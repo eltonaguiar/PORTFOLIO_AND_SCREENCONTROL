@@ -209,6 +209,12 @@ loop: kills become machine-enforced blocks, not paragraphs.
 | R186–R188 | Latency sensitivity: re-run promoted cells with 5s/30s/120s entry delay |
 | R189–R190 | Capacity: at what notional does the edge disappear given observed depth |
 
+**Rule adopted from the peer review (2026-11-22):** a scheduled runner supervises every
+~60 minutes, so the bracket must also be *survivable across one supervision gap*. Every
+cell must report `supervision_gap_s / median_hold_s` and
+`bracket_width_bps / max_expected_move_over_gap`; a bracket narrower than the move the
+market can make while nobody is watching is not a stop.
+
 **Rule adopted from the live round (2026-11-22):** the bracket must be *reachable inside
 the holding period*, or the risk model is fictional. The live smoke book used a 1.2×ATR
 bracket (~120 bps on BTC 1h) with a 6-minute hold — the market moved 6 bps, so TP/SL never

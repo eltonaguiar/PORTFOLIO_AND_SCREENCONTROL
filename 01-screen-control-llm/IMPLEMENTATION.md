@@ -120,3 +120,7 @@ print(loop.run("Find the invoice for August and read out its total"))
   the demo, not by reading the code.
 - **No multi-tab / frame handling.** One page, top frame.
 - **Not tested against hostile pages.** The allowlist is the mitigation, not a proof.
+- **Approval class is inferred from the target's name, not declared by the policy.** This
+  matches `TOOL_INTERFACE.md` classes 0–3 only approximately: a button labelled "Go" that
+  submits a payment passes the gate. Round 2 should let a policy declare an action's class
+  and have the guard take the **maximum** of declared and inferred.
