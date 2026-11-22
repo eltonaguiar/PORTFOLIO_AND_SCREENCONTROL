@@ -183,11 +183,43 @@ def cmd_live(args) -> int:
         tp_atr=args.tp_atr, sl_atr=args.sl_atr, max_open=args.max_open,
         burst_pct=args.burst,
     )
+    # Market-clock preflight: record which classes were open when this round started.
+    # Nothing here enforces it yet (the universe is all crypto), but the record is what
+    # turns "we only traded crypto because it was Sunday" from a human observation into
+    # an artifact.
+    from . import market_clock as M
+
+    _open = M.open_classes()
+    print(f"market preflight: open now = {_open}")
+    if "crypto" not in _open:
+        print("  WARNING: crypto is oddly closed — check the exchange before trusting fills")
+    round_.ledger.append({"event": "PREFLIGHT", "open_classes": _open,
+                          "utc": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+
     print(f"live round {run_id} | venue={args.venue} | {args.minutes} min | "
           f"risk={args.risk:.1%}/trade | tp={args.tp_atr}ATR sl={args.sl_atr}ATR")
     summary = round_.run(duration_minutes=args.minutes, poll_s=args.poll, book=args.book, min_votes=args.min_votes)
     print(json.dumps(summary, indent=1))
     (RESULTS_DIR / f"{run_id}_summary.json").write_text(json.dumps(summary, indent=1, default=str), encoding="utf-8")
+    return 0
+
+
+def cmd_market(args) -> int:
+    """Which asset classes are tradeable right now. Run before any live round."""
+    from . import market_clock as M
+
+    print(f"UTC now: {datetime.now(timezone.utc).isoformat(timespec='seconds')}")
+    status = M.market_status()
+    for name, st in status.items():
+        print(f"  {'OPEN  ' if st.open else 'closed'} {name:10s} [{st.precision:6s}] {st.detail}")
+        if st.next_open_utc:
+            print(f"          next open: {st.next_open_utc}")
+    print(f"\nTradeable now: {M.open_classes()}")
+    out = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+           "status": {k: v.as_dict() for k, v in status.items()},
+           "open_classes": M.open_classes()}
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    (RESULTS_DIR / "market_status.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     return 0
 
 
@@ -240,6 +272,9 @@ def main(argv=None) -> int:
     lv.add_argument("--burst", type=float, default=0.004)
     lv.add_argument("--run-id", default=None)
     lv.set_defaults(func=cmd_live)
+
+    mk = sub.add_parser("market")
+    mk.set_defaults(func=cmd_market)
 
     st = sub.add_parser("status")
     st.set_defaults(func=cmd_status)

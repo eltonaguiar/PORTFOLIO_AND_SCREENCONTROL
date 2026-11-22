@@ -38,6 +38,25 @@ Every round is judged on artifacts, not prose.
 A round that produces a number but no gate verdict is a note. A round that fails a gate
 is a **result** and gets written down — it is not repeated with a tweaked parameter.
 
+### Numeric thresholds (adopted 2026-11-22 from the GLM 5.3 Flash proposal)
+
+Qualitative gates drift. These are the numbers, and each one is a *policy choice* stated as
+such — not a fact derived from data — so that a future author has to argue with a number
+rather than with an adjective.
+
+| gate | threshold | why this number |
+|---|---|---|
+| sample | **≥ 300 trades, or ≥ 2 years daily** | below this a 20 bps edge cannot be distinguished from zero by a bootstrap |
+| net Sharpe | **≥ 1.0 daily, ≥ 1.3 intraday** | intraday carries more operational risk per unit of Sharpe, so the bar is higher, not lower |
+| max drawdown | **≤ 25%** | a book that can draw down 50% cannot be held by someone who has to look at it |
+| deflated Sharpe | **≥ 0.95** (equivalently p < 0.05 after deflation), **computed against the recorded trial count** | this is the gate that killed every candidate so far; `stats.deflated_sharpe` |
+| permutation | **p < 0.05** vs shuffled prices | structure must exist in the price series, not just in the rule |
+| random-entry control | **survives Benjamini–Hochberg FDR 5% across all cells tested** | a per-cell p < 0.05 out of 29 cells is the luck of running 29 tests |
+| parameter plateau | neighbouring settings must also pass, not just the optimum | a spike surrounded by losses is a fit, not a rule |
+| stress windows | must survive 2020-03 and 2022 on daily data | regime robustness is the cheapest overfit test there is |
+| **G2 paper** | **≥ 20 trading days**, live slippage **≤ 1.5× modelled**, tracking error vs backtest within **2× costs** | paper is where modelled friction meets real friction |
+| **decay alarm** | rolling **20-trade** Sharpe < 0 → flag, and re-review before adding size | GLM proposed 60; shortened to 20 because a pod accumulating n=100 cannot afford a 60-trade blind spot |
+
 ---
 
 ## Phase map
