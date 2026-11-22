@@ -1,0 +1,104 @@
+{
+ "generated_utc": "2026-11-22T14:16:54+00:00",
+ "peer": {
+  "spy_bnh": {
+   "cagr": 0.1027,
+   "max_drawdown": -0.552,
+   "window": "2006-2026"
+  },
+  "trend_overlay": {
+   "cagr": 0.0837,
+   "max_drawdown": -0.205,
+   "window": "2006-2026"
+  },
+  "note": "peer verdict quotes these two rows; this script reconciles them"
+ },
+ "window_early": "2004-01-01",
+ "window_late": "2006-01-01",
+ "convention": "month-end close signal -> next-day open fill, 5bps/side",
+ "rows": {
+  "early_2004": {
+   "spy_buy_and_hold": {
+    "cagr": 0.1028,
+    "sharpe": 0.619391,
+    "max_drawdown": -0.551895,
+    "total_return": 8.385364
+   },
+   "spy_200d_overlay": {
+    "cagr": 0.053377,
+    "sharpe": 0.516731,
+    "max_drawdown": -0.253459,
+    "total_return": 2.28689,
+    "turnover_per_year": 12.061378
+   },
+   "aoa": {
+    "cagr": 0.076319,
+    "sharpe": 0.610111,
+    "max_drawdown": -0.283791,
+    "total_return": 4.381501
+   },
+   "6040": {
+    "cagr": 0.0758,
+    "sharpe": 0.702167,
+    "max_drawdown": -0.347038,
+    "total_return": 4.322413
+   },
+   "gic": {
+    "cagr": 0.014072,
+    "sharpe": 4.287529,
+    "max_drawdown": -0.004504,
+    "total_return": 0.376809
+   }
+  },
+  "late_2006": {
+   "spy_buy_and_hold": {
+    "cagr": 0.104356,
+    "sharpe": 0.613624,
+    "max_drawdown": -0.551895,
+    "total_return": 6.944482
+   },
+   "spy_200d_overlay": {
+    "cagr": 0.058264,
+    "sharpe": 0.550774,
+    "max_drawdown": -0.253459,
+    "total_return": 2.262099,
+    "turnover_per_year": 10.920142
+   },
+   "aoa": {
+    "cagr": 0.083944,
+    "sharpe": 0.638739,
+    "max_drawdown": -0.283791,
+    "total_return": 4.381501
+   },
+   "6040": {
+    "cagr": 0.07805,
+    "sharpe": 0.701917,
+    "max_drawdown": -0.347038,
+    "total_return": 3.802422
+   },
+   "gic": {
+    "cagr": 0.015433,
+    "sharpe": 4.504177,
+    "max_drawdown": -0.004504,
+    "total_return": 0.376809
+   }
+  }
+ },
+ "gap_attribution": {
+  "spy_cagr_peer": 0.1027,
+  "spy_cagr_early_2004": 0.10279996201779307,
+  "spy_cagr_late_2006": 0.10435566379760508,
+  "spy_dd_peer": -0.552,
+  "spy_dd_early_2004": -0.551894534502581,
+  "spy_dd_late_2006": -0.5518945345025813,
+  "overlay_cagr_peer": 0.0837,
+  "overlay_cagr_early_2004": 0.05337703930846982,
+  "overlay_cagr_late_2006": 0.05826426382943484,
+  "overlay_dd_peer": -0.205,
+  "overlay_dd_early_2004": -0.25345930505221237,
+  "overlay_dd_late_2006": -0.2534593050522116,
+  "conclusion": "gap is not explained by start date alone; rebalance convention / cash drag is a contributor",
+  "gap_peer_vs_2004_bps": 303.2,
+  "gap_2004_vs_2006_bps": -48.9
+ }
+}

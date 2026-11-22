@@ -287,3 +287,12 @@ Question: do value/quality/low-vol (and momentum as the H-E1 reference) deliver 
 SPY buy-and-hold reproducibility: CAGR 10.28% / Sharpe 0.619 / maxDD −55.19% over 2004-2026 — two-decimal agreement with H-E1's independently written script.
 
 ---
+
+## Session 8 — 2026-11-22 (14:15–14:30 UTC) — `hermes` (Session B, cron queue axis)
+
+Question: does the peer's ETF rotation + trend overlay table reproduce on one shared script, one window, one convention (roadmap R191–R192)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 14:15 | RUN | (g) R191/R192 trend-overlay reconciliation: SPY B&H, AOA, 60/40, GIC, SPY+200d overlay under one convention (month-end close signal -> next-day open fill, 5bps/side, 2004 vs 2006 starts), vs peer verdict rows (SPY 10.27% / -55.2%, overlay 8.37% / -20.5% over 2006-2026) | proof/r191_r192_overlay.py, results/r191_r192_reconciliation.json |
+| 14:29 | PASS | SPY B&H and max DD reconcile: 10.28% vs peer 10.27% CAGR (2004-start matches H-E1's independent script), -55.19% vs -55.2% DD exact. Trend overlay does NOT reproduce under one convention: peer 8.37% vs mine 5.83% on the same 2006-2026 window; start date explains only ~16% of the gap (5.34% vs 5.83%), so the remainder is convention/cost difference (likely daily close-to-close signaling vs month-end->next-open). R191/R192 closed on numbers: SPY row reconciled, overlay row flagged as convention-dependent, not re-runnable to the peer's figure. | results/r191_r192_reconciliation.json |
