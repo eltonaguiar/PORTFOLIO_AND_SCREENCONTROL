@@ -1,0 +1,40 @@
+{
+ "generated_utc": "2026-11-22T09:50:16+00:00",
+ "status": {
+  "crypto": {
+   "asset_class": "crypto",
+   "open": true,
+   "precision": "EXACT",
+   "detail": "24/7/365 \u2014 no session, no holiday",
+   "next_open_utc": null,
+   "next_close_utc": null
+  },
+  "fx": {
+   "asset_class": "fx",
+   "open": false,
+   "precision": "EXACT",
+   "detail": "Sunday before 17:00 ET open",
+   "next_open_utc": "2026-11-22T22:00:00+00:00",
+   "next_close_utc": null
+  },
+  "us_equity": {
+   "asset_class": "us_equity",
+   "open": false,
+   "precision": "APPROX",
+   "detail": "weekend",
+   "next_open_utc": "2026-11-23T14:30:00+00:00",
+   "next_close_utc": null
+  },
+  "futures": {
+   "asset_class": "futures",
+   "open": false,
+   "precision": "APPROX",
+   "detail": "Sunday before 18:00 ET",
+   "next_open_utc": "2026-11-22T23:00:00+00:00",
+   "next_close_utc": null
+  }
+ },
+ "open_classes": [
+  "crypto"
+ ]
+}

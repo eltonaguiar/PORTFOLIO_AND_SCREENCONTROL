@@ -114,6 +114,70 @@ The two failing artifacts from the buggy data path (`..._090644Z.json`, 1,000 ba
 JSON with the wrong window is indistinguishable from a correct one to anyone who does not
 read `bars`. Its numbers survive only in this table, labelled.
 
+## 4c. Third control: random entry (does the SIGNAL's timing add anything?)
+
+Adopted from a peer proposal (GLM 5.3 Flash: a seeded random-entry control). This answers a
+different question from the permutation control:
+
+| control | shuffles | asks |
+|---|---|---|
+| permutation | **prices** (`stats.permutation_control`) | is there structure in the price series? |
+| random-entry | **entry timing** (`proof/random_entry_control.py`) | does *when* the signal fires beat a random entry with the same exit machinery? |
+
+A rule can pass one and fail the other, and the failure it catches is specific: a rule whose
+positive mean comes from its **bracket** (36 bars for a volatility expansion to pay a 26 bps
+round trip) rather than from its **timing**. Random entries get the identical TP/SL multiples,
+sizing, `max_bars` and costs; only the entry moments are drawn uniformly.
+
+**What it found, before correction:** 2 of 29 powered cells beat random timing at raw
+p < 0.05 — `H-R2_donchian_breakout/SOL` (p = 0.015) and `H-R4_vol_compression/ETH` (p = 0.030,
+real **+240.5 bps/trade** vs random median **−17.8 bps**, 97th percentile).
+
+**What it found, after correction:** nothing.
+
+| k | cell | raw p | BH threshold (5% FDR) | survives? |
+|---:|---|---:|---:|---|
+| 1 | H-R2_donchian_breakout/SOL | 0.015 | 0.00172 | ✗ |
+| 2 | H-R4_vol_compression/ETH | 0.030 | 0.00345 | ✗ |
+| 3 | H-R3_bollinger_meanrev/XRP | 0.050 | 0.00517 | ✗ |
+
+The expected false-positive count for 29 tests at α = 0.05 is **1.45**. Observing 2 is
+indistinguishable from noise, and Benjamini–Hochberg leaves **0 survivors**.
+
+That correction matters enough to be stated explicitly, because the first version of this
+test printed a per-cell label — *"SIGNAL ADDS TIMING VALUE"* — for any cell above the 95th
+percentile. On its own that label was a multiple-testing machine: 29 cells, one of which will
+land above the 95th percentile by construction. The per-cell verdict is now deliberately
+neutral and only the BH-corrected reading can claim anything.
+
+### What it does establish
+
+One thing is not noise, because it is a large effect in the wrong direction:
+
+| cell | real mean | random median | percentile |
+|---|---:|---:|---:|
+| H-R6_rsi2_pullback/SOL | **−374.4 bps** | −27.7 bps | 0.00 |
+| H-R6_rsi2_pullback/LINK | **−426.6 bps** | −16.4 bps | 0.00 |
+| H-R6_rsi2_pullback/ADA | **−434.2 bps** | −101.1 bps | 0.005 |
+| H-R3_bollinger_meanrev/SOL | **−299.6 bps** | −9.9 bps | 0.01 |
+
+The mean-reversion entries are **worse than random** by an order of magnitude, across four
+independent cells. Buying a dip in an asset that keeps falling is not a neutral mistake — it
+is the worst of the 29 timings tested. That reinforces the archive decision on H-R3 and H-R6
+from §2 with a second, independent mechanism.
+
+### The three controls now agree
+
+| control | best result across 126 cells |
+|---|---|
+| deflated Sharpe (vs trial count) | **0.256** against a 0.95 bar |
+| permutation (shuffled prices) | **p = 0.40** |
+| random-entry (shuffled timing, BH-corrected) | **0 of 29 survive** |
+
+Three mechanisms, three different null hypotheses, one answer. That is the strongest form the
+negative result can take, and it is why the verdict is "no asset class proven" rather than
+"promising but unconfirmed".
+
 ## 5. What this changes in the plan
 
 | change | why |

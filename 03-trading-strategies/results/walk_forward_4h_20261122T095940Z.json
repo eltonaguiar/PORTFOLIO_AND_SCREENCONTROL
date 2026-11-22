@@ -1,0 +1,922 @@
+{
+ "hypothesis": "P6 \u2014 do any of the six families survive walk-forward with purge+embargo?",
+ "generated_utc": "2026-11-22T09:59:34+00:00",
+ "timeframe": "4h",
+ "universe": [
+  "BTC",
+  "ETH",
+  "SOL",
+  "XRP",
+  "DOGE",
+  "ADA",
+  "LINK"
+ ],
+ "costs": {
+  "taker_fee": 0.001,
+  "slippage": 0.0003,
+  "per_side": 0.0013,
+  "round_turn": 0.0026
+ },
+ "protocol": {
+  "folds": "sequential expanding, strictly no look-ahead",
+  "purge_bars": 48,
+  "embargo_frac": 0.01,
+  "mode_a": "frozen parameters \u2014 temporal stability",
+  "mode_b": "grid 18 brackets fitted on train, applied untouched to test",
+  "mode_b_symbols": [
+   "BTC",
+   "ETH",
+   "SOL"
+  ],
+  "pass_rule": "pooled OOS CI lower bound > 0 AND >= 60% folds positive"
+ },
+ "mode_b": {
+  "rows": [
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 138.36,
+      "n_test": 21,
+      "test_mean_bps": 79.53
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 126.26,
+      "n_test": 21,
+      "test_mean_bps": 67.03
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 97.92,
+      "n_test": 20,
+      "test_mean_bps": 41.1
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 57.87,
+      "n_test": 21,
+      "test_mean_bps": -37.13
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 4,
+    "folds_test_positive": 3,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 83
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": -28.14,
+      "n_test": 36,
+      "test_mean_bps": 20.08
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 47.2,
+      "n_test": 40,
+      "test_mean_bps": 10.62
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 22.97,
+      "n_test": 34,
+      "test_mean_bps": -169.13
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": 6.51,
+      "n_test": 29,
+      "test_mean_bps": -40.59
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 3,
+    "folds_test_positive": 2,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 139
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 58.76,
+      "n_test": 21,
+      "test_mean_bps": -20.44
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": 24.82,
+      "n_test": 21,
+      "test_mean_bps": 2.74
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 37.52,
+      "n_test": 20,
+      "test_mean_bps": 6.62
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 29.62,
+      "n_test": 21,
+      "test_mean_bps": -38.94
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 4,
+    "folds_test_positive": 2,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 83
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": -39.08,
+      "n_test": 21,
+      "test_mean_bps": 49.69
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": 26.87,
+      "n_test": 21,
+      "test_mean_bps": -71.81
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": -3.93,
+      "n_test": 20,
+      "test_mean_bps": 11.15
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 18.35,
+      "n_test": 21,
+      "test_mean_bps": -129.01
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 2,
+    "folds_test_positive": 2,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 83
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 132.74,
+      "n_test": 39,
+      "test_mean_bps": 31.03
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 35.08,
+      "n_test": 40,
+      "test_mean_bps": -52.01
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 4.52,
+      "n_test": 37,
+      "test_mean_bps": -182.96
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": -38.32,
+      "n_test": 35,
+      "test_mean_bps": -76.45
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 3,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 151
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 52.56,
+      "n_test": 10,
+      "test_mean_bps": -63.78
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 23.47,
+      "n_test": 8,
+      "test_mean_bps": 10.8
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 16.32,
+      "n_test": 25,
+      "test_mean_bps": -70.41
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 3,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 43
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 21.44,
+      "n_test": 8,
+      "test_mean_bps": -106.53
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": -18.25,
+      "n_test": 8,
+      "test_mean_bps": -16.08
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": -15.71,
+      "n_test": 24,
+      "test_mean_bps": 12.87
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 1,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 40
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 50.38,
+      "n_test": 4,
+      "test_mean_bps": 24.55
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 73.11,
+      "n_test": 5,
+      "test_mean_bps": -153.15
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": -18.77,
+      "n_test": 24,
+      "test_mean_bps": 16.87
+     }
+    ],
+    "n_scored_folds": 2,
+    "folds_train_positive": 1,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 29
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": -74.68,
+      "n_test": 14,
+      "test_mean_bps": -10.64
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": -31.31,
+      "n_test": 7,
+      "test_mean_bps": 19.24
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": -5.76,
+      "n_test": 9,
+      "test_mean_bps": -43.57
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 0,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 0,
+    "total_oos_trades": 30
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 6.26,
+      "n_test": 11,
+      "test_mean_bps": -108.07
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": -19.03,
+      "n_test": 15,
+      "test_mean_bps": 24.86
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": -4.52,
+      "n_test": 20,
+      "test_mean_bps": -19.47
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 1,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 46
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": 27.42,
+      "n_test": 16,
+      "test_mean_bps": 8.02
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 20.5,
+      "n_test": 8,
+      "test_mean_bps": -85.53
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 0.75,
+       "max_bars": 12
+      },
+      "train_mean_bps": 11.01,
+      "n_test": 20,
+      "test_mean_bps": -1.33
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 3,
+    "folds_test_positive": 1,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 44
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": 19.36,
+      "n_test": 2,
+      "test_mean_bps": 89.56
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": 32.12,
+      "n_test": 6,
+      "test_mean_bps": -62.79
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 6
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": 79.33,
+      "n_test": 4,
+      "test_mean_bps": -18.38
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": 119.95,
+      "n_test": 6,
+      "test_mean_bps": -125.1
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 6
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 0.75,
+       "max_bars": 24
+      },
+      "train_mean_bps": 97.24,
+      "n_test": 1,
+      "test_mean_bps": -146.87
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 88.27,
+      "n_test": 5,
+      "test_mean_bps": -168.38
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 5
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-08-29 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 40.06,
+      "n_test": 36,
+      "test_mean_bps": -49.57
+     },
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": -21.09,
+      "n_test": 44,
+      "test_mean_bps": -8.44
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 3.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": -17.98,
+      "n_test": 39,
+      "test_mean_bps": -84.67
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.0,
+       "max_bars": 24
+      },
+      "train_mean_bps": -33.04,
+      "n_test": 33,
+      "test_mean_bps": -22.65
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 152
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 21.96,
+      "n_test": 12,
+      "test_mean_bps": -69.19
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": -25.6,
+      "n_test": 9,
+      "test_mean_bps": -23.22
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": -24.3,
+      "n_test": 10,
+      "test_mean_bps": -43.16
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 31
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": 45.78,
+      "n_test": 8,
+      "test_mean_bps": -154.51
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.5,
+       "max_bars": 12
+      },
+      "train_mean_bps": -30.52,
+      "n_test": 9,
+      "test_mean_bps": -136.12
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": -65.33,
+      "n_test": 12,
+      "test_mean_bps": -11.13
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 1,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 1,
+    "total_oos_trades": 29
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-08-31 12:00:00+00:00",
+      "test_end": "2026-01-26 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 56.73,
+      "n_test": 8,
+      "test_mean_bps": -122.51
+     },
+     {
+      "test_start": "2026-01-30 00:00:00+00:00",
+      "test_end": "2026-06-25 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 2.0,
+       "sl_atr": 1.5,
+       "max_bars": 24
+      },
+      "train_mean_bps": 27.2,
+      "n_test": 9,
+      "test_mean_bps": -131.36
+     },
+     {
+      "test_start": "2026-06-30 12:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "picked": {
+       "tp_atr": 1.0,
+       "sl_atr": 1.0,
+       "max_bars": 12
+      },
+      "train_mean_bps": -16.39,
+      "n_test": 24,
+      "test_mean_bps": -35.7
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_train_positive": 2,
+    "folds_test_positive": 0,
+    "train_to_test_collapses": 2,
+    "total_oos_trades": 41
+   }
+  ],
+  "train_positive_folds": 33,
+  "test_positive_folds": 16,
+  "collapses": 24
+ }
+}

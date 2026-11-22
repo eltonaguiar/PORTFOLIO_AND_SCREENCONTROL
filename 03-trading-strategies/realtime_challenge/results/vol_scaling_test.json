@@ -1,0 +1,128 @@
+{
+ "hypothesis": "H-VS1 \u2014 inverse-vol scaling improves Sharpe by 0.3+ for any momentum strategy",
+ "source": "audit2/audit3 doctrine, quoted in REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md line 10",
+ "previously_tested": false,
+ "flagged_untested_by": "GLM 5.3 Flash \u2014 'vol scaling is free alpha is itself a testable hypothesis'",
+ "generated_utc": "2026-11-22T09:54:00+00:00",
+ "window": {
+  "start": "2004-01-01",
+  "end": "2026-11",
+  "instrument": "SPY"
+ },
+ "parameters": {
+  "target_vol": 0.1,
+  "vol_window": 20,
+  "cost_per_side": 0.0005,
+  "leverage_caps": [
+   1.0,
+   2.0
+  ]
+ },
+ "rows": [
+  {
+   "strategy": "SPY buy-and-hold",
+   "unscaled": {
+    "sharpe": 0.62,
+    "cagr": 0.103,
+    "max_drawdown": -0.5519,
+    "ann_vol": 0.1863
+   },
+   "scaled_cap1": {
+    "sharpe": 0.748,
+    "cagr": 0.0737,
+    "max_drawdown": -0.2555,
+    "ann_vol": 0.1022
+   },
+   "delta_cap1": 0.128,
+   "scaled_cap2": {
+    "sharpe": 0.695,
+    "cagr": 0.0744,
+    "max_drawdown": -0.2598,
+    "ann_vol": 0.1124
+   },
+   "delta_cap2": 0.075
+  },
+  {
+   "strategy": "SPY 12m TSMOM",
+   "unscaled": {
+    "sharpe": 0.604,
+    "cagr": 0.0746,
+    "max_drawdown": -0.3117,
+    "ann_vol": 0.134
+   },
+   "scaled_cap1": {
+    "sharpe": 0.688,
+    "cagr": 0.0613,
+    "max_drawdown": -0.1559,
+    "ann_vol": 0.0928
+   },
+   "delta_cap1": 0.084,
+   "scaled_cap2": {
+    "sharpe": 0.617,
+    "cagr": 0.0614,
+    "max_drawdown": -0.1991,
+    "ann_vol": 0.1056
+   },
+   "delta_cap2": 0.013
+  },
+  {
+   "strategy": "SPY + 200d SMA",
+   "unscaled": {
+    "sharpe": 0.719,
+    "cagr": 0.0785,
+    "max_drawdown": -0.2068,
+    "ann_vol": 0.1141
+   },
+   "scaled_cap1": {
+    "sharpe": 0.69,
+    "cagr": 0.0611,
+    "max_drawdown": -0.1595,
+    "ann_vol": 0.0921
+   },
+   "delta_cap1": -0.029,
+   "scaled_cap2": {
+    "sharpe": 0.618,
+    "cagr": 0.0629,
+    "max_drawdown": -0.1834,
+    "ann_vol": 0.1083
+   },
+   "delta_cap2": -0.101
+  },
+  {
+   "strategy": "SPY 6m ECM",
+   "unscaled": {
+    "sharpe": 0.71,
+    "cagr": 0.0781,
+    "max_drawdown": -0.2334,
+    "ann_vol": 0.1152
+   },
+   "scaled_cap1": {
+    "sharpe": 0.676,
+    "cagr": 0.0591,
+    "max_drawdown": -0.1438,
+    "ann_vol": 0.0912
+   },
+   "delta_cap1": -0.034,
+   "scaled_cap2": {
+    "sharpe": 0.621,
+    "cagr": 0.0632,
+    "max_drawdown": -0.2028,
+    "ann_vol": 0.1081
+   },
+   "delta_cap2": -0.089
+  }
+ ],
+ "n_strategies": 4,
+ "n_gain_0_30_no_leverage": 0,
+ "n_gain_0_30_with_leverage": 0,
+ "momentum_deltas_with_leverage": [
+  0.013,
+  -0.089
+ ],
+ "verdict": "CLAIM DOES NOT HOLD AS STATED: 0/4 strategies gain >=0.30 Sharpe under 2x-levered vol targeting, and 0/4 under no-leverage vol targeting. Momentum alone: 0/2 reach +0.30.",
+ "reading": {
+  "de_risking_works": "vol targeting reliably CUTS drawdown and vol; that part is real and it is risk management, not alpha",
+  "sharpe_gain_is_mostly_denominator": "where Sharpe rises it is because realised vol falls, and CAGR usually falls with it under a no-leverage cap",
+  "cost_is_omitted_upstream": "rescaling trades; the turnover charge is included here and is not in the doctrinal claim"
+ }
+}

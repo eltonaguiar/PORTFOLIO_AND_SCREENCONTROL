@@ -235,20 +235,52 @@ open on live data.
 | BTC | SHORT | 59,667.07 | 59,283.09 | 59,923.06 | 5m burst > 0.18% on above-median volume |
 | ETH | SHORT | 1,682.92 | 1,671.94 | 1,690.23 | same |
 
-**Result — signal-driven, and the same lesson:**
+**Result — 11 closed trades, and the decomposition is the whole story.**
 
-| symbol | direction | entry | exit | exit reason | net | P&L |
-|---|---|---:|---:|---|---:|---:|
-| BTC | SHORT | 59,667.07 | 59,962.70 | **SL** | −49.6 bps | −$16.52 (R −1.16) |
-| ETH | SHORT | 1,682.92 | 1,691.86 | **SL** | −53.2 bps | −$17.72 (R −1.22) |
-| SOL | SHORT | 69.6303 | 70.0800 | **SL** | −64.6 bps | −$21.53 (R −1.55) |
+*(An earlier draft of this section reported 3 trades and −$55.76. That was a partial read of
+a round that was still running. The full round closed 11.)*
 
-All three stopped out within ~4 minutes, for **−$55.76 total**. The reason is clear from
-the session context: BTC was **+3.4% on the day**. A 5-minute down-impulse inside a rising
-session is noise, not a reversal, and shorting it means being stopped out on the next leg
-up. Note the realised loss (−49.6 bps) is **larger than the stop distance** (~43 bps) —
-the exit fills at the live bid plus fee, so slippage through the stop is charged rather
-than assumed away.
+| symbol | dir | gross % | **friction** | net % | exit | P&L | held |
+|---|---|---:|---:|---:|---|---:|---:|
+| BTC | SHORT | −0.295 | 20.1 bps | −0.495 | SL | −$16.52 | 4.2 m |
+| ETH | SHORT | −0.331 | 20.1 | −0.531 | SL | −$17.72 | 3.9 m |
+| SOL | SHORT | −0.445 | 20.1 | −0.646 | SL | −$21.53 | 3.7 m |
+| ETH | SHORT | −0.261 | 20.1 | −0.462 | SL | −$15.41 | 2.5 m |
+| SOL | SHORT | −0.229 | 20.1 | −0.429 | SL | −$14.31 | 2.3 m |
+| BTC | LONG | −0.166 | 19.9 | −0.365 | TIME | −$12.17 | 8.7 m |
+| ETH | SHORT | **+0.145** | 20.0 | −0.054 | TIME | −$1.82 | 8.4 m |
+| SOL | SHORT | **+0.200** | 20.0 | **+0.000** | TIME | **$0.00** | 8.3 m |
+| BTC | LONG | **+0.346** | 20.1 | +0.145 | TIME | +$4.84 | 7.2 m |
+| ETH | SHORT | −0.175 | 20.1 | −0.376 | TIME | −$12.53 | 3.9 m |
+| SOL | SHORT | −0.215 | 20.1 | −0.415 | TIME | −$13.85 | 3.8 m |
+
+**Totals: gross price component −$47.50, fees −$73.33, net −$120.83** (equity $9,879 of
+$10,000, **−1.21%**; win rate 18.2%, profit factor 0.038; 5 stop-outs, 6 time stops).
+
+Two things are worth more than the headline:
+
+**1. Fees were 61% of the loss.** The mean round-turn friction was **20.05 bps** on every
+single trade, and the gross price component contributed only −$47.50 of the −$120.83.
+
+**2. Trade 8 is the cleanest specimen of the cost wall in this entire project.** SOL short,
+gross **+0.200%** — the direction was exactly right — and net **+0.000%**. The gross edge was
+exactly the width of the round turn. Three trades (7, 8, 9) had positive gross moves and only
+one of them survived contact with the fee. That is what "the fee line is bigger than the gross
+line" looks like at the level of a single trade, and it is the same mechanism Mercury3 measured
+at 1,254 trades and this harness measured across 126 cells.
+
+**The signal was also directionally wrong for this session**, which is a separate fault from
+the cost. All five stops were short positions stopped out as the market rallied; BTC was
+**+3.4% on the day**. Shorting a 5-minute down-impulse inside a rising session is noise, not
+reversal. Note the realised loss (−0.495%) is **larger than the stop distance** (~43 bps) —
+the exit fills at the live bid plus fee, so slippage through the stop is charged rather than
+assumed away.
+
+**Comparing to Mercury3's PART13 is instructive and not perfectly aligned:** they found a
+*positive* gross edge (+2.2 bps/trade) destroyed by fees. This probe found a *negative* gross
+(−13 bps/trade) that fees doubled. Both end at "the fee line dominates", but they disagree on
+whether the raw signal has anything — which is exactly why n=11 in one session is plumbing,
+not evidence.
 
 The burst signal correctly identified a downward 5m impulse on all three symbols and
 opened shorts at the live bid minus taker fee. Whether that ended in a profit is not the
@@ -259,11 +291,59 @@ recorded here for completeness, not as evidence.
 
 Across four books on live markets:
 
-| book | trades opened | trades closed | net result |
-|---|---:|---:|---|
-| pre-registered consensus | **0** | 0 | declined to trade — trend filters false in a −27% market |
-| SMOKE_TEST (no signal, deterministic long) | 6 | 6 | **−$27.79 (−0.278%)**, 0% WR |
-| HARNESS_PROBE_5M_BURST | 3 | 3 | see table above |
+Five books ran. All five are below, read from the ledgers rather than from the printed
+summaries:
+
+| book | venue | closed | winners | WR | net | fees | exits |
+|---|---|---:|---:|---:|---:|---:|---|
+| pre-registered consensus | bybit / kraken | **0** | — | — | $0.00 | $0.00 | declined — trend filters false in a −27% market |
+| SMOKE_TEST (no signal) | bybit | 6 | 0 | 0.0% | −$27.79 | $40.00 | TIME 6 |
+| HARNESS_PROBE v1 | **bybit** | 3 | 0 | 0.0% | −$46.49 | $20.00 | SL 3 |
+| HARNESS_PROBE v2 | **bybit** | 11 | 2 | 18.2% | −$121.00 | $73.33 | SL 5, TIME 6 |
+| HARNESS_PROBE | **kraken** | 3 | 0 | 0.0% | −$37.03 | $20.00 | SL 2, TIME 1 |
+| HARNESS_PROBE | **okx** | 4 | 0 | 0.0% | −$52.83 | $26.67 | SL 4 |
+| | | **27** | **2** | **7.4%** | **−$285.14** | **$180.00** | SL 12, TIME 14 |
+
+**Three things this sample establishes, and one it does not.**
+
+**1. Fees were 63% of the loss.** Gross price component across all 27 trades is **−$105.14**;
+commission is **$180.00** on a **−$285.14** result. Mean round-turn friction was 20 bps on every
+trade.
+
+**2. The take-profit never fired — 0 times in 27 trades.** 12 stops, 15 time stops, **0 targets**.
+
+I first explained this as *"the bracket was wider than the expected move over the hold, so it
+could not be hit."* **The arithmetic refutes that for 21 of the 27 trades** (see `BRACKET_P7.md`,
+22 passing tests). Re-running every closed trade through the reachability gate with its own
+`atr_1h`:
+
+- **27 of 27 would have been refused before opening**, and only **6** because the bracket was
+  unreachable. Those 6 are all from the smoke book.
+- The other **21 were perfectly reachable and still guaranteed to lose.** At their own
+  geometry-implied hit rates they returned exactly **zero before costs** and −0.002 to −0.007R
+  after. The reason is an identity: for a driftless walk `p_TP = sl/(tp+sl)`, so
+  `p_TP·(tp/sl) − p_SL` is **identically zero for every bracket**. Friction then makes it
+  negative. **No bracket can create an edge; the target is where profit is collected, never where
+  it is made.**
+
+The second defect is independent and worse. Predicted `P(TP exit)` averaged **0.269**, so about
+**7.3 targets out of 27** should have occurred. Zero did: two-sided binomial **p = 0.0003**. That
+is incompatible with the geometry, and the only explanation left is that the paths were not
+driftless — **the positions were systematically against the move**. All shorts, into BTC +3.4%.
+
+So the 27 live trades carried two separate fatal defects: a bracket that could not profit even
+with a perfect signal, and a direction that was wrong. Neither is fixed by choosing a better
+signal alone, and neither was visible from the win rate.
+
+**3. Four venues agree on the direction of the result.** bybit (two rounds), kraken and okx all
+lost, at 0%, 0%, 0% and 18.2% win rates. The strategy was shorting 5-minute down-impulses while
+BTC rallied +3.4%; that is one wrong idea repeated on four exchanges, not four independent
+tests. It does confirm the plumbing works identically across venues, which is what these books
+existed to check.
+
+**What it does not establish: an edge or the absence of one.** n = 27 against a G4 requirement of
+100, one session, one regime. It is plumbing evidence plus a hard cost measurement, and it is
+recorded as such.
 
 **No.** In a short timeframe, on live markets, this system did not find a profit. The
 reason is specific and measurable, not mysterious:
@@ -309,10 +389,14 @@ replay. Neither would have surfaced in a backtest.
 | Did it survive a proper test? | **No.** 3 years, clustered, with controls: −3.21 bps, CI straddles zero, rank #15 of 42. |
 | Can the harness be trusted to say no? | **Yes** — 5/5 certification tests pass, including a 60-cell pure-noise calibration at 0/60 false positives. |
 | Did the live round open and close real positions? | **Yes**, on live prices, paying spread + taker fee on both legs. |
-| Was there a profit? | **No — and the reason is arithmetic, not luck.** Two books traded, both lost: the
-no-signal book lost **−0.278%** purely to friction, and the signal book lost **−0.56%**
-because it shorted a 5-minute dip inside a +3.4% day. The pre-registered book opened zero
-trades, correctly. Full breakdown in §5.4. |
+**No — and the reason is arithmetic, not luck.** Two books traded, both lost: the
+no-signal book lost **−0.278%** (0 of 6 winners), and the signal book lost **−1.21%** over
+11 trades (18.2% WR, PF 0.038) because it shorted 5-minute dips inside a +3.4% day. The
+pre-registered book opened zero trades, correctly.
+
+Of the $148.62 lost across both books, **$113.33 (76%) is commission**. The one trade that
+got direction exactly right — SOL short, gross +0.200% — closed at **net +0.000%**. Full
+breakdown in §5.4.
 | Would I allocate capital? | **No.** Per the peer verdict this agrees with: hold beta sized to drawdown tolerance; no desk strategy sanctioned. |
 
 ---

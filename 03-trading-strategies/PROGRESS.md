@@ -8,6 +8,81 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 3 — 2026-11-22 (10:45–11:05 UTC) — `deepseek-flash`
+
+Question: what do the live rounds actually say once the round has *finished*, and does a peer's
+control idea change any verdict?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 10:46 | FIX | **Corrected my own reporting.** Session 1 described the probe book as "3 trades, −$55.76". That was a partial read of a round still running. The full round closed **11 trades**. Corrected in the challenge write-up | `REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD` §5.3 |
+| 10:47 | FAIL | Full probe round: **11 closed, 18.2% WR, PF 0.038, −$120.83 (−1.21%)**. Gross price component **−$47.50**, fees **−$73.33** → **fees were 61% of the loss** | `ledger/liveprobe_bybit_v2.jsonl` |
+| 10:48 | RUN | Decomposed every trade into gross vs friction. Mean round-turn friction **20.05 bps on all 11**. Trade 8 (SOL short) is the cleanest specimen in the project: **gross +0.200%, net +0.000%** — the gross edge was exactly the width of the round turn. Three trades had positive gross; only one survived the fee | `REALTIMECHALLENGE...MD` §5.3 |
+| 10:49 | FAIL | Combined live sample: **17 closed trades, −$148.62, of which $113.33 (76%) is commission.** Gross component across both books only −$35.29. Also directionally wrong: all 5 stops were shorts stopped out in a +3.4% BTC session | same |
+| 10:51 | RUN | **Adopted GLM's random-entry control** (new third null): random entries with identical bracket/sizing/hold/costs, only the entry moment differs | `proof/random_entry_control.py` |
+| 10:52 | FAIL | Raw: 2 of 29 cells at p<0.05 (H-R2/SOL 0.015; H-R4/ETH 0.030, +240.5 bps vs random median −17.8, 97th pct) | `results/random_entry_control.json` |
+| 10:52 | FIX | **Caught my own multiple-testing error.** v1 printed a per-cell label "SIGNAL ADDS TIMING VALUE" above the 95th percentile — on 29 cells that is a machine for manufacturing findings. Label neutralised; BH FDR added | same |
+| 10:53 | FAIL | **Corrected: 0 of 29 survive.** Expected false positives for 29 tests at α=0.05 is **1.45**; BH 5% thresholds are 0.00172 and 0.00345 against observed 0.015 / 0.030. Nothing survives | `TIMEFRAME_MATRIX.md` §4c |
+| 10:54 | RUN | The control **does** establish a large wrong-direction effect: H-R6 entries are worse than random by an order of magnitude across four cells (−374, −427, −434, −300 bps vs random −10 to −101). Mean reversion into a falling asset was the worst of 29 timings tested | same |
+| 10:56 | RUN | Adopted `market_clock.py` (GLM): sessions in the market's own timezone via zoneinfo so DST is handled. Verified against our first live round's moment (Sun 09:00 UTC) → `open_classes == ['crypto']` only | `realtime_challenge/market_clock.py`, `results/market_status.json` |
+| 10:57 | RUN | Adopted the outcome taxonomy (Claude Haiku) and the decay alarm (GLM, 60→**20** trades): `ledger.summary()` now returns `outcome`, `rolling_sharpe_20`, `decay_alarm` | `realtime_challenge/ledger.py` |
+| 10:59 | DOC | Numeric G1/G2 gate thresholds written into the roadmap as stated *policy choices* with reasons, not as facts | `ROADMAP_200_deepseek-flash.md` |
+| 11:01 | DOC | `WORKSTREAMS.md` created: the two concurrent sessions now have an explicit boundary (build/tracking vs verification) with disjoint file ownership, so merges are no-ops | `../WORKSTREAMS.md` |
+
+| 11:10 | PEER | **Duplication check on a pasted allocation-strategy batch.** Five of six items were already in the repo: the four model answers verbatim in `REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md`, the synthesis in `02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`, the audit3 verdict table (fetched live, timestamped), and the ETF-rotation question already settled by H-E1. Wrote no fifth synthesis | `../WORKSTREAMS.md` duplication log |
+| 11:12 | RUN | **The one uncovered item was the doctrine's most load-bearing claim**, quoted in three places and never run: "volatility scaling is free alpha... improves Sharpe by 0.3+ for any momentum strategy". Tested on SPY 2004-2026, 4 strategies, with turnover charged at 5bps/side | `proof/vol_scaling_test.py`, `results/vol_scaling_test.json` |
+| 11:13 | FAIL | **0 of 4 strategies reach +0.30 Sharpe** at either a 1.0 or 2.0 leverage cap. Best gain **+0.128** on buy-and-hold (no timing signal at all); TSMOM +0.013 with leverage | `VOL_SCALING_H-VS1.md` |
+| 11:14 | FAIL | **It hurts exactly the strategies it claims to help.** The two with real timing value get WORSE: SPY+200d −0.029 (unlev) / −0.101 (lev); SPY 6m ECM −0.034 / −0.089. Vol targeting is itself a trend overlay, so stacking it on a trend signal double-counts the signal and pays turnover twice | same |
+| 11:15 | PASS | The useful half survives and is recorded separately: vol targeting does cut realised vol (18.6 pct to 10.2 pct) and drawdown reliably — it belongs in the RISK section of the allocation doc, not the RETURN section | same |
+
+| 11:24 | RUN | **All five live books are now complete.** Read from the ledgers, not the summaries: bybit smoke 6 closed, bybit probe v1 3, bybit probe v2 11, kraken 3, okx 4 = **27 closed trades, 2 winners (7.4% WR), −$285.14** | `REALTIMECHALLENGE...MD` §5.4 |
+| 11:25 | FAIL | Fees **$180.00** of a **−$285.14** result = **63%**. Gross price component across all 27 is −$105.14. Mean round-turn friction 20 bps on every trade | same |
+| 11:26 | FAIL | **The take-profit fired 0 times in 27 trades** (12 SL, 14 TIME, 0 TP). With tp_atr 0.8-1.2 and sl_atr 0.5-0.6 on a 1h ATR of ~0.7%, the target sat ~0.57% away inside 8-12 min holds where the market moved 0.2-0.5%. This is the roadmap P7 rule confirmed empirically: a bracket wider than the expected move over the hold is unreachable, so the outcome is decided by the clock and the stop, never by the thesis | same |
+| 11:27 | PASS | Four venues (bybit ×2, kraken, okx) agree on direction: all lost. Not four independent tests — one wrong idea (shorting 5m dips in a +3.4% session) repeated on four exchanges — but it does confirm the fill/exit plumbing behaves identically across venues, which is what these books existed to check | same |
+| 11:28 | FIX | **Silent-overwrite race closed in the new proof.** The stale v1 random-entry run finished after the BH-corrected v2 and wrote the same path; the artifact was verified to be v2 both on disk and on origin, but the race is the same class as `backtest_latest.json`. Script now writes a timestamped copy first, then the canonical file, and carries `generated_utc` | `proof/random_entry_control.py` |
+
+| 11:32 | RUN | **P6 walk-forward — the one gate in our table never executed.** 4h, binance, 7 symbols, 4,000 bars (22 months), sequential expanding folds, purge 48 bars, embargo 1%, 26 bps costs | `proof/walk_forward.py` |
+| 11:33 | FIX | Two bugs on the first run, both of which would have silently changed the answer: `BacktestResult.trades` holds `as_dict()` payloads not `Trade` objects (AttributeError), and **kraken's inner-joined 4h panel across 7 symbols is only 721 bars, not 4,000** — the first version would have walked forward over 4 months instead of 22 and reported whatever fits in 120 days. Panel now from binance, cache bypassed | same |
+| 11:34 | FAIL | **Mode A (frozen params): 2 of 42 cells survive** temporal stability — H-R6/ADA (3 of 4 folds, n=43, +40.84 bps) and H-R5 weekend/ETH (3 of 5 folds, n=82, +21.12 bps) | `WALKFORWARD_P6.md` |
+| 11:35 | FAIL | **Both survivors are cells two other controls already killed.** H-R6/ADA was the *worst of 29* in the random-entry control (real −434.17 bps vs random −101.07, p=0.995, verified from `results/random_entry_control.json`) and H-R5 weekend/ETH was refuted by the 3.01y clustered test (verified from `results/weekend_test.json`: −3.21 bps, CI [−67.26,+64.51], rank 15 of 42). **Walk-forward stability resurrects cells that permutation and random-entry destroy** — it is the weakest of the four controls because it only asks whether the sign held, never whether the sign beat luck | same |
+| 11:36 | FAIL | **Mode B (fitted params): 33 folds made money in-sample, 24 of those lost money on the next window — a 73% collapse rate.** OOS positive rate 28.6%, worse than a coin flip. Selecting (tp_atr, sl_atr, max_bars) on the training window had **negative predictive value** for the following window | same |
+| 11:37 | DOC | This is the strongest generalisable claim the project can currently make: **tuning TP/SL on data you then score is not a small bias, it is how the edge gets created and destroyed.** It also explains the live books — 0 take-profits in 27 trades from bracket widths chosen by apparent tuning value | same |
+| 11:40 | RUN | **P8 FX class census** — the last major class this repo had never tested. 7 majors, 3,094-3,095 daily bars each (2015-01-02 to 2026-11-22, 11.9y), 6 families, 3 cost levels, 60 shuffles/cell | `proof/fx_census.py` |
+| 11:44 | FAIL | **0 of 35 cells clear both gates.** 8 of 35 positive on point estimate (a coin flip predicts 17.5, so 8 is *below* chance); **0 CI intervals exclude zero**; 1 permutation p≤0.05 (H-R1/USDJPY p=0.017, n=16) whose CI is [−26.5,+94.2] — and 1 of 35 tests at α=0.05 has an expected false-positive count of 1.75, so finding one is finding fewer than chance | `FX_CENSUS_P8.md` |
+| 11:45 | FIX | **Caught a mislabelled benchmark in my own FX work.** My carry baseline printed −3.7% CAGR / Sharpe −0.18 and it would have been easy to write "the classic carry trade lost money this decade". It measures **spot only**. A carry trade also earns the interest differential, which for AUD/NZD vs JPY was strongly positive for most of the window and is the dominant term; that data is not in this dataset. Recorded as "cannot be quoted as carry's return" rather than as a negative | same |
+| 11:46 | DOC | Trial count 126 → 240 (walk-forward) → **275** (FX). FX is the third class to return a clean null on this repo's own machinery | same |
+
+| 11:52 | **CORRECTION** | **My 11:26 entry is wrong and is superseded.** I claimed the bracket was "wider than the expected move over the hold, so unreachable". Re-running all 27 closed trades through the reachability gate with each trade's own `atr_1h`: only **6 of 27** were unreachable (all from the smoke book). The other 21 were reachable and still guaranteed to lose | `BRACKET_P7.md` |
+| 11:53 | RUN | **Found the identity that explains it.** For a driftless walk `p_TP = sl/(tp+sl)`, so gross `E[R] = p_TP·(tp/sl) − p_SL = a/(a+b) − a/(a+b) = 0` **identically, for every bracket**. Verified numerically across 16 brackets (every one returns gross_EV = 0.000000R). Friction then makes every bracket negative. **A bracket cannot create an edge — the target is where profit is collected, never where it is made** | `proof/test_bracket.py` (22 tests) |
+| 11:54 | FAIL | **27 of 27 live trades would have been refused before opening.** NEGATIVE-EV on all 27; UNREACHABLE on only 6. So every trade in every book was arithmetically incapable of showing a profit regardless of signal quality | `bracket.py --audit-ledger` |
+| 11:55 | FAIL | **Second independent defect: direction.** Predicted P(TP exit) averaged **0.269**, so ~**7.3 targets of 27** should have occurred. Observed **0** → two-sided binomial **p=0.0003**. Incompatible with the geometry, so the driftless assumption is violated: the positions were systematically against the move | same |
+| 11:56 | PASS | Shipped the gate as enforceable code rather than a docstring: `evaluate()` returns `fail_reach` / `fail_balance` / `fail_ev` (the third was initially missing — it only printed a reason while `ok()` still returned True; caught by a test that asserted the probe bracket was refused), `exit_mix_test()` asks whether realised exits match the geometry, and the formulas are validated against 20,000-path Monte Carlo | `realtime_challenge/bracket.py` |
+| 11:57 | DOC | Roadmap P7 rule rewritten from "the bracket must be reachable" to the provable form: **"a bracket must have positive expectancy at its own geometry-implied hit rates, which is only possible if the entry carries directional skill"** | `ROADMAP_200_deepseek-flash.md` |
+
+### Standing state after session 3
+
+- **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
+  permutation best p = 0.40 · BH-corrected random-entry 0 of 29. One answer.
+- **Live evidence is 27 closed trades, −$285.14, 63% commission, 7.4% win rate, and the target
+  fired zero times.** No forward edge of any kind.
+- **Walk-forward, run for the first time, fails everything and explains the live books.** 2 of 42
+  cells survive frozen-parameter stability and both were already killed by other controls; with
+  fitted brackets **73% of in-sample winners lose money in the next window**.
+- **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
+- **Brackets provably cannot create an edge** (algebraic identity, 16/16 verified): every one of
+  the 27 live trades was negative-EV at its own implied hit rates, and 0 targets against 7.3
+  expected says the direction was wrong too.
+- **The cleanest single fact in the whole challenge:** a trade with the direction exactly right
+  (+0.200% gross) netted +0.000% because the round turn was 20 bps.
+
+### What session 4 must not do
+
+Report a live P&L before the round has exited. Session 1's "3 trades, −$55.76" became "11
+trades, −$120.83" once the round finished — a 2x understatement of the loss, from reading a
+running process. **Read `n_open == 0` before quoting a total.**
+
+---
+
 ## Session 2 — 2026-11-22 (09:30–09:45 UTC) — `deepseek-flash`
 
 Question: does the verdict hold at other horizons, or was 1h hiding something?

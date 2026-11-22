@@ -9,9 +9,11 @@ Two files, one truth:
 from __future__ import annotations
 
 import json
+import math
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+import numpy as np
 from typing import Dict, List, Optional
 
 STATE_DIR = Path(__file__).resolve().parent / "state"
@@ -94,7 +96,42 @@ class Ledger:
                 cash += qty * (p["entry_price"] - px) * p.get("size_frac", 1.0)
         return cash
 
-    def summary(self) -> dict:
+    # ------------------------------------------------------------ outcome taxonomy
+    # Adopted from a peer proposal (Claude Haiku 5.5): a live round must land in exactly one
+    # of a fixed set of outcomes, so "we didn't trade" is a recorded result rather than an
+    # absence. Without this, a flat book and a broken feed look identical in the summary.
+    OUTCOMES = ("PROFIT", "LOSS", "NO_SIGNAL", "DATA_UNAVAILABLE",
+                "MARKET_CLOSED", "STALE_DATA", "INCONCLUSIVE")
+
+    def classify(self, market_open: Optional[bool] = None) -> str:
+        closed = self.closed
+        if market_open is False and not closed:
+            return "MARKET_CLOSED"
+        if not closed:
+            reasons = [s.get("reason", "") for s in self.skips]
+            if any("DATA_ERROR" in r or "NO_QUOTE" in r for r in reasons):
+                return "DATA_UNAVAILABLE"
+            if reasons and all(r in ("NO_SIGNAL", "NO_CONSENSUS", "PROBE_FLAT", "ALREADY_OPEN")
+                               for r in reasons):
+                return "NO_SIGNAL"
+            return "NO_SIGNAL" if reasons else "INCONCLUSIVE"
+        total = sum(c["pnl"] for c in closed)
+        if len(closed) < 10:
+            return "INCONCLUSIVE"      # too few closed trades to call a result
+        return "PROFIT" if total > 0 else "LOSS"
+
+    def rolling_sharpe(self, window: int = 20) -> Optional[float]:
+        """Sharpe over the last `window` closed trades. The decay alarm input."""
+        pnls = [c["pnl"] for c in self.closed][-window:]
+        if len(pnls) < 5:
+            return None
+        arr = np.asarray(pnls, dtype=float)
+        sd = arr.std(ddof=1)
+        if sd == 0:
+            return None
+        return round(float(arr.mean() / sd * math.sqrt(len(arr))), 3)
+
+    def summary(self, market_open: Optional[bool] = None) -> dict:
         closed = self.closed
         pnls = [c["pnl"] for c in closed]
         wins = [p for p in pnls if p > 0]
@@ -116,7 +153,22 @@ class Ledger:
             "fees_paid": round(sum(c.get("fees", 0.0) for c in closed), 2),
             "exit_mix": _counts([c.get("exit_reason", "?") for c in closed]),
             "skip_reasons": _counts([s.get("reason", "?") for s in self.skips]),
+            "outcome": self.classify(market_open),
+            "rolling_sharpe_20": self.rolling_sharpe(20),
+            "decay_alarm": self._decay_alarm(),
         }
+
+    def _decay_alarm(self) -> Optional[bool]:
+        """True when the recent record has stopped working: rolling 20-trade Sharpe < 0.
+
+        Adopted from a peer proposal (GLM 5.3 Flash: 'rolling 60-trade Sharpe < 0 -> halt').
+        The window is 20 here because a forward pod accumulating n=100 cannot afford a
+        60-trade blind spot. Raise as the book grows.
+        """
+        rs = self.rolling_sharpe(20)
+        if rs is None:
+            return None
+        return bool(rs < 0)
 
 
 def _counts(items: List[str]) -> Dict[str, int]:

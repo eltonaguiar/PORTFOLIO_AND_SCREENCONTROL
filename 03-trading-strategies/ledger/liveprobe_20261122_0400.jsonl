@@ -99,3 +99,167 @@
 {"ts_utc": "2026-11-22T09:20:26+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
 {"ts_utc": "2026-11-22T09:20:30+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
 {"ts_utc": "2026-11-22T09:20:34+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:20:47+00:00", "run_id": "liveprobe_20261122_0400", "event": "OPEN", "symbol": "ADA", "venue": "bybit", "direction": "LONG", "entry_price": 0.1447446, "bid_at_entry": 0.1444, "ask_at_entry": 0.1446, "exchange_ts": null, "qty": 23029.0686722222, "notional": 3333.33, "tp": 0.14564174, "sl": 0.14418389, "atr_1h": 0.001121, "signal_source": "HARNESS_PROBE_5M_BURST", "max_minutes": 12}
+{"ts_utc": "2026-11-22T09:20:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:20:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "CLOSE", "symbol": "BTC", "direction": "LONG", "entry_price": 60090.8308, "exit_price": 59782.5576, "tp": 60445.10508571, "sl": 59869.40937143, "exit_reason": "SL", "held_minutes": 0.54, "pnl": -17.1004, "ret_pct": -0.513, "fees": 6.6667, "r_multiple": -1.392, "notional": 3333.33, "signal_source": "HARNESS_PROBE_5M_BURST"}
+{"ts_utc": "2026-11-22T09:20:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 13, "equity": 9974.96, "n_open": 1, "marks": {"BTC": 59842.4, "ETH": 1688.32, "SOL": 70.02, "XRP": 0.9279, "DOGE": 0.05491, "ADA": 0.1444, "LINK": 8.653}}
+{"ts_utc": "2026-11-22T09:21:50+00:00", "run_id": "liveprobe_20261122_0400", "event": "OPEN", "symbol": "BTC", "venue": "bybit", "direction": "LONG", "entry_price": 60095.9359, "bid_at_entry": 60035.8, "ask_at_entry": 60035.9, "exchange_ts": null, "qty": 0.05546686782414073, "notional": 3333.33, "tp": 60450.21018571, "sl": 59874.51447143, "atr_1h": 442.842857, "signal_source": "HARNESS_PROBE_5M_BURST", "max_minutes": 12}
+{"ts_utc": "2026-11-22T09:21:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:21:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:22:03+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:22:07+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:22:13+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:22:13+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 14, "equity": 9971.54, "n_open": 2, "marks": {"BTC": 60034.2, "ETH": 1689.89, "SOL": 70.0, "XRP": 0.9279, "DOGE": 0.05491, "ADA": 0.1444, "LINK": 8.659}}
+{"ts_utc": "2026-11-22T09:23:05+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:23:11+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:23:16+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:23:19+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:23:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:23:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 15, "equity": 9975.99, "n_open": 2, "marks": {"BTC": 60031.4, "ETH": 1692.21, "SOL": 70.06, "XRP": 0.9293, "DOGE": 0.05503, "ADA": 0.1446, "LINK": 8.67}}
+{"ts_utc": "2026-11-22T09:24:20+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:24:25+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:24:29+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:24:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:24:39+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:24:39+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 16, "equity": 9975.43, "n_open": 2, "marks": {"BTC": 60062.9, "ETH": 1693.51, "SOL": 70.12, "XRP": 0.9296, "DOGE": 0.055, "ADA": 0.1445, "LINK": 8.667}}
+{"ts_utc": "2026-11-22T09:25:37+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:25:41+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:25:45+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:25:49+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:25:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:25:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 17, "equity": 9970.14, "n_open": 2, "marks": {"BTC": 60009.0, "ETH": 1691.08, "SOL": 69.97, "XRP": 0.9279, "DOGE": 0.05495, "ADA": 0.1444, "LINK": 8.656}}
+{"ts_utc": "2026-11-22T09:26:52+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:26:57+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:27:03+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:27:06+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:27:12+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:27:12+00:00", "run_id": "liveprobe_20261122_0400", "event": "CLOSE", "symbol": "ADA", "direction": "LONG", "entry_price": 0.1447446, "exit_price": 0.1440558, "tp": 0.14564174, "sl": 0.14418389, "exit_reason": "SL", "held_minutes": 6.42, "pnl": -15.8624, "ret_pct": -0.4759, "fees": 6.6667, "r_multiple": -1.228, "notional": 3333.33, "signal_source": "HARNESS_PROBE_5M_BURST"}
+{"ts_utc": "2026-11-22T09:27:12+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 18, "equity": 9958.54, "n_open": 1, "marks": {"BTC": 59942.8, "ETH": 1688.57, "SOL": 69.93, "XRP": 0.9268, "DOGE": 0.05488, "ADA": 0.1442, "LINK": 8.647}}
+{"ts_utc": "2026-11-22T09:28:13+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:19+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:29+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:34+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:38+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:28:38+00:00", "run_id": "liveprobe_20261122_0400", "event": "CLOSE", "symbol": "BTC", "direction": "LONG", "entry_price": 60095.9359, "exit_price": 59852.088, "tp": 60450.21018571, "sl": 59874.51447143, "exit_reason": "SL", "held_minutes": 6.82, "pnl": -13.5255, "ret_pct": -0.4058, "fees": 6.6667, "r_multiple": -1.101, "notional": 3333.33, "signal_source": "HARNESS_PROBE_5M_BURST"}
+{"ts_utc": "2026-11-22T09:28:38+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 19, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59912.0, "ETH": 1687.91, "SOL": 69.89, "XRP": 0.9262, "DOGE": 0.05487, "ADA": 0.1442, "LINK": 8.642}}
+{"ts_utc": "2026-11-22T09:29:34+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:29:38+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:29:43+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:29:48+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:29:53+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:29:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:30:02+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:30:02+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 20, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59903.0, "ETH": 1688.42, "SOL": 69.87, "XRP": 0.9255, "DOGE": 0.05483, "ADA": 0.1441, "LINK": 8.641}}
+{"ts_utc": "2026-11-22T09:30:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:30:56+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:01+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:06+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:12+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:17+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:22+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:31:22+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 21, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59971.2, "ETH": 1688.31, "SOL": 69.88, "XRP": 0.9253, "DOGE": 0.05481, "ADA": 0.144, "LINK": 8.638}}
+{"ts_utc": "2026-11-22T09:32:19+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:28+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:32+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:40+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:44+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:32:44+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 22, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59965.0, "ETH": 1688.87, "SOL": 69.87, "XRP": 0.9254, "DOGE": 0.05481, "ADA": 0.144, "LINK": 8.645}}
+{"ts_utc": "2026-11-22T09:33:43+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:33:47+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:33:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:33:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:33:59+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:34:04+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:34:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:34:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 23, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59964.6, "ETH": 1689.4, "SOL": 69.83, "XRP": 0.9248, "DOGE": 0.0548, "ADA": 0.1439, "LINK": 8.644}}
+{"ts_utc": "2026-11-22T09:35:01+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:05+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:09+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:15+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:18+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:22+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:26+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:35:26+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 24, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 59987.1, "ETH": 1689.96, "SOL": 69.84, "XRP": 0.9243, "DOGE": 0.05479, "ADA": 0.1438, "LINK": 8.638}}
+{"ts_utc": "2026-11-22T09:36:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:28+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:33+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:37+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:44+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:48+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:52+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:36:52+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 25, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60099.9, "ETH": 1692.38, "SOL": 69.94, "XRP": 0.9256, "DOGE": 0.05484, "ADA": 0.144, "LINK": 8.649}}
+{"ts_utc": "2026-11-22T09:37:49+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:37:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:37:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:38:03+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:38:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:38:13+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:38:17+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:38:17+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 26, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60157.9, "ETH": 1692.44, "SOL": 69.95, "XRP": 0.9257, "DOGE": 0.05484, "ADA": 0.1441, "LINK": 8.656}}
+{"ts_utc": "2026-11-22T09:39:10+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:15+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:20+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:28+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:33+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:37+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:39:37+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 27, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60101.0, "ETH": 1690.67, "SOL": 69.92, "XRP": 0.9259, "DOGE": 0.05486, "ADA": 0.1442, "LINK": 8.665}}
+{"ts_utc": "2026-11-22T09:40:39+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:40:44+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:40:48+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:40:52+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:40:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:41:03+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:41:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:41:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 28, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60184.7, "ETH": 1693.7, "SOL": 69.99, "XRP": 0.9262, "DOGE": 0.05487, "ADA": 0.1442, "LINK": 8.67}}
+{"ts_utc": "2026-11-22T09:42:04+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:10+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:15+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:20+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:24+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:29+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:42:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 29, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60213.7, "ETH": 1694.89, "SOL": 70.05, "XRP": 0.9274, "DOGE": 0.05498, "ADA": 0.1444, "LINK": 8.679}}
+{"ts_utc": "2026-11-22T09:43:31+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:43:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:43:40+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:43:45+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:43:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:43:56+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:44:01+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:44:01+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 30, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60253.0, "ETH": 1696.74, "SOL": 70.13, "XRP": 0.9283, "DOGE": 0.05501, "ADA": 0.1445, "LINK": 8.681}}
+{"ts_utc": "2026-11-22T09:44:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:04+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:13+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:18+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:22+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:27+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:45:27+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 31, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60204.1, "ETH": 1694.52, "SOL": 70.0, "XRP": 0.9267, "DOGE": 0.05493, "ADA": 0.1443, "LINK": 8.665}}
+{"ts_utc": "2026-11-22T09:46:23+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:28+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:33+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:37+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:41+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:46+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:46:51+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 32, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60233.6, "ETH": 1695.36, "SOL": 70.02, "XRP": 0.9268, "DOGE": 0.05494, "ADA": 0.1443, "LINK": 8.666}}
+{"ts_utc": "2026-11-22T09:47:45+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:47:50+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:47:54+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:47:58+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:48:02+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:48:06+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:48:11+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:48:11+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 33, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60194.0, "ETH": 1694.83, "SOL": 69.95, "XRP": 0.9262, "DOGE": 0.05495, "ADA": 0.1443, "LINK": 8.67}}
+{"ts_utc": "2026-11-22T09:49:08+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "BTC", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:14+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ETH", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:20+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "SOL", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:25+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "XRP", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:29+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "DOGE", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:35+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "ADA", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:39+00:00", "run_id": "liveprobe_20261122_0400", "event": "SKIP", "symbol": "LINK", "reason": "PROBE_FLAT"}
+{"ts_utc": "2026-11-22T09:49:39+00:00", "run_id": "liveprobe_20261122_0400", "event": "HEARTBEAT", "iteration": 34, "equity": 9953.51, "n_open": 0, "marks": {"BTC": 60175.4, "ETH": 1694.89, "SOL": 69.96, "XRP": 0.9264, "DOGE": 0.05495, "ADA": 0.1444, "LINK": 8.674}}
