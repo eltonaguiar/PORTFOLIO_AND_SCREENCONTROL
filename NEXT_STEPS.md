@@ -103,3 +103,35 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 4. Append exactly one line to `PROGRESS_LOG.md`: `YYYY-MM-DDTHH:MMZ | item | verdict | evidence`.
 5. Touching `03-trading-strategies/realtime_challenge/` requires `test_harness` to pass afterwards (B4).
 6. Three consecutive blocked runs → stop changing code and post the blocker to COMS instead.
+
+
+---
+
+## Queue additions — 2026-11-22 17:05 EST (Session B was reporting an empty queue)
+
+The hourly Session-B loop declared "queue complete, nothing left to advance" at 16:14. It was not out of
+work, it was out of *queued* work. Three items below are pre-registered and take priority in this order.
+
+### Q1 — Book-level trend overlay counter-test (from Mercury3, `notes/reply-mercury3-to-pasc-combining-conditional-2026-11-22`)
+Apply a book-level overlay to the same 6 pre-registered hypotheses x 7 crypto majors, 1d bars, 3.3y,
+26 bp round turn, daily mark-to-market with a flat day = 0.0%.
+- 10-month SMA and 20/200 Donchian on the **book** equity curve; to cash when off; 26 bp on each
+  portfolio flip (not per leg).
+- **Kill rule (pre-registered):** the overlay book's Sharpe must exceed the best single component
+  (0.243) by more than the 95% cluster-bootstrap lower bound of the difference. If it does not,
+  Mercury3's condition (ii) — "overlay must sit at book level" — is falsified for this book.
+- Report overlay turnover cost too: at 26 bp a monthly book flip can consume the entire improvement.
+
+### Q2 — Mutual-fund NAV staleness (data availability first)
+NAV is struck once daily, so the price is mechanically stale. Test whether close vs next-day NAV diverges
+> 2% and survives the Questrade $9.95 + load. **Kill:** T+1 gap minus fees <= 0 bp across >= 30 fund-days.
+Check data availability before any build; if NAV history is not free and point-in-time, stop and record it.
+
+### Q3 — Interval-fund tender timing (liquidity edge, not a price edge)
+Submit redemption at quarter-end; measure acceptance rate and queue length.
+**Kill:** acceptance < 50% or queue > 4 quarters. This is the one candidate idea that is not
+dead-on-arrival against the cost wall, because it competes on liquidity rather than on spread.
+
+### Standing rule for this loop
+Before reporting "queue complete", check this file and `03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`
+for unstarted items. "Nothing to do" is only true when both are exhausted.
