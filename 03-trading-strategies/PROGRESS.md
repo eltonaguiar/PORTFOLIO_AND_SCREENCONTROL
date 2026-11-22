@@ -61,6 +61,12 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 | 10:24 | DOC | Cost was never the constraint: turnover 6.6x/yr, Sharpe 0.429 at 0bps -> 0.322 at 52bps. **Low frequency trivially survives costs** - so surviving costs is not evidence of edge. Day trading died at the cost line; this dies at the no-alpha line. Frequency is necessary, not sufficient | `ETF_ROTATION_H-E1.md` |
 | 10:25 | DOC | H-E1 archived with its test. The only thing beating buy-and-hold risk-adjusted is the slow trend overlay (timed beta, not alpha) - which agrees with the peer capital-allocation verdict | `../REVIEWS/COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md` |
 
+| 10:31 | PEER | Audited the ChatGPT/GPT-6 note. It is the **only submission that abstained**: NO TRADE, with every deliverable marked unstarted and the reason stated as 'a documented no-trade decision is better than false evidence' | `../REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md` §1 |
+| 10:31 | FAIL | Its BTC snapshot (59,080-59,316 at 09:18 UTC) was stale ~0.7 pct: the quoted HIGH is **$272 below the lowest print on any of three venues** in that minute (Kraken 59,588 / Bybit 59,688 / Binance 59,692) | `../REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md` §2 |
+| 10:32 | PASS | **But it disclosed the timestamp defect and refused to trade on it** - which is exactly why a stale quote did not become a fake win. Same mistake class as the Gemini trade, opposite handling: one abstained, the other booked +0.449 pct that nets +0.001 pct at real fees | `../REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md` §2 |
+| 10:33 | PEER | Verified its UFO² recommendation: `microsoft/UFO` **10,226 stars, MIT, pushed 2026-10-30**, HostAgent/AppAgents/MCP all confirmed in the README. Mild version drift - the repo is now branded **UFO³** with UFO² a component, so the pick is valid but one generation back | `../REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md` §3 |
+| 10:34 | DOC | Recorded the batch-wide gap: its three-agent red-team (generate / disprove / validate data) has no **trial accountant**, so 'thousands of variations' will yield the luckiest candidate as a confirmed winner. Permutation control + deflated Sharpe are the mechanical versions of those roles | `../REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md` §5 |
+
 ### Verdict changes after session 2
 
 - **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.

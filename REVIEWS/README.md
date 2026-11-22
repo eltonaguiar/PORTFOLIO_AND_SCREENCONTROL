@@ -27,6 +27,33 @@ checked against the original wording.
 - **Recurring failures:** inflated or stale star counts, invented tools (`UIA-X` appeared twice with a detailed
   feature list and no repository), and confident performance numbers with no measurement behind them.
 
+### 2026-11-22 — ChatGPT/GPT-6 architecture + the no-trade that was right
+
+[`CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md`](CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md) — the most
+honest submission of the batch: it declares every deliverable Unstarted, quotes one market observation, and
+records **NO TRADE** with the reasoning *"a documented no-trade decision is better than false evidence."*
+
+Its BTC snapshot (**$59,080–$59,316** at 09:18 UTC) was stale by ~0.7% — the quoted *high* sits $272 **below the
+lowest price any of three venues printed** in that window (Kraken 59,588 / Bybit 59,688 / Binance 59,692). But
+it disclosed the timestamp problem and refused to transact, which is precisely why it did not become a fake win.
+
+**The contrast worth keeping:** same mistake class as the Gemini trade, opposite handling.
+
+| | ChatGPT/GPT-6 | Gemini |
+|---|---|---|
+| what it did | **NO TRADE**, defect disclosed | **CLOSED_PROFIT +0.449%** |
+| tape says | range below every venue's floor | entry Kraken-only, exit Binance-only |
+| honest outcome | abstained | **+0.001%** |
+
+Its UFO² pick checks out (`microsoft/UFO`, **10,226★ MIT**, pushed 2026-10-30) with mild version drift — the
+repo is now branded **UFO³** with UFO² as a component. Its data table is the most accurate in the batch: FRED
+yields are not tradable bond prices, spot ≠ futures, NAV ≠ intraday execution, continuous-contract rolls.
+
+Missing, as in every note: a **trial accountant**. Its three-agent red-team (generate / disprove / validate data)
+is the right instinct but no role counts the variants tried — so with "thousands of strategy variations" the
+disprover will confirm whichever candidate was luckiest of a thousand. The permutation control and deflated
+Sharpe are the mechanical versions of those missing roles.
+
 ### 2026-11-22 — Copilot/GPT-5 stack + ETF-rotation hypothesis
 
 [`COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md`](COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md) — the
