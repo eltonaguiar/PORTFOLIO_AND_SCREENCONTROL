@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -30,21 +31,62 @@ STATE = Path(__file__).resolve().parent.parent / "state"
 RESULTS = Path(__file__).resolve().parent.parent / "results"
 
 
+# Venue preference order. Cloud IP ranges (GitHub Actions runs on Azure US) are
+# blocked by several exchanges: Bybit and OKX refuse US datacentre traffic, Binance
+# restricts US IPs. Kraken and Coinbase accept it. The supervisor therefore probes in
+# this order and uses the first venue that actually answers, then RECORDS which one it
+# used so a run is never ambiguous about its price source.
+VENUE_ORDER = ["kraken", "coinbase", "bybit", "okx", "binance"]
+
+
+def pick_venue(preferred: str, universe, attempts: int = 2):
+    """Return (venue, marks) for the first venue that answers with live quotes.
+
+    Probes a SINGLE symbol first, so a geo-blocked venue costs ~2 seconds rather than
+    len(universe) x retries. Only a venue that passes the probe is asked for the rest.
+    """
+    order = [preferred] + [v for v in VENUE_ORDER if v != preferred]
+    errors = []
+    for venue in order:
+        probe = None
+        for attempt in range(attempts):
+            probe = _quote(venue, universe[0])
+            if probe:
+                break
+            time.sleep(1.0)
+        if not probe:
+            errors.append(f"{venue}: probe failed")
+            continue
+        marks = {universe[0]: probe}
+        for base in universe[1:]:
+            q = _quote(venue, base)
+            if q:
+                marks[base] = q
+        if len(marks) >= max(3, len(universe) // 2):
+            return venue, marks
+        errors.append(f"{venue}: {len(marks)}/{len(universe)} quotes")
+    raise SystemExit("no venue returned quotes — treating as an outage. " + " | ".join(errors))
+
+
 def one_pass(book: str, run_id: str, venue: str, max_open: int, max_new: int,
-             min_votes: int, poll_cash: float) -> dict:
+             min_votes: int, poll_cash: float, allow_failover: bool = True) -> dict:
     r = LiveRound(
         run_id=run_id, venue=venue, universe=DEFAULT_UNIVERSE,
         starting_cash=poll_cash, max_open=max_open,
     )
 
-    # 1. live marks
-    marks = {}
-    for base in r.universe:
-        q = _quote(venue, base)
-        if q:
-            marks[base] = q
-    if not marks:
-        raise SystemExit(f"venue {venue} returned no quotes — treating as an outage")
+    # 1. live marks (with venue failover)
+    if allow_failover:
+        venue, marks = pick_venue(venue, r.universe)
+        r.venue = venue
+    else:
+        marks = {}
+        for base in r.universe:
+            q = _quote(venue, base)
+            if q:
+                marks[base] = q
+        if not marks:
+            raise SystemExit(f"venue {venue} returned no quotes — treating as an outage")
 
     # 2. + 3. TP / SL / time-stop supervisor
     closed = r.check_exits(marks)
@@ -98,10 +140,11 @@ def main(argv=None) -> int:
     ap.add_argument("--max-new", type=int, default=2)
     ap.add_argument("--min-votes", type=int, default=2)
     ap.add_argument("--cash", type=float, default=10000.0)
+    ap.add_argument("--no-failover", action="store_true")
     args = ap.parse_args(argv)
 
     s = one_pass(args.book, args.run_id, args.venue, args.max_open, args.max_new,
-                 args.min_votes, args.cash)
+                 args.min_votes, args.cash, allow_failover=not args.no_failover)
     print(json.dumps(s, indent=1, default=str))
     return 0
 

@@ -1,0 +1,32 @@
+{
+ "run_id": "gha_test",
+ "starting_cash": 10000.0,
+ "equity": 10000.0,
+ "n_closed": 0,
+ "n_open": 0,
+ "n_skips": 0,
+ "win_rate": null,
+ "profit_factor": null,
+ "total_pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "fees_paid": 0,
+ "exit_mix": {},
+ "skip_reasons": {},
+ "pass": {
+  "ts_utc": "2026-11-22T09:25:42+00:00",
+  "venue": "bybit",
+  "closed_this_pass": [],
+  "opened_this_pass": [],
+  "marks": {
+   "BTC": 59982.3,
+   "ETH": 1690.59,
+   "SOL": 69.98,
+   "XRP": 0.9277,
+   "DOGE": 0.05493,
+   "ADA": 0.1443,
+   "LINK": 8.655
+  },
+  "equity": 10000.0
+ }
+}
