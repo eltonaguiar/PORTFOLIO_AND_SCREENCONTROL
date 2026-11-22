@@ -38,7 +38,7 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 32 (11 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 94 (17 md) | 62 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 105 (17 md) | 73 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -47,11 +47,11 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|
 | [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8645 |
 | [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6506 |
-| [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 88 | 5793 |
+| [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6321 |
 | [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
 | [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40245 |
 | [`01-screen-control-llm/PROGRESS.md`](01-screen-control-llm/PROGRESS.md) | 69 | 5411 |
-| [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 57 | 4446 |
+| [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 57 | 4535 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
 | [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8099 |
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
@@ -63,7 +63,7 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
-| [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 119 | 6199 |
+| [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
 | [`03-trading-strategies/ETF_ROTATION_H-E1.md`](03-trading-strategies/ETF_ROTATION_H-E1.md) | 144 | 7413 |
 | [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5862 |
 | [`03-trading-strategies/FX_CENSUS_P8.md`](03-trading-strategies/FX_CENSUS_P8.md) | 98 | 5130 |
@@ -72,7 +72,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/IMPLEMENTATION.md`](03-trading-strategies/IMPLEMENTATION.md) | 77 | 3902 |
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 223 | 34701 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 231 | 36240 |
 | [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7718 |
 | [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 19700 |
 | [`03-trading-strategies/STATIC_GATE_AUDIT.md`](03-trading-strategies/STATIC_GATE_AUDIT.md) | 37 | 3470 |

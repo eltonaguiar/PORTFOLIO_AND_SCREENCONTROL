@@ -14,9 +14,9 @@ indices. It does not work on raw coordinates, which is the finding that matters.
 |---|---|---|---|
 | 1 | `capture app=chrome.exe mode=ax` (cold) | **24 elements**, all browser furniture, 0 page nodes | tabs, address bar, extension buttons only |
 | 2 | `capture app=chrome.exe mode=ax` (after one `som` capture) | **95 elements**, page fully exposed | `Document 'Compare · ChatPlayground AI'`, `Hyperlink 'Playground'`, model list |
-| 3 | `click coordinate=[700,960]` | landed at `(2621,1019)`, **outside the window**; the open conversation was cleared | panel content went from 3 answers to "Ready when you are" |
+| 3 | `click coordinate=[700,960]` | window-relative point became `(2621,1019)` after the driver added the window origin `(1912,50)`; **below the 720 px client area**, the open conversation was cleared | panel content went from 3 answers to "Ready when you are" |
 | 4 | `set_value element=86 'Message every model'` | composer filled | screenshot shows `Reply with exactly: PROTOTYPE OK`, Send becomes active |
-| 5 | `click coordinate=[3108,739]` | driver posted the click at **`(5029,798)`** — a no-op far right of the window | element list unchanged |
+| 5 | `click coordinate=[3108,739]` | driver posted the click at **`(5029,798)`** — past the 1360 px client width, a no-op | element list unchanged |
 | 6 | `click element=87 'Send to every model'` | **sent**; all three panels show the user bubble, `Stop`, and a spinner | posted click at `(3127,746)` |
 | 7 | poll `capture mode=ax` after ~20 s | **all panels done** | `Text 'ChatGPT-6 Luna finished responding'`, `Text 'Claude (Latest Model) finished responding'`, `PROTOTYPE OK`, `TTFT 634 ms / Total 851 ms / 14 → 8 tokens / 1 credit`, `TTFT 338 ms / 494 ms / 38 → 12 tokens` |
 | 8 | element inventory during streaming | `Copy all answers` exists while streaming | `Button 'Copy all answers' @ [2319, 727, 32, 32]`, plus per-panel `Copy message` |

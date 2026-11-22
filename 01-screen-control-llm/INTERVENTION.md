@@ -13,19 +13,25 @@ Three ways a human can be in the loop, and what each one is actually good for. T
 | `192.168.2.52:5900` | **closed from outside** | good: websockify proxies it, the raw VNC port is not exposed |
 | `192.168.2.52:3000` | open | unclaimed service; identify before relying on it |
 
-Two input findings from the live run, both worth more than they look:
+Two input findings from the live run, both worth more than they look. The window was measured
+directly afterwards with `kernel.capture`: **hwnd 36899254, window rect (1912, 50, 1376, 736),
+client 1360×720, `dpi_scale = 1.0`** — monitor 2, 100% scaling, so the early "2.42× scale" reading
+from the tool's own caption was wrong and misled the first two clicks.
 
-- **`coordinate=` clicks are ambiguous in a multi-monitor + DPI setup.** Passing `(3108, 739)` — which
-  I had computed as native screen coordinates — made the driver post the click at `(5029, 798)`.
-  Element hits are unaffected: clicking *element #87 'Send to every model'* landed at `(3127, 746)`
-  and sent the message. **Rule: elements, never coordinates.** The earlier coordinate click in the
-  same session landed outside the window and cleared the chat panel, which is exactly the class of
-  silent, destructive failure coordinates produce.
+- **`coordinate=` is window-relative; element `bounds` are desktop-absolute.** Passing `(700, 960)`
+  and `(3108, 739)` — computed from a screenshot, treated by me as native — produced posts at
+  `(2621, 1019)` and `(5029, 798)`: the driver adds the window origin `(1912, 50)` and, because both
+  points lay outside the 1360×720 client area, delivered them *outside the window*. The first cleared
+  the open conversation. Element hits need no arithmetic: clicking *element #87 'Send to every model'*
+  landed at `(3127, 746)` and sent the message. **Rule: elements, never coordinates.**
 - **The window's own accessibility tree is the map**, once Chrome's renderer accessibility is awake.
   The first capture returned 24 elements (tabs and buttons only); after one `som` capture the same
   window returned 95–129 elements including `Edit 'Message every model'`, per-panel
   `Regenerate`/`Copy message`, and the live regions below. A first probe returning only furniture is a
   *retry signal*, not a verdict — that correction now lives in `kernel/resolve.py`.
+
+Resolver caching was exercised against this same window: the second resolve made **0 probes**
+(cached), and a synthetic 208 px resize forced **2 probes** — invalidation works on live geometry.
 
 ## 2. Three intervention models
 
