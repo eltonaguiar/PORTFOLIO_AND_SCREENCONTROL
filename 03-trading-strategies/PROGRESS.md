@@ -29,6 +29,12 @@ control idea change any verdict?
 | 10:59 | DOC | Numeric G1/G2 gate thresholds written into the roadmap as stated *policy choices* with reasons, not as facts | `ROADMAP_200_deepseek-flash.md` |
 | 11:01 | DOC | `WORKSTREAMS.md` created: the two concurrent sessions now have an explicit boundary (build/tracking vs verification) with disjoint file ownership, so merges are no-ops | `../WORKSTREAMS.md` |
 
+| 11:10 | PEER | **Duplication check on a pasted allocation-strategy batch.** Five of six items were already in the repo: the four model answers verbatim in `REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md`, the synthesis in `02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`, the audit3 verdict table (fetched live, timestamped), and the ETF-rotation question already settled by H-E1. Wrote no fifth synthesis | `../WORKSTREAMS.md` duplication log |
+| 11:12 | RUN | **The one uncovered item was the doctrine's most load-bearing claim**, quoted in three places and never run: "volatility scaling is free alpha... improves Sharpe by 0.3+ for any momentum strategy". Tested on SPY 2004-2026, 4 strategies, with turnover charged at 5bps/side | `proof/vol_scaling_test.py`, `results/vol_scaling_test.json` |
+| 11:13 | FAIL | **0 of 4 strategies reach +0.30 Sharpe** at either a 1.0 or 2.0 leverage cap. Best gain **+0.128** on buy-and-hold (no timing signal at all); TSMOM +0.013 with leverage | `VOL_SCALING_H-VS1.md` |
+| 11:14 | FAIL | **It hurts exactly the strategies it claims to help.** The two with real timing value get WORSE: SPY+200d −0.029 (unlev) / −0.101 (lev); SPY 6m ECM −0.034 / −0.089. Vol targeting is itself a trend overlay, so stacking it on a trend signal double-counts the signal and pays turnover twice | same |
+| 11:15 | PASS | The useful half survives and is recorded separately: vol targeting does cut realised vol (18.6 pct to 10.2 pct) and drawdown reliably — it belongs in the RISK section of the allocation doc, not the RETURN section | same |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·

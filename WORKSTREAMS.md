@@ -70,3 +70,27 @@ each does not.
 | 8 | FX class census — opens 17:00 EST Sunday, measurable from tonight | pending |
 | 9 | Equity single-name and ETF factor set beyond H-E1 | pending |
 | 10 | Reconcile the trend-overlay discrepancy for R191–R192 on one shared script | pending |
+
+---
+
+## Duplication checks (Session B, 2026-11-22 11:15 EST)
+
+Run before adding any new document, because three sessions and four model answers have already
+produced a lot of overlapping prose on this repo.
+
+| input | already in the repo? | where | action |
+|---|---|---|---|
+| The allocation question (GIC vs savings vs stocks/bonds/ETFs/futures/forex/crypto/commodities, by horizon) | **YES — verbatim** | `REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md` holds all four answers (ChatGPT-6 Luna, Claude, Qwen, GLM) | **did not write a fifth synthesis** |
+| The synthesis of those four into an allocation policy (GIC ladder, CDIC $100k limits, horizon tiers, selection-alpha table) | **YES** | `02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`, numbers fetched live from `audit3_ledger.json` 2026-11-22T07:10:35Z | **did not duplicate** |
+| audit3 asset-class verdicts (CRYPTO KILL, COMMODITY KILL, rest WEAK, 0 of 67 proven) | **YES** | same file, §1, with the generator timestamp cited | **did not re-quote** |
+| "ETF rotation + trend beats day trading" | **YES — and tested** | `03-trading-strategies/ETF_ROTATION_H-E1.md` (H-E1: rotation loses to SPY+200d) | already settled |
+| "volatility scaling is free alpha, +0.3 Sharpe for any momentum strategy" | **NO — quoted only, never run** | quoted in `REVIEWS/inputs/...` line 10, `02-`'s doctrine block, and GLM's answer | **tested — see `03-trading-strategies/VOL_SCALING_H-VS1.md`. Result: 0 of 4 strategies reach +0.30** |
+
+**Net:** of the six items in the pasted material, five were already covered and one had never
+been checked. The one that had never been checked is the one the doctrine leans on hardest, and
+it does not hold as stated.
+
+### Rule this establishes
+
+Before writing a document about a repeated claim, grep for it. If it is already quoted in three
+places, a fourth quotation adds nothing — **run it**. The output of that grep is the work queue.
