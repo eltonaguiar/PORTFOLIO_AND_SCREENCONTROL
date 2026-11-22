@@ -44,6 +44,57 @@ contract: [`TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) ·
 measurements: [`MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) ·
 anti-stall design: §5 of [`PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md).
 
+## How the screen-control runs were actually driven
+
+Every automation run behind this repo used the same five-rung ladder, in order, and every rung was
+measured rather than assumed:
+
+| Rung | What it means | When it won |
+|---|---|---|
+| **1. App API / CDP** | the app's own interface: a browser's DOM over the DevTools protocol, a CLI, a process's stdout | any page with a debug port — selectors, `value` setters, exact text |
+| **2. Accessibility tree** | UIA on Windows, AT-SPI on Linux, AX on macOS; elements addressed by handle, not by pixel | native windows, most Electron apps, browser pages once the renderer's tree is awake |
+| **3. Text layer** | the a11y text pattern, or OCR over a **crop** | when the tree exposes containers but no useful nodes |
+| **4. Element detection** | a grounding model (ShowUI / UI-TARS / OmniParser) returns labelled boxes | canvas-like surfaces with no tree at all |
+| **5. Raw coordinates** | click at (x, y) from a screenshot | last resort, and the least reliable |
+
+**Tools used:** `cua-driver` through a `computer_use` tool (window-scoped capture, element handles,
+background input), Playwright over CDP for DOM work, RapidOCR for text, and local VLMs only for
+reading labels. Nothing paid, nothing cloud.
+
+**Rules this project learned the hard way — each with a number behind it:**
+
+- **Element handles, never coordinates.** Handing the driver `(3108, 739)` produced a click at
+  `(5029, 798)` — outside the window, silently. Clicking element `#87` landed at `(3127, 746)` and
+  worked. A coordinate click outside the window bounds is a no-op at best and can destroy state at
+  worst; one early misfire cleared a live conversation.
+- **A cold accessibility tree is not a dead surface.** The first capture of a Chromium window returned
+  **24** elements (tabs and window buttons only, no page); after one further capture the same window
+  exposed **95–129** nodes including the composer and per-message controls. Retry once before falling
+  down the ladder.
+- **Background input has a hard split.** Clicks and `set_value` (UIA ValuePattern) deliver without
+  stealing focus; **keyboard and mouse-wheel are refused** by the renderer (`background_unavailable`)
+  and need a brief foreground raise, which should be budgeted and announced, never looped.
+- **Rich-text editors need insert-text, not keystrokes.** Typing character-by-character into a
+  ProseMirror/TipTap composer **dropped characters** ("sentence" → "sence", "single" → "ingle");
+  `insert_text` wrote the same string intact. And clear the editor first — a leftover draft
+  concatenates onto the new prompt.
+- **For long answers, the clipboard beats both the tree and OCR.** `Ctrl+A`/`Ctrl+C` recovered
+  **36.6 KB** of a three-panel answer set where the accessibility tree yielded **2.2 KB** — the tree
+  only exposes the rendered viewport. OCR on a full 1456×818 frame cost **18.99 s** for 106 boxes and
+  mangled digits (`2006-11-30` → `2886-11-38`), so OCR is for *state* ("is a Stop button present"),
+  never for numbers.
+- **Window identity is part of the target.** Captures must be addressed by `(pid, window_id)`: a second
+  browser instance (or an OS profile-picker window) makes app-name targeting ambiguous, and element
+  indices only mean anything inside one window and one snapshot.
+- **Verify after every state change.** Re-read the smallest thing that should have changed. An
+  "unverifiable" verdict is not a success — it is a prompt to look before doing anything else.
+
+**Consequence, stated plainly:** where the API rung is unavailable — a browser with no debug port,
+driving a profile whose sessions cannot be transplanted because of app-bound cookie encryption — the
+run is UIA-only, and custom controls (a bespoke mode selector, a canvas, a virtualised long answer)
+may simply be unreachable. That is a property of the surface, and the honest response is to report the
+gate rather than to thrash at pixels.
+
 ## Topic 2 — portfolio tracking and paper trading
 
 Start here: [`PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) ·
