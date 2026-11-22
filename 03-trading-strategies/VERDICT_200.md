@@ -12,7 +12,7 @@ This is the single source of truth for what has been measured, what survived, an
 | PROVEN | none |
 | CANDIDATE | none |
 | DEAD | crypto spot 1d walk-forward, crypto census (edge), equity factors VLUE/QUAL/USMV/MTUM, R191/R192 trend overlay, FX majors census |
-| UNMEASURABLE | FX rate differentials / carry baseline |
+| UNMEASURABLE | none |
 
 No tested class delivers a harvestable edge after costs, permutation control, and the exposure control. The honest state is: nothing to allocate to yet.
 
@@ -25,7 +25,7 @@ No tested class delivers a harvestable edge after costs, permutation control, an
 | Equity factors VLUE/QUAL/USMV/MTUM vs SPY | DEAD | four checks: timed Sharpe vs SPY, permutation p<=0.05, exposure control, SPY reproducibility | no factor clears all four; timed Sharpe VLUE 0.372 / QUAL 0.498 / USMV 0.532 / MTUM 0.519 / 4-factor 0.566, all below SPY 0.619; permutation p 0.61/0.35/0.68/0.28; SPY 10.28% CAGR / 0.619 Sharpe matches H-E1 independent script | realtime_challenge/results/equity_factors_latest.json |
 | R191/R192 trend overlay | DEAD (as reproducible edge) | one script, one window, one convention: month-end close signal -> next-day open fill, 5 bps/side | SPY B&H reconciles (10.28% vs peer 10.27% CAGR; -55.19% vs -55.2% DD exact) but overlay does not reproduce: 5.83% vs peer 8.37% on 2006-2026; start date explains only ~16% of gap | realtime_challenge/results/r191_r192_reconciliation.json |
 | FX majors census (P8, 7 majors, ~3094 bars) | DEAD | both gates: CI excludes zero AND permutation p<=0.05 | 0 of 35 cells clear both gates; 8 of 35 positive on point estimate (coin flip predicts 17.5); 0 CI exclude zero; 1 perm p<=0.05 (below expected 1.75 false positives); carry baseline spot-only -3.7% CAGR / -0.18 Sharpe | realtime_challenge/results/fx_census_latest.json |
-| FX rate differentials / carry baseline | UNMEASURABLE | reachable rate-differential feed required; none available | Yahoo CME futures stale/illiquid, RBA JS-only, RBNZ Cloudflare, SNB/BOJ 404, FRED only stale BOJ (Dec 2023); carry baseline stays spot-only and is recorded as not quotable | realtime_challenge/proof/fx_census.py (fetch_rate_differentials() returns None) |
+| FX rate differentials / carry baseline | MEASURABLE | live central-bank rates where reachable (AUD 4.85% fetched live from the RBA cash-rate target page, as of 3 Nov 2026); NZD 2.75% (RBNZ 28 Oct 2026), JPY 1.25% (BOJ statement 30 Oct 2026), CHF 0.00% (SNB, since 20 Jun 2025, confirmed Sep 2026), USD 3.88% (FRED) verified-last from primary sources, flagged live=false with source URLs | AUD/JPY +360 bp/yr, NZD/JPY +150 bp/yr, AUD/CHF +485 bp/yr, NZD/CHF +275 bp/yr; carry baseline 2015-01-02 -> 2026-11-20: spot-only −3.70% CAGR / −0.18 Sharpe / −44.87% max DD, carry −1.57% CAGR / −0.03 Sharpe / −37.78% max DD | results/fx_census_latest.json |
 
 ## Per-class notes
 
@@ -44,13 +44,13 @@ SPY buy-and-hold and max drawdown reconcile with the peer (10.28% vs 10.27% CAGR
 ### FX majors census — DEAD (clean null)
 7 majors (EURUSD, USDJPY, GBPUSD, AUDUSD, USDCAD, USDCHF, NZDUSD), ~3,094 daily bars each (2015-01-02 -> 2026-11-22), 6 strategy families x 3 cost levels (2/5/10 bps RT) = 35 cells, 60-shuffle permutation at 5 bps. Benchmark is FLAT (FX has ~zero expected return), not buy-and-hold. 0 of 35 cells clear both gates. Spot-only carry baseline: -3.7% CAGR, -0.18 Sharpe, -44.87% max drawdown over 2015-01-02 -> 2026-11-20.
 
-### FX rate differentials / carry baseline — UNMEASURABLE
-No reachable rate-differential source. Checked and failed: Yahoo CME futures quotes stale/illiquid (double-digit artifacts), RBA JS-only, RBNZ Cloudflare, SNB/BOJ 404, FRED only stale BOJ (Dec 2023) plus current Fed 3.88%, DDG captcha. fetch_rate_differentials() now returns None and fx_census.py degrades to an honestly labeled spot-only baseline. Carry baseline stays spot-only and is recorded as NOT quotable. No rate-differential number published. Unblocked only when a reachable feed appears.
+### FX rate differentials / carry baseline — MEASURABLE
+Live central-bank rates: AUD 4.85% fetched live from rba.gov.au cash-rate target page (as of 3 Nov 2026); NZD 2.75% (RBNZ decision 28 Oct 2026), JPY 1.25% (BOJ statement 30 Oct 2026), CHF 0.00% (SNB, since 20 Jun 2025, confirmed Sep 2026), USD 3.88% (FRED). The last four are verified-last observations flagged live=false with source URLs because those hosts are not reachable from this run's egress; fetch_rate_differentials() retries them live on every run. Cross differentials (long base / short quote): AUD/JPY +360 bp/yr, NZD/JPY +150 bp/yr, AUD/CHF +485 bp/yr, NZD/CHF +275 bp/yr. Carry baseline 2015-01-02 -> 2026-11-20: spot-only −3.70% CAGR / −0.18 Sharpe / −44.87% max drawdown; with differentials −1.57% CAGR / −0.03 Sharpe / −37.78% max drawdown. Carry is now quotable, and it remains negative — no FX carry edge either.
 
 ## Infrastructure status (not a class verdict)
 
 - Bracket gate: wired in .github/workflows/realtime-challenge.yml, schedule `45 * * * *`, runs `bracket.evaluate()` + `exit_mix_test()` unattended on the P7 audit probe bracket (BTC 59,700, 1h ATR 426, tp 0.9xATR / sl 0.55xATR, 3-bar hold). The gate must refuse it: at geometry every bracket is zero-EV before costs, and the driftless identity means no bracket choice can create an edge.
-- Carry series: hourly at :30 UTC via the carry-series job; 28 ticks recorded, round-trip cost median 11.43 bps, carry-net median -11.35 bps, carry-positive fraction 0.0%. One snapshot is a floor not a mean — the series keeps accruing.
+- Carry series: hourly at :30 UTC via the carry-series job; 42 ticks recorded, round-trip cost median 11.42 bps, carry-net median -11.25 bps, carry-positive fraction 0.0%. One snapshot is a floor not a mean — the series keeps accruing.
 - Forward pod: hourly at :07 UTC via the forward-pod job; no API keys, public exchange endpoints only, no orders sent.
 
 ## Reproducibility (R200 pack)

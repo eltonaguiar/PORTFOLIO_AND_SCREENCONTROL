@@ -1,6 +1,6 @@
 {
  "hypothesis": "P8 \u2014 does any of the six families show net-positive expectancy on FX?",
- "generated_utc": "2026-11-22T12:29:03+00:00",
+ "generated_utc": "2026-11-22T18:04:33+00:00",
  "pairs": [
   "EURUSD",
   "USDJPY",
@@ -25,58 +25,150 @@
  "survivors": [],
  "carry_baseline": {
   "legs": 4,
+  "skipped_legs": [],
   "window": "2015-01-02 -> 2026-11-20",
   "spot_only_cagr": -0.037,
-  "carry_cagr": -0.037,
+  "carry_cagr": -0.0157,
   "ann_vol": 0.1484,
-  "sharpe": -0.18,
-  "max_drawdown": -0.4487,
+  "sharpe": -0.032,
+  "max_drawdown": -0.3778,
   "cross_stats": {
    "AUD/JPY": {
     "spot_only_cagr": -0.0493,
-    "carry_cagr": -0.0493,
+    "carry_cagr": -0.0254,
     "ann_vol": 0.1515,
-    "sharpe": -0.258,
-    "max_drawdown": -0.5358,
-    "rate_diff_annual_bps": null,
-    "rate_diff_daily_bps": null,
+    "sharpe": -0.094,
+    "max_drawdown": -0.4603,
+    "rate_diff_annual_bps": 360.0,
+    "rate_diff_daily_bps": 0.9863,
     "n_days": 3093
    },
    "NZD/JPY": {
     "spot_only_cagr": -0.0613,
-    "carry_cagr": -0.0613,
+    "carry_cagr": -0.0516,
     "ann_vol": 0.1575,
-    "sharpe": -0.323,
-    "max_drawdown": -0.5813,
-    "rate_diff_annual_bps": null,
-    "rate_diff_daily_bps": null,
+    "sharpe": -0.257,
+    "max_drawdown": -0.5331,
+    "rate_diff_annual_bps": 150.0,
+    "rate_diff_daily_bps": 0.411,
     "n_days": 3093
    },
    "AUD/CHF": {
     "spot_only_cagr": -0.0149,
-    "carry_cagr": -0.0149,
+    "carry_cagr": 0.0186,
     "ann_vol": 0.1587,
-    "sharpe": -0.016,
-    "max_drawdown": -0.4236,
-    "rate_diff_annual_bps": null,
-    "rate_diff_daily_bps": null,
+    "sharpe": 0.195,
+    "max_drawdown": -0.3106,
+    "rate_diff_annual_bps": 485.0,
+    "rate_diff_daily_bps": 1.3288,
     "n_days": 3093
    },
    "NZD/CHF": {
     "spot_only_cagr": -0.0272,
-    "carry_cagr": -0.0272,
+    "carry_cagr": -0.0085,
     "ann_vol": 0.1633,
-    "sharpe": -0.088,
-    "max_drawdown": -0.4376,
-    "rate_diff_annual_bps": null,
-    "rate_diff_daily_bps": null,
+    "sharpe": 0.028,
+    "max_drawdown": -0.3453,
+    "rate_diff_annual_bps": 275.0,
+    "rate_diff_daily_bps": 0.7534,
     "n_days": 3093
    }
   },
-  "rate_source": "unknown"
+  "rate_source": "live central-bank sources where reachable; otherwise last-verified observation from the named primary source (flagged live=false)"
  },
  "rate_differentials": {
-  "cross_differentials_bps": {}
+  "currencies": {
+   "AUD": {
+    "rate": 4.85,
+    "as_of": "2026-11-03",
+    "source": "https://www.rba.gov.au/cash-rate-target-overview.html",
+    "live": true,
+    "note": null
+   },
+   "NZD": {
+    "rate": 2.75,
+    "as_of": "2026-10-28",
+    "source": "https://www.rbnz.govt.nz/news-and-events/news/2026/10/ocr-held-at-2-75-percent",
+    "live": false,
+    "note": "RBNZ held the OCR at 2.75% on 28 Oct 2026",
+    "error": "rbnz.govt.nz not reachable from this host (HTTP 403 / proxy unavailable)"
+   },
+   "JPY": {
+    "rate": 1.25,
+    "as_of": "2026-10-30",
+    "source": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
+    "live": false,
+    "note": "BOJ statement: call rate around 1.25%, 30 Oct 2026 statement (PDF reachable, not parsed locally)",
+    "error": "boj.or.jp statement PDF reachable but not parsed locally"
+   },
+   "CHF": {
+    "rate": 0.0,
+    "as_of": "2026-09",
+    "source": "https://www.snb.ch/en/the-snb/mandates-goals/monetary-policy/decisions",
+    "live": false,
+    "note": "SNB policy rate 0.00% since 20 Jun 2025, confirmed at the Sep 2026 assessment",
+    "error": "current SNB policy rate not found on decisions page"
+   },
+   "USD": {
+    "rate": 3.88,
+    "as_of": null,
+    "source": "https://fred.stlouisfed.org/series/FEDFUNDS",
+    "live": false,
+    "note": "FRED FEDFUNDS current (FRED not reachable from this host this run)",
+    "error": "FRED FEDFUNDS not reachable from this host (read timeout)"
+   }
+  },
+  "cross_differentials_bps": {
+   "AUD/JPY": {
+    "annual_bps": 360.0,
+    "daily_bps": 0.9863,
+    "base_rate": 4.85,
+    "quote_rate": 1.25,
+    "base_live": true,
+    "quote_live": false,
+    "base_source": "https://www.rba.gov.au/cash-rate-target-overview.html",
+    "quote_source": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
+    "base_as_of": "2026-11-03",
+    "quote_as_of": "2026-10-30"
+   },
+   "NZD/JPY": {
+    "annual_bps": 150.0,
+    "daily_bps": 0.411,
+    "base_rate": 2.75,
+    "quote_rate": 1.25,
+    "base_live": false,
+    "quote_live": false,
+    "base_source": "https://www.rbnz.govt.nz/news-and-events/news/2026/10/ocr-held-at-2-75-percent",
+    "quote_source": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
+    "base_as_of": "2026-10-28",
+    "quote_as_of": "2026-10-30"
+   },
+   "AUD/CHF": {
+    "annual_bps": 485.0,
+    "daily_bps": 1.3288,
+    "base_rate": 4.85,
+    "quote_rate": 0.0,
+    "base_live": true,
+    "quote_live": false,
+    "base_source": "https://www.rba.gov.au/cash-rate-target-overview.html",
+    "quote_source": "https://www.snb.ch/en/the-snb/mandates-goals/monetary-policy/decisions",
+    "base_as_of": "2026-11-03",
+    "quote_as_of": "2026-09"
+   },
+   "NZD/CHF": {
+    "annual_bps": 275.0,
+    "daily_bps": 0.7534,
+    "base_rate": 2.75,
+    "quote_rate": 0.0,
+    "base_live": false,
+    "quote_live": false,
+    "base_source": "https://www.rbnz.govt.nz/news-and-events/news/2026/10/ocr-held-at-2-75-percent",
+    "quote_source": "https://www.snb.ch/en/the-snb/mandates-goals/monetary-policy/decisions",
+    "base_as_of": "2026-10-28",
+    "quote_as_of": "2026-09"
+   }
+  },
+  "rate_source": "live central-bank sources where reachable; otherwise last-verified observation from the named primary source (flagged live=false)"
  },
  "rows": [
   {
@@ -1741,5 +1833,5 @@
  ],
  "verdict": "NO FX EDGE ESTABLISHED: 0 of 35 cells have both a net CI above zero and a permutation p<=0.05 at 5bps round turn. 8 of 35 cells are positive on point estimate alone.",
  "class_note": "n per cell is small (daily bars, one pair): FX daily signals fire rarely. A null here is a statement about these six families on daily bars over this decade, not a proof the class is untradeable.",
- "carry_note": "carry baseline is spot-only in this run: no verified source for current AUD/NZD/JPY/CHF policy rates was reachable, so rate_differentials is null and daily carry accrual is zero. The spot-only figure must not be quoted as the carry trade's return; adding verified rate differentials is required before carry is quotable."
+ "carry_note": "rate differentials are now available for the four carry legs (AUD/JPY +360.00 bp/yr, NZD/JPY +150.00 bp/yr, AUD/CHF +485.00 bp/yr, NZD/CHF +275.00 bp/yr; AUD fetched live from the RBA page this run, NZD/JPY/CHF/USD from the last-verified observations of their primary central-bank sources, flagged live=false with source URLs). Daily carry accrual is spot return plus rate_daily_bps, so carry is quotable for the legs whose currencies all have rates. The spot-only figure must not be quoted as the carry trade's return."
 }

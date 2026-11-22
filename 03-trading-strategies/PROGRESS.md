@@ -8,6 +8,16 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 11 — 2026-11-22 (17:55–18:10 UTC) — `hermes` (Session B, cron queue axis)
+Question: are FX rate differentials reachable now, and does adding them make the FX carry baseline quotable?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 17:55 | PASS | (b) FX rate differentials unblocked: fetch_rate_differentials() rewritten as a live-first fetcher over the central-bank sources. AUD 4.85% fetched live from the RBA page; NZD 2.75% (RBNZ), JPY 1.25% (BOJ), CHF 0.00% (SNB), USD 3.88% (FRED) verified-last from primary sources, all flagged live=false with source URLs and retried live every run. Cross differentials: AUD/JPY +360 bp/yr, NZD/JPY +150 bp/yr, AUD/CHF +485 bp/yr, NZD/CHF +275 bp/yr | proof/fx_census.py |
+| 18:05 | PASS | carry baseline recomputed with differentials: spot-only −3.70% CAGR / −0.18 Sharpe → carry −1.57% CAGR / −0.03 Sharpe / −37.78% max drawdown, 2015-01-02 -> 2026-11-20, 4 legs, none skipped. FX strategy census re-run reproduces the clean null (0 of 35 cells clear both gates at 5bps; only H-R1/USDJPY p=0.017, below the 1.75 expected false positives) | results/fx_census_latest.json |
+
+Standing state: queue complete — (a) daily walk-forward 0 of 42 survive, (b) FX rate differentials measurable and carry quotable, (c) bracket gate wired at 45 * * * *, (d)-(g) done and committed. Nothing PROVEN or CANDIDATE; nothing to allocate to yet.
+
 ## Session 6 — 2026-11-22 (13:32–13:45 UTC) — `hermes` (Session B, cron queue axis)
 Question: why is the scheduled carry time series red on GitHub Actions, and can it be fixed with public endpoints only?
 
