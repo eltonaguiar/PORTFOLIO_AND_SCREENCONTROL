@@ -59,6 +59,27 @@ Interpretation: OCR is a good *state* channel (is there a Stop button? which act
 agent say in prose?) and a bad *evidence* channel (numbers, paths, code, stack traces). At 19 s/frame it is
 also too slow for a control loop at full-frame resolution — crop the panel (~400×800) instead.
 
+## 2.1 400×800 panel crop vs full frame (re-measurement, 2026-11-22)
+
+The `capture.py` docstring claims a 400×800 panel crop is "a fraction of" the ~19 s full-frame OCR.
+Re-measured on a synthetic but reproducible 1456×818 UI frame (editor text left, chat panel right at
+x > 1000) so no private screenshot or live desktop is needed:
+
+```
+python probes/probe_ocr_crop.py   # renders frame + 400x800 crop, times RapidOCR (CPU)
+```
+
+| Metric | Value |
+|---|---|
+| Wall clock, full frame | **17.04 s** (105 boxes) |
+| Wall clock, 400×800 crop | **10.70 s** (42 boxes) |
+| Speedup | **1.6×** |
+
+Interpretation: the crop *is* faster, but only 1.6× — OCR time is dominated by fixed backend
+cost, not pixel count. The docstring's "a fraction of" claim is **not supported** at this
+resolution: a 400×800 crop still costs ~11 s, too slow for a tight control loop. Claim
+refined, not confirmed.
+
 ## 3. Local VLM reading one UI label
 
 Prompt: *"In the right-hand Chat panel, what is the exact label of the green/blue action button shown under

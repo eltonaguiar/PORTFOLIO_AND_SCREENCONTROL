@@ -36,9 +36,9 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 64 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
-| `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 152 (23 md) | 113 | see `git log -1 -- 03-trading-strategies` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 65 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 8 (8 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 153 (24 md) | 113 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -57,7 +57,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md`](01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md) | 151 | 9997 |
 | [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6506 |
 | [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6321 |
-| [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
+| [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 140 | 6834 |
 | [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40245 |
 | [`01-screen-control-llm/PROGRESS.md`](01-screen-control-llm/PROGRESS.md) | 69 | 5411 |
 | [`01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md`](01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md) | 74 | 4480 |
@@ -72,12 +72,14 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8357 |
 | [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 130 | 6795 |
 | [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
+| [`02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md`](02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md) | 102 | 6949 |
 | [`02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md`](02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md) | 291 | 16353 |
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
+| [`03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`](03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md) | 59 | 4359 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
-| [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 94 | 4701 |
+| [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 125 | 6582 |
 | [`03-trading-strategies/CARRY_SERIES.md`](03-trading-strategies/CARRY_SERIES.md) | 68 | 3752 |
 | [`03-trading-strategies/ETF_ROTATION_H-E1.md`](03-trading-strategies/ETF_ROTATION_H-E1.md) | 144 | 7413 |
 | [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5862 |
@@ -128,8 +130,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 9000 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 29 | 5811 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 154 | 12321 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 30 | 6089 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

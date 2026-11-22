@@ -211,8 +211,9 @@ def capture_region(rect: Rect, hwnd: Optional[int] = None) -> Capture:
 def crop_png(png: bytes, rect: Rect) -> bytes:
     """Crop an already-captured frame without re-grabbing the screen.
 
-    This is what keeps OCR cheap: a full 1456x818 frame took ~19 s with RapidOCR in our
-    measurements, while a 400x800 panel crop is a fraction of that.
+    This is what keeps OCR cheap: a full 1456x818 frame took ~17 s with RapidOCR in our
+    measurements, but a 400x800 panel crop is only ~1.6x faster (~11 s): OCR cost is
+    dominated by fixed backend cost, not pixel count (see MEASUREMENTS.md §2.1).
     """
     from PIL import Image
 
