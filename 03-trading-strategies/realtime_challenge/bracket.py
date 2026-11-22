@@ -336,7 +336,7 @@ def main() -> int:
         print(json.dumps({k: v for k, v in r.items() if k != "trades"}, indent=1))
         for t in r.get("trades", [])[:15]:
             flag = "REFUSE" if t["would_refuse"] else "ok    "
-            print(f"  {flag} {t['exit_reason']:5s} hold={t["held_minutes"]:>5.1f}m "
+            print(f"  {flag} {t['exit_reason']:5s} hold={t['held_minutes']:>5.1f}m "
                   f"tp={t['tp_bps']:>6.1f}bps sl={t['sl_bps']:>6.1f}bps "
                   f"P(tp)={t['p_tp_exit']:.3f} P(timeout)={t['p_timeout']:.3f}")
         return 0
