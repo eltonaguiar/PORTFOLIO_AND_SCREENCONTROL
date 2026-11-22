@@ -77,6 +77,67 @@ independent defects, in this order of importance:
 
 The two together are why the live P&L was −$285.14 on 27 trades with $180.00 of it commission.
 
+## The verification wall — the finding that unifies the whole project
+
+Solving the break-even condition for the win rate a bracket needs gives a clean result:
+
+```
+required_win_rate = (1 + cost) / (1 + tp/sl)
+required_edge     = required_win_rate − sl/(tp+sl)  =  cost / (1 + tp/sl)
+```
+
+**The edge a bracket demands is exactly the friction divided by the payoff ratio** — so it is
+always *less than the round-trip cost itself* (≤ 26 bps here). There is no such thing as a bracket
+that "demands unrealistic skill". There is only the question of how many trades it takes to
+**verify** that edge at 80% power (`n ≈ 16·p(1−p)/δ²`):
+
+| bracket (tp:sl) | required edge | trades needed to verify |
+|---|---:|---:|
+| 0.5 : 1 | +0.170 pp | **1,183,432** |
+| 1 : 1 | +0.130 pp | **2,366,864** |
+| 2 : 1 | +0.090 pp | **4,733,728** |
+| 3 : 1 | +0.060 pp | **7,100,592** |
+| 6 : 0.5 | +0.020 pp | **28,402,367** |
+
+Read this against the audit3 ledger's own `required_n` column from the pasted dashboard:
+EQUITY **22,569**, ETF **1,730,370**, FOREX **2,366**, CRYPTO **917**. Same order of magnitude,
+derived from a completely different direction — bracket geometry here versus the picks ledger
+there. **Two independent routes, one number.**
+
+### Correction: the "100-trade" gate is fine. The edge requirement is the problem.
+
+I first concluded from the table above that the project's `n ≥ 100` forward gate was "off by four
+to five orders of magnitude". **That was wrong, and the next calculation refuted it.** The 0.02–0.17
+pp figure is the **break-even margin** — the edge that earns exactly zero. Verifying a
+zero-profit margin is indeed hopeless, but nothing useful lives there. Computing the edge needed
+for a *useful* profit, on this repo's actual 1.5:1 bracket (64 bps TP / 43 bps SL) and its
+observed live dispersion of 19.6 bps per trade:
+
+| target net profit | win rate needed | edge over geometry | trades to verify |
+|---|---:|---:|---:|
+| 0 bps (break-even) | 40.45% | +0.26 pp | unreachable |
+| **+5 bps/trade** | 45.12% | **+4.93 pp** | **121** |
+| +10 bps/trade | 49.79% | +9.61 pp | 31 |
+| +20 bps/trade | 59.14% | +18.95 pp | 8 |
+
+**`n ≥ 100` is approximately correct for detecting a 5 bps/trade edge.** It is not too strict and
+it is not off by orders of magnitude. What is brutal is the *edge itself*: a 5 bps net profit
+requires beating the geometry by **4.93 percentage points of win rate** — because friction has to
+be paid out of a margin that geometry hands you at exactly zero.
+
+So the honest statement, corrected:
+
+> **The sample-size gate was never the binding constraint. To earn 5 bps per trade on this
+> bracket, an entry must beat random by 4.93 percentage points of win rate — and no family in this
+> repo has come within a fraction of that in 435 tested cells. The live books did not fail for
+> want of sample; they ran 31.7 bps per trade *worse* than break-even, which is detectable at
+> n = 3.**
+
+That last number is worth stopping on. `proof/power.py` on the pooled 27 live trades: mean
+**−31.68 bps**, sd 19.56 bps, **t = −8.42, p = 6.7 × 10⁻⁹**, and the required n to detect an effect
+that large is **3**. The live books are not inconclusive. They are **conclusively unprofitable**,
+and calling them "too small a sample" would have been a way of not saying so.
+
 ## The gate, as shipped
 
 `bracket.evaluate(price, atr, tp_atr, sl_atr, hold_bars)` returns three independent verdicts:

@@ -1,0 +1,300 @@
+{
+ "constant_alpha05_power80": 7.849,
+ "formula": "n = (z_a + z_b)^2 * (sigma/mu)^2",
+ "live": [
+  {
+   "name": "live_smoke_bybit",
+   "n": 6,
+   "mean_bps": -13.9,
+   "sd_bps": 8.9,
+   "required_n": 4,
+   "have_fraction": 1.5,
+   "status": "MEASURABLE NOW"
+  },
+  {
+   "name": "liveprobe_20261122_0400",
+   "n": 3,
+   "note": "too few"
+  },
+  {
+   "name": "liveprobe_bybit_v2",
+   "n": 11,
+   "mean_bps": -33.0,
+   "sd_bps": 24.83,
+   "required_n": 5,
+   "have_fraction": 2.2,
+   "status": "MEASURABLE NOW"
+  },
+  {
+   "name": "liveprobe_kraken_20261122_0416",
+   "n": 3,
+   "note": "too few"
+  },
+  {
+   "name": "liveprobe_okx_20261122_0415",
+   "n": 4,
+   "note": "too few"
+  },
+  {
+   "name": "ALL LIVE BOOKS (pooled)",
+   "n": 27,
+   "mean_bps": -31.68,
+   "sd_bps": 19.56,
+   "required_n": 3,
+   "have_fraction": 9.0,
+   "status": "MEASURABLE NOW"
+  }
+ ],
+ "fx": [
+  {
+   "name": "H-R1_trend_pullback/EURUSD",
+   "n": 19,
+   "mean_bps": -1.55,
+   "sd_bps": 97.88,
+   "required_n": 31298
+  },
+  {
+   "name": "H-R1_trend_pullback/USDJPY",
+   "n": 16,
+   "mean_bps": 32.77,
+   "sd_bps": 123.22,
+   "required_n": 111
+  },
+  {
+   "name": "H-R1_trend_pullback/GBPUSD",
+   "n": 13,
+   "mean_bps": -24.0,
+   "sd_bps": 71.38,
+   "required_n": 70
+  },
+  {
+   "name": "H-R1_trend_pullback/AUDUSD",
+   "n": 12,
+   "mean_bps": 32.13,
+   "sd_bps": 138.93,
+   "required_n": 147
+  },
+  {
+   "name": "H-R1_trend_pullback/USDCAD",
+   "n": 19,
+   "mean_bps": -8.29,
+   "sd_bps": 95.4,
+   "required_n": 1040
+  },
+  {
+   "name": "H-R1_trend_pullback/USDCHF",
+   "n": 15,
+   "mean_bps": 7.3,
+   "sd_bps": 95.88,
+   "required_n": 1354
+  },
+  {
+   "name": "H-R1_trend_pullback/NZDUSD",
+   "n": 13,
+   "mean_bps": -36.0,
+   "sd_bps": 112.29,
+   "required_n": 77
+  },
+  {
+   "name": "H-R2_donchian_breakout/EURUSD",
+   "n": 114,
+   "mean_bps": -1.61,
+   "sd_bps": 106.06,
+   "required_n": 34065
+  },
+  {
+   "name": "H-R2_donchian_breakout/USDJPY",
+   "n": 109,
+   "mean_bps": -9.02,
+   "sd_bps": 118.73,
+   "required_n": 1361
+  },
+  {
+   "name": "H-R2_donchian_breakout/GBPUSD",
+   "n": 118,
+   "mean_bps": -5.51,
+   "sd_bps": 129.0,
+   "required_n": 4302
+  },
+  {
+   "name": "H-R2_donchian_breakout/AUDUSD",
+   "n": 116,
+   "mean_bps": -37.1,
+   "sd_bps": 117.05,
+   "required_n": 79
+  },
+  {
+   "name": "H-R2_donchian_breakout/USDCAD",
+   "n": 126,
+   "mean_bps": -8.32,
+   "sd_bps": 94.81,
+   "required_n": 1020
+  },
+  {
+   "name": "H-R2_donchian_breakout/USDCHF",
+   "n": 117,
+   "mean_bps": -23.84,
+   "sd_bps": 97.88,
+   "required_n": 133
+  },
+  {
+   "name": "H-R2_donchian_breakout/NZDUSD",
+   "n": 119,
+   "mean_bps": -22.51,
+   "sd_bps": 136.0,
+   "required_n": 287
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/EURUSD",
+   "n": 36,
+   "mean_bps": 2.28,
+   "sd_bps": 96.8,
+   "required_n": 14148
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/USDJPY",
+   "n": 49,
+   "mean_bps": -23.71,
+   "sd_bps": 111.04,
+   "required_n": 173
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/GBPUSD",
+   "n": 46,
+   "mean_bps": 0.39,
+   "sd_bps": 100.77,
+   "required_n": 523990
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/AUDUSD",
+   "n": 41,
+   "mean_bps": -3.14,
+   "sd_bps": 117.66,
+   "required_n": 11021
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/USDCAD",
+   "n": 53,
+   "mean_bps": 2.18,
+   "sd_bps": 97.74,
+   "required_n": 15780
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/USDCHF",
+   "n": 48,
+   "mean_bps": -12.54,
+   "sd_bps": 92.15,
+   "required_n": 424
+  },
+  {
+   "name": "H-R3_bollinger_meanrev/NZDUSD",
+   "n": 40,
+   "mean_bps": -4.22,
+   "sd_bps": 134.59,
+   "required_n": 7985
+  },
+  {
+   "name": "H-R4_vol_compression/EURUSD",
+   "n": 30,
+   "mean_bps": -31.58,
+   "sd_bps": 63.69,
+   "required_n": 32
+  },
+  {
+   "name": "H-R4_vol_compression/USDJPY",
+   "n": 33,
+   "mean_bps": -13.21,
+   "sd_bps": 86.07,
+   "required_n": 334
+  },
+  {
+   "name": "H-R4_vol_compression/GBPUSD",
+   "n": 25,
+   "mean_bps": 8.48,
+   "sd_bps": 99.85,
+   "required_n": 1089
+  },
+  {
+   "name": "H-R4_vol_compression/AUDUSD",
+   "n": 29,
+   "mean_bps": -57.28,
+   "sd_bps": 76.2,
+   "required_n": 14
+  },
+  {
+   "name": "H-R4_vol_compression/USDCAD",
+   "n": 31,
+   "mean_bps": 13.51,
+   "sd_bps": 80.76,
+   "required_n": 281
+  },
+  {
+   "name": "H-R4_vol_compression/USDCHF",
+   "n": 27,
+   "mean_bps": -21.81,
+   "sd_bps": 82.25,
+   "required_n": 112
+  },
+  {
+   "name": "H-R4_vol_compression/NZDUSD",
+   "n": 21,
+   "mean_bps": -16.39,
+   "sd_bps": 116.16,
+   "required_n": 395
+  },
+  {
+   "name": "H-R6_rsi2_pullback/EURUSD",
+   "n": 62,
+   "mean_bps": -4.8,
+   "sd_bps": 90.79,
+   "required_n": 2809
+  },
+  {
+   "name": "H-R6_rsi2_pullback/USDJPY",
+   "n": 77,
+   "mean_bps": -11.51,
+   "sd_bps": 110.43,
+   "required_n": 723
+  },
+  {
+   "name": "H-R6_rsi2_pullback/GBPUSD",
+   "n": 68,
+   "mean_bps": -20.66,
+   "sd_bps": 90.08,
+   "required_n": 150
+  },
+  {
+   "name": "H-R6_rsi2_pullback/AUDUSD",
+   "n": 58,
+   "mean_bps": -39.37,
+   "sd_bps": 103.13,
+   "required_n": 54
+  },
+  {
+   "name": "H-R6_rsi2_pullback/USDCAD",
+   "n": 85,
+   "mean_bps": -15.64,
+   "sd_bps": 87.89,
+   "required_n": 248
+  },
+  {
+   "name": "H-R6_rsi2_pullback/USDCHF",
+   "n": 66,
+   "mean_bps": -9.49,
+   "sd_bps": 100.16,
+   "required_n": 875
+  },
+  {
+   "name": "H-R6_rsi2_pullback/NZDUSD",
+   "n": 57,
+   "mean_bps": -11.49,
+   "sd_bps": 129.74,
+   "required_n": 1001
+  }
+ ],
+ "policy": {
+  "old_gate": "n >= 100 closed forward trades",
+  "why_it_fails": "a bracket needs 0.02-0.17pp of win-rate edge (BRACKET_P7.md); verifying that needs 1.2-28M trades, so 100 cannot distinguish an edge from zero",
+  "new_gate": "promotion requires n >= required_n(mu, sigma) computed from that strategy's own measured per-trade dispersion, reported alongside the estimate \u2014 never a fixed constant"
+ }
+}

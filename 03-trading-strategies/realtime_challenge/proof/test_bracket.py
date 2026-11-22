@@ -97,8 +97,10 @@ def main() -> int:
           not probe.fail_reach, f"p_any={probe.p_touch_any}")
     check("probe bracket is balanced enough on first-touch odds",
           not probe.fail_balance, f"p_tp_exit={probe.p_tp_exit}")
-    check("probe bracket is refused on NEGATIVE-EV, not geometry", probe.fail_ev,
-          f"exp_net={probe.exp_net_r}")
+    check("probe bracket is refused on EV/edge-demand, not geometry", probe.fail_ev,
+          f"exp_net={probe.exp_net_r} req_edge={probe.required_edge_pp}pp")
+    print(f"    probe 0.9/0.55 needs {probe.required_win_rate:.1%} vs "
+          f"{probe.geometry_win_rate:.1%} geometry = {probe.required_edge_pp:+.2f}pp of edge")
     check("probe bracket overall is refused", not probe.ok())
 
     # 3b. THE FOLLOW-UP: 0 of 27 take-profits against a geometry-implied 34%.
@@ -140,6 +142,38 @@ def main() -> int:
     check("symmetric 1:1 bracket is REFUSED after costs", not sym.ok(),
           f"E={sym.exp_net_r}R")
     check("refused on EV, not on reachability", sym.fail_ev and not sym.fail_reach)
+    print(f"    1:1 needs {sym.required_win_rate:.1%} win rate vs {sym.geometry_win_rate:.1%} "
+          f"geometry -> {sym.required_edge_pp:+.2f}pp of edge")
+    check("1:1 break-even win rate is just above 50% (friction)",
+          0.50 < sym.required_win_rate < 0.51, f"{sym.required_win_rate}")
+
+    # 4b. THE GATE IS NOT A BLOCKER: supplying a measured directional edge lets a bracket pass.
+    #     This is the only way anything can pass, and it is why the live loop refuses everything
+    #     today — no strategy in this repo has a demonstrated edge to supply.
+    edged = evaluate(price=100.0, atr=1.0, tp_atr=1.0, sl_atr=1.0, hold_bars=30,
+                     assumed_p_tp=0.60)
+    print(f"    with a 60% supplied hit rate: E={edged.exp_net_r:+.4f}R ok={edged.ok()}")
+    check("a bracket with a real supplied edge PASSES", edged.ok(), str(edged.reasons[:1]))
+    check("that bracket is not flagged for reachability either", not edged.fail_reach)
+
+    # 4c. THE STRUCTURE OF THE REQUIREMENT: required edge == cost/(1+tp/sl), so it is bounded
+    #     above by the round-trip cost and can never exceed it. There is therefore no such thing
+    #     as a bracket that "demands unrealistic skill" — every bracket demands LESS edge than
+    #     the friction itself. What varies is only how many trades it takes to VERIFY that edge.
+    print("\n  required edge and verification cost by bracket:")
+    for tp, sl in [(0.5, 1.0), (1.0, 1.0), (2.0, 1.0), (3.0, 1.0), (6.0, 0.5)]:
+        g = evaluate(price=100.0, atr=1.0, tp_atr=tp, sl_atr=sl, hold_bars=200)
+        pred = 26.0 / (1.0 + tp / sl) / 1e4 * 100
+        print(f"    tp{tp:<4g} sl{sl:<4g} need={g.required_edge_pp:+.3f}pp  "
+              f"(cost/(1+ratio)={pred:+.3f}pp)  n_to_verify={g.required_n_to_verify:,}")
+        check(f"required edge == cost/(1+ratio) for tp{tp:g}/sl{sl:g}",
+              abs(g.required_edge_pp - pred) < 0.01,
+              f"{g.required_edge_pp} vs {pred}")
+
+    greedy = evaluate(price=100.0, atr=1.0, tp_atr=6.0, sl_atr=0.5, hold_bars=200)
+    check("even an extreme bracket demands less edge than the friction itself",
+          greedy.required_edge_pp < 26.0, f"{greedy.required_edge_pp}pp")
+    check("required edge is still positive for every bracket", greedy.required_edge_pp > 0)
 
     # 5. the classic asymmetry trap: wide TP, tight SL. Reachable but a low-win-rate bet.
     trap = evaluate(price=100.0, atr=1.0, tp_atr=3.0, sl_atr=0.5, hold_bars=40)
@@ -147,6 +181,15 @@ def main() -> int:
           f"p_tp_exit={trap.p_tp_exit}")
     check("but it is NOT flagged unreachable (barriers are hittable)",
           not trap.fail_reach, f"p_any={trap.p_touch_any}")
+
+    # 5b. units regression: expected_excursion must be in PRICE units, not price*atr.
+    #     A 426-point ATR on a 59,700 BTC over 1 bar is ~71 bps, not ~5.5 million bps.
+    u = evaluate(price=59700.0, atr=426.0, tp_atr=2.0, sl_atr=1.0, hold_bars=1)
+    bps = u.expected_excursion / 59700.0 * 1e4
+    print(f"\n  units check: expected excursion = {u.expected_excursion:.1f} price = {bps:.1f} bps")
+    check("expected_excursion is in price units (71 bps, not millions)", 60 < bps < 85, f"{bps:.1f}")
+    check("expected_excursion equals atr*sqrt(hold) in price units",
+          abs(u.expected_excursion - 426.0) < 1e-6, str(u.expected_excursion))
 
     # 6. monotonicity: a longer hold must never lower the touch probability
     prev = -1.0
