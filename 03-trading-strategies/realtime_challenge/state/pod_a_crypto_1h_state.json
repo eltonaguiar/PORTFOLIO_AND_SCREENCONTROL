@@ -13,19 +13,22 @@
  "fees_paid": 0,
  "exit_mix": {},
  "skip_reasons": {},
+ "outcome": "INCONCLUSIVE",
+ "rolling_sharpe_20": null,
+ "decay_alarm": null,
  "pass": {
-  "ts_utc": "2026-11-22T09:30:14+00:00",
+  "ts_utc": "2026-11-22T10:14:12+00:00",
   "venue": "kraken",
   "closed_this_pass": [],
   "opened_this_pass": [],
   "marks": {
-   "BTC": 59839.7,
-   "ETH": 1685.76,
-   "SOL": 69.75,
-   "XRP": 0.92399,
-   "DOGE": 0.0547429,
-   "ADA": 0.14387,
-   "LINK": 8.62707
+   "BTC": 60910.7,
+   "ETH": 1709.77,
+   "SOL": 70.5,
+   "XRP": 0.93207,
+   "DOGE": 0.0554789,
+   "ADA": 0.145507,
+   "LINK": 8.75069
   },
   "equity": 10000.0
  }
