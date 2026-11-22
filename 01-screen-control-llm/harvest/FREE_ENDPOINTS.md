@@ -56,3 +56,39 @@ window was moved to `(0,0)` and the driver kept offsetting coordinate clicks by 
 to this; coordinates are not.** Prefer `set_value` + element clicks, and re-capture immediately before
 acting so the snapshot binding stays valid (a capture of a different mode in between invalidates indices
 with `snapshot_id_required`).
+
+## Local gateways — full measured matrix (2026-11-22, this host)
+
+Every row below is a real call, not documentation.
+
+**Router on `:4000`** — exists on *both* machines (`127.0.0.1` and `192.168.2.52`). All aliases answered;
+`back=` is the actual upstream the alias resolved to:
+
+| Alias | Latency | Upstream it resolved to | Verdict |
+|---|---:|---|---|
+| `ULTRA_FREE_CLOUD_LARGE` | 10.8 s | — | **full 905-char answer to a real question; best free route** |
+| `ULTRA_FREE_CLOUD_FAST` | 13.9 s | `meituan/longcat-2.5:free` | works |
+| `ULTRA_FREE_CLOUD_TOOLS` | 7.0 s | `gpt-4o-mini-2024-07-18` | works, tool-capable |
+| `ULTRA_FREE_KILO` | 2.0 s | `ULTRA_FREE_KILO` | works |
+| `ULTRA_FREE_OPENROUTER` | 1.6 s | `ULTRA_FREE_OPENROUTER` | works |
+| `ULTRA_FREE_NVIDIA` | 3.8 s | `ULTRA_FREE_NVIDIA` | works |
+
+**vLLM `:8000`** — `Qwen3.6-35B-A3B-NVFP4`, 12.0 s, `finish_reason=length`, **`content` = 0 chars,
+`reasoning` = 3,643 chars even at `max_tokens=900`.** A reasoning model spends the whole budget thinking:
+budget `max_tokens` at 2–3 k (or strip the reasoning channel), never report `content: null` as an empty
+answer.
+
+**Ollama cloud tags** — the Windows box still lists them but they are **dead upstream**:
+
+| Tag | Result |
+|---|---|
+| `glm-4.6:cloud` | **410 Gone** |
+| `kimi-k2.5:cloud` | **410 Gone** |
+| `gpt-oss:120b-cloud` | 200 with an **empty** body in 0.3 s |
+| `deepseek-v3.1:671b-cloud` | **410 Gone** (earlier probe) |
+
+A tag appearing in `/api/tags` does not mean it is served. Prefer the router aliases for cloud models.
+
+**Kilo `192.168.2.32:53401`** — 15 imported GGUFs, all `Not loaded` until first use, **one model at a
+time**; `/v1/models` itself times out while a load is in flight (busy, not down). First call can return
+`''` after ~27 s with the model still loading.
