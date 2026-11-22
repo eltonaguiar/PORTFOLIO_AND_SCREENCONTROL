@@ -310,13 +310,30 @@ summaries:
 commission is **$180.00** on a **−$285.14** result. Mean round-turn friction was 20 bps on every
 trade.
 
-**2. The take-profit never fired — 0 times in 27 trades.** 12 stops, 14 time stops, **0 targets**.
-With `tp_atr` 0.8–1.2 and `sl_atr` 0.5–0.6 on a 1h ATR of ~0.7%, the target sat ~0.57% away and
-the stop ~0.43%, inside 8–12 minute holds where the market moved 0.2–0.5%. This is the exact
-failure the roadmap's P7 rule predicts: **a bracket wider than the expected move over the
-holding period cannot be hit, so the exit is decided by the clock and the stop rather than by
-the thesis.** The asymmetry is structural, not bad luck — a target further away than the stop
-with a hold too short to reach either produces stops and timeouts and never targets.
+**2. The take-profit never fired — 0 times in 27 trades.** 12 stops, 15 time stops, **0 targets**.
+
+I first explained this as *"the bracket was wider than the expected move over the hold, so it
+could not be hit."* **The arithmetic refutes that for 21 of the 27 trades** (see `BRACKET_P7.md`,
+22 passing tests). Re-running every closed trade through the reachability gate with its own
+`atr_1h`:
+
+- **27 of 27 would have been refused before opening**, and only **6** because the bracket was
+  unreachable. Those 6 are all from the smoke book.
+- The other **21 were perfectly reachable and still guaranteed to lose.** At their own
+  geometry-implied hit rates they returned exactly **zero before costs** and −0.002 to −0.007R
+  after. The reason is an identity: for a driftless walk `p_TP = sl/(tp+sl)`, so
+  `p_TP·(tp/sl) − p_SL` is **identically zero for every bracket**. Friction then makes it
+  negative. **No bracket can create an edge; the target is where profit is collected, never where
+  it is made.**
+
+The second defect is independent and worse. Predicted `P(TP exit)` averaged **0.269**, so about
+**7.3 targets out of 27** should have occurred. Zero did: two-sided binomial **p = 0.0003**. That
+is incompatible with the geometry, and the only explanation left is that the paths were not
+driftless — **the positions were systematically against the move**. All shorts, into BTC +3.4%.
+
+So the 27 live trades carried two separate fatal defects: a bracket that could not profit even
+with a perfect signal, and a direction that was wrong. Neither is fixed by choosing a better
+signal alone, and neither was visible from the win rate.
 
 **3. Four venues agree on the direction of the result.** bybit (two rounds), kraken and okx all
 lost, at 0%, 0%, 0% and 18.2% win rates. The strategy was shorting 5-minute down-impulses while

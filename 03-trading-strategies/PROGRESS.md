@@ -52,6 +52,13 @@ control idea change any verdict?
 | 11:45 | FIX | **Caught a mislabelled benchmark in my own FX work.** My carry baseline printed −3.7% CAGR / Sharpe −0.18 and it would have been easy to write "the classic carry trade lost money this decade". It measures **spot only**. A carry trade also earns the interest differential, which for AUD/NZD vs JPY was strongly positive for most of the window and is the dominant term; that data is not in this dataset. Recorded as "cannot be quoted as carry's return" rather than as a negative | same |
 | 11:46 | DOC | Trial count 126 → 240 (walk-forward) → **275** (FX). FX is the third class to return a clean null on this repo's own machinery | same |
 
+| 11:52 | **CORRECTION** | **My 11:26 entry is wrong and is superseded.** I claimed the bracket was "wider than the expected move over the hold, so unreachable". Re-running all 27 closed trades through the reachability gate with each trade's own `atr_1h`: only **6 of 27** were unreachable (all from the smoke book). The other 21 were reachable and still guaranteed to lose | `BRACKET_P7.md` |
+| 11:53 | RUN | **Found the identity that explains it.** For a driftless walk `p_TP = sl/(tp+sl)`, so gross `E[R] = p_TP·(tp/sl) − p_SL = a/(a+b) − a/(a+b) = 0` **identically, for every bracket**. Verified numerically across 16 brackets (every one returns gross_EV = 0.000000R). Friction then makes every bracket negative. **A bracket cannot create an edge — the target is where profit is collected, never where it is made** | `proof/test_bracket.py` (22 tests) |
+| 11:54 | FAIL | **27 of 27 live trades would have been refused before opening.** NEGATIVE-EV on all 27; UNREACHABLE on only 6. So every trade in every book was arithmetically incapable of showing a profit regardless of signal quality | `bracket.py --audit-ledger` |
+| 11:55 | FAIL | **Second independent defect: direction.** Predicted P(TP exit) averaged **0.269**, so ~**7.3 targets of 27** should have occurred. Observed **0** → two-sided binomial **p=0.0003**. Incompatible with the geometry, so the driftless assumption is violated: the positions were systematically against the move | same |
+| 11:56 | PASS | Shipped the gate as enforceable code rather than a docstring: `evaluate()` returns `fail_reach` / `fail_balance` / `fail_ev` (the third was initially missing — it only printed a reason while `ok()` still returned True; caught by a test that asserted the probe bracket was refused), `exit_mix_test()` asks whether realised exits match the geometry, and the formulas are validated against 20,000-path Monte Carlo | `realtime_challenge/bracket.py` |
+| 11:57 | DOC | Roadmap P7 rule rewritten from "the bracket must be reachable" to the provable form: **"a bracket must have positive expectancy at its own geometry-implied hit rates, which is only possible if the entry carries directional skill"** | `ROADMAP_200_deepseek-flash.md` |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
@@ -62,6 +69,9 @@ control idea change any verdict?
   cells survive frozen-parameter stability and both were already killed by other controls; with
   fitted brackets **73% of in-sample winners lose money in the next window**.
 - **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
+- **Brackets provably cannot create an edge** (algebraic identity, 16/16 verified): every one of
+  the 27 live trades was negative-EV at its own implied hit rates, and 0 targets against 7.3
+  expected says the direction was wrong too.
 - **The cleanest single fact in the whole challenge:** a trade with the direction exactly right
   (+0.200% gross) netted +0.000% because the round turn was 20 bps.
 

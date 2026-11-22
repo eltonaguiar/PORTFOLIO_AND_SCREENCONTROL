@@ -248,12 +248,32 @@ cell must report `supervision_gap_s / median_hold_s` and
 `bracket_width_bps / max_expected_move_over_gap`; a bracket narrower than the move the
 market can make while nobody is watching is not a stop.
 
-**Rule adopted from the live round (2026-11-22):** the bracket must be *reachable inside
-the holding period*, or the risk model is fictional. The live smoke book used a 1.2×ATR
-bracket (~120 bps on BTC 1h) with a 6-minute hold — the market moved 6 bps, so TP/SL never
-fired and every trade resolved on the clock, guaranteeing "friction + noise". Every cell
-must now report `expected_move_over_hold / bracket_width`; below ~0.5 the bracket is
-decoration and the cell is not a strategy.
+**Rule adopted from the live round (2026-11-22), in two parts — the second supersedes the
+first as the binding one.**
+
+*Part 1 — reachability.* The bracket must be reachable inside the holding period, or the risk
+model is fictional. The live smoke book used a 1.2×ATR bracket (~120 bps on BTC 1h) with a
+6-minute hold — the market moved 6 bps, so TP/SL never fired and every trade resolved on the
+clock. That affected **6 of the 27** live trades, not all of them.
+
+*Part 2 — the identity, which is the real gate.* For a driftless walk `p_TP = sl/(tp+sl)`, so a
+bracket's gross expectancy is
+
+```
+E[R] = p_TP·(tp/sl) − p_SL = a/(a+b) − a/(a+b) = 0     identically, for every (a, b)
+```
+
+verified numerically on 16 bracket combinations. **A bracket cannot create an edge; friction
+makes every bracket negative.** Therefore the rule is not "make it reachable" but:
+
+> **A bracket must have positive expectancy at its own geometry-implied hit rates, which is only
+> possible if the entry is right more often than the geometry implies. If it is not, no bracket
+> choice can save the trade.**
+
+Every cell and every live book must now refuse to open a bracket failing `fail_reach`,
+`fail_balance` or `fail_ev` from `realtime_challenge/bracket.py`, and every closed book must
+report `exit_mix_test` — because **0 targets against 7.3 predicted (p=0.0003) proved the direction
+was wrong while the win rate said nothing about it.**
 
 ---
 
