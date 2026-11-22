@@ -41,6 +41,11 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 | 10:04 | FIX | Adopted Mercury3's reporting rule as a standing requirement: every sub-hourly strategy reports **gross / fees / net and the ratio** — if the fee line exceeds the gross line it is a donation, not a strategy | `ROADMAP_200_deepseek-flash.md` |
 | 10:05 | PEER | Documented the two fleet-hygiene behaviours hit here: `coms.ps1` refuses `--retain` into another seat's inbox (last-writer-wins guard), and `check` without `-WorktreeName` resolves to the newest registered seat and misses a new worktree's inbox | `PEERCROSSCHECK_deepseek-flash.md` §11.3 |
 
+| 10:08 | PEER | Perplexity note audit: a peer review of the **same** note already existed (`REVIEWS/PERPLEXITY_NOTE_REVIEW.md`, 5 matching tool names), so I re-verified its factual table instead of duplicating it - Windows-MCP 11,999 stars MIT, SayDoneAI/Screenhand 0 stars, screen-use no match, Eigent 15,867, open-cowork 2,283, nuphus-mcp 336 all confirmed | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` addendum A0 |
+| 10:10 | DOC | Appended a backtesting-half addendum: **four undisclosed licences** (`backtesting.py` AGPL-3.0, `LumiBot` GPL-3.0, `NautilusTrader` LGPL-3.0, vectorbt NOASSERTION) and `vectorbt.pro` has no public repo to audit | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` A1 |
+| 10:10 | FAIL | Its proposed gate list (OOS, costs, slippage, position limits, drawdown limits, data quality, reproducible artifacts) is **necessary and not sufficient**: all seven were implemented here across 126 cells and **0 qualified**. The missing gates are trial accounting / deflated Sharpe and a permutation control | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` A2, `TIMEFRAME_MATRIX.md` |
+| 10:11 | DOC | Recorded that engine choice is not the binding constraint: NautilusTrader over vectorbt changes how faithfully you simulate an edge smaller than 26bps; it does not create one. Mercury3 PART13 reaches the same place from a different codebase (fees 9x gross edge) | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` A3 |
+
 ### Verdict changes after session 2
 
 - **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.
