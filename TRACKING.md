@@ -36,15 +36,16 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 61 (23 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 62 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 173 (21 md) | 95 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 178 (22 md) | 98 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
 
 | Path | Lines | Bytes |
 |---|---:|---:|
+| [`01-screen-control-llm/DRIVING_BROWSER_AND_VSCODE.md`](01-screen-control-llm/DRIVING_BROWSER_AND_VSCODE.md) | 107 | 7632 |
 | [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8727 |
 | [`01-screen-control-llm/harvest/1min_methodology.md`](01-screen-control-llm/harvest/1min_methodology.md) | 85 | 10558 |
 | [`01-screen-control-llm/harvest/arena_methodology.md`](01-screen-control-llm/harvest/arena_methodology.md) | 1040 | 38556 |
@@ -76,6 +77,7 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 7025 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5738 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
+| [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 94 | 4701 |
 | [`03-trading-strategies/CARRY_SERIES.md`](03-trading-strategies/CARRY_SERIES.md) | 68 | 3820 |
 | [`03-trading-strategies/ETF_ROTATION_H-E1.md`](03-trading-strategies/ETF_ROTATION_H-E1.md) | 144 | 7413 |
 | [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5968 |
@@ -87,7 +89,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5954 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17713 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 241 | 38435 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 252 | 41012 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9486 |
 | [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7847 |
 | [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 20027 |
@@ -126,7 +128,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8465 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 21 | 3119 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 20 | 3360 |
 | [`README.md`](README.md) | 196 | 16556 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6589 |
 

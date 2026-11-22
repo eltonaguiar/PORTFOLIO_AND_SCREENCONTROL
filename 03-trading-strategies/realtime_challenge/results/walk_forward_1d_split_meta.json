@@ -1,0 +1,26 @@
+{
+  "published_utc": "2026-11-22T06:53:00-05:00",
+  "source_command": "python -m realtime_challenge.proof.walk_forward --mode A --timeframe 1d --folds 10 --limit 2000",
+  "source_artifact": "results/walk_forward_1d_20261122T115608Z.json",
+  "partition": {
+    "folds": 10,
+    "split_basis": "calendar",
+    "test_window_bars": 150,
+    "purge_bars": 24,
+    "embargo_frac": 0.01,
+    "timeframe": "1d",
+    "venue": "binance",
+    "universe": ["BTC", "ETH", "SOL", "XRP", "DOGE", "ADA", "LINK"],
+    "limit_bars": 2000,
+    "window_utc": "2021-06-02 -> 2026-11-22",
+    "protocol": "sequential expanding folds, strictly no look-ahead, purge+embargo (Lopez de Prado)"
+  },
+  "result": {
+    "n_cells": 42,
+    "n_survivors": 0,
+    "survivors": [],
+    "gate": "pooled OOS CI lower bound > 0 AND >= 60% folds positive AND n>=20",
+    "note": "0 of 42 cells cleared the gate at the strictest partition"
+  },
+  "t3_context": "fold count is a free parameter: 6 survivors at 3 folds, 0 at 10 on identical data, code, and costs. Publishing the partition (folds, split_basis, test_window_bars, purge_bars) is required before any walk-forward claim can be evaluated."
+}

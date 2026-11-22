@@ -1,6 +1,6 @@
 {
  "hypothesis": "P6 \u2014 do any of the six families survive walk-forward with purge+embargo?",
- "generated_utc": "2026-11-22T11:19:32+00:00",
+ "generated_utc": "2026-11-22T11:56:08+00:00",
  "timeframe": "1d",
  "universe": [
   "BTC",
@@ -14,6 +14,7 @@
  "folds_a": 10,
  "folds_b": 10,
  "purge_bars": 24,
+ "test_window_bars": 150,
  "venue": "binance",
  "costs": {
   "taker_fee": 0.001,
@@ -25,6 +26,7 @@
   "folds": "sequential expanding, strictly no look-ahead",
   "purge_bars": 24,
   "embargo_frac": 0.01,
+  "split_basis": "calendar",
   "mode_a": "frozen parameters \u2014 temporal stability",
   "mode_b": "grid 18 brackets fitted on train, applied untouched to test",
   "mode_b_symbols": [
@@ -32,7 +34,8 @@
    "ETH",
    "SOL"
   ],
-  "pass_rule": "pooled OOS CI lower bound > 0 AND >= 60% folds positive"
+  "pass_rule": "pooled OOS CI lower bound > 0 AND >= 60% folds positive",
+  "test_window_bars": 150
  },
  "mode_a": {
   "rows": [
@@ -879,14 +882,14 @@
       "test_start": "2026-07-04 00:00:00+00:00",
       "test_end": "2026-11-22 00:00:00+00:00",
       "n": 7,
-      "mean_bps": -8.74
+      "mean_bps": -6.74
      }
     ],
     "n_scored_folds": 10,
     "folds_positive": 4,
     "fold_positivity": 0.4,
     "total_oos_trades": 60,
-    "pooled_mean_bps": 45.66
+    "pooled_mean_bps": 45.89
    },
    {
     "strategy": "H-R2_donchian_breakout",
@@ -950,14 +953,14 @@
       "test_start": "2026-07-04 00:00:00+00:00",
       "test_end": "2026-11-22 00:00:00+00:00",
       "n": 9,
-      "mean_bps": -13.41
+      "mean_bps": -10.28
      }
     ],
     "n_scored_folds": 9,
     "folds_positive": 3,
     "fold_positivity": 0.333,
     "total_oos_trades": 68,
-    "pooled_mean_bps": -168.83
+    "pooled_mean_bps": -168.42
    },
    {
     "strategy": "H-R6_rsi2_pullback",

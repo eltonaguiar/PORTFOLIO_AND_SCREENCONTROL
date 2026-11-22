@@ -35,6 +35,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import statistics
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -212,6 +213,18 @@ def main() -> int:
     if not panel:
         print("no data"); return 1
     nbars = min(len(v) for v in panel.values())
+    # test window size in bars (median scored window across expanding folds)
+    sample_df = next(iter(panel.values()))
+    sample_fl = folds_for(len(sample_df), folds_a)
+    tw = []
+    for train_end, t0, t1 in sample_fl:
+        te_stop = max(1, train_end - purge)
+        emb = int(te_stop * EMBARGO_FRAC)
+        lo = min(t1, t0 + emb)
+        sub = sample_df.iloc[lo:t1]
+        if len(sub) >= 30:
+            tw.append(len(sub))
+    test_window_bars = int(round(statistics.median(tw))) if tw else None
     print(f"  {len(panel)} symbols, common window {min(v.index[0] for v in panel.values())} "
           f"-> {max(v.index[-1] for v in panel.values())} ({nbars} bars)\n")
 
@@ -219,16 +232,18 @@ def main() -> int:
         "hypothesis": "P6 — do any of the six families survive walk-forward with purge+embargo?",
         "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "timeframe": a.timeframe, "universe": UNIVERSE,
-        "folds_a": folds_a, "folds_b": folds_b, "purge_bars": purge, "venue": a.venue,
+        "folds_a": folds_a, "folds_b": folds_b, "purge_bars": purge, "test_window_bars": test_window_bars, "venue": a.venue,
         "costs": DEFAULT_COSTS.as_dict(),
         "protocol": {
             "folds": "sequential expanding, strictly no look-ahead",
             "purge_bars": purge,
             "embargo_frac": EMBARGO_FRAC,
+            "split_basis": "calendar",
             "mode_a": "frozen parameters — temporal stability",
             "mode_b": f"grid {len(GRID)} brackets fitted on train, applied untouched to test",
             "mode_b_symbols": GRID_SYMBOLS,
             "pass_rule": f"pooled OOS CI lower bound > 0 AND >= {WF_MIN_FOLDS_POSITIVE:.0%} folds positive",
+            "test_window_bars": test_window_bars,
         },
     }
 
