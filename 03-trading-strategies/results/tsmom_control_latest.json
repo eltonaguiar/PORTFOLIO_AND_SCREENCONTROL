@@ -1,0 +1,35 @@
+{
+ "hypothesis": "multi-asset vol-scaled TSMOM beats buy-and-hold for TIMING reasons",
+ "corrects": "vol_scaling_test.py judged TSMOM on a single-asset binary version; the published construction is multi-asset and vol-scaled",
+ "generated_utc": "2026-11-22T11:10:36+00:00",
+ "window": {
+  "start": "2004-01-01",
+  "universe": [
+   "SPY",
+   "EFA",
+   "EEM",
+   "TLT",
+   "IEF",
+   "GLD",
+   "DBC",
+   "UUP"
+  ]
+ },
+ "real_sharpe": 0.749,
+ "buy_and_hold_sharpe": 0.643,
+ "exposure_control": {
+  "n_random": 200,
+  "mean": 0.587,
+  "sd": 0.102,
+  "p05": 0.422,
+  "p95": 0.759,
+  "p_random_beats_real": 0.07
+ },
+ "permutation_control": {
+  "n": 200,
+  "mean": 0.807,
+  "p95": 1.042,
+  "p_value": 0.665
+ },
+ "verdict": "NO TIMING EDGE: random exposure with the same flat fraction matches it (p=0.070) -> the result is EXPOSURE, not timing; permuted returns do as well (p=0.665)"
+}
