@@ -1,0 +1,32 @@
+{
+ "run_id": "pod_a_crypto_1h",
+ "starting_cash": 10000.0,
+ "equity": 10000.0,
+ "n_closed": 0,
+ "n_open": 0,
+ "n_skips": 0,
+ "win_rate": null,
+ "profit_factor": null,
+ "total_pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "fees_paid": 0,
+ "exit_mix": {},
+ "skip_reasons": {},
+ "pass": {
+  "ts_utc": "2026-11-22T09:26:44+00:00",
+  "venue": "kraken",
+  "closed_this_pass": [],
+  "opened_this_pass": [],
+  "marks": {
+   "BTC": 59843.0,
+   "ETH": 1685.32,
+   "SOL": 69.8,
+   "XRP": 0.92525,
+   "DOGE": 0.054783,
+   "ADA": 0.143968,
+   "LINK": 8.6313
+  },
+  "equity": 10000.0
+ }
+}
