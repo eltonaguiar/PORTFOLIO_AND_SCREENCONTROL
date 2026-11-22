@@ -63,19 +63,51 @@ the models cited it unprompted, which is a good sign the answers are grounded ra
 
 ## 3. What arena's blind pair added that the others missed
 
-Both arena answers push past "pick a threshold and pass it":
+**Assistant B is the single most operational answer in the set** — it is a stage-gate, not advice:
 
-- **Three outcomes, not two.** *Pass* / *Fail* / **Inconclusive** — and inconclusive is **not** permission
-  to lower the hurdle, change the metric, or keep testing until something passes. That is the failure
-  mode of nearly every retail research loop.
-- **A fixed reporting pack** to be allowed to say "works": pre-registration + trial log with N and V;
-  PIT/survivorship/cost plus audit tests; net equity, drawdown, monthly table, turnover, exposures;
-  DSR + PBO/CSCV histograms; walk-forward table; IR and factor regression; 2×-cost; tail; and a kill list.
-- **A stronger null**: Hansen SPA / White Reality Check with **p > 0.10 across the family**, and DSR
-  recomputed with the *true* N including every forward tweak, targeting **< 0.90**. Our forward gate only
-  asks for a CI lower bound above zero at 2× costs — arena's null is stricter and worth adopting.
-- **The scaling rule**: pass everything, then survive **12+ months live at small size with IR intact** —
-  and only then scale. No single Sharpe, PBO, or backtest plot substitutes for that.
+| Gate | Test | Pass to continue |
+|---|---|---|
+| 0 | economic rationale + pre-registration | written **before** seeing OOS |
+| 1 | backtest integrity | every build-checklist row passes |
+| 2 | multiple-testing-adjusted significance | **DSR ≥ 0.95, PBO ≤ 0.20** |
+| 3 | robustness | WFE ≥ 0.50, IR ≥ 0.50, 2×-cost Sharpe > 0.5 *and* > 50% of base, tail ratio > 1.0, capacity > 20× intended size |
+| 4 | forward/paper + live incubation | pre-specified N, alpha-spending, no peeking |
+| 5 | live monitoring | no falsification trigger fires |
+
+One fail stops the process; a revision is a new candidate needing new confirmatory data.
+
+Its **worked DSR example** is the clearest statement of how data mining dies: 5 years daily (T = 1260),
+SR 1.2 net, skew −0.2, kurt 4.5 — with N = 200 trials and V = 0.04 → SR₀ = 0.55 → **DSR ≈ 1.00, PASS**.
+Same strategy, but you tried **N = 1000 with V = 0.25 → SR₀ ≈ 1.62 > SR 0.8 → DSR ≈ 0.02, REJECT.**
+The only thing that changed was how many things you tried.
+
+Its **forward-duration table** (80% power, one-sided α = 0.05) is the number most retail plans ignore:
+
+| Active IR above hurdle | daily obs | years |
+|---|---|---|
+| 0.25 | 24,900 | **99** |
+| 0.50 | 6,230 | 24.7 |
+| 0.75 | 2,770 | 11.0 |
+| 1.00 | 1,560 | 6.2 |
+| 2.00 | 390 | 1.5 |
+
+with ~620 independent trades if per-trade μ/σ = 0.10 — i.e. **a daily Sharpe below ~1 cannot be demonstrated
+by a six-month paper test**, however good the early P&L looks.
+
+Also from B, and worth adopting: PBO computed over C(16,8)/2 = **6,435** train/test splits; kill triggers with
+concrete numbers (realised slippage > 2× modelled for 3 months; borrow hard on > 15% of shorts; live drawdown
+> 1.5× worst IS drawdown; **any PIT/survivorship bug that removes > 20% of backtest Sharpe invalidates all
+prior tests**); and a **stricter null**: Hansen SPA / White Reality Check **p > 0.10** across the family, DSR
+recomputed with the true N including forward tweaks, targeting **< 0.90**.
+
+From Assistant A, the framing that survives its messier formatting: *Pass / Fail / **Inconclusive***, where
+inconclusive is **not** permission to lower the hurdle, change the metric, or keep testing until something
+passes. A writes its numbers as LaTeX, and the clipboard dump splits formulas across lines — so A's equations
+should be read from the rendered page, not the copy. B's tables survive the copy intact.
+
+**Disagreement to resolve inside the repo:** B rejects below DSR 0.90 and accepts ≥ 0.95; the chatplayground
+answers set the pass mark at 0.95 with 0.80–0.95 marginal. Our own forward gate does not use DSR at all yet —
+it uses a CI lower bound above zero at 2× costs. B's version is the stricter and better-specified one.
 
 ## 4. Where they differ
 
