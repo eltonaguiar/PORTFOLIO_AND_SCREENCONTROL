@@ -37,9 +37,9 @@ reflects new peer artifacts without a human in the loop.
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 20 (8 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
-| `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 6 (6 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
+| `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
 | `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 62 (11 md) | 38 | see `git log -1 -- 03-trading-strategies` |
-| `REVIEWS/` — Audits of model answers and challenge documents | 21 (21 md) | 0 | see `git log -1 -- REVIEWS` |
+| `REVIEWS/` — Audits of model answers and challenge documents | 22 (22 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
 
@@ -53,12 +53,13 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 108 | 7860 |
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
 | [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
+| [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8357 |
 | [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 130 | 6795 |
 | [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
 | [`02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md`](02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md) | 291 | 16353 |
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
-| [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 66 | 5409 |
+| [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
 | [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5862 |
 | [`03-trading-strategies/GPT5NANO_REVIEW.md`](03-trading-strategies/GPT5NANO_REVIEW.md) | 52 | 4684 |
 | [`03-trading-strategies/HARNESS_CERTIFICATION.md`](03-trading-strategies/HARNESS_CERTIFICATION.md) | 56 | 3919 |
@@ -77,6 +78,7 @@ reflects new peer artifacts without a human in the loop.
 | [`REVIEWS/GEMINI_TRADE_0001_AUDIT.md`](REVIEWS/GEMINI_TRADE_0001_AUDIT.md) | 204 | 10859 |
 | [`REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md`](REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md) | 68 | 6540 |
 | [`REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md`](REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md) | 97 | 11968 |
+| [`REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md`](REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md) | 483 | 41739 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Claude-4.5-Opus.md`](REVIEWS/inputs/REALTIMECHALLENGE_Claude-4.5-Opus.md) | 3186 | 114814 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Claude-5.5-Haiku.md`](REVIEWS/inputs/REALTIMECHALLENGE_Claude-5.5-Haiku.md) | 379 | 23658 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md`](REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md) | 254 | 22199 |

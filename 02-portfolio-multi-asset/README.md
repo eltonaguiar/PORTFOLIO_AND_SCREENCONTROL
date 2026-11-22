@@ -31,6 +31,7 @@ here cover both, plus the data-evidence rules that make either one honest.
 | [`PORTFOLIO_TRACKING.md`](PORTFOLIO_TRACKING.md) | The tracking/valuation stack: ledgers, aggregators, multi-currency valuation, TWR vs MWR, reconciliation, broker imports |
 | [`DATA_EVIDENCE_RULES.md`](DATA_EVIDENCE_RULES.md) | Mandatory provenance for every series and every backtest report; `observed` / `derived` / `assumed` labelling; multiple-testing discipline |
 | [`PAPER_TRADING_AND_MONITORING.md`](PAPER_TRADING_AND_MONITORING.md) | The audit loop between backtest and money: fill model assumptions, TP/SL sequencing, event log schema, latency/slippage metrics, a scheduler that is actually suitable, kill switches |
+| [`CAPITAL_ALLOCATION.md`](CAPITAL_ALLOCATION.md) | How to allocate real money given the audit surface's own verdicts — three tiers by horizon, the forward-gate funding rule, and the live selection-alpha table that says picks lost to holding in every class |
 
 ## Recommendation in one paragraph
 
