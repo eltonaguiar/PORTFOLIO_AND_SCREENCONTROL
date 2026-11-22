@@ -302,6 +302,7 @@ summaries:
 | HARNESS_PROBE v2 | **bybit** | 11 | 2 | 18.2% | −$121.00 | $73.33 | SL 5, TIME 6 |
 | HARNESS_PROBE | **kraken** | 3 | 0 | 0.0% | −$37.03 | $20.00 | SL 2, TIME 1 |
 | HARNESS_PROBE | **okx** | 4 | 0 | 0.0% | −$52.83 | $26.67 | SL 4 |
+| FX paper probe (H-R1 USD/JPY daily) | yfinance USDJPY=X | 0 | — | — | $0.00 | $0.00 | NO_SIGNAL — daily-bar cell, no entry trigger in the 25-minute window |
 | | | **27** | **2** | **7.4%** | **−$285.14** | **$180.00** | SL 12, TIME 14 |
 
 **Three things this sample establishes, and one it does not.**

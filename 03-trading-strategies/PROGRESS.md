@@ -335,3 +335,16 @@ Question: after every measurement round, is there any surviving class, and what 
 |---|---|---|---|
 | 15:46 | RUN | (g) consolidated STATUS/VERDICT doc: every tested class as PROVEN / CANDIDATE / DEAD / UNMEASURABLE with the deciding gate | 03-trading-strategies/VERDICT_200.md |
 | 15:46 | PASS | Verdict written: PROVEN none, CANDIDATE none, DEAD = crypto 1d walk-forward (0/42 cells), crypto census (descriptive, no edge claimed), equity factors (all timed Sharpe below SPY 0.619), R191/R192 overlay (5.83% vs peer 8.37%, convention-dependent), FX majors census (0/35 cells); UNMEASURABLE = FX rate differentials (no reachable feed). Bracket gate wired (schedule 45 * * * *); carry series running at :30 UTC (28 ticks, carry-net median -11.35 bps, positive fraction 0.0). | VERDICT_200.md |
+
+## Session 11 — 2026-11-22 (22:15–22:25 UTC) — `hermes` (cron job, FX live leg)
+
+Question: does the FX live leg produce a trade in the first 25 minutes after the Sunday 17:00 ET open, on the census's best cell (H-R1 trend pullback on USD/JPY, p = 0.017, CI straddles zero)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 22:15 | PASS | Market-clock preflight: `fx` in `open_classes()` = ['crypto', 'fx'] — forex is open inside the 17:00 Sun–17:00 Fri ET session; round proceeds | ledger/fx_paper_usdjpy_20261122_2221Z.jsonl |
+| 22:21 | RUN | FX paper probe, H-R1_trend_pullback on USD/JPY daily bars, yfinance USDJPY=X (399 bars, last closed 2026-11-20 @ 159.707, next-bar open 158.601 = the lag-1 fill had it fired), ATR14 = 0.9622, costs = 10 bps taker + 3 bps slippage per side (26 bps round turn), max 25 minutes | ledger/fx_paper_usdjpy_20261122_2221Z.jsonl |
+| 22:21 | PASS | Signal on the last closed daily bar = 0 (uptrend true: EMA50 158.39 > EMA200 157.81, but RSI 61.2 — no dip below EMA20 with RSI < 45, so no reclaim setup). 0 signals in the last 60 closed bars. No entry; flat book observed live for ~3 minutes while the session was open (yfinance 1m mark stale at Friday's 158.51 — weekend session illiquid, reported as staleness, not invented) | ledger/fx_paper_usdjpy_20261122_2221Z.jsonl |
+| 22:25 | PASS | Round complete: 0 trades opened, 0 closed, n_open = 0 (read before quoting any total), net $0.00, fees $0.00, outcome NO_SIGNAL. "No signal in the window" — a valid zero-trade result, not padded. Had it fired, the bracket would have been TP = entry + 2·ATR, SL = entry − 1·ATR with stop-first on ambiguous bars, force-flat at the 25-minute cap. Census caveat restated: p = 0.017 but CI [−26.5, +94.2] straddles zero — 1 of 35 cells at α = 0.05 is below the 1.75 false-positive expectation, not an established edge | ledger/fx_paper_usdjpy_20261122_2221Z.jsonl |
+
+Also updated: `REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD` §5.4 live-evidence table with the FX paper probe row (0 closed, $0.00 net, $0.00 fees, NO_SIGNAL).
