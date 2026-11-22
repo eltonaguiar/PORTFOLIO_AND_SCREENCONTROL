@@ -296,3 +296,14 @@ Question: does the peer's ETF rotation + trend overlay table reproduce on one sh
 |---|---|---|---|
 | 14:15 | RUN | (g) R191/R192 trend-overlay reconciliation: SPY B&H, AOA, 60/40, GIC, SPY+200d overlay under one convention (month-end close signal -> next-day open fill, 5bps/side, 2004 vs 2006 starts), vs peer verdict rows (SPY 10.27% / -55.2%, overlay 8.37% / -20.5% over 2006-2026) | proof/r191_r192_overlay.py, results/r191_r192_reconciliation.json |
 | 14:29 | PASS | SPY B&H and max DD reconcile: 10.28% vs peer 10.27% CAGR (2004-start matches H-E1's independent script), -55.19% vs -55.2% DD exact. Trend overlay does NOT reproduce under one convention: peer 8.37% vs mine 5.83% on the same 2006-2026 window; start date explains only ~16% of the gap (5.34% vs 5.83%), so the remainder is convention/cost difference (likely daily close-to-close signaling vs month-end->next-open). R191/R192 closed on numbers: SPY row reconciled, overlay row flagged as convention-dependent, not re-runnable to the peer's figure. | results/r191_r192_reconciliation.json |
+
+---
+## Session 9 — 2026-11-22 (14:40–14:45 UTC) — `hermes` (Session B, cron queue axis)
+Question: does the daily-timeframe walk-forward gate (10 folds over the 1d panel) leave any surviving cell, and does fitted-bracket collapse hold at the daily horizon?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 14:42 | RUN | (a) daily walk-forward, 10 folds: 1d, binance, 7 symbols, 2,000 bars (2021-06-02 -> 2026-11-22), purge 24 bars, embargo 1%, 26 bps round-turn costs, sequential expanding folds, no look-ahead | proof/walk_forward.py, realtime_challenge/results/walk_forward_1d_20261122T144246Z.json |
+| 14:42 | FAIL | Mode A (frozen params): 0 of 42 cells survive (>=60% folds positive, pooled>0, n>=20). Most cells score a single fold with n=5-6 because ~150-bar daily test windows are too short for rare daily signals | realtime_challenge/results/walk_forward_1d_20261122T144246Z.json |
+| 14:42 | FAIL | Mode B (fitted params): 43 folds train-positive, 24 test-positive, 20 collapses (~47%). Picking (tp_atr,sl_atr,max_bars) on the train window has negative predictive value for the next daily window — same overfitting signature as 4h | realtime_challenge/results/walk_forward_1d_20261122T144246Z.json |
+| 14:42 | PASS | Reproduces Session 3's fold-sweep on current data: 10 folds -> 0 of 42 survivors, the strictest partition that cannot be chosen after seeing the result | realtime_challenge/results/walk_forward_1d_latest.json |

@@ -1,6 +1,6 @@
 {
  "hypothesis": "P6 \u2014 do any of the six families survive walk-forward with purge+embargo?",
- "generated_utc": "2026-11-22T12:44:40+00:00",
+ "generated_utc": "2026-11-22T14:42:34+00:00",
  "timeframe": "1d",
  "universe": [
   "BTC",
@@ -669,14 +669,14 @@
       "test_start": "2026-07-04 00:00:00+00:00",
       "test_end": "2026-11-22 00:00:00+00:00",
       "n": 7,
-      "mean_bps": 0.75
+      "mean_bps": 5.99
      }
     ],
     "n_scored_folds": 10,
     "folds_positive": 5,
     "fold_positivity": 0.5,
     "total_oos_trades": 60,
-    "pooled_mean_bps": 46.77
+    "pooled_mean_bps": 47.38
    },
    {
     "strategy": "H-R6_rsi2_pullback",
@@ -953,14 +953,14 @@
       "test_start": "2026-07-04 00:00:00+00:00",
       "test_end": "2026-11-22 00:00:00+00:00",
       "n": 9,
-      "mean_bps": -8.52
+      "mean_bps": -4.26
      }
     ],
     "n_scored_folds": 9,
     "folds_positive": 3,
     "fold_positivity": 0.333,
     "total_oos_trades": 68,
-    "pooled_mean_bps": -168.19
+    "pooled_mean_bps": -167.62
    },
    {
     "strategy": "H-R6_rsi2_pullback",
