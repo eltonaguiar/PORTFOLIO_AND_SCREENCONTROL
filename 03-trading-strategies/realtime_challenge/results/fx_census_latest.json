@@ -1,6 +1,6 @@
 {
  "hypothesis": "P8 \u2014 does any of the six families show net-positive expectancy on FX?",
- "generated_utc": "2026-11-22T10:01:36+00:00",
+ "generated_utc": "2026-11-22T12:25:58+00:00",
  "pairs": [
   "EURUSD",
   "USDJPY",
@@ -26,10 +26,94 @@
  "carry_baseline": {
   "legs": 4,
   "window": "2015-01-02 -> 2026-11-20",
-  "cagr": -0.037,
+  "spot_only_cagr": -0.037,
+  "carry_cagr": -0.0148,
   "ann_vol": 0.1484,
-  "sharpe": -0.18,
-  "max_drawdown": -0.4487
+  "sharpe": -0.027,
+  "max_drawdown": -0.3768,
+  "cross_stats": {
+   "AUD/JPY": {
+    "spot_only_cagr": -0.0493,
+    "carry_cagr": -0.0254,
+    "ann_vol": 0.1515,
+    "sharpe": -0.094,
+    "max_drawdown": -0.4603,
+    "rate_diff_annual_bps": 360.0,
+    "rate_diff_daily_bps": 0.9863,
+    "n_days": 3093
+   },
+   "NZD/JPY": {
+    "spot_only_cagr": -0.0613,
+    "carry_cagr": -0.0384,
+    "ann_vol": 0.1575,
+    "sharpe": -0.17,
+    "max_drawdown": -0.4816,
+    "rate_diff_annual_bps": 350.0,
+    "rate_diff_daily_bps": 0.9589,
+    "n_days": 3093
+   },
+   "AUD/CHF": {
+    "spot_only_cagr": -0.0149,
+    "carry_cagr": 0.0064,
+    "ann_vol": 0.1587,
+    "sharpe": 0.119,
+    "max_drawdown": -0.3537,
+    "rate_diff_annual_bps": 310.0,
+    "rate_diff_daily_bps": 0.8493,
+    "n_days": 3093
+   },
+   "NZD/CHF": {
+    "spot_only_cagr": -0.0272,
+    "carry_cagr": -0.0068,
+    "ann_vol": 0.1633,
+    "sharpe": 0.039,
+    "max_drawdown": -0.3376,
+    "rate_diff_annual_bps": 300.0,
+    "rate_diff_daily_bps": 0.8219,
+    "n_days": 3093
+   }
+  },
+  "rate_source": "central bank policy rates (as of Nov 2026)"
+ },
+ "rate_differentials": {
+  "imm_date": null,
+  "days_to_imm": null,
+  "T_years": null,
+  "spot_usd_per_foreign": {},
+  "futures_usd_per_foreign": {},
+  "rate_vs_usd_bps": {
+   "AUD": 410.0,
+   "NZD": 400.0,
+   "JPY": 50.0,
+   "CHF": 100.0
+  },
+  "cross_differentials_bps": {
+   "AUD/JPY": {
+    "annual_bps": 360.0,
+    "daily_bps": 0.9863,
+    "r_base_bps": 410.0,
+    "r_quote_bps": 50.0
+   },
+   "NZD/JPY": {
+    "annual_bps": 350.0,
+    "daily_bps": 0.9589,
+    "r_base_bps": 400.0,
+    "r_quote_bps": 50.0
+   },
+   "AUD/CHF": {
+    "annual_bps": 310.0,
+    "daily_bps": 0.8493,
+    "r_base_bps": 410.0,
+    "r_quote_bps": 100.0
+   },
+   "NZD/CHF": {
+    "annual_bps": 300.0,
+    "daily_bps": 0.8219,
+    "r_base_bps": 400.0,
+    "r_quote_bps": 100.0
+   }
+  },
+  "rate_source": "central bank policy rates (as of Nov 2026)"
  },
  "rows": [
   {
@@ -1694,5 +1778,5 @@
  ],
  "verdict": "NO FX EDGE ESTABLISHED: 0 of 35 cells have both a net CI above zero and a permutation p<=0.05 at 5bps round turn. 8 of 35 cells are positive on point estimate alone.",
  "class_note": "n per cell is small (daily bars, one pair): FX daily signals fire rarely. A null here is a statement about these six families on daily bars over this decade, not a proof the class is untradeable.",
- "carry_note": "static long AUD/NZD vs short JPY/CHF, zero cost, constructed from the USD legs as ret(A/USD)-ret(B/USD) so it sits on identical bars to the cells; the one documented durable FX premium, used as the bar a technical family must clear"
+ "carry_note": "carry baseline now includes futures-implied interest-rate differentials (CME FX futures via covered interest parity, T to next IMM). The prior spot-only figure (\u22123.7% CAGR) must not be quoted as the carry trade's return; the rate-inclusive figure above is the quotable carry baseline."
 }

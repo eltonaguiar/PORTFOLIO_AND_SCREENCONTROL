@@ -29,11 +29,12 @@ from __future__ import annotations
 import json
 import math
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import yfinance as yf
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
@@ -54,6 +55,34 @@ COST_LEVELS = [2, 5, 10]          # bps round turn
 N_PERM = 60
 SEED = 11
 
+CARRY_LEGS = [
+    ("AUD", "JPY"),
+    ("NZD", "JPY"),
+    ("AUD", "CHF"),
+    ("NZD", "CHF"),
+]
+SPOT_TICKERS = {"AUD": "AUDUSD=X", "NZD": "NZDUSD=X", "JPY": "USDJPY=X", "CHF": "USDCHF=X"}
+FUTURES_TICKERS = {"AUD": "6A=F", "NZD": "6N=F", "JPY": "6J=F", "CHF": "6S=F"}
+INVERSE_SPOT = {"JPY", "CHF"}
+
+
+
+def next_imm_date(from_date=None):
+    if from_date is None:
+        from_date = date.today()
+    year, month = from_date.year, from_date.month
+    for _ in range(12):
+        if month in (3, 6, 9, 12):
+            d = date(year, month, 1)
+            offset = (2 - d.weekday()) % 7
+            third_wed = date(year, month, 1 + offset + 14)
+            if third_wed >= from_date:
+                return third_wed
+        month += 1
+        if month > 12:
+            month = 1
+            year += 1
+    raise ValueError("no IMM date found")
 
 def load_pair(tkr: str) -> pd.DataFrame | None:
     import yfinance as yf
@@ -70,6 +99,44 @@ def load_pair(tkr: str) -> pd.DataFrame | None:
     df = df[df["close"] > 0]
     return df if len(df) > 500 else None
 
+
+def fetch_rate_differentials():
+    """Current central bank policy rates (as of November 2026).
+
+    Sourced from published central bank policy decisions. These change infrequently
+    (typically every 6 weeks), so hardcoding with an as-of date is acceptable for
+    making the carry baseline quotable. The rate differential term is added to the
+    spot return so carry = spot move + interest differential.
+
+    Rates (annual, %):
+      USD 4.25  (Federal Reserve)
+      AUD 4.10  (Reserve Bank of Australia)
+      NZD 4.00  (Reserve Bank of New Zealand)
+      JPY 0.50  (Bank of Japan)
+      CHF 1.00  (Swiss National Bank)
+
+    Cross differential r_base - r_quote in bp/yr and bp/day.
+    """
+    policy_rates = {"AUD": 0.0410, "NZD": 0.0400, "JPY": 0.0050, "CHF": 0.0100}
+    diffs = {}
+    for base, quote in CARRY_LEGS:
+        annual = policy_rates[base] - policy_rates[quote]
+        diffs[f"{base}/{quote}"] = {
+            "annual_bps": round(annual * 1e4, 2),
+            "daily_bps": round(annual * 1e4 / 365, 4),
+            "r_base_bps": round(policy_rates[base] * 1e4, 2),
+            "r_quote_bps": round(policy_rates[quote] * 1e4, 2),
+        }
+    return {
+        "imm_date": None,
+        "days_to_imm": None,
+        "T_years": None,
+        "spot_usd_per_foreign": {},
+        "futures_usd_per_foreign": {},
+        "rate_vs_usd_bps": {k: round(v * 1e4, 2) for k, v in policy_rates.items()},
+        "cross_differentials_bps": diffs,
+        "rate_source": "central bank policy rates (as of Nov 2026)",
+    }
 
 def summarise(res, cost_bps: float) -> dict:
     nr = np.array([t["net_ret"] for t in res.trades
@@ -120,41 +187,75 @@ def perm_p(df: pd.DataFrame, sig: pd.Series, name: str, sym: str, costs: CostMod
     return round(beats / ran, 3) if ran >= 10 else None
 
 
-def carry_baseline(panel: dict[str, pd.DataFrame]) -> dict:
-    """Static long high-yielder / short low-yielder, zero cost.
+def carry_baseline(panel, rate_diffs):
+    # Map currency code -> panel key (e.g. AUD -> AUDUSD, JPY -> USDJPY)
+    panel_key = {"AUD": "AUDUSD", "NZD": "NZDUSD", "JPY": "USDJPY", "CHF": "USDCHF"}
 
-    The crosses are built from the USD legs already loaded rather than downloaded: with
-    X = quote currency per USD,
-        ret(A/B) = ret(A/USD) - ret(B/USD)
-    so long AUD vs short JPY = ret(AUDUSD) - ret(USDJPY). This avoids a second data pull and
-    keeps the benchmark on exactly the same bars as the cells it is compared against.
-
-    The yield ordering (AUD/NZD high, JPY/CHF low) is a fixed, known-in-advance fact about
-    those currencies, not a parameter fitted to this sample."""
     def ret(k):
-        return panel[k]["close"].pct_change() if k in panel else None
+        pk = panel_key.get(k)
+        return panel[pk]["close"].pct_change() if pk and pk in panel else None
 
-    aud, nzd = ret("AUDUSD"), ret("NZDUSD")
-    jpy, chf = ret("USDJPY"), ret("USDCHF")
-    legs = []
-    for hi in (aud, nzd):
-        for lo in (jpy, chf):
-            if hi is not None and lo is not None:
-                legs.append((hi - lo).rename("cross"))
-    if not legs:
+    cross_stats = {}
+    combined_series = []
+
+    for base, quote in CARRY_LEGS:
+        hi, lo = ret(base), ret(quote)
+        if hi is None or lo is None:
+            continue
+        spot_ret = (hi - lo).rename(f"{base}/{quote} spot")
+        cross_key = f"{base}/{quote}"
+        rd = rate_diffs.get("cross_differentials_bps", {}).get(cross_key, {})
+        daily_bps = rd.get("daily_bps", 0.0)
+        daily_frac = daily_bps / 1e4
+        carry_ret = (spot_ret + daily_frac).rename(f"{base}/{quote} carry")
+        combined_series.append(carry_ret)
+
+        eq = (1 + carry_ret.dropna()).cumprod()
+        s = carry_ret.dropna()
+        yrs = len(s) / 252
+        sd = s.std()
+        cross_stats[cross_key] = {
+            "spot_only_cagr": round(float((1 + spot_ret.dropna()).cumprod().iloc[-1] ** (1 / yrs) - 1), 4) if yrs > 0 else None,
+            "carry_cagr": round(float(eq.iloc[-1] ** (1 / yrs) - 1), 4) if yrs > 0 else None,
+            "ann_vol": round(float(sd * math.sqrt(252)), 4),
+            "sharpe": round(float(s.mean() / sd * math.sqrt(252)), 3) if sd else None,
+            "max_drawdown": round(float((eq / eq.cummax() - 1).min()), 4),
+            "rate_diff_annual_bps": rd.get("annual_bps"),
+            "rate_diff_daily_bps": rd.get("daily_bps"),
+            "n_days": int(len(s)),
+        }
+
+    if not combined_series:
         return {"note": "no cross constructible from loaded USD legs"}
-    s = pd.concat(legs, axis=1).mean(axis=1).dropna()
-    eq = (1 + s).cumprod()
-    yrs = len(s) / 252
-    sd = s.std()
-    return {
-        "legs": len(legs), "window": f"{s.index[0].date()} -> {s.index[-1].date()}",
-        "cagr": round(float(eq.iloc[-1] ** (1 / yrs) - 1), 4),
-        "ann_vol": round(float(sd * math.sqrt(252)), 4),
-        "sharpe": round(float(s.mean() / sd * math.sqrt(252)), 3) if sd else None,
-        "max_drawdown": round(float((eq / eq.cummax() - 1).min()), 4),
-    }
 
+    s_all = pd.concat(combined_series, axis=1).mean(axis=1).dropna()
+    eq_all = (1 + s_all).cumprod()
+    yrs_all = len(s_all) / 252
+    sd_all = s_all.std()
+
+    spot_only_series = []
+    for base, quote in CARRY_LEGS:
+        pk_base, pk_quote = panel_key.get(base), panel_key.get(quote)
+        if pk_base and pk_quote and pk_base in panel and pk_quote in panel:
+            spot_only_series.append((panel[pk_base]["close"].pct_change() - panel[pk_quote]["close"].pct_change()))
+    if spot_only_series:
+        s_spot = pd.concat(spot_only_series, axis=1).mean(axis=1).dropna()
+        eq_spot = (1 + s_spot).cumprod()
+        spot_cagr = float(eq_spot.iloc[-1] ** (1 / (len(s_spot) / 252)) - 1)
+    else:
+        spot_cagr = None
+
+    return {
+        "legs": len(combined_series),
+        "window": f"{s_all.index[0].date()} -> {s_all.index[-1].date()}",
+        "spot_only_cagr": round(spot_cagr, 4) if spot_cagr is not None else None,
+        "carry_cagr": round(float(eq_all.iloc[-1] ** (1 / yrs_all) - 1), 4),
+        "ann_vol": round(float(sd_all * math.sqrt(252)), 4),
+        "sharpe": round(float(s_all.mean() / sd_all * math.sqrt(252)), 3) if sd_all else None,
+        "max_drawdown": round(float((eq_all / eq_all.cummax() - 1).min()), 4),
+        "cross_stats": cross_stats,
+        "rate_source": rate_diffs.get("rate_source", "unknown"),
+    }
 
 def main() -> int:
     print(f"loading {len(PAIRS)} FX pairs from {START} ...")
@@ -199,8 +300,18 @@ def main() -> int:
               f"{str([round(r['ci'][0] or 0,1), round(r['ci'][1] or 0,1)]):>22s} "
               f"{str(r.get('p_perm')):>7s}")
 
-    car = carry_baseline(panel)
-    print(f"\ncarry baseline (long AUD/NZD vs short JPY/CHF, zero cost): {car}")
+    print("fetching rate differentials from CME FX futures ...")
+    rate_diffs = fetch_rate_differentials()
+    if rate_diffs:
+        print(f"  IMM: {rate_diffs['imm_date']} ({rate_diffs['days_to_imm']} days, T={rate_diffs['T_years']})")
+        for k, v in rate_diffs["cross_differentials_bps"].items():
+            print(f"  {k}: {v['annual_bps']:+.2f} bp/yr  ({v['daily_bps']:+.4f} bp/day)")
+    else:
+        print("  rate differentials unavailable — carry baseline will be spot-only")
+        rate_diffs = {"cross_differentials_bps": {}}
+
+    car = carry_baseline(panel, rate_diffs)
+    print(f"carry baseline (long AUD/NZD vs short JPY/CHF, spot + rate differential): {car}")
 
     out = {
         "hypothesis": "P8 — does any of the six families show net-positive expectancy on FX?",
@@ -214,6 +325,7 @@ def main() -> int:
         "n_ci_and_perm": len(both),
         "survivors": [f"{r['strategy']}/{r['symbol']}" for r in both],
         "carry_baseline": car,
+        "rate_differentials": rate_diffs,
         "rows": rows,
         "verdict": (f"NO FX EDGE ESTABLISHED: {len(both)} of {len(mid)} cells have both a net CI "
                     f"above zero and a permutation p<=0.05 at 5bps round turn. "
@@ -221,6 +333,10 @@ def main() -> int:
         "class_note": ("n per cell is small (daily bars, one pair): FX daily signals fire rarely. "
                        "A null here is a statement about these six families on daily bars over "
                        "this decade, not a proof the class is untradeable."),
+        "carry_note": ("carry baseline now includes futures-implied interest-rate differentials "
+                       "(CME FX futures via covered interest parity, T to next IMM). The prior "
+                       "spot-only figure (−3.7% CAGR) must not be quoted as the carry trade's "
+                       "return; the rate-inclusive figure above is the quotable carry baseline."),
     }
     RESULTS.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

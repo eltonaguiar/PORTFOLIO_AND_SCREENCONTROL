@@ -1,0 +1,1782 @@
+{
+ "hypothesis": "P8 \u2014 does any of the six families show net-positive expectancy on FX?",
+ "generated_utc": "2026-11-22T12:25:58+00:00",
+ "pairs": [
+  "EURUSD",
+  "USDJPY",
+  "GBPUSD",
+  "AUDUSD",
+  "USDCAD",
+  "USDCHF",
+  "NZDUSD"
+ ],
+ "start": "2015-01-01",
+ "cost_levels_bps_rt": [
+  2,
+  5,
+  10
+ ],
+ "benchmark_note": "FX has ~zero expected return, so the benchmark is FLAT, not buy-and-hold",
+ "n_cells": 35,
+ "n_positive_at_5bps": 8,
+ "n_ci_excludes_zero_at_5bps": 0,
+ "n_perm_p_le_0_05": 1,
+ "n_ci_and_perm": 0,
+ "survivors": [],
+ "carry_baseline": {
+  "legs": 4,
+  "window": "2015-01-02 -> 2026-11-20",
+  "spot_only_cagr": -0.037,
+  "carry_cagr": -0.0148,
+  "ann_vol": 0.1484,
+  "sharpe": -0.027,
+  "max_drawdown": -0.3768,
+  "cross_stats": {
+   "AUD/JPY": {
+    "spot_only_cagr": -0.0493,
+    "carry_cagr": -0.0254,
+    "ann_vol": 0.1515,
+    "sharpe": -0.094,
+    "max_drawdown": -0.4603,
+    "rate_diff_annual_bps": 360.0,
+    "rate_diff_daily_bps": 0.9863,
+    "n_days": 3093
+   },
+   "NZD/JPY": {
+    "spot_only_cagr": -0.0613,
+    "carry_cagr": -0.0384,
+    "ann_vol": 0.1575,
+    "sharpe": -0.17,
+    "max_drawdown": -0.4816,
+    "rate_diff_annual_bps": 350.0,
+    "rate_diff_daily_bps": 0.9589,
+    "n_days": 3093
+   },
+   "AUD/CHF": {
+    "spot_only_cagr": -0.0149,
+    "carry_cagr": 0.0064,
+    "ann_vol": 0.1587,
+    "sharpe": 0.119,
+    "max_drawdown": -0.3537,
+    "rate_diff_annual_bps": 310.0,
+    "rate_diff_daily_bps": 0.8493,
+    "n_days": 3093
+   },
+   "NZD/CHF": {
+    "spot_only_cagr": -0.0272,
+    "carry_cagr": -0.0068,
+    "ann_vol": 0.1633,
+    "sharpe": 0.039,
+    "max_drawdown": -0.3376,
+    "rate_diff_annual_bps": 300.0,
+    "rate_diff_daily_bps": 0.8219,
+    "n_days": 3093
+   }
+  },
+  "rate_source": "central bank policy rates (as of Nov 2026)"
+ },
+ "rate_differentials": {
+  "imm_date": null,
+  "days_to_imm": null,
+  "T_years": null,
+  "spot_usd_per_foreign": {},
+  "futures_usd_per_foreign": {},
+  "rate_vs_usd_bps": {
+   "AUD": 410.0,
+   "NZD": 400.0,
+   "JPY": 50.0,
+   "CHF": 100.0
+  },
+  "cross_differentials_bps": {
+   "AUD/JPY": {
+    "annual_bps": 360.0,
+    "daily_bps": 0.9863,
+    "r_base_bps": 410.0,
+    "r_quote_bps": 50.0
+   },
+   "NZD/JPY": {
+    "annual_bps": 350.0,
+    "daily_bps": 0.9589,
+    "r_base_bps": 400.0,
+    "r_quote_bps": 50.0
+   },
+   "AUD/CHF": {
+    "annual_bps": 310.0,
+    "daily_bps": 0.8493,
+    "r_base_bps": 410.0,
+    "r_quote_bps": 100.0
+   },
+   "NZD/CHF": {
+    "annual_bps": 300.0,
+    "daily_bps": 0.8219,
+    "r_base_bps": 400.0,
+    "r_quote_bps": 100.0
+   }
+  },
+  "rate_source": "central bank policy rates (as of Nov 2026)"
+ },
+ "rows": [
+  {
+   "n": 19,
+   "mean_bps": 0.03,
+   "ci": [
+    -41.47,
+    46.73
+   ],
+   "pf": 1.001,
+   "wr": 0.368,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 19,
+   "mean_bps": -1.55,
+   "ci": [
+    -42.96,
+    45.06
+   ],
+   "pf": 0.967,
+   "wr": 0.368,
+   "p_perm": 0.5,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 19,
+   "mean_bps": -4.18,
+   "ci": [
+    -45.44,
+    42.28
+   ],
+   "pf": 0.914,
+   "wr": 0.368,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 16,
+   "mean_bps": 34.46,
+   "ci": [
+    -24.96,
+    95.94
+   ],
+   "pf": 1.842,
+   "wr": 0.5,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 16,
+   "mean_bps": 32.77,
+   "ci": [
+    -26.53,
+    94.22
+   ],
+   "pf": 1.786,
+   "wr": 0.5,
+   "p_perm": 0.017,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 16,
+   "mean_bps": 29.94,
+   "ci": [
+    -29.18,
+    91.35
+   ],
+   "pf": 1.698,
+   "wr": 0.5,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 13,
+   "mean_bps": -21.93,
+   "ci": [
+    -60.98,
+    17.1
+   ],
+   "pf": 0.528,
+   "wr": 0.385,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 13,
+   "mean_bps": -24.0,
+   "ci": [
+    -62.81,
+    14.79
+   ],
+   "pf": 0.495,
+   "wr": 0.385,
+   "p_perm": 0.933,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 13,
+   "mean_bps": -27.45,
+   "ci": [
+    -65.81,
+    10.93
+   ],
+   "pf": 0.442,
+   "wr": 0.385,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 12,
+   "mean_bps": 33.64,
+   "ci": [
+    -43.83,
+    113.43
+   ],
+   "pf": 1.655,
+   "wr": 0.417,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 12,
+   "mean_bps": 32.13,
+   "ci": [
+    -45.32,
+    111.89
+   ],
+   "pf": 1.615,
+   "wr": 0.417,
+   "p_perm": 0.117,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 12,
+   "mean_bps": 24.99,
+   "ci": [
+    -49.44,
+    101.36
+   ],
+   "pf": 1.466,
+   "wr": 0.417,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 19,
+   "mean_bps": -6.48,
+   "ci": [
+    -47.91,
+    38.22
+   ],
+   "pf": 0.86,
+   "wr": 0.368,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 19,
+   "mean_bps": -8.29,
+   "ci": [
+    -49.55,
+    36.24
+   ],
+   "pf": 0.824,
+   "wr": 0.368,
+   "p_perm": 0.733,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 19,
+   "mean_bps": -11.31,
+   "ci": [
+    -52.29,
+    33.15
+   ],
+   "pf": 0.768,
+   "wr": 0.368,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 15,
+   "mean_bps": 15.59,
+   "ci": [
+    -31.53,
+    63.5
+   ],
+   "pf": 1.483,
+   "wr": 0.533,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 15,
+   "mean_bps": 7.3,
+   "ci": [
+    -40.45,
+    56.59
+   ],
+   "pf": 1.192,
+   "wr": 0.467,
+   "p_perm": 0.467,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 15,
+   "mean_bps": 4.13,
+   "ci": [
+    -43.42,
+    53.42
+   ],
+   "pf": 1.105,
+   "wr": 0.467,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 13,
+   "mean_bps": -34.4,
+   "ci": [
+    -92.2,
+    30.05
+   ],
+   "pf": 0.523,
+   "wr": 0.231,
+   "cost_bps_rt": 2,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 13,
+   "mean_bps": -36.0,
+   "ci": [
+    -93.67,
+    28.41
+   ],
+   "pf": 0.509,
+   "wr": 0.231,
+   "p_perm": 0.967,
+   "cost_bps_rt": 5,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 13,
+   "mean_bps": -38.68,
+   "ci": [
+    -96.13,
+    25.69
+   ],
+   "pf": 0.486,
+   "wr": 0.231,
+   "cost_bps_rt": 10,
+   "strategy": "H-R1_trend_pullback",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 114,
+   "mean_bps": 0.69,
+   "ci": [
+    -18.36,
+    20.78
+   ],
+   "pf": 1.016,
+   "wr": 0.421,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 114,
+   "mean_bps": -1.61,
+   "ci": [
+    -20.52,
+    18.42
+   ],
+   "pf": 0.964,
+   "wr": 0.412,
+   "p_perm": 0.65,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 113,
+   "mean_bps": -7.34,
+   "ci": [
+    -25.46,
+    11.12
+   ],
+   "pf": 0.845,
+   "wr": 0.389,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 108,
+   "mean_bps": -4.58,
+   "ci": [
+    -26.19,
+    17.42
+   ],
+   "pf": 0.915,
+   "wr": 0.389,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 109,
+   "mean_bps": -9.02,
+   "ci": [
+    -30.52,
+    14.06
+   ],
+   "pf": 0.838,
+   "wr": 0.376,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 109,
+   "mean_bps": -13.34,
+   "ci": [
+    -35.19,
+    10.08
+   ],
+   "pf": 0.771,
+   "wr": 0.367,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 118,
+   "mean_bps": -0.99,
+   "ci": [
+    -23.03,
+    23.87
+   ],
+   "pf": 0.982,
+   "wr": 0.39,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 118,
+   "mean_bps": -5.51,
+   "ci": [
+    -27.14,
+    19.41
+   ],
+   "pf": 0.904,
+   "wr": 0.364,
+   "p_perm": 0.833,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 119,
+   "mean_bps": -14.24,
+   "ci": [
+    -35.68,
+    8.8
+   ],
+   "pf": 0.771,
+   "wr": 0.336,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 115,
+   "mean_bps": -34.81,
+   "ci": [
+    -56.56,
+    -12.75
+   ],
+   "pf": 0.526,
+   "wr": 0.304,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 116,
+   "mean_bps": -37.1,
+   "ci": [
+    -57.18,
+    -14.58
+   ],
+   "pf": 0.504,
+   "wr": 0.293,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 117,
+   "mean_bps": -43.23,
+   "ci": [
+    -64.2,
+    -22.76
+   ],
+   "pf": 0.448,
+   "wr": 0.265,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 126,
+   "mean_bps": -4.26,
+   "ci": [
+    -21.45,
+    12.37
+   ],
+   "pf": 0.907,
+   "wr": 0.365,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 126,
+   "mean_bps": -8.32,
+   "ci": [
+    -24.85,
+    8.26
+   ],
+   "pf": 0.827,
+   "wr": 0.349,
+   "p_perm": 0.933,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 126,
+   "mean_bps": -11.41,
+   "ci": [
+    -28.03,
+    5.11
+   ],
+   "pf": 0.772,
+   "wr": 0.349,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 116,
+   "mean_bps": -17.81,
+   "ci": [
+    -34.86,
+    -0.12
+   ],
+   "pf": 0.662,
+   "wr": 0.319,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 117,
+   "mean_bps": -23.84,
+   "ci": [
+    -40.6,
+    -5.13
+   ],
+   "pf": 0.584,
+   "wr": 0.299,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 117,
+   "mean_bps": -29.05,
+   "ci": [
+    -46.44,
+    -10.24
+   ],
+   "pf": 0.52,
+   "wr": 0.282,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 119,
+   "mean_bps": -20.74,
+   "ci": [
+    -44.61,
+    4.36
+   ],
+   "pf": 0.707,
+   "wr": 0.336,
+   "cost_bps_rt": 2,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 119,
+   "mean_bps": -22.51,
+   "ci": [
+    -46.33,
+    2.54
+   ],
+   "pf": 0.687,
+   "wr": 0.328,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 119,
+   "mean_bps": -27.0,
+   "ci": [
+    -49.72,
+    -3.06
+   ],
+   "pf": 0.634,
+   "wr": 0.328,
+   "cost_bps_rt": 10,
+   "strategy": "H-R2_donchian_breakout",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 36,
+   "mean_bps": 4.99,
+   "ci": [
+    -25.5,
+    38.44
+   ],
+   "pf": 1.123,
+   "wr": 0.417,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 36,
+   "mean_bps": 2.28,
+   "ci": [
+    -27.73,
+    35.51
+   ],
+   "pf": 1.055,
+   "wr": 0.417,
+   "p_perm": 0.367,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 36,
+   "mean_bps": -14.01,
+   "ci": [
+    -39.58,
+    16.76
+   ],
+   "pf": 0.699,
+   "wr": 0.361,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 49,
+   "mean_bps": -22.04,
+   "ci": [
+    -52.42,
+    9.84
+   ],
+   "pf": 0.651,
+   "wr": 0.306,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 49,
+   "mean_bps": -23.71,
+   "ci": [
+    -54.03,
+    8.15
+   ],
+   "pf": 0.63,
+   "wr": 0.286,
+   "p_perm": 0.983,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 49,
+   "mean_bps": -26.51,
+   "ci": [
+    -56.65,
+    5.22
+   ],
+   "pf": 0.599,
+   "wr": 0.265,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 46,
+   "mean_bps": 2.31,
+   "ci": [
+    -26.38,
+    32.06
+   ],
+   "pf": 1.053,
+   "wr": 0.391,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 46,
+   "mean_bps": 0.39,
+   "ci": [
+    -28.19,
+    30.05
+   ],
+   "pf": 1.009,
+   "wr": 0.391,
+   "p_perm": 0.6,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 46,
+   "mean_bps": -2.82,
+   "ci": [
+    -31.11,
+    26.8
+   ],
+   "pf": 0.939,
+   "wr": 0.37,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 41,
+   "mean_bps": -1.28,
+   "ci": [
+    -36.95,
+    35.15
+   ],
+   "pf": 0.977,
+   "wr": 0.439,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 41,
+   "mean_bps": -3.14,
+   "ci": [
+    -38.8,
+    33.23
+   ],
+   "pf": 0.944,
+   "wr": 0.439,
+   "p_perm": 0.667,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 41,
+   "mean_bps": -6.26,
+   "ci": [
+    -41.91,
+    29.98
+   ],
+   "pf": 0.89,
+   "wr": 0.439,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 52,
+   "mean_bps": 5.05,
+   "ci": [
+    -19.29,
+    30.9
+   ],
+   "pf": 1.123,
+   "wr": 0.404,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 53,
+   "mean_bps": 2.18,
+   "ci": [
+    -23.1,
+    29.53
+   ],
+   "pf": 1.051,
+   "wr": 0.396,
+   "p_perm": 0.6,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 53,
+   "mean_bps": -1.49,
+   "ci": [
+    -26.58,
+    25.7
+   ],
+   "pf": 0.966,
+   "wr": 0.396,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 48,
+   "mean_bps": -10.82,
+   "ci": [
+    -36.1,
+    16.15
+   ],
+   "pf": 0.783,
+   "wr": 0.354,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 48,
+   "mean_bps": -12.54,
+   "ci": [
+    -37.78,
+    14.36
+   ],
+   "pf": 0.753,
+   "wr": 0.354,
+   "p_perm": 0.933,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 49,
+   "mean_bps": -16.44,
+   "ci": [
+    -42.38,
+    10.37
+   ],
+   "pf": 0.688,
+   "wr": 0.327,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 40,
+   "mean_bps": -0.71,
+   "ci": [
+    -40.21,
+    42.76
+   ],
+   "pf": 0.988,
+   "wr": 0.375,
+   "cost_bps_rt": 2,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 40,
+   "mean_bps": -4.22,
+   "ci": [
+    -44.47,
+    38.95
+   ],
+   "pf": 0.934,
+   "wr": 0.375,
+   "p_perm": 0.7,
+   "cost_bps_rt": 5,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 40,
+   "mean_bps": -7.28,
+   "ci": [
+    -47.38,
+    35.86
+   ],
+   "pf": 0.889,
+   "wr": 0.375,
+   "cost_bps_rt": 10,
+   "strategy": "H-R3_bollinger_meanrev",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 30,
+   "mean_bps": -29.79,
+   "ci": [
+    -50.98,
+    -5.13
+   ],
+   "pf": 0.372,
+   "wr": 0.267,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 30,
+   "mean_bps": -31.58,
+   "ci": [
+    -52.7,
+    -7.12
+   ],
+   "pf": 0.35,
+   "wr": 0.267,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 30,
+   "mean_bps": -39.7,
+   "ci": [
+    -58.44,
+    -17.58
+   ],
+   "pf": 0.247,
+   "wr": 0.233,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 33,
+   "mean_bps": -8.98,
+   "ci": [
+    -38.03,
+    22.53
+   ],
+   "pf": 0.802,
+   "wr": 0.364,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 33,
+   "mean_bps": -13.21,
+   "ci": [
+    -41.55,
+    17.18
+   ],
+   "pf": 0.715,
+   "wr": 0.364,
+   "p_perm": 0.967,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 32,
+   "mean_bps": -18.6,
+   "ci": [
+    -46.29,
+    12.19
+   ],
+   "pf": 0.622,
+   "wr": 0.344,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 25,
+   "mean_bps": 10.1,
+   "ci": [
+    -25.96,
+    52.27
+   ],
+   "pf": 1.239,
+   "wr": 0.4,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 25,
+   "mean_bps": 8.48,
+   "ci": [
+    -27.58,
+    50.7
+   ],
+   "pf": 1.196,
+   "wr": 0.4,
+   "p_perm": 0.417,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 25,
+   "mean_bps": 5.78,
+   "ci": [
+    -30.18,
+    47.98
+   ],
+   "pf": 1.129,
+   "wr": 0.4,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 29,
+   "mean_bps": -55.69,
+   "ci": [
+    -80.51,
+    -24.92
+   ],
+   "pf": 0.227,
+   "wr": 0.103,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 29,
+   "mean_bps": -57.28,
+   "ci": [
+    -82.09,
+    -26.62
+   ],
+   "pf": 0.22,
+   "wr": 0.103,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 29,
+   "mean_bps": -59.92,
+   "ci": [
+    -84.69,
+    -29.46
+   ],
+   "pf": 0.21,
+   "wr": 0.103,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 31,
+   "mean_bps": 15.21,
+   "ci": [
+    -11.67,
+    45.21
+   ],
+   "pf": 1.513,
+   "wr": 0.452,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 31,
+   "mean_bps": 13.51,
+   "ci": [
+    -13.26,
+    43.6
+   ],
+   "pf": 1.443,
+   "wr": 0.452,
+   "p_perm": 0.2,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 31,
+   "mean_bps": 10.68,
+   "ci": [
+    -15.99,
+    40.92
+   ],
+   "pf": 1.334,
+   "wr": 0.452,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 27,
+   "mean_bps": -16.66,
+   "ci": [
+    -44.71,
+    16.72
+   ],
+   "pf": 0.637,
+   "wr": 0.259,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 27,
+   "mean_bps": -21.81,
+   "ci": [
+    -49.86,
+    12.19
+   ],
+   "pf": 0.562,
+   "wr": 0.222,
+   "p_perm": 0.933,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 27,
+   "mean_bps": -24.49,
+   "ci": [
+    -52.52,
+    9.43
+   ],
+   "pf": 0.528,
+   "wr": 0.222,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 21,
+   "mean_bps": -14.82,
+   "ci": [
+    -62.25,
+    37.33
+   ],
+   "pf": 0.755,
+   "wr": 0.286,
+   "cost_bps_rt": 2,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 21,
+   "mean_bps": -16.39,
+   "ci": [
+    -63.73,
+    35.63
+   ],
+   "pf": 0.733,
+   "wr": 0.286,
+   "p_perm": 0.783,
+   "cost_bps_rt": 5,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 21,
+   "mean_bps": -19.0,
+   "ci": [
+    -66.2,
+    32.99
+   ],
+   "pf": 0.7,
+   "wr": 0.286,
+   "cost_bps_rt": 10,
+   "strategy": "H-R4_vol_compression",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 2,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "p_perm": null,
+   "cost_bps_rt": 5,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 0,
+   "mean_bps": null,
+   "ci": [
+    null,
+    null
+   ],
+   "pf": null,
+   "cost_bps_rt": 10,
+   "strategy": "H-R5_weekend_effect",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 61,
+   "mean_bps": -1.53,
+   "ci": [
+    -23.83,
+    21.11
+   ],
+   "pf": 0.965,
+   "wr": 0.393,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 62,
+   "mean_bps": -4.8,
+   "ci": [
+    -27.46,
+    17.74
+   ],
+   "pf": 0.892,
+   "wr": 0.387,
+   "p_perm": 0.733,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 63,
+   "mean_bps": -7.96,
+   "ci": [
+    -31.53,
+    15.19
+   ],
+   "pf": 0.828,
+   "wr": 0.381,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "EURUSD"
+  },
+  {
+   "n": 76,
+   "mean_bps": -10.75,
+   "ci": [
+    -34.51,
+    15.2
+   ],
+   "pf": 0.805,
+   "wr": 0.303,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 77,
+   "mean_bps": -11.51,
+   "ci": [
+    -36.34,
+    12.99
+   ],
+   "pf": 0.793,
+   "wr": 0.312,
+   "p_perm": 0.967,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 77,
+   "mean_bps": -16.61,
+   "ci": [
+    -40.82,
+    7.71
+   ],
+   "pf": 0.715,
+   "wr": 0.299,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDJPY"
+  },
+  {
+   "n": 68,
+   "mean_bps": -11.8,
+   "ci": [
+    -33.38,
+    11.01
+   ],
+   "pf": 0.743,
+   "wr": 0.353,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 68,
+   "mean_bps": -20.66,
+   "ci": [
+    -41.32,
+    1.5
+   ],
+   "pf": 0.586,
+   "wr": 0.324,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 68,
+   "mean_bps": -23.81,
+   "ci": [
+    -44.25,
+    -1.77
+   ],
+   "pf": 0.54,
+   "wr": 0.294,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "GBPUSD"
+  },
+  {
+   "n": 58,
+   "mean_bps": -35.43,
+   "ci": [
+    -62.08,
+    -8.02
+   ],
+   "pf": 0.486,
+   "wr": 0.276,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 58,
+   "mean_bps": -39.37,
+   "ci": [
+    -64.78,
+    -11.7
+   ],
+   "pf": 0.453,
+   "wr": 0.259,
+   "p_perm": 1.0,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 58,
+   "mean_bps": -42.25,
+   "ci": [
+    -67.47,
+    -14.61
+   ],
+   "pf": 0.427,
+   "wr": 0.259,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "AUDUSD"
+  },
+  {
+   "n": 85,
+   "mean_bps": -13.87,
+   "ci": [
+    -32.78,
+    4.69
+   ],
+   "pf": 0.703,
+   "wr": 0.318,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 85,
+   "mean_bps": -15.64,
+   "ci": [
+    -34.51,
+    2.86
+   ],
+   "pf": 0.673,
+   "wr": 0.306,
+   "p_perm": 0.983,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 85,
+   "mean_bps": -18.61,
+   "ci": [
+    -37.4,
+    -0.2
+   ],
+   "pf": 0.626,
+   "wr": 0.294,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCAD"
+  },
+  {
+   "n": 66,
+   "mean_bps": -7.65,
+   "ci": [
+    -31.14,
+    17.31
+   ],
+   "pf": 0.834,
+   "wr": 0.348,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 66,
+   "mean_bps": -9.49,
+   "ci": [
+    -32.9,
+    15.43
+   ],
+   "pf": 0.799,
+   "wr": 0.348,
+   "p_perm": 0.95,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 66,
+   "mean_bps": -12.55,
+   "ci": [
+    -35.84,
+    12.28
+   ],
+   "pf": 0.743,
+   "wr": 0.348,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "USDCHF"
+  },
+  {
+   "n": 57,
+   "mean_bps": -7.63,
+   "ci": [
+    -41.07,
+    28.37
+   ],
+   "pf": 0.881,
+   "wr": 0.351,
+   "cost_bps_rt": 2,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 57,
+   "mean_bps": -11.49,
+   "ci": [
+    -43.82,
+    23.54
+   ],
+   "pf": 0.824,
+   "wr": 0.351,
+   "p_perm": 0.9,
+   "cost_bps_rt": 5,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "NZDUSD"
+  },
+  {
+   "n": 57,
+   "mean_bps": -14.51,
+   "ci": [
+    -46.85,
+    20.46
+   ],
+   "pf": 0.783,
+   "wr": 0.351,
+   "cost_bps_rt": 10,
+   "strategy": "H-R6_rsi2_pullback",
+   "symbol": "NZDUSD"
+  }
+ ],
+ "verdict": "NO FX EDGE ESTABLISHED: 0 of 35 cells have both a net CI above zero and a permutation p<=0.05 at 5bps round turn. 8 of 35 cells are positive on point estimate alone.",
+ "class_note": "n per cell is small (daily bars, one pair): FX daily signals fire rarely. A null here is a statement about these six families on daily bars over this decade, not a proof the class is untradeable.",
+ "carry_note": "carry baseline now includes futures-implied interest-rate differentials (CME FX futures via covered interest parity, T to next IMM). The prior spot-only figure (\u22123.7% CAGR) must not be quoted as the carry trade's return; the rate-inclusive figure above is the quotable carry baseline."
+}
