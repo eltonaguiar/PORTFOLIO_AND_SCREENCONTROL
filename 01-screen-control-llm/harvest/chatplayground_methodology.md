@@ -1,0 +1,416 @@
+# Proving a stock trading strategy: discovery, backtest construction, professional statistics, forward test, falsification
+
+## ChatGPT-6 Luna
+
+No finite backtest can prove a strategy will keep working. The goal is to make the claim auditable and falsifiable: define what “works” means in advance, test it on data that could have been known at the time, account for every research trial, and then seek independent forward evidence.
+The thresholds below are practical starting gates, not universal laws. Set them before seeing the final test results, and tighten or adapt them to the strategy’s horizon, risk, liquidity, and intended capital.
+1. Candidate discovery without self-deception
+Define the claim before testing
+Write a short protocol that specifies:
+Economic rationale: what behavior or market friction the strategy exploits, and why it might persist.
+Eligible instruments and dates: including any liquidity, price, or borrowability requirements.
+Signal and execution rules: exact inputs, timestamps, order types, holding periods, sizing, and exit rules.
+Primary outcome: for example, net active return, net information ratio (IR), or risk-adjusted return after specified costs.
+Benchmark and risk limits: chosen before evaluating the final test.
+Decision gates: the metrics and thresholds that will determine whether the strategy passes.
+Permitted changes: ideally none after registration. Any change creates a new trial.
+Timestamp the protocol, code version, and data snapshot—for example, in an immutable repository or independent registry. Keep final holdout data inaccessible during development.
+Keep a complete trial ledger
+Count every meaningful attempt, not just published candidates.
+Record	Examples
+Hypothesis and rationale	Signal family, expected mechanism, predicted holding period
+All tested variants	Parameters, filters, universes, rebalance rules, stops, features
+Data and code versions	Vendor, extraction date, cleaning rules, commit hash
+Trial outcome	Metrics, dates, costs, benchmark, whether it was rejected
+Researcher decisions	Manual exclusions, plots inspected, post-hoc changes
+Holdout access	Who accessed it, when, and for what purpose
+Trying many variants and reporting only the winner creates selection bias even if each individual backtest is computed correctly. Treat manual tuning and informal experimentation as trials too. If a result inspires a new rule, that rule is a new hypothesis—not a confirmation of the old one.
+Discovery, validation, and confirmation should be separate. Use discovery data to develop ideas, validation data to choose among frozen alternatives, and a final untouched period or forward test for confirmation. If the final result prompts another change, retire that holdout for the revised strategy.
+2. Backtest construction rules
+Area	Minimum rule
+Point-in-time data	Use only values available to a trader at the decision time. For fundamentals, use publication/filing timestamps and realistic vendor delays; do not use later revisions as if they were known then. Preserve original timestamps and time zones.
+Universe and survivorship	Reconstruct historical membership, including later-delisted, bankrupt, acquired, and otherwise failed securities. Do not backtest today’s constituents over past periods.
+Look-ahead and timing	Make signal availability precede the simulated order. A signal calculated using a closing price generally cannot also fill at that same close without a defensible executable mechanism. Account for reporting lags, event timestamps, and asynchronous markets.
+Corporate actions	Correctly handle splits, dividends, mergers, spinoffs, rights issues, ticker changes, and delisting returns. Avoid double-counting adjustments. Model cash, share quantities, and reinvestment consistently.
+Execution and costs	Apply commissions, fees, bid–ask spread, slippage, market impact, financing, borrow fees, short-sale constraints, and taxes where relevant. Use executable prices and realistic order timing. Model partial fills, limits, halts, and unavailable borrow when material.
+Liquidity and sizing	Enforce tradable volume and participation limits at each historical date. Do not assume unlimited capacity at a quoted price.
+Return calculation	Use a consistent mark-to-market method, including cash and financing. Avoid overlapping trades or overlapping labels leaking information across train/test boundaries.
+Validation splits	Split by time, not randomly. Purge or embargo observations around overlapping holding periods and labels. Keep test periods untouched by feature, universe, and parameter selection.
+Uncertainty	Use confidence intervals that account for serial correlation and, where appropriate, clustered or cross-sectional dependence. Block bootstrap or HAC methods are often preferable to an IID standard error.
+Archive the cleaned inputs, transformation code, cost assumptions, and trade-level outputs. A result that cannot be independently reproduced is weak evidence.
+3. Professional statistical and economic checks
+Run the primary tests on net returns, against a benchmark chosen in advance. Report estimates and uncertainty, not just a pass/fail statistic.
+Check	What it asks	Practical decision gate
+Deflated Sharpe Ratio (DSR)	Is the observed Sharpe still persuasive after accounting for non-normal returns and the number and dispersion of trials? Estimate the effective number of trials from the research ledger; highly correlated variants are not fully independent, but they are not “free” trials either.	As an example, require DSR ≥ 0.95 for a serious candidate and prefer ≥ 0.99 for a high-stakes claim. DSR is not a replacement for a clean holdout or forward test.
+Probability of Backtest Overfitting (PBO), via CSCV	Does the strategy selected as best in-sample tend to rank poorly out-of-sample? In Combinatorially Symmetric Cross-Validation, partition the history into contiguous blocks, repeatedly select half as in-sample, rank strategies in-sample, and evaluate their ranks on the complementary blocks. PBO is the fraction of selections whose out-of-sample rank is below the median.	A pre-set gate such as PBO ≤ 10% is a reasonable strong-evidence target. Use enough blocks to expose regime variation, and avoid splits that leak overlapping trades or labels. PBO diagnoses selection risk; it does not establish future profitability.
+Walk-forward efficiency (WFE)	Does performance survive repeated chronological re-estimation and testing? Define it in advance—for example, median net OOS Sharpe divided by median net IS Sharpe across rolling or expanding folds, when IS Sharpe is positive.	A suggested gate is WFE ≥ 0.5, with positive OOS results in most folds and no dependence on one exceptional period. Ratios are unstable when IS performance is small or negative, so report each fold as well as the ratio.
+IR versus a matched benchmark	Does the strategy add value over a credible alternative with comparable exposure, risk, and investability? Compute annualized mean active return divided by annualized tracking error, net of costs. Show benchmark definition and factor/exposure diagnostics.	Require a positive net IR with a one-sided 95% lower confidence bound above zero for a confirmatory claim. A point IR around 0.5 or higher can be a useful practical hurdle, but is not universal.
+2× cost test	Is the result robust to plausible cost misspecification? Double the full cost stack—not just commissions—including spread, slippage, impact, borrow, financing, and fees.	Require positive net active return and preferably positive net IR at 2× estimated costs. If it fails, the strategy may still be viable only with a better-supported cost model and a lower capital or turnover target.
+Capacity	Can the intended capital trade without consuming the apparent edge? Re-estimate fills and market impact as capital scales; include participation limits, crowdedness, borrow capacity, and liquidity by instrument and time.	State a maximum deployable AUM before testing. Require the strategy to pass its economic hurdle at that AUM; a conservative target is capacity of at least 2× planned capital. Report the capital level at which net IR or returns fall below the hurdle.
+Tail behavior	Is performance being earned by taking an unacceptable chance of ruin or by a few extreme observations? Report drawdown, expected shortfall, skew, worst periods, and stress scenarios.	One descriptive statistic is the tail ratio = 95th-percentile return ÷ absolute 5th-percentile return, calculated at the strategy’s natural return horizon; above 1 means the upper quantile exceeds the lower-tail magnitude. Pre-set a minimum appropriate to the mandate, but do not use this ratio alone: it is noisy and misses losses beyond the 5th percentile.
+For DSR and PBO, use the whole recorded search, not only the finalists. For IR, use a benchmark that reflects what the capital could actually have earned; do not select a weak benchmark after seeing the results. For capacity and tail tests, a favorable backtest estimate is not enough without stress assumptions and uncertainty ranges.
+4. Forward or paper-test protocol
+A forward test checks both predictive performance and whether the strategy can be operated as specified. Freeze the strategy, data sources, execution rules, and analysis plan before starting.
+Sample size and power
+Choose sample size from the smallest economically meaningful effect, not from a round number of trades. For an approximate one-sided test of mean return against zero, with independent observations and known volatility:
+n
+≈
+(
+z
+1
+−
+α
++
+z
+1
+−
+β
+)
+2
+δ
+2
+,
+n≈
+δ
+2
+(z
+1−α
+​
++z
+1−β
+​
+)
+2
+​
+,
+where
+δ
+δ is the target mean per observation in standard-deviation units,
+α
+α is the false-positive rate, and
+1
+−
+β
+1−β is power. For an annualized Sharpe
+S
+S, the per-day Sharpe is approximately
+S
+/
+252
+S/
+252
+​
+, so the IID daily-observation approximation is
+n
+≈
+(
+z
+1
+−
+α
++
+z
+1
+−
+β
+)
+2
+252
+S
+2
+.
+n≈
+S
+2
+(z
+1−α
+​
++z
+1−β
+​
+)
+2
+252
+​
+.
+At one-sided
+α
+=
+0.05
+α=0.05, 80% power, and target annualized Sharpe
+S
+=
+1
+S=1, this is about 1,560 independent daily observations—roughly six years. This illustrates why a short paper test cannot establish a modest Sharpe statistically. Serial dependence reduces effective sample size; use HAC or block-bootstrap methods, and do not count highly correlated daily observations as independent evidence. For comparison to a benchmark, power the test on active returns and their tracking error. Tail-risk claims generally need substantially more data than mean-return claims.
+If a strategy trades infrequently, define the required number of independent opportunities and calendar regimes as well as the observation count. A large number of trades in one market regime is not a substitute for evidence across regimes.
+Operating and stopping rules
+Protocol item	Pre-specify
+Test mode	Prefer shadow/live execution or a very small, risk-limited deployment if fills, borrow, or impact cannot be validated by paper trading. Paper fills can be systematically optimistic.
+Primary endpoint	For example, net active return or IR over a fixed horizon, with a fixed benchmark and cost model. Keep secondary metrics secondary.
+Minimum information	Planned duration, required effective observations/trades, and any regime coverage needed.
+No peeking	Do not change parameters, costs, universe, or the primary endpoint after examining interim performance. Log operational deviations.
+Interim looks	If performance is monitored for efficacy, use a pre-specified group-sequential or alpha-spending design. Repeatedly checking ordinary 5% significance inflates false positives.
+Safety stops	Pre-specify objective operational or risk limits—such as a maximum drawdown, exposure breach, or execution failure. These can stop trading for safety; they do not turn an inconclusive test into evidence of failure or success.
+Futility	If used, define an interim futility boundary in advance. Do not stop early just because results look bad and then report only a favorable subset.
+Multiple strategies	If several candidates enter confirmation, control family-wise error (for example, Holm) for confirmatory claims. Benjamini–Hochberg can be used for explicitly exploratory screening, not to imply each discovery is confirmed.
+At the end, report every registered endpoint and deviation, including failures. A successful forward result should be replicated or followed by an independent period before materially increasing capital.
+5. What would falsify the strategy?
+Write these conditions into the protocol before testing. Examples include:
+The net IR’s pre-specified confidence interval is inconsistent with the minimum economically meaningful hurdle.
+The result disappears under point-in-time data, correct delisting treatment, or realistic execution timing.
+A small, defensible cost increase eliminates the edge, or the required 2× cost test fails.
+Out-of-sample performance is negative in most walk-forward folds, or the candidate repeatedly ranks below the median in CSCV.
+The apparent edge is concentrated in one instrument, one short time window, a few exceptional trades, or a regime not central to the stated rationale.
+It cannot trade the intended capital without breaching participation, borrow, impact, or capacity limits.
+Forward fills, borrow availability, turnover, or operational behavior differ materially from the backtest assumptions.
+A corrected benchmark or exposure analysis shows the return is explained by a cheaper, simpler, or more investable alternative.
+The strategy violates its pre-registered drawdown or risk limits, or its tail losses are incompatible with the mandate.
+The thesis depends on an economic mechanism that no longer exists, or required data cease to be available at the assumed time or quality.
+A failed test is useful evidence. Do not “repair” a failed confirmatory strategy and reuse the same holdout as though it were still independent. Record the failure, form a new hypothesis, and test that version on new data.
+Time to first token
+
+## Claude (Latest Model)
+
+A Methodology for Proving a Trading Strategy Works
+Guiding principle: A strategy is "proven" only when a pre-specified test, run once on data the discovery process never touched, passes criteria fixed in advance, and survives a set of attempts to break it. Every threshold below is a convention to be written into the pre-registration before any result is seen.
+1. Candidate Discovery Without Self-Deception
+1.1 Pre-registration
+Before running any test, commit a dated document (hash it and push it to a timestamped repository) containing:
+Item	What to specify
+Hypothesis	Economic mechanism, e.g., "post-earnings drift in small caps is driven by slow analyst revision"
+Universe	Exact rule and data source, e.g., "US common stocks, price > $5, ADV > $2M, as of each month-end"
+Signal	Formula, lookbacks, and the single parameter set to be tested
+Execution	Timing (e.g., signal at close t, fill at open t+1 or VWAP t+1), order type
+Cost model	Commission, half-spread, impact coefficient, borrow fee
+Holdout	Start date after which no data may be used for any decision
+Success criteria	The thresholds in Sections 3 and 4
+Trial budget	Maximum number of configurations to be tested (N_max)
+1.2 Trial accounting
+Log every configuration ever run, including failures, bugs, and "quick looks." Each row in the trial ledger should record: date, parameters, data version, code commit hash, and the resulting Sharpe.
+N = total trials. This feeds the deflated Sharpe (Section 3.1).
+Effective trials N_eff: cluster the trial return series by correlation (e.g., hierarchical clustering on the return correlation matrix) and count clusters. Trials on near-identical signals are not independent.
+Rule: If N exceeds N_max, the holdout is burned and a new holdout must be defined.
+1.3 Discovery discipline
+Practice	Rule
+Split data	Discovery sample (≈50%), validation (≈25%), untouched holdout (≈25%)
+Hypothesis first	Mechanism written before the search. Searches without a stated mechanism are treated as N = search-space size
+Parameter grids	Report the full grid and the surface. A strategy that works only at one parameter point is a spike, not an edge
+No holdout peeking	Looking at holdout performance to "adjust" anything resets the holdout
+Placebo	Run the same search pipeline on shuffled or random-signal data. The best placebo result sets a floor for what discovery can produce by chance
+2. Backtest Construction Rules
+2.1 Data and bias controls
+Bias	Failure mode	Control
+Point-in-time (PIT)	Using restated financials or revised estimates	Use vendor PIT databases. Use the first-reported value with its actual filing or announcement timestamp, not period-end date
+Survivorship	Only currently listed stocks in the universe	Include delisted names with final returns (e.g., CRSP-style delisting returns, including bankruptcy and merger losses)
+Index membership	Using today's S&P 500 constituents historically	Reconstruct membership as of each date from historical change logs
+Look-ahead in signal	Full-sample z-scores, winsorization, or sector means	Compute all normalization expanding or rolling, using only past data
+Look-ahead in timing	Signal uses the close and executes at the same close	Signal at t, execution at t+1 at earliest. Earnings used only after the timestamp (after-hours releases go to next day)
+Corporate actions	Unadjusted prices produce phantom returns or losses	Use total-return series adjusted for splits, dividends, rights, spinoffs. Handle ticker changes via permanent identifiers (PERMNO, CUSIP history)
+Halts and calendar	Trading in halted or non-trading names	Use the exchange calendar. Mark untradeable days and model forced exits at the next available price
+Data errors	Bad ticks inflate returns	Outlier filters defined ex ante, with the count of removed observations reported
+2.2 Cost model
+Every backtest must include all of the following, each reported separately:
+Component	Model
+Commission	Actual broker schedule
+Half-spread	Observed quoted spread / 2, or a conservative fraction of it
+Market impact	Square-root law: Impact ≈ k · σ_daily · √(Q / ADV), with k ≈ 0.5–1.0 unless calibrated
+Short borrow	Time-varying borrow fee, with hard-to-borrow names flagged or excluded
+Financing	Margin rate on net exposure
+Locate failures	Assume a fraction of short orders fail (e.g., 5–10% in small caps)
+Taxes	If relevant, model by holding period and account type
+2.3 Accounting conventions
+Use a single portfolio-level P&L identity that reconciles to positions × prices minus costs every day.
+Report gross and net returns, turnover, average holding period, and exposure (gross, net, beta, sector, size).
+Rebalance on a schedule fixed in advance. Do not select rebalance dates after seeing results.
+3. Statistical Tests and Decision Thresholds
+Thresholds below are the default gate. Adjust only in the pre-registration, and never in response to results.
+3.1 Deflated Sharpe Ratio (DSR)
+The Probabilistic Sharpe Ratio (PSR) gives the probability that the true per-period Sharpe exceeds a benchmark SR*:
+PSR(SR*) = Φ[ (SR̂ − SR*) · √(T − 1) / √(1 − γ̂₃·SR̂ + ((γ̂₄ − 1)/4)·SR̂²) ]
+where SR̂ is the per-period (non-annualized) Sharpe, T the number of return observations, γ̂₃ skewness, γ̂₄ kurtosis (non-excess), and Φ the standard normal CDF.
+The DSR sets SR* to the expected maximum Sharpe from N trials under the null of no skill:
+SR₀ = √V[SR̂ₙ] · [ (1 − γ_E)·Φ⁻¹(1 − 1/N) + γ_E·Φ⁻¹(1 − 1/(N·e)) ]
+where V[SR̂ₙ] is the cross-trial variance of Sharpe estimates, γ_E ≈ 0.5772 (Euler–Mascheroni), and N is the trial count (or N_eff).
+Metric	Pass	Marginal	Fail
+DSR	≥ 0.95	0.80–0.95	< 0.80
+MinTRL (min track record length)	Realized length ≥ MinTRL at 95%	—	Shorter than MinTRL
+3.2 Probability of Backtest Overfitting (PBO) via CSCV
+Combinatorially Symmetric Cross-Validation procedure:
+Partition the return history of all N strategy variants into S blocks (S even, typically 16).
+For every combination of S/2 blocks as in-sample (IS) and the complement as out-of-sample (OOS), with C(S, S/2) total splits (12,870 for S = 16):
+Select the variant with the best IS Sharpe.
+Find its relative OOS rank ω ∈ (0,1).
+Compute logit λ = ln(ω / (1 − ω)).
+PBO = fraction of splits where λ ≤ 0 (the chosen variant lands at or below the OOS median).
+PBO	Interpretation
+< 0.10	Selection process is informative
+0.10–0.25	Acceptable only with other evidence
+0.25–0.50	Strong overfitting signal
+> 0.50	Selection is no better than chance. Reject
+3.3 Walk-Forward Efficiency (WFE)
+Run a true walk-forward: re-estimate all parameters on each in-sample window, then trade the following out-of-sample window without modification. Use rolling or anchored windows, fixed in advance.
+WFE = Sharpe_OOS / Sharpe_IS (concatenated OOS returns vs. IS Sharpe from the same re-fit procedure)
+WFE	Verdict
+0.5–1.0	Pass. Expected decay from parameter drift
+0.3–0.5	Marginal. Investigate parameter instability
+< 0.3, or OOS sign flip	Fail
+> 1.2	Suspicious. Check for leakage in the walk-forward implementation
+Also report the stability of selected parameters across windows. If the chosen parameters change every window, the strategy is a noise-fitter.
+3.4 Information Ratio versus a matched benchmark
+The benchmark must match the strategy's known exposures, not just "the market." Build it to be matched on:
+Market beta (target within ±0.05)
+Sector and industry weights
+Size and value/momentum factor loadings (if these are not the hypothesized edge)
+Gross exposure and turnover
+Active return r_t = r_strategy,t − r_benchmark,t (net of costs).
+IR = (mean(r_t) / std(r_t)) · √periods_per_year
+Use Newey–West standard errors (lags ≈ holding period) for the alpha t-statistic.
+Metric	Pass	Fail
+Net IR vs. matched benchmark	≥ 0.5	< 0.25
+Alpha t-statistic (NW)	≥ 3.0 for discovered strategies (≥ 2.0 for pre-registered single hypothesis)	< 2.0
+95% CI on annualized alpha	Excludes zero	Includes zero
+The t ≥ 3 hurdle for discovered factors follows Harvey, Liu & Zhu (2016), who argue that multiple testing in the factor literature demands much higher t-statistics than 2.0.
+3.5 2× cost test
+Rerun the entire backtest with all cost parameters doubled (including impact coefficient k and borrow fees), with no other changes.
+Result	Verdict
+Net Sharpe at 2× cost ≥ 0.5 × base net Sharpe and > 0	Pass
+Net Sharpe at 2× cost > 0 but < 0.5 × base	Marginal. Edge is cost-sensitive
+Net Sharpe at 2× cost ≤ 0	Fail. Edge is within the cost noise band
+Also compute the break-even cost multiple: the multiple of base costs at which net Sharpe = 0. Pass requires break-even ≥ 2.5×.
+3.6 Capacity
+Estimate the AUM at which net-of-impact alpha falls to the hurdle.
+Per-name impact: Impact_i = k · σ_i · √(Q_i / ADV_i), where Q_i is the position trade size.
+Parameter	Convention
+Participation cap	≤ 5% of ADV per day (≤ 2% for conservative)
+Capacity definition	AUM where net alpha after impact = 50% of base net alpha
+Test	Simulate at 1×, 2×, 5× target AUM
+Capacity result	Verdict
+Capacity ≥ 3× intended AUM	Pass
+1–3× intended AUM	Marginal. Scale plan required
+< 1× intended AUM	Fail
+3.7 Tail ratio and drawdown profile
+Tail ratio = |P95(daily returns)| / |P5(daily returns)|
+Metric	Pass	Fail
+Tail ratio	≥ 1.0	< 0.8
+Skewness	Report; negative skew needs explicit risk justification	—
+Expected shortfall (97.5%)	Within the risk budget	Exceeds budget
+Max drawdown (net)	Within pre-registered limit; must survive a Monte Carlo bootstrap at 95%	Exceeds limit
+Longest underwater period	Report; compare to investor tolerance	—
+3.8 Placebo and robustness battery
+Test	Expected result if real
+Randomized signal (same turnover, exposure)	Sharpe distribution well below strategy; strategy in top 1–5%
+Shuffled date alignment (signal shifted ±k days)	Edge decays quickly with shift
+Subperiod stability	Positive net Sharpe in ≥ 70% of sub-periods, with no single period supplying majority of P&L
+Universe perturbation (drop top 10% by market cap, or by liquidity)	Edge persists in direction and rough magnitude
+Parameter neighborhood	Positive edge across ±20% of chosen parameters
+4. Forward and Paper-Test Protocol
+4.1 Sample size and power
+Under iid returns, the t-statistic of the annualized Sharpe after Y years is t ≈ SR · √Y.
+For a one-sided test at significance α with power 1 − β, the required years are:
+Y = ((z_{1−α} + z_{1−β}) / SR)²
+True annual SR	Y needed (α = 0.05, power 80%)	Y needed (α = 0.0005, i.e., ~100 trials Bonferroni, power 80%)
+0.5	24.7 years	68 years
+0.75	11.0 years	30 years
+1.0	6.2 years	17 years
+1.5	2.8 years	7.6 years
+2.0	1.5 years	4.3 years
+Implication: Most strategies cannot be proven by a forward test in a practical time frame. Forward testing is a confirmation of a strong backtest, not a discovery tool. If the claimed SR is 0.8, a 1-year paper test cannot distinguish it from zero, and the protocol should say so in advance.
+4.2 Protocol
+Element	Specification
+Start	Immediately after backtest and holdout gates pass. No re-tuning
+Execution	Paper with realistic fills: simulated at the quote with latency, or live with minimum size
+Pre-registered predictions	Expected monthly return, vol, hit rate, and turnover from the backtest, with confidence bands
+Tracking error	Compare live trade-level fills and slippage to model. Realized cost > 1.5× modeled triggers a halt for review
+Analysis cadence	Scheduled (e.g., quarterly), not after every bad week
+Multiple strategies	If forward-testing K strategies, control FDR with Benjamini–Hochberg at q = 0.10, or Holm if only one must succeed
+4.3 Stopping rules
+Use a sequential design so that looking early does not inflate Type I error. Choose one of:
+Alpha spending (Lan–DeMets with O'Brien–Fleming-type boundaries) at pre-set analysis dates, e.g., 25%, 50%, 75%, 100% of planned sample.
+Always-valid p-values or e-values if continuous monitoring is required.
+Decision	Rule
+Accept (confirm)	Crosses efficacy boundary: net alpha t-stat above the spending-adjusted threshold
+Reject (kill)	Crosses futility boundary, e.g., realized net SR below 0 with posterior probability > 0.9 for SR > claimed/2; OR any pre-set risk limit breached
+Operational halt	Live cost > 1.5× model; correlation to backtest-predicted trades < 0.6; data feed error
+Continue	Otherwise
+Pre-set risk limits (non-negotiable): maximum drawdown, maximum daily loss, and position limits. Breaching these ends the test regardless of statistics.
+5. Evidence That Would Falsify the Strategy
+A strategy should be declared dead if any of the following occur. Write these down before testing.
+Evidence	Falsifies
+DSR < 0.80 with N counted honestly	The edge is indistinguishable from the best of N random trials
+PBO > 0.50	The selection process picks noise
+Placebo (random-signal) Sharpe distribution covers the strategy's Sharpe at ≥ 5%	Discovery pipeline produces this by chance
+Walk-forward OOS sign flips, or WFE < 0.3	Parameters do not generalize
+Alpha vs. matched benchmark CI includes zero, or t < 2 (t < 3 for discovered factors)	Return is explained by known exposures
+Net Sharpe at 2× costs ≤ 0	Edge does not survive realistic friction
+Edge disappears when universe excludes top or bottom liquidity tercile	Edge is a microstructure or small-cap artifact, not the hypothesized mechanism
+Edge disappears under 1–2 day signal lag	Look-ahead bias was present
+Edge concentrated in one sub-period or a few outlier days (e.g., > 50% of P&L from top 1% of days)	Lucky draw, not a repeatable process
+Forward realized net SR below the lower 95% bound of backtest-predicted SR, sustained past the futility boundary	Backtest was overstated
+Live slippage > 1.5× modeled, persistently	Cost model was wrong; the net edge is gone
+Trade-level prediction correlation < 0.6 with backtest over the forward period	The live system is not doing what was tested
+Capacity estimate < intended AUM	The edge cannot be monetized at the intended size
+Mechanism check fails: the hypothesized driver (e.g., analyst revision lag) shows no change in the period when the edge is claimed	Strategy may be a statistical artifact even if numbers pass
+Summary Gate
+Stage	Required to pass
+Discovery	Mechanism pre-registered; trials logged; N_eff computed
+Backtest hygiene	PIT data, delisted names, look-ahead audit, total-return adjustment, full cost model
+Statistics	DSR ≥ 0.95; PBO < 0.25; WFE 0.5–1.0; IR ≥ 0.5 vs. matched benchmark; alpha t ≥ 3.0 (discovered) or ≥ 2.0 (single pre-registered hypothesis); net Sharpe > 0 at 2× costs; capacity ≥ 3× target; tail ratio ≥ 1.0
+Robustness	Placebo, shift, subperiod, universe, and parameter-neighborhood tests all pass
+Forward test	Pre-registered predictions tracked; sequential boundaries respected; cost and correlation tolerances held; holdout never used for tuning
+Falsification	None of the Section 5 conditions triggered
+Bottom line: A strategy is proven only when it passes every gate, its forward results fall within the pre-registered prediction bands for long enough to meet the power calculation, and no falsification condition was triggered. If the claimed Sharpe is below about 1.0, expect a forward test to take years to resolve, and size the position accordingly, or do not trade it.
+Time to first token
+
+## GLM 5.3 Flash
+
+Thought for 95s
+A Validation Pipeline for a Trading Strategy
+Treat "does this strategy work?" as a hypothesis test with stage gates, an audit trail, and pre-committed kill criteria. The core discipline: all decisions about the final specification are made before the final evidence is examined, and every trial is counted.
+Stage	Question	Gate	Artifact
+0. Idea	Is there a mechanism?	Mechanism classified (risk premium / behavioral / structural)	1-page idea memo
+1. Discovery	Am I fooling myself?	Pre-registration complete, ledger entry made, N_eff updated	Hashed memo + ledger ID
+2. Backtest	Was the test fair?	Construction checklist 100% passed	PIT dataset hash, code commit
+3. Statistics	Is the result distinguishable from luck?	All primary stats pass thresholds	Scorecard
+4. Pilot	Does it survive contact with reality?	SPRT graduation or fixed-horizon pass	Live log + slippage report
+5. Scale	Does it survive size?	Capacity/risk sign-off	Sizing policy
+1. Candidate Discovery Without Self-Deception
+The enemy is the implicit multiple testing you did before the "final" backtest. Fixes: registration, accounting, and provenance-tiered thresholds.
+Table 1.1 — Pre-registration memo (frozen before holdout data is touched)
+Field	Requirement
+Hypothesis + mechanism	Why does the edge exist and who is on the other side? Classify: risk / behavioral / structural
+Signal	Exact formula, all parameters, winsorization/neutralization rules
+Universe	Point-in-time membership definition, all filters
+Trading rule	Rebalance date/frequency, weighting, execution lag (signal at t close → fill at t+1)
+Cost model	Specified a priori (Section 2)
+Primary metric	One number (e.g., DSR on stitched WF-OOS curve), with pass threshold written down
+Holdout	Which period is never touched until the end; one look, ever
+Trial count	Honest N_eff: where did the idea come from (paper, variation, mining)?
+Table 1.2 — Trial ledger (every backtest run gets a row)
+Column	Content
+trial_id, timestamp	Sequential
+git commit + data hash	Exact reproducibility
+config hash	Full parameter JSON
+Result	SR, t-stat, turnover, costs
+Provenance	New hypothesis / variant of prior trial / replication
+Stopping reason	Why you moved on
+N_eff counting rule (concrete): count a trial as independent if its return stream has correlation < 0.7 with every previously counted trial. This is your deflation input for Section 3.
+Table 1.3 — Minimum evidence by provenance tier (net, Newey–West t-stat)
+Provenance	Prior	Min |t|	Multiplicity control
+Published anomaly, replicated across markets/eras	Higher	≥ 2.0	BH-FDR 10%
+Variation on a known anomaly	Medium	≥ 3.0	BH-FDR 5%
+Mined from this dataset	Low	≥ 3.5 or DSR ≥ 0.95	Bonferroni with N_eff
+Rules: no parameter tuning on holdout data, ever; any post-hoc change restarts the process as a new trial; log failed ideas too (they count in N_eff).
+2. Backtest Construction Rules
+Table 2.1 — Data construction
+Rule	Implementation
+Point-in-time universe	Historical constituent files only; never today's index list backfilled
+Survivorship	Delisted firms included with delisting returns; Shumway defaults (−30% NYSE/AMEX, −55% NASDAQ) when missing
+Fundamentals	As-first-reported data with publication lag (45–90 days for earnings); never restated values
+Prices	Store raw prices + adjustment factors; apply adjustments at computation time (back-adjusted files silently rewrite history)
+Corporate actions	Splits, special dividends, spinoffs (child legs kept), mergers (cash out on effective date), all unit-tested
+Table 2.2 — Look-ahead traps and verification tests
+Trap	Verification test
+Full-sample normalization (z-scores, vol targets)	Re-run with rolling windows only; check signal distribution unchanged
+Same-bar execution	Shift fills +1 day; alpha must retain ≥ 50%
+Today's knowledge in history
+Time to first token

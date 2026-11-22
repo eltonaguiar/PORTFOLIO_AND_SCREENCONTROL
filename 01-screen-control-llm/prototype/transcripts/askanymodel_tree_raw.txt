@@ -1,0 +1,35 @@
+6
+Pick a few, ask one question, and see how the answers differ. Up to
+at a time.
+Gemma 4 26B A4B
+Gemma 4 31B
+Nemotron 3.5 Lightning
+Nemotron 3.5 Super VL
+4
+no credits used
+picked ·
+Everyone answers the same question
+, and
+.
+Gemma 4 26B A4B IT
+Nemotron 3.5 Super VL
+answered first and kept it shortest
+went into the most detail
+2
+?
+One answer from all
+A judge model weighs the answers and writes the one to use. 2 free syntheses left on this account.
+Google
+To prove a strategy works, one must move from "pattern matching" to "hypothesis testing." The goal is not to find a high Sharpe ratio, but to reject the null hypothesis that your returns are a product of data mining or luck.
+The most common failure is "p-hacking"—testing 1,000 variations of a rule until one looks good. To avoid this, you must separate
+.
+Exploitation
+Exploration
+from
+A backtest is a simulation of reality. If it ignores frictions, it is a fantasy.
+Point-in-Time (PIT) Data:
+at that moment
+Survivorship Bias:
+Look-Ahead Bias:
+Corporate Actions:
+The Integrity Checklist:

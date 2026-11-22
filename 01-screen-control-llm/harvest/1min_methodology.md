@@ -1,0 +1,85 @@
+# Proving a stock trading strategy: discovery, backtest construction, professional statistics, forward test, falsification
+
+## GPT-4.1 mini (1min.ai multi-chat)
+
+GPT-4.1 mini - OpenAI (18.097s - 12,039 credits)
+Certainly! Below is a rigorous, step-by-step methodology for proving a stock trading strategy actually works, covering the discovery stage to falsification criteria. The framework emphasizes scientific rigor, statistical robustness, and practical implementation aspects to ensure the strategy’s reliability and real-world viability.
+Rigorous Methodology for Proving a Stock Trading Strategy Works
+1. Candidate Discovery Without Self-Deception
+Objective:
+Ensure the initial discovery of a candidate trading strategy avoids data snooping, hindsight bias, and overfitting. Establish discipline and transparency early.
+Step	Description	Concrete Actions
+Define Hypothesis	Clearly formulate the trading hypothesis/mechanism before testing.	Write a formal description including: entry/exit rules, data inputs, time horizons.
+Pre-registration	Record all assumptions, parameters, and the discovery process in a timestamped, immutable form.	Use platforms (OSF, GitHub, blockchain-based timestamping) for pre-registration of strategy specs.
+Holdout Set (Trial Accounting)	Divide historical data into a discovery/training set and a holdout (simulated "future") test set.	Use first 70% history for hypothesis generation; keep last 30% unseen until validation.
+Immutable Parameter Setting	Freeze hyperparameter choices before testing on holdout to avoid “peeking.”	Document parameters and ensure no modifications post hoc in holdout testing phase.
+Blind Discovery Tools	If possible, use blind or double-blind procedures during candidate generation (e.g., anonymized data).	Implement pipelines where signals are generated without knowledge of subsequent returns.
+Rationale: This is akin to clinical trial pre-registration to avoid P-hacking or overfitting to noisy data.
+2. Backtest Construction Rules — Building a Clean, Realistic Backtest
+Objective:
+Create a backtest that represents a feasible, real-world live trading environment, eliminating biases from data leakage, unrealistic assumptions, or survivorship bias.
+Rule	Detail / Implementation	Purpose
+Point-in-Time Data	Use only information available at each time step (no future data leakage).	Avoid look-ahead bias, ensuring realistic signal availability.
+Survivorship Bias-Free	Include all securities trading at the time, not just those that survived until present.	Prevent inflated returns due to ignoring delisted/failed companies.
+Look-Ahead Bias	Avoid using future-adjusted data (e.g., returns, fundamentals revised in hindsight).	Maintain causality in data inputs.
+Costs and Slippage	Include realistic transaction costs, spreads, commissions, slippage models.	Reflect net returns after operational frictions.
+Corporate Actions	Properly adjust for splits, dividends, mergers, and delistings in pricing and shares.	Preserve the accuracy of PnL attribution and avoid artificial gains/losses.
+Latency and Execution Delays	Incorporate realistic execution timing assumptions, e.g., signals generated daily after close, execution the next day open/close.	Land on feasible execution prices and delays.
+Liquidity and Market Impact	Limit position size relative to average daily volume and backtest market impact models if feasible.	Avoid unrealistic scaling beyond liquidity constraints.
+3. Statistical Evaluation and Decision Thresholds
+Objective:
+Apply sophisticated statistical diagnostics to evaluate the strategy’s genuine alpha, robustness, and economic significance.
+Statistic	Description	Calculation/Threshold	Purpose/Interpretation
+Deflated Sharpe Ratio (DSR)	Sharpe ratio adjusted for multiple testing and strategy selection bias.	DSR > 0.5–0.7 (depending on confidence)	Confirms performance beyond chance after considering selection bias.
+Probability of Backtest Overfitting (PBO) via Combinatorially Symmetric Cross-Validation (CSCV)	Quantifies overfitting risk from dataset snooping / parameter tuning.	PBO < 0.05 ideal; <0.2 acceptable under some domain expertise	Low PBO indicates the strategy isn’t a curve-fit artifact.
+Walk-Forward Efficiency (WFE)	Ratio of out-of-sample performance to in-sample performance using a walk-forward scheme.	WFE ≥ 0.7 desirable	Measures stability and predictability over time.
+Information Ratio (IR)	Excess return over matched benchmark divided by tracking error.	IR > 0.3 taken as meaningful	Confirms value added vs. passive alternatives or market benchmarks.
+2× Cost Test	Strategy return net of double estimated transaction costs.	Positive net returns	Validates robustness to underestimated costs and smaller spreads.
+Capacity / Scalability	Estimated max AUM before performance degrades due to liquidity and market impact.	Quantified via impact models, e.g., <10% ADV per trade	Ensures strategy is commercially scalable.
+Tail Ratio / Skewness	Measures risk of extreme losses (tail risk) in strategy returns.	Tail Ratio > 1 preferred; skewness mildly positive	Detects adverse risk characteristics and hidden tail risks.
+| Summary Table: Key Metrics Example |
+Metric	Value	Threshold / Interpretation
+Sharpe Ratio (raw)	1.4	>1.0 indicates very good performance
+Deflated Sharpe Ratio	0.62	>0.5 suggests genuine alpha after multiple testing
+PBO	0.03	<0.05 highly unlikely to be overfit
+Walk-Forward Efficiency	0.75	>0.7 stable performance over time
+Information Ratio	0.45	Adds value compared to benchmark
+2× Cost Net Return	+3% annualized	Positive after conservative cost assumptions
+Capacity (AUM)	$500 million	Scalable at moderate size
+Tail Ratio	1.3	Acceptable tail risk profile
+4. Forward / Paper-Test Protocol
+Objective:
+Validate the strategy prospectively on unseen data, incorporating realistic constraints and rigorous statistical properties.
+Component	Guidelines	Rationale
+Sample Size (Duration)	Forward test window covering ≥2 years daily data with >500 independent trades preferred.	Ensure adequate power to detect real performance (power > 0.8 at alpha=0.05)
+Statistical Power Analysis	Calculate expected effect size (e.g., Sharpe), sample size, and power a priori.	Avoid false negatives or false positives due to insufficient testing length.
+Stopping Rules	Predefine rules for halting test if performance deteriorates or after fixed period.	Prevent data-dependent continuations or “cherry-picking” test results.
+Multiple Testing Correction	Use Bonferroni/Holm or False Discovery Rate corrections if testing multiple variants or markets.	Controls inflated Type-I error risk due to multiple comparisons.
+Trade Execution Realism	Implement the same execution assumptions and costs as backtest, including latency.	Avoid overly optimistic forward test outcomes.
+Paper Trading vs. Live	Track both paper (simulated fills) and, if possible, a small live account for slippage check.	Detect discrepancies between model assumptions and market realities.
+Isolation of Signals	Avoid changing parameters or adding “cheats” during forward period.	Maintain honest evaluation and avoid tuning on forward test data.
+5. Evidence That Would Falsify the Strategy
+Type of Evidence	Explanation	Implication for Falsification
+Post Forward Failure	Strategy exhibits statistically significant negative or zero alpha in forward test.	Suggests null or negative expectancy; original test was likely overfit or luck.
+Repeated Walk-Forward Instability	Large fluctuations in performance metrics over rolling out-of-sample windows.	Indicates lack of robustness or regime dependence.
+Cost and Slippage Underestimation	Realized transaction costs and market impact exceed backtest assumptions by a material margin.	Realized profits disappear; strategy not operationally feasible.
+Capacity Limits Hit	Strategy cannot scale beyond small AUM before performance declines due to liquidity constraints.	Practical application not viable at scale, limiting commercial value.
+Deterioration of Statistical Metrics	Declining Sharpe, rising PBO, poor information ratio when repeating tests on newer data.	Signal likely due to chance or non-stationary market conditions.
+Material Regime Changes Ignored	Underlying hypothesis contradicted by major structural market changes (e.g., regulation, technology).	Strategy assumptions no longer valid; needs re-evaluation or abandonment.
+Non-Reproducibility of Results	Inability to replicate performance when independently implemented with the documented methodology.	Validity of original discovery is questionable; potential data or procedural flaws.
+Summary Table: Methodology Checklist
+Phase	Key Steps	Critical Controls/Checks
+Candidate Discovery	Pre-registration, holdout separation	Immutable parameters; blind analysis; trial accounting
+Backtest Construction	Point-in-time data, no survivorship bias	Costs, corporate actions, execution realism
+Statistical Evaluation	DSR, PBO (CSCV), WFE, IR, 2× cost test	Capacity analysis, tail risk metrics
+Forward Testing	Fixed sample size, power analysis, stopping rules	Multiple test correction; realistic execution assumptions
+Falsification Criteria	Forward failure, cost overruns, scalability	Instability, regime shifts, reproducibility failure
+Conclusion
+To rigorously prove a stock trading strategy works, one must approach the problem like a controlled scientific experiment rather than an ad hoc backtest. This requires:
+Transparent candidate discovery with pre-registered hypotheses and holdout data to minimize self-deception.
+Backtests free from common biases (survivorship, look-ahead) that incorporate realistic costs and corporate actions, replicating true operational conditions.
+Robust statistical evaluation that adjusts for multiple testing and strategy selection bias, ensuring results reflect genuine alpha.
+Carefully designed forward testing with predefined sample sizes, stopping rules, and corrections to validate genuine strategy efficacy.
+Explicit falsification criteria that, if met, mandate strategy rejection or rework to avoid false confidence.
+Adhering to this methodology significantly improves confidence that a discovered trading strategy will deliver real economic value rather than ephemeral, spurious returns. It aligns trading strategy development with best practices from empirical sciences, ensuring a sound foundation for quantitative investment.
+If you need implementations or software tool recommendations (e.g., for CSCV or power analysis), please let me know!

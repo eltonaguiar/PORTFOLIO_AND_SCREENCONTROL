@@ -36,7 +36,7 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 44 (14 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 53 (18 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
 | `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 106 (18 md) | 73 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
@@ -46,6 +46,9 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8645 |
+| [`01-screen-control-llm/harvest/1min_methodology.md`](01-screen-control-llm/harvest/1min_methodology.md) | 85 | 10558 |
+| [`01-screen-control-llm/harvest/chatplayground_methodology.md`](01-screen-control-llm/harvest/chatplayground_methodology.md) | 416 | 33727 |
+| [`01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md`](01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md) | 102 | 6655 |
 | [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6506 |
 | [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6321 |
 | [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
@@ -54,6 +57,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md`](01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md) | 74 | 4480 |
 | [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 92 | 6098 |
 | [`01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md`](01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md) | 56 | 4080 |
+| [`01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md`](01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md) | 42 | 2297 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
 | [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8099 |
@@ -114,7 +118,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 12 | 1425 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 13 | 1615 |
 | [`README.md`](README.md) | 145 | 12400 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6349 |
 
