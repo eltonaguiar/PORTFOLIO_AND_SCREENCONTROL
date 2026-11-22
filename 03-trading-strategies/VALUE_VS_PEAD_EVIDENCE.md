@@ -44,6 +44,28 @@ After fixing portfolio, rebalance, universe and cost model **before** looking at
 
 Count all turnover costs once; do not double-subtract. Same rule applies to PEAD if it is tested later.
 
+## Cross-model comparison — three sources, one 2× disagreement
+
+Same prompt, no shared numbers, three independent surfaces:
+
+| Source | Value premium | PEAD | Decay claim |
+|---|---|---|---|
+| **duck.ai / GPT-6 Luna** | 3–5%/yr = **25–42 bp/month** gross; series 1927–2024 | positive in 41/48 quarters 1974–85; ~6% over 60 days | HML lost ~half cumulative value **after 2007**; **Martineau: large-cap PEAD non-existent since 2006** |
+| **Router / `ULTRA_FREE_OPENROUTER`** | **0.5–0.7%/month = 50–70 bp/month** gross (top vs bottom quintile); FF 1963–2019+, Asness 1975–2011 international | Ball & Brown 1968; Bernard & Thomas | HML **≈ −0.3%/month 2007–2020**; decay after publication; "net of 15–20 bp/month turnover costs the alpha shrinks to **30–40 bp/month**" |
+| **Router / `ULTRA_FREE_CLOUD_LARGE`** | (answer truncated before the value section) | **2.0–3.5%/yr ≈ 20–30 bp/month** SUE1 decile spread; 4–6% over 60 days for extreme SUE; sample **1971–2005 US** | "post-2005 SUE spread compressed" |
+
+**The disagreement is roughly 2×** — 25–42 vs 50–70 bp/month gross for the same factor. Both cannot be right about the same portfolio, and the difference is plausibly the construction: annualised HML return across a very long sample (duck.ai) versus a quintile-spread average per month on a shorter sample (router). That distinction decides whether value clears our 12–20 bp round trip with room to spare or barely at all.
+
+**Where all three agree, and it is the more useful finding:**
+
+1. **PEAD decayed post-2005/2006 and nothing after that is large-cap reliable.** Three independent models, three different citation sets, same conclusion.
+2. **Value is the better first test**, and it is a *monthly* strategy — the horizon our own cost ladder says survives (+24.21 bp at 1D vs −0.57 bp at 15m).
+3. **Turnover costs are the binding constraint**, not signal strength: the router's own arithmetic takes 50–70 bp/month down to 30–40.
+
+**What this changes in practice:** the magnitude must be **measured on our data, not imported from literature**, because the literature disagrees with itself by a factor of two. The pre-registered kill rule is unchanged and is exactly what resolves it — OOS net return on committed capital ≤ 4.3%, or the one-sided 95% upper bound ≤ 4.3%.
+
+**Citations to verify at source** (none of these has been checked against the paper yet): Fama & French 1992 *J Finance*; Fama & French 2019 *JFE*; Asness, Moskowitz & Pedersen 2013 *J Finance*; Ball & Brown 1968 *JAR*; Bernard & Thomas 1989 *JAR*; Ball & Bartov 1996 *JAE*; Livnat & Mendenhall 2006 *TAR*; Martineau (SSRN).
+
 ## What this means for our programme
 
 - **PEAD is the weakest of the two for us.** If the repo's PEAD infrastructure is large-cap and post-2006,
