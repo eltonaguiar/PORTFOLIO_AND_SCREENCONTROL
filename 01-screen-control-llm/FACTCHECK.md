@@ -3,7 +3,9 @@
 Four answers were collected on 2026-11-22 (Grok, Mercury, SUB Q, Arena) and they overlap heavily. Instead of
 picking a favourite, each named tool was checked: does the repository exist, what is its license, how many
 stars, when was it last pushed (GitHub API, 2026-11-22), and does its own README support the claim made about
-it?
+it? A fifth answer (Perplexity) is audited separately in
+[`../REVIEWS/PERPLEXITY_NOTE_REVIEW.md`](../REVIEWS/PERPLEXITY_NOTE_REVIEW.md), along with a second SUB Q note
+in [`../REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md`](../REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md).
 
 Legend: ✅ verified · 🟡 plausible but not verified here · ❌ claim not supported / likely invented.
 
