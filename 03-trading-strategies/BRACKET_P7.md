@@ -77,6 +77,44 @@ independent defects, in this order of importance:
 
 The two together are why the live P&L was −$285.14 on 27 trades with $180.00 of it commission.
 
+## The verification wall — the finding that unifies the whole project
+
+Solving the break-even condition for the win rate a bracket needs gives a clean result:
+
+```
+required_win_rate = (1 + cost) / (1 + tp/sl)
+required_edge     = required_win_rate − sl/(tp+sl)  =  cost / (1 + tp/sl)
+```
+
+**The edge a bracket demands is exactly the friction divided by the payoff ratio** — so it is
+always *less than the round-trip cost itself* (≤ 26 bps here). There is no such thing as a bracket
+that "demands unrealistic skill". There is only the question of how many trades it takes to
+**verify** that edge at 80% power (`n ≈ 16·p(1−p)/δ²`):
+
+| bracket (tp:sl) | required edge | trades needed to verify |
+|---|---:|---:|
+| 0.5 : 1 | +0.170 pp | **1,183,432** |
+| 1 : 1 | +0.130 pp | **2,366,864** |
+| 2 : 1 | +0.090 pp | **4,733,728** |
+| 3 : 1 | +0.060 pp | **7,100,592** |
+| 6 : 0.5 | +0.020 pp | **28,402,367** |
+
+Read this against the audit3 ledger's own `required_n` column from the pasted dashboard:
+EQUITY **22,569**, ETF **1,730,370**, FOREX **2,366**, CRYPTO **917**. Same order of magnitude,
+derived from a completely different direction — bracket geometry here versus the picks ledger
+there. **Two independent routes, one number.**
+
+That is the arithmetic reason this field is stuck, and it is the strongest result the project has:
+
+> **A bracket strategy needs an edge of 0.02–0.17 percentage points of win rate to beat friction,
+> and between 1.2 and 28 million trades to demonstrate it at 80% power. A live book of 27 trades —
+> or 100, or 1,000 — cannot confirm or refute a bracket strategy at all. The "100 closed trades"
+> checkpoint this project has been using as its forward gate is not a conservative bar; it is
+> off by four to five orders of magnitude.**
+
+The 27-trade live book was not a small sample of a real edge. It was a sample from a distribution
+whose mean cannot be distinguished from zero by any realistic experiment.
+
 ## The gate, as shipped
 
 `bracket.evaluate(price, atr, tp_atr, sl_atr, hold_bars)` returns three independent verdicts:

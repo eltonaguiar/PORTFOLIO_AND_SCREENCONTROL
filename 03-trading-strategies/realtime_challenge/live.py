@@ -28,6 +28,7 @@ from typing import Dict, List, Optional
 import pandas as pd
 
 from . import data as D
+from .bracket import evaluate as evaluate_bracket
 from . import strategies as S
 from .costs import CostModel, DEFAULT_COSTS
 from .ledger import Ledger
@@ -184,6 +185,25 @@ class LiveRound:
             tp, sl = entry + self.tp_atr * a, entry - self.sl_atr * a
         else:
             tp, sl = entry - self.tp_atr * a, entry + self.sl_atr * a
+
+        # P7 gate — refuse a bracket that cannot pay. See BRACKET_P7.md: for a driftless walk
+        # every bracket is exactly zero-EV before costs, so a bracket only has a chance if the
+        # entry is right more often than the geometry implies AND friction is small relative to
+        # the edge. 27 of 27 earlier live trades would have been refused here.
+        hold_bars = max(1, int(round(self.max_minutes / 60.0)))
+        bv = evaluate_bracket(
+            price=entry, atr=a, tp_atr=self.tp_atr, sl_atr=self.sl_atr,
+            hold_bars=hold_bars,
+            round_turn_cost_bps=self.costs.round_turn * 1e4,
+        )
+        if not bv.ok():
+            self.ledger.append({
+                "event": "SKIP", "symbol": base, "reason": "BRACKET_REFUSED",
+                "p_tp_exit": bv.p_tp_exit, "p_touch_any": bv.p_touch_any,
+                "exp_net_r": bv.exp_net_r, "hold_bars": hold_bars,
+                "reasons": bv.reasons,
+            })
+            return None
 
         stop_dist = abs(entry - sl) / entry
         notional = min(self.risk_per_trade / stop_dist, 1.0) * self.ledger.starting_cash

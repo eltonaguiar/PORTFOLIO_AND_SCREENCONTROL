@@ -87,6 +87,11 @@ class Verdict:
     fail_balance: bool
     fail_ev: bool
     exp_net_r: float
+    required_win_rate: float
+    geometry_win_rate: float
+    required_edge_pp: float
+    required_n_to_verify: Optional[int]
+    assumed_p_tp: float
     reasons: list[str]
 
     def ok(self) -> bool:
@@ -100,7 +105,8 @@ class Verdict:
 
 def evaluate(price: float, atr: float, tp_atr: float, sl_atr: float, hold_bars: int,
              *, min_touch: float = MIN_TOUCH, min_tp_exit: float = MIN_TP_EXIT,
-             round_turn_cost_bps: float = 26.0) -> Verdict:
+             round_turn_cost_bps: float = 26.0,
+             assumed_p_tp: Optional[float] = None) -> Verdict:
     """Judge a bracket before it is opened.
 
     `atr` is the per-bar true range in price units; `hold_bars` the time stop. The horizon
@@ -113,8 +119,11 @@ def evaluate(price: float, atr: float, tp_atr: float, sl_atr: float, hold_bars: 
 
     tp_dist = tp_atr * atr
     sl_dist = sl_atr * atr
+    # ATR is already in PRICE units, so the horizon excursion is horizon_sd itself. Multiplying
+    # by price here produced a log line reading "expected to travel ~5,466,071 bps", which is
+    # exactly the kind of absurd number that gets copied into a report and believed.
     horizon_sd = atr * math.sqrt(hold_bars)
-    expected_excursion = horizon_sd * price
+    expected_excursion = horizon_sd
 
     # P(touch a barrier at distance d within the horizon), one-sided, reflected BM
     def p_touch(d: float) -> float:
@@ -132,9 +141,30 @@ def evaluate(price: float, atr: float, tp_atr: float, sl_atr: float, hold_bars: 
     p_sl_exit = (1.0 - p_tp_first) * p_any
     p_timeout = 1.0 - p_any
 
-    # net expectancy of a unit-risk trade at these probabilities, after friction
+    # --- the honest accounting -------------------------------------------------------------
+    # Among trades the bracket actually resolves (excluding time stops), the conditional win
+    # rate is p_tp_first = sl/(tp+sl) under a driftless walk. Substituting that into the
+    # expectancy, the gross term collapses to exactly zero for EVERY bracket:
+    #
+    #     E[R] = p_tp_first*(tp/sl) - (1 - p_tp_first) = 0
+    #
+    # so a bracket's expectancy is  -p_any*cost  — negative, always, at geometry. This is why
+    # `fail_ev` fires on every bracket when no directional claim is supplied. That is not a
+    # bug and it is not pessimism: it is the statement that a bracket cannot create an edge.
+    #
+    # What a bracket CAN be asked is: how good does the entry have to be for it to pay?
     cost = round_turn_cost_bps / 1e4
-    exp_net = p_tp_exit * (tp_atr / sl_atr) - p_sl_exit - (p_tp_exit + p_sl_exit) * cost
+    ratio = tp_atr / sl_atr
+    required_wr = (1.0 + cost) / (1.0 + ratio)     # break-even conditional win rate
+    geometry_wr = sl_dist / (tp_dist + sl_dist)    # what a driftless walk delivers
+    required_edge = required_wr - geometry_wr      # the edge the entry itself must supply
+
+    # with no claim supplied, assume the entry has no skill — i.e. geometry
+    p_tp_used = geometry_wr if assumed_p_tp is None else assumed_p_tp
+    p_tp_exit_assumed = p_tp_used * p_any
+    p_sl_exit_assumed = (1.0 - p_tp_used) * p_any
+    exp_net = (p_tp_exit_assumed * ratio - p_sl_exit_assumed
+               - (p_tp_exit_assumed + p_sl_exit_assumed) * cost)
 
     reasons = []
     fail_reach = p_any < min_touch
@@ -151,11 +181,20 @@ def evaluate(price: float, atr: float, tp_atr: float, sl_atr: float, hold_bars: 
             f"the time; P(TP exit) = {p_tp_exit:.1%} < {min_tp_exit:.0%}. A "
             f"{tp_atr:g}xATR target against {sl_atr:g}xATR risks a low-win-rate bet")
 
+    # How many trades would be needed to VERIFY a win-rate edge this small at 80% power?
+    # n ~= 16*p*(1-p)/delta^2 (the standard two-proportion rule of thumb). With a required edge
+    # of ~0.1pp this lands in the millions — which is the same order as the audit3 ledger's
+    # required_n column, and the reason a small live book can never confirm a bracket edge.
+    delta = max(1e-9, required_edge)
+    required_n = int(round(16.0 * geometry_wr * (1.0 - geometry_wr) / (delta ** 2)))
+
     fail_ev = exp_net <= 0
-    if fail_ev:
+    if exp_net <= 0:
         reasons.append(
-            f"NEGATIVE-EV: at these probabilities the expected net is {exp_net:+.3f}R after "
-            f"{round_turn_cost_bps:g} bps; the geometry cannot pay for the friction")
+            f"NEGATIVE-EV: at the supplied hit rate ({p_tp_used:.1%}) the expected net is "
+            f"{exp_net:+.4f}R after {round_turn_cost_bps:g} bps. At geometry it is always "
+            f"-p_any*cost; the entry must beat {geometry_wr:.1%} to make this pay, which is "
+            f"{required_edge*100:+.1f}pp of edge the signal has not demonstrated")
 
     return Verdict(
         price=price, atr=atr, hold_bars=hold_bars,
@@ -165,7 +204,12 @@ def evaluate(price: float, atr: float, tp_atr: float, sl_atr: float, hold_bars: 
         p_tp_exit=round(p_tp_exit, 4), p_sl_exit=round(p_sl_exit, 4),
         p_timeout=round(p_timeout, 4),
         fail_reach=fail_reach, fail_balance=fail_balance, fail_ev=fail_ev,
-        exp_net_r=round(exp_net, 4), reasons=reasons,
+        exp_net_r=round(exp_net, 4),
+        required_win_rate=round(required_wr, 4), geometry_win_rate=round(geometry_wr, 4),
+        required_edge_pp=round(required_edge * 100, 2),
+        required_n_to_verify=required_n if required_n < 10**9 else None,
+        assumed_p_tp=round(p_tp_used, 4),
+        reasons=reasons,
     )
 
 

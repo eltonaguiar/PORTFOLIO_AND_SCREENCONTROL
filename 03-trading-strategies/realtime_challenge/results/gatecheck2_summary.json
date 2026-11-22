@@ -1,0 +1,21 @@
+{
+ "run_id": "gatecheck2",
+ "starting_cash": 10000.0,
+ "equity": 10000.0,
+ "n_closed": 0,
+ "n_open": 0,
+ "n_skips": 14,
+ "win_rate": null,
+ "profit_factor": null,
+ "total_pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "fees_paid": 0,
+ "exit_mix": {},
+ "skip_reasons": {
+  "BRACKET_REFUSED": 14
+ },
+ "outcome": "NO_SIGNAL",
+ "rolling_sharpe_20": null,
+ "decay_alarm": null
+}
