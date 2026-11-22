@@ -41,12 +41,27 @@ control idea change any verdict?
 | 11:27 | PASS | Four venues (bybit ×2, kraken, okx) agree on direction: all lost. Not four independent tests — one wrong idea (shorting 5m dips in a +3.4% session) repeated on four exchanges — but it does confirm the fill/exit plumbing behaves identically across venues, which is what these books existed to check | same |
 | 11:28 | FIX | **Silent-overwrite race closed in the new proof.** The stale v1 random-entry run finished after the BH-corrected v2 and wrote the same path; the artifact was verified to be v2 both on disk and on origin, but the race is the same class as `backtest_latest.json`. Script now writes a timestamped copy first, then the canonical file, and carries `generated_utc` | `proof/random_entry_control.py` |
 
+| 11:32 | RUN | **P6 walk-forward — the one gate in our table never executed.** 4h, binance, 7 symbols, 4,000 bars (22 months), sequential expanding folds, purge 48 bars, embargo 1%, 26 bps costs | `proof/walk_forward.py` |
+| 11:33 | FIX | Two bugs on the first run, both of which would have silently changed the answer: `BacktestResult.trades` holds `as_dict()` payloads not `Trade` objects (AttributeError), and **kraken's inner-joined 4h panel across 7 symbols is only 721 bars, not 4,000** — the first version would have walked forward over 4 months instead of 22 and reported whatever fits in 120 days. Panel now from binance, cache bypassed | same |
+| 11:34 | FAIL | **Mode A (frozen params): 2 of 42 cells survive** temporal stability — H-R6/ADA (3 of 4 folds, n=43, +40.84 bps) and H-R5 weekend/ETH (3 of 5 folds, n=82, +21.12 bps) | `WALKFORWARD_P6.md` |
+| 11:35 | FAIL | **Both survivors are cells two other controls already killed.** H-R6/ADA was the *worst of 29* in the random-entry control (real −434.17 bps vs random −101.07, p=0.995, verified from `results/random_entry_control.json`) and H-R5 weekend/ETH was refuted by the 3.01y clustered test (verified from `results/weekend_test.json`: −3.21 bps, CI [−67.26,+64.51], rank 15 of 42). **Walk-forward stability resurrects cells that permutation and random-entry destroy** — it is the weakest of the four controls because it only asks whether the sign held, never whether the sign beat luck | same |
+| 11:36 | FAIL | **Mode B (fitted params): 33 folds made money in-sample, 24 of those lost money on the next window — a 73% collapse rate.** OOS positive rate 28.6%, worse than a coin flip. Selecting (tp_atr, sl_atr, max_bars) on the training window had **negative predictive value** for the following window | same |
+| 11:37 | DOC | This is the strongest generalisable claim the project can currently make: **tuning TP/SL on data you then score is not a small bias, it is how the edge gets created and destroyed.** It also explains the live books — 0 take-profits in 27 trades from bracket widths chosen by apparent tuning value | same |
+| 11:40 | RUN | **P8 FX class census** — the last major class this repo had never tested. 7 majors, 3,094-3,095 daily bars each (2015-01-02 to 2026-11-22, 11.9y), 6 families, 3 cost levels, 60 shuffles/cell | `proof/fx_census.py` |
+| 11:44 | FAIL | **0 of 35 cells clear both gates.** 8 of 35 positive on point estimate (a coin flip predicts 17.5, so 8 is *below* chance); **0 CI intervals exclude zero**; 1 permutation p≤0.05 (H-R1/USDJPY p=0.017, n=16) whose CI is [−26.5,+94.2] — and 1 of 35 tests at α=0.05 has an expected false-positive count of 1.75, so finding one is finding fewer than chance | `FX_CENSUS_P8.md` |
+| 11:45 | FIX | **Caught a mislabelled benchmark in my own FX work.** My carry baseline printed −3.7% CAGR / Sharpe −0.18 and it would have been easy to write "the classic carry trade lost money this decade". It measures **spot only**. A carry trade also earns the interest differential, which for AUD/NZD vs JPY was strongly positive for most of the window and is the dominant term; that data is not in this dataset. Recorded as "cannot be quoted as carry's return" rather than as a negative | same |
+| 11:46 | DOC | Trial count 126 → 240 (walk-forward) → **275** (FX). FX is the third class to return a clean null on this repo's own machinery | same |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
   permutation best p = 0.40 · BH-corrected random-entry 0 of 29. One answer.
 - **Live evidence is 27 closed trades, −$285.14, 63% commission, 7.4% win rate, and the target
   fired zero times.** No forward edge of any kind.
+- **Walk-forward, run for the first time, fails everything and explains the live books.** 2 of 42
+  cells survive frozen-parameter stability and both were already killed by other controls; with
+  fitted brackets **73% of in-sample winners lose money in the next window**.
+- **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
 - **The cleanest single fact in the whole challenge:** a trade with the direction exactly right
   (+0.200% gross) netted +0.000% because the round turn was 20 bps.
 

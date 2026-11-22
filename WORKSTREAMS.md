@@ -64,7 +64,7 @@ each does not.
 | 3 | Outcome taxonomy (PROFIT/LOSS/NO_SIGNAL/DATA_UNAVAILABLE/MARKET_CLOSED/STALE_DATA/INCONCLUSIVE) | **done** |
 | 4 | Decay alarm (rolling 20-trade Sharpe < 0) | **done** |
 | 5 | Numeric G1/G2 gate thresholds | **done** — in `ROADMAP_200` |
-| 6 | Walk-forward harness (the gate that has never been run here) | **next** |
+| 6 | Walk-forward harness with purge+embargo (the gate never run here) | **done** — 2 of 42 survive frozen, 73% bracket collapse when fitted. `WALKFORWARD_P6.md` |
 | 6a | Live-round accounting: always read `n_open == 0` before quoting a P&L (session 1 understated the probe loss 2x by reading a running process) | **done** — rule in PROGRESS session 3 |
 | 6b | All five live books aggregated from ledgers: 27 closed, 7.4% WR, −$285.14, 63% fees, **0 take-profits in 27** | **done** — challenge doc §5.4 |
 | 7 | Re-run the crypto census with a real walk-forward split | pending |

@@ -1,0 +1,1764 @@
+{
+ "hypothesis": "P6 \u2014 do any of the six families survive walk-forward with purge+embargo?",
+ "generated_utc": "2026-11-22T09:59:00+00:00",
+ "timeframe": "4h",
+ "universe": [
+  "BTC",
+  "ETH",
+  "SOL",
+  "XRP",
+  "DOGE",
+  "ADA",
+  "LINK"
+ ],
+ "costs": {
+  "taker_fee": 0.001,
+  "slippage": 0.0003,
+  "per_side": 0.0013,
+  "round_turn": 0.0026
+ },
+ "protocol": {
+  "folds": "sequential expanding, strictly no look-ahead",
+  "purge_bars": 48,
+  "embargo_frac": 0.01,
+  "mode_a": "frozen parameters \u2014 temporal stability",
+  "mode_b": "grid 18 brackets fitted on train, applied untouched to test",
+  "mode_b_symbols": [
+   "BTC",
+   "ETH",
+   "SOL"
+  ],
+  "pass_rule": "pooled OOS CI lower bound > 0 AND >= 60% folds positive"
+ },
+ "mode_a": {
+  "rows": [
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 0,
+      "mean_bps": null
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": -205.31
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": 323.76
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": -135.37
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": 135.57
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_positive": 1,
+    "fold_positivity": 1.0,
+    "total_oos_trades": 5,
+    "pooled_mean_bps": 135.57
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": 33.78
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": 123.95
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -68.25
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 10,
+      "mean_bps": -106.61
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 112.31
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 3,
+    "fold_positivity": 0.75,
+    "total_oos_trades": 43,
+    "pooled_mean_bps": 40.84
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 209.63
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 39.14
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -129.22
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 55.95
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -83.87
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 3,
+    "fold_positivity": 0.6,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": 21.12
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -81.15
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": 13.84
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -37.69
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": 38.32
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 14,
+      "mean_bps": -10.67
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 2,
+    "fold_positivity": 0.5,
+    "total_oos_trades": 44,
+    "pooled_mean_bps": -23.49
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": -103.57
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -53.57
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -72.46
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": 52.84
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": 4.73
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 2,
+    "fold_positivity": 0.5,
+    "total_oos_trades": 44,
+    "pooled_mean_bps": -29.27
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -92.31
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": 50.26
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 3,
+      "mean_bps": -290.58
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -19.82
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": 32.18
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 2,
+    "fold_positivity": 0.5,
+    "total_oos_trades": 37,
+    "pooled_mean_bps": -13.63
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": 2.31
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -35.06
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 123.99
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -143.0
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": 4.67
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 2,
+    "fold_positivity": 0.5,
+    "total_oos_trades": 30,
+    "pooled_mean_bps": -44.83
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 35,
+      "mean_bps": -55.48
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 30,
+      "mean_bps": -39.56
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 31,
+      "mean_bps": 24.5
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 34,
+      "mean_bps": 17.83
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": -23.63
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 163,
+    "pooled_mean_bps": -15.6
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 28,
+      "mean_bps": -6.39
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 32,
+      "mean_bps": 49.63
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": 51.53
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 32,
+      "mean_bps": -48.76
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 23,
+      "mean_bps": -46.54
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 148,
+    "pooled_mean_bps": 3.24
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -1.15
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 18.2
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -106.93
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 2.87
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -66.34
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": -29.9
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 169.43
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 30.38
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -103.73
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -51.23
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -30.26
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": 4.29
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 37.28
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 14,
+      "mean_bps": -84.49
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -62.86
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 90.0
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": -9.97
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 71,
+    "pooled_mean_bps": 0.98
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 15,
+      "mean_bps": 37.47
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -45.24
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -46.96
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": -74.36
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": 112.88
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 63,
+    "pooled_mean_bps": -4.17
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 19,
+      "mean_bps": 26.06
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -23.34
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -146.76
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -56.52
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 15,
+      "mean_bps": 1.28
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 58,
+    "pooled_mean_bps": -24.11
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 10,
+      "mean_bps": 87.97
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": -197.99
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": 0.58
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 14,
+      "mean_bps": -83.61
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": -115.36
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 51,
+    "pooled_mean_bps": -69.65
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -11.4
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -116.65
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -89.08
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": 77.59
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 15,
+      "mean_bps": 2.29
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 2,
+    "fold_positivity": 0.4,
+    "total_oos_trades": 49,
+    "pooled_mean_bps": -20.4
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 13,
+      "mean_bps": -77.6
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": 128.21
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": -138.85
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -110.64
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 10,
+      "mean_bps": 55.77
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_positive": 1,
+    "fold_positivity": 0.333,
+    "total_oos_trades": 29,
+    "pooled_mean_bps": -44.28
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 73.67
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -50.36
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -118.69
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -24.07
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 14,
+      "mean_bps": -22.35
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 1,
+    "fold_positivity": 0.25,
+    "total_oos_trades": 49,
+    "pooled_mean_bps": -3.19
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -39.3
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -173.94
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 10,
+      "mean_bps": 46.49
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -48.65
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -67.41
+     }
+    ],
+    "n_scored_folds": 4,
+    "folds_positive": 1,
+    "fold_positivity": 0.25,
+    "total_oos_trades": 34,
+    "pooled_mean_bps": -47.12
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 35,
+      "mean_bps": 9.65
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 31,
+      "mean_bps": -19.22
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 38,
+      "mean_bps": -32.23
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 32,
+      "mean_bps": -46.59
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 35,
+      "mean_bps": -87.5
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 171,
+    "pooled_mean_bps": -35.3
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 34,
+      "mean_bps": -20.51
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 34,
+      "mean_bps": -19.18
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": -89.56
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 31,
+      "mean_bps": 7.34
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 25,
+      "mean_bps": -58.38
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 157,
+    "pooled_mean_bps": -35.27
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 35,
+      "mean_bps": -28.12
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 35,
+      "mean_bps": -108.85
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 29,
+      "mean_bps": -3.55
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 30,
+      "mean_bps": 19.0
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 23,
+      "mean_bps": -48.85
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 152,
+    "pooled_mean_bps": -35.86
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": -71.3
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": -49.89
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 32,
+      "mean_bps": -24.21
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 23,
+      "mean_bps": -26.15
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 26,
+      "mean_bps": 23.4
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 147,
+    "pooled_mean_bps": -32.43
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 54.82
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -71.36
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -97.28
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -4.76
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -153.61
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": -52.5
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -7.05
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 33.21
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -95.29
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -124.01
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -92.85
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": -57.4
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": 62.72
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -0.35
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -194.37
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -128.06
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -52.9
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": -61.86
+   },
+   {
+    "strategy": "H-R5_weekend_effect",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -33.01
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": 100.6
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -98.39
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 17,
+      "mean_bps": -89.36
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -123.61
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 82,
+    "pooled_mean_bps": -49.06
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": -14.01
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": 62.74
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": -118.26
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": -32.03
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 15,
+      "mean_bps": -66.73
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 53,
+    "pooled_mean_bps": -33.23
+   },
+   {
+    "strategy": "H-R6_rsi2_pullback",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 15,
+      "mean_bps": -13.26
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -57.65
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -146.9
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -25.58
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": 26.41
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 48,
+    "pooled_mean_bps": -32.18
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": -13.97
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": 50.64
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -41.4
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -27.68
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -62.89
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 1,
+    "fold_positivity": 0.2,
+    "total_oos_trades": 40,
+    "pooled_mean_bps": -10.2
+   },
+   {
+    "strategy": "H-R2_donchian_breakout",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 33,
+      "mean_bps": -40.18
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 42,
+      "mean_bps": -13.08
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 31,
+      "mean_bps": -42.03
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 27,
+      "mean_bps": -43.2
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 27,
+      "mean_bps": -2.59
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 160,
+    "pooled_mean_bps": -27.59
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -38.43
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": -39.06
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -61.71
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 10,
+      "mean_bps": -74.02
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -31.81
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 42,
+    "pooled_mean_bps": -50.37
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": -1.97
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -205.04
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -94.18
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -88.14
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": -51.0
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 39,
+    "pooled_mean_bps": -81.75
+   },
+   {
+    "strategy": "H-R4_vol_compression",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -104.57
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 7,
+      "mean_bps": -21.34
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 8,
+      "mean_bps": -24.28
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 9,
+      "mean_bps": -26.69
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -86.69
+     }
+    ],
+    "n_scored_folds": 5,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 36,
+    "pooled_mean_bps": -48.59
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": -105.79
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -82.13
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -91.36
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -99.73
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 16,
+      "mean_bps": -103.2
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 33,
+    "pooled_mean_bps": -100.95
+   },
+   {
+    "strategy": "H-R3_bollinger_meanrev",
+    "symbol": "XRP",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 12,
+      "mean_bps": -138.51
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": 126.04
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -49.38
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -153.25
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 11,
+      "mean_bps": -126.47
+     }
+    ],
+    "n_scored_folds": 3,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 28,
+    "pooled_mean_bps": -136.41
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "BTC",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -5.91
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -45.03
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 0,
+      "mean_bps": null
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": 36.65
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -61.82
+     }
+    ],
+    "n_scored_folds": 2,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 10,
+    "pooled_mean_bps": -33.86
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "LINK",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": -245.28
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -109.35
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": -149.67
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 3,
+      "mean_bps": 25.82
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -27.78
+     }
+    ],
+    "n_scored_folds": 2,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 10,
+    "pooled_mean_bps": -68.56
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "ADA",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": -273.53
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 6,
+      "mean_bps": -48.36
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 0,
+      "mean_bps": null
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": 345.46
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 68.2
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 6,
+    "pooled_mean_bps": -48.36
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "ETH",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 55.41
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 103.26
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 0,
+      "mean_bps": null
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 30.83
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 5,
+      "mean_bps": -112.63
+     }
+    ],
+    "n_scored_folds": 1,
+    "folds_positive": 0,
+    "fold_positivity": 0.0,
+    "total_oos_trades": 5,
+    "pooled_mean_bps": -112.63
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "SOL",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": -196.05
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": -5.01
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 1,
+      "mean_bps": -196.88
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 3,
+      "mean_bps": -182.77
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 3,
+      "mean_bps": -75.38
+     }
+    ],
+    "n_scored_folds": 0,
+    "folds_positive": 0,
+    "fold_positivity": null,
+    "total_oos_trades": 0,
+    "pooled_mean_bps": null
+   },
+   {
+    "strategy": "H-R1_trend_pullback",
+    "symbol": "DOGE",
+    "folds": [
+     {
+      "test_start": "2025-04-02 00:00:00+00:00",
+      "test_end": "2025-07-30 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": 143.68
+     },
+     {
+      "test_start": "2025-08-01 04:00:00+00:00",
+      "test_end": "2025-11-27 08:00:00+00:00",
+      "n": 4,
+      "mean_bps": 153.36
+     },
+     {
+      "test_start": "2025-11-30 08:00:00+00:00",
+      "test_end": "2026-03-27 08:00:00+00:00",
+      "n": 0,
+      "mean_bps": null
+     },
+     {
+      "test_start": "2026-03-31 16:00:00+00:00",
+      "test_end": "2026-07-25 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": -156.79
+     },
+     {
+      "test_start": "2026-07-30 20:00:00+00:00",
+      "test_end": "2026-11-22 08:00:00+00:00",
+      "n": 2,
+      "mean_bps": 340.06
+     }
+    ],
+    "n_scored_folds": 0,
+    "folds_positive": 0,
+    "fold_positivity": null,
+    "total_oos_trades": 0,
+    "pooled_mean_bps": null
+   }
+  ],
+  "n_survivors": 2,
+  "survivors": [
+   "H-R6_rsi2_pullback/ADA",
+   "H-R5_weekend_effect/ETH"
+  ]
+ }
+}
