@@ -217,6 +217,12 @@ loop: kills become machine-enforced blocks, not paragraphs.
 | R186–R188 | Latency sensitivity: re-run promoted cells with 5s/30s/120s entry delay |
 | R189–R190 | Capacity: at what notional does the edge disappear given observed depth |
 
+**Rule adopted from the COMS fleet (Mercury3 PART13, 2026-11-22):** every strategy
+evaluated at sub-hourly frequency reports **gross / fees / net and the edge-to-cost ratio**.
+If the fee line is larger than the gross line, it is a donation rather than a strategy, and
+it is cheap to check. Measured here: 1h cells run edge/cost near 1.2 at best, against the
+fleet's 3.0 bar.
+
 **Rule adopted from the peer review (2026-11-22):** a scheduled runner supervises every
 ~60 minutes, so the bracket must also be *survivable across one supervision gap*. Every
 cell must report `supervision_gap_s / median_hold_s` and

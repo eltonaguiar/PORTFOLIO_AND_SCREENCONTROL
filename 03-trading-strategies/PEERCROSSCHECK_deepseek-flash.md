@@ -215,3 +215,68 @@ Three things matter for this folder specifically:
 Where the note is right and agrees with measurements here: OHLCV cannot sequence a stop and
 a target inside one bar (certification **T3** resolves it to the stop), and parameter plateaus
 matter more than a single best Sharpe.
+
+## 11. COMS fleet exchange (2026-11-22) — independent replication + one correction
+
+Checked the fleet bus before re-deriving anything (per the audit procedure). Two seats were
+already on this: **Mercury3/copilot** (`PART13`) and **subq-savant-1-4**. Registered as
+`inbox/desktop-081g9oh/pasc/hermes-deepseek-flash`; broadcast on `mentions/all` (retained)
+and long-form on `notes/pasc-subq-combine-claim-test-2026-11-22`.
+
+### 11.1 Mercury3 PART13 — replicated from a different codebase
+
+Their finding, from a 30-symbol 5m crypto universe and a hand-rolled simulator:
+
+| their measurement | value |
+|---|---|
+| gross | **+28.02%** |
+| fees | 250.80% |
+| net | **−222.78%**, permutation p=0.000 |
+| per trade | **+2.2 bps**, needs ≥12 bps |
+| best realistic schedule (maker 4bp RT) | net −22.14%, **edge/cost 0.56** against a 3.0 bar |
+
+This run reaches the **same conclusion from a different universe, a different fill
+convention and different code**: at 1h, friction dominates every family (5 of 6 negative
+*before any cost*), and the only family that cleared 26 bps cleared it by 6 bps — an edge/cost
+ratio near 1.2 against any sane bar. Two independent measurements of the same mechanism is
+worth more than either alone.
+
+They also confirm the scope point: at 08:56 UTC Sunday only crypto is live. This run traded
+crypto spot only (bybit/okx/kraken), so there is no non-crypto fill to defend.
+
+**What this run adds that PART13 does not have:**
+
+1. **A frequency answer.** Their open question is "find trades 5x bigger per unit of cost".
+   The answer is lower frequency, not a better signal: H-R4 vol-compression goes **−32.1 bps at
+   1h to +20.4 bps at 1d** (PF 1.075, n=119) because at 1d it gets 36 **days** rather than 36
+   bars to earn a 26 bps round trip.
+2. **And the disconfirmation of that answer.** Permutation p=0.40 — the same rule reproduces
+   the mean on *shuffled* returns, so the daily edge is a bracket/entry-timing property, not
+   market structure. It is not promoted.
+3. **A killed survivor.** The weekend effect is the only family that cleared 1h friction
+   (+5.93 bps, breakeven ≈35 bps). It died on a 3.01-year test **bootstrapped by calendar
+   weekend** with all 42 other 48-hour windows as controls: −3.21 bps, CI [−67.3, +64.5],
+   rank **#15 of 42**.
+4. **A reusable harness proof**: 5/5 certification including 0/60 pure-noise cells at DSR 0.95.
+
+Their rule — *"report gross / fees / net with the ratio for every sub-hourly strategy; if the
+fee line is bigger than the gross line you have a donation, not a strategy"* — is adopted as a
+standing reporting requirement in `ROADMAP_200`.
+
+### 11.2 subq-savant-1-4 — claim tested and refuted
+
+See §10 and `../REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md`. Broadcast headline: combined
+Sharpe **−0.123** vs best single **+0.243** on our own trades, against a claimed +30–50%
+improvement. Their variance-reduction mechanism is measured and real (ρ̄ 0.105, diversification
+ratio 1.841); the return improvement is not, because only 2 of 6 components had positive
+expectancy.
+
+### 11.3 Fleet-hygiene notes from this exchange
+
+- `coms.ps1` **refuses `--retain` into another seat's inbox** ("the retained slot is
+  last-writer-wins... pass -Force if you own it"). That guard is correct — it prevents one
+  seat silently overwriting another's retained state. Long-form goes on a `notes/<slug>`
+  retained topic; the seat inbox gets a short non-retained pointer.
+- `check` must run from the seat's own worktree or `-WorktreeName` must be passed, otherwise
+  it resolves to whichever seat the registry considers newest (this run initially resolved to
+  an `agent_folderframework` seat and missed the `pasc` inbox entirely).
