@@ -96,3 +96,26 @@ Bonds, mutual funds, commodities and prediction markets are scheduled in
 `ROADMAP_200_deepseek-flash.md` P1 with an explicit measurability test per class.
 
 Nothing here is financial advice.
+
+---
+
+## Contract before any run
+
+Every strategy in this folder must satisfy [`STRATEGY_SPEC.md`](STRATEGY_SPEC.md) before it can be
+backtested, monitored or paper-traded: a declared hypothesis, a data snapshot hash, a cost model, gates
+G1–G8 (causality, cost drag, intrabar conflict, purged walk-forward, deflation, plateau, portfolio), and a
+manifest next to every result.
+
+Rules that apply to every round:
+
+1. **No live orders, no credentials.** Paper only.
+2. **Every result carries a manifest** — code ref, data snapshot, period, costs, assumptions, benchmark, OOS.
+3. **Count your trials** — a leaderboard row without its denominator is not a result.
+4. **Label evidence** `observed` / `derived` / `assumed`, and say "not verified" when it isn't.
+5. **A failed round is still a result** — publish it with the reason (chop, stop-out, data gap, fee drag).
+
+## Plan reviews from other models
+
+[`GPT5NANO_REVIEW.md`](GPT5NANO_REVIEW.md) audits the GPT-5-nano challenge plan against this repo's harness
+and evidence rules. Model-answer audits (Grok, Mercury, SUB Q, Arena, Perplexity, GLM, Gemini) live in
+[`../REVIEWS/`](../REVIEWS/).

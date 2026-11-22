@@ -9,6 +9,7 @@ conflated in AI-agent discussions:
 | [`02-portfolio-multi-asset/`](02-portfolio-multi-asset/) | **Portfolio tracking and valuation** — what do I own, what is it worth in my base currency, how did it perform | NautilusTrader architecture read from source, framework matrix with verified licences, tracking/valuation stack, data-evidence rules, paper-trading/monitoring design | — |
 | [`03-trading-strategies/`](03-trading-strategies/) | **Trading strategies, backtests, paper trading** — would this *rule* have made money, and is that answer real | A running harness (`realtime_challenge/`), 6 pre-registered hypotheses, deflated Sharpe + permutation control, live paper round, hourly forward pods, 200-round roadmap | [`PROGRESS.md`](03-trading-strategies/PROGRESS.md) |
 | [`REVIEWS/`](REVIEWS/) | **Source-answer audits** — user-supplied agent playbooks and peer challenge prototypes reviewed claim by claim, with the originals kept alongside | Review + input copy | — |
+| [`TRACKING.md`](TRACKING.md) | **Generated index** of every folder and document, with the status of the folder split | Folder/file tables, rebuilt by `scripts/update_index.py` (also runs on a schedule) | — |
 
 ### Why 02 and 03 are separate folders
 
