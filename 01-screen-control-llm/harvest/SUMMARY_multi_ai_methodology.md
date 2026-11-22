@@ -11,7 +11,7 @@ criteria. Four sites driven in the user's own logged-in Chrome (`zerounderscore@
 | **web.chatplayground.ai** | ChatGPT-6 Luna, Claude (Latest Model), GLM 5.3 Flash — **3/3** | **complete** (33.7 KB) | `harvest/chatplayground_methodology.md` |
 | **app.1min.ai** | GPT-4.1 mini (6 models selected, 1 responded in full) | **complete** (10.6 KB) | `harvest/1min_methodology.md` |
 | **askanymodel.xyz** | Second pass with 6 selected: Gemma 4 26B A4B, Nemotron 3.5 Super VL, Nemotron 3.5 Lightning, **GPT-5 Nano, Gemini, Claude Haiku 4.5** — 6/6 answered (Gemini first + most detailed, Claude Haiku shortest) | **partial** — page text is not selectable and the a11y tree is virtualised; only fragments captured | `prototype/transcripts/askanymodel_tree_raw.txt` |
-| **arena.ai** | — | **no answer**: anonymous pair "Assistant A/B" still generating after 4 minutes; the mode switch (Chat→Agent) would not open to synthetic clicks, so the run went through Chat | — |
+| **arena.ai** | Blind pair `Assistant A` / `Assistant B` (identities hidden until a vote) — **2/2 answered** | **complete** (38.6 KB) — Chat mode; the Chat→Agent switch ignores synthetic clicks, so the run went through Chat | `harvest/arena_methodology.md` |
 
 Failure worth recording: on the first askanymodel pass, `Gemma 4 31B` returned *"This model is
 temporarily unavailable"* and `Nemotron 3.5 Lightning` never answered. Rotating in three different
@@ -61,7 +61,23 @@ the models cited it unprompted, which is a good sign the answers are grounded ra
 - Stopping rules declared in advance; multiple-testing correction across the whole family tested.
 - Falsification criteria written **before** the first forward row.
 
-## 3. Where they differ
+## 3. What arena's blind pair added that the others missed
+
+Both arena answers push past "pick a threshold and pass it":
+
+- **Three outcomes, not two.** *Pass* / *Fail* / **Inconclusive** — and inconclusive is **not** permission
+  to lower the hurdle, change the metric, or keep testing until something passes. That is the failure
+  mode of nearly every retail research loop.
+- **A fixed reporting pack** to be allowed to say "works": pre-registration + trial log with N and V;
+  PIT/survivorship/cost plus audit tests; net equity, drawdown, monthly table, turnover, exposures;
+  DSR + PBO/CSCV histograms; walk-forward table; IR and factor regression; 2×-cost; tail; and a kill list.
+- **A stronger null**: Hansen SPA / White Reality Check with **p > 0.10 across the family**, and DSR
+  recomputed with the *true* N including every forward tweak, targeting **< 0.90**. Our forward gate only
+  asks for a CI lower bound above zero at 2× costs — arena's null is stricter and worth adopting.
+- **The scaling rule**: pass everything, then survive **12+ months live at small size with IR intact** —
+  and only then scale. No single Sharpe, PBO, or backtest plot substitutes for that.
+
+## 4. Where they differ
 
 - **How much discretion is allowed after pre-registration.** ChatGPT-6 Luna permits tightening gates
   before results are seen; Claude and GLM treat any change as a new trial. The stricter reading is the
@@ -73,7 +89,7 @@ the models cited it unprompted, which is a good sign the answers are grounded ra
   discovery phase; the chatplayground answers put them at the end. Early is better — it kills ideas
   cheaply.
 
-## 4. How this maps onto our repo
+## 5. How this maps onto our repo
 
 The harvested methodology is the same rule set this repo already enforces, which is a useful
 cross-check rather than a new opinion:
@@ -88,7 +104,7 @@ cross-check rather than a new opinion:
 Live audit state: **0 of 67 tested cells proven, selection alpha negative in every asset class.** The
 methodology above is precisely why that number is credible rather than disappointing.
 
-## 5. Reproduce
+## 6. Reproduce
 
 ```
 # clipboard route (full text, works on chatplayground + 1min)
