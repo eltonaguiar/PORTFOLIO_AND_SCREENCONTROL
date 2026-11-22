@@ -7,6 +7,18 @@ The reference case is [`../REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md`](../REVIEWS/QW
 a document that reports a completed BTC trade at $61,200 on 2024-06-15, on a day BTC never traded below
 $65,857. It fails checks 1, 2, 3, 4, 5, 6 and 10 — a full-house fabrication.
 
+## 0. Static gates — four checks that need no data and no trust
+
+Before any result is quoted, grep the code that produced it. All four cost seconds and each one has already
+caught a real document in this collection (`REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW.md` fails 1, 2, 3 and 4).
+
+| # | Gate | What to look for | Failure means |
+|---|---|---|---|
+| S1 | **Causality** | the signal index is strictly less than the fill index (`sig.shift(1)`, `iloc[i-1]`), or a fill at `open[i]` from `close[i-1]` | same-bar look-ahead; numbers are fiction |
+| S2 | **Exit ordering** | SL/TP compared against `low`/`high`, not `close`, and the stop booked when both are touched | optimistic bias |
+| S3 | **Annualisation** | `sqrt(bars_per_year)` derived from the interval, not hard-coded 252 | Sharpe off by √(bars) |
+| S4 | **Trials** | every sweep counts and reports the number of variants evaluated | selection effect; the "best" is the maximum of a search |
+
 ## 1. Does the timestamp precede the question?
 
 A document dated before the brief it answers cannot contain an execution. Check the file date, the prompt date,
