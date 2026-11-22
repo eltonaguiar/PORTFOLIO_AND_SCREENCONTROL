@@ -101,17 +101,17 @@ def folds_for(n_bars: int, k: int, min_train: int = 400):
     return out
 
 
-def mode_a(panel, tf) -> list[dict]:
+def mode_a(panel, tf, n_folds: int = N_FOLDS_A, purge: int = PURGE_BARS) -> list[dict]:
     """Frozen parameters: temporal stability only."""
     rows = []
     for name, build in builders().items():
         for sym, df in panel.items():
             sig = build(df)
-            fl = folds_for(len(df), N_FOLDS_A)
+            fl = folds_for(len(df), n_folds)
             per = []
             for train_end, t0, t1 in fl:
                 # purge: labels from the tail of train may resolve inside test
-                te_stop = max(1, train_end - PURGE_BARS)
+                te_stop = max(1, train_end - purge)
                 emb = int((te_stop) * EMBARGO_FRAC)
                 lo = min(t1, t0 + emb)
                 if t1 - lo < 30:
@@ -137,17 +137,17 @@ def mode_a(panel, tf) -> list[dict]:
     return rows
 
 
-def mode_b(panel, tf) -> list[dict]:
+def mode_b(panel, tf, n_folds: int = N_FOLDS_B, purge: int = PURGE_BARS) -> list[dict]:
     """Fit the bracket on train, apply untouched to test."""
     rows = []
     for name, build in builders().items():
         for sym in GRID_SYMBOLS:
             df = panel[sym]
             sig = build(df)
-            fl = folds_for(len(df), N_FOLDS_B)
+            fl = folds_for(len(df), n_folds)
             per = []
             for train_end, t0, t1 in fl:
-                te_stop = max(1, train_end - PURGE_BARS)
+                te_stop = max(1, train_end - purge)
                 emb = int(te_stop * EMBARGO_FRAC)
                 tr = df.iloc[max(0, te_stop - 2500):te_stop]
                 lo = min(t1, t0 + emb)
@@ -190,14 +190,25 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", default="both", choices=["A", "B", "both"])
     ap.add_argument("--timeframe", default="4h")
+    ap.add_argument("--folds", type=int, default=None,
+                    help="folds per mode; defaults 5 for A and 4 for B")
+    ap.add_argument("--limit", type=int, default=4000, help="bars to request")
+    ap.add_argument("--purge", type=int, default=None,
+                    help="purge bars; defaults to PURGE_BARS (48) on intraday, 24 on daily")
+    ap.add_argument("--venue", default="binance")
     a = ap.parse_args()
+    # daily bars need a shorter purge: a 48-bar purge on a 1d fold would delete most of the
+    # training tail, since the longest bracket held is max_bars (<=24), not 48 bars
+    purge = a.purge if a.purge is not None else (24 if a.timeframe.endswith("d") else PURGE_BARS)
+    folds_a = a.folds or N_FOLDS_A
+    folds_b = a.folds or N_FOLDS_B
 
-    print(f"fetching 4h panel, {len(UNIVERSE)} symbols ...")
+    print(f"fetching {a.timeframe} panel, {len(UNIVERSE)} symbols, limit {a.limit} ...")
     # Venue matters for history depth: kraken's inner-joined 4h panel across all seven
     # symbols is only ~721 bars (120 days), which cannot support 4-5 expanding folds.
     # binance carries the full 4000-bar (22-month) 4h history used by the census.
-    panel = D.fetch_panel("binance", UNIVERSE, timeframe=a.timeframe,
-                          limit=4000, use_cache=False)
+    panel = D.fetch_panel(a.venue, UNIVERSE, timeframe=a.timeframe,
+                          limit=a.limit, use_cache=False)
     if not panel:
         print("no data"); return 1
     nbars = min(len(v) for v in panel.values())
@@ -208,10 +219,11 @@ def main() -> int:
         "hypothesis": "P6 — do any of the six families survive walk-forward with purge+embargo?",
         "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "timeframe": a.timeframe, "universe": UNIVERSE,
+        "folds_a": folds_a, "folds_b": folds_b, "purge_bars": purge, "venue": a.venue,
         "costs": DEFAULT_COSTS.as_dict(),
         "protocol": {
             "folds": "sequential expanding, strictly no look-ahead",
-            "purge_bars": PURGE_BARS,
+            "purge_bars": purge,
             "embargo_frac": EMBARGO_FRAC,
             "mode_a": "frozen parameters — temporal stability",
             "mode_b": f"grid {len(GRID)} brackets fitted on train, applied untouched to test",
@@ -222,7 +234,7 @@ def main() -> int:
 
     if a.mode in ("A", "both"):
         print("MODE A — frozen parameters, temporal stability")
-        rows_a = mode_a(panel, a.timeframe)
+        rows_a = mode_a(panel, a.timeframe, n_folds=folds_a, purge=purge)
         rows_a.sort(key=lambda r: (-(r["fold_positivity"] or 0), -(r["total_oos_trades"] or 0)))
         print(f"  {'strategy':24s} {'sym':5s} {'folds+':>7s} {'n_oos':>6s} {'pooled bps':>11s}")
         for r in rows_a[:10]:
@@ -244,7 +256,7 @@ def main() -> int:
 
     if a.mode in ("B", "both"):
         print(f"\nMODE B — {len(GRID)}-bracket grid fitted on train, applied to test")
-        rows_b = mode_b(panel, a.timeframe)
+        rows_b = mode_b(panel, a.timeframe, n_folds=folds_b, purge=purge)
         rows_b.sort(key=lambda r: -r["folds_test_positive"])
         print(f"  {'strategy':24s} {'sym':5s} {'train+':>7s} {'test+':>6s} "
               f"{'collapse':>9s} {'n_oos':>6s}")
