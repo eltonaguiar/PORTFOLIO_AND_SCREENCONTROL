@@ -1,0 +1,41 @@
+New Chat
+Leaderboard
+Search
+See more
+Unlock more with Arena
+
+Sign up for free to access the world’s top AI models for chatting, coding, and creating, all in one place.
+
+Log In
+Terms of Use
+Privacy Policy
+Cookies
+Log in
+Sign up for free
+Experience the frontier
+Suggest improvements to my repo
+Help me organize my Drive files
+Find this week's important emails
+Connect more apps
+
+In one sence: what is the ingle strongest dosentence-integrity checkcumented market risk premium?You are advising a retail quant. Give a rigorous methodology for proving a stock trading strategy actually works: (1) how to find candidates without fooling yourself (hypothesis sources, pre-registration, trial accounting); (2) the exact backtest construction rules (point-in-time data, survivorship, look-ahead, costs, corporate actions); (3) the statistics a professional checks (Sharpe vs deflated Sharpe/DSR, PBO/CSCV, walk-forward efficiency, IR vs matched benchmark, 2x-cost test, capacity, tail ratio) with decision thresholds; (4) a forward/paper-test protocol with sample size and power, stopping rules and multiple-testing correction; (5) the specific evidence that would falsify the strategy. Use tables and be concrete.
+
+Agent
+
+Model
+Log In or Create Account
+Log In or Create Account
+
+Your current chat history will be saved to your new account so you can access your chat from any device.
+
+Continue with Google
+OR
+Continue with email
+Yes, keep me posted on what's new
+Merge existing chats with your account
+
+Linking chats may not work if you verify your account on a different browser
+
+By signing up for this service, you agree to the Terms and have read our Privacy Policy.
+
+Close
