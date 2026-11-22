@@ -38,7 +38,7 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 62 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 140 (22 md) | 102 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 150 (22 md) | 112 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -89,7 +89,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 262 | 42725 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 309 | 48379 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
 | [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7718 |
 | [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 19700 |
@@ -128,7 +128,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8682 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 23 | 3949 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 24 | 4946 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 
