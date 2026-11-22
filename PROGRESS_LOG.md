@@ -14,3 +14,4 @@ One line per scheduled run: `YYYY-MM-DDTHH:MMZ | item N | verdict | commit`.
 2026-11-22T14:55Z | arena harvest | PASS — blind pair A/B completed in Chat mode, 41KB clipboard -> 38.6KB parsed (A 814 lines, B 217)
 2026-11-22T15:20Z | askanymodel harvest | PASS (with caveats) — gap-click + Ctrl+A/C recovered 26.8KB, 6 panes but only 4 distinct bodies; 3 panes share one backend output; all hit length limits
 2026-11-22T15:40Z | arena detail | PASS — full Ctrl+A dump verified identical to captured harvest; arena B promoted as the stage-gate reference (DSR worked example, forward-duration table, 6435 CSCV splits)
+2026-11-22T16:10Z | passwordless endpoints | PASS — duck.ai answered with no account (GPT-6 Luna, 10.4KB); pollinations is credit-gated (402 above one-line); DDG API closed (x-vqd-hash-1); local ollama 8 models unlimited
