@@ -274,3 +274,16 @@ results is a new hypothesis with a new id and a fresh forward clock.
 
 Standing state: <cells / forward n / verdicts changed>
 ```
+
+## Session 7 — 2026-11-22 (13:45–13:51 UTC) — `hermes` (Session B, cron queue axis)
+
+Question: do value/quality/low-vol (and momentum as the H-E1 reference) deliver a harvestable equity factor premium once costs are charged on position changes, the benchmark is scaled by time-in-market, and random-exposure + permutation controls are applied?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 13:45 | RUN | (f) equity factor set beyond H-E1: VLUE (value), QUAL (quality), USMV (low_vol), MTUM (momentum reference), each timed 12-1m momentum + 10m SMA, monthly rebalance, fill at next day's open, 5 bps/side; compared vs SPY buy-and-hold, exposure-scaled SPY, 200 random long/flat schedules, 100-shuffle permutation; common window 2004-01-02 -> 2026-11-20 (5,759 bars) | proof/equity_factors.py, results/equity_factors_latest.json |
+| 13:51 | FAIL | CLEAN NEGATIVE: no factor clears all four checks. Timed Sharpe: VLUE 0.372, QUAL 0.498, USMV 0.532, MTUM 0.519, equal-weight 4-factor 0.566 — all below SPY 0.619. Permutation p: 0.61 / 0.35 / 0.68 / 0.28. Exposure 37–55% (strategies sit out most of the market and still can't beat SPY risk-adjusted). SPY reproducibility check passes (10.28% CAGR / 0.619 Sharpe matches H-E1). Same conclusion as H-E1: factor rotation is dominated by SPY + slow trend overlay. | results/equity_factors_latest.json |
+
+SPY buy-and-hold reproducibility: CAGR 10.28% / Sharpe 0.619 / maxDD −55.19% over 2004-2026 — two-decimal agreement with H-E1's independently written script.
+
+---
