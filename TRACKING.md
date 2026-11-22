@@ -66,7 +66,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md`](01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md) | 42 | 2297 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
-| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8099 |
+| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 126 | 10308 |
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
 | [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
 | [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8357 |
@@ -128,8 +128,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8682 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 26 | 4954 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 9000 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 29 | 5811 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

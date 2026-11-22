@@ -50,7 +50,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [x] **A6 — `overseer.py`** · L · stop classifier + signature hashing + brief injection + budgets + `STOP` file (§5).
       **DoD:** passes a simulated session (stop → continue → loop → steer with a new fact → done) without
       touching a real vendor agent; test committed.
-- [ ] **A7 — reconcile with the peer's `screen_control/`** · M · two drivers now exist under `01-`: the peer's
+- [x] **A7 — reconcile with the peer's `screen_control/`** · M · two drivers now exist under `01-`: the peer's
       guarded loop and this kernel. Decide the merge — kernel as perception/actuation layer, or adopt the peer's
       policy module wholesale. **DoD:** one documented owner per concern in `01-*/README.md`; no duplicated capture
       or click path.

@@ -107,3 +107,20 @@ times out against this CDP daemon after 5 s (the transport now falls back to
 `window.scrollBy`). Both are recorded in `IMPLEMENTATION.md`.
 
 Run it: `python tests/test_loop.py` (mechanics, CI-enforced) then `python examples/live_demo.py`.
+
+## Ownership — one owner per concern
+
+The folder carries two implementations that share the research but not the runtime: this folder's `kernel/` (perception + supervision) and the peer's `screen_control/` (the running loop). Decision: **the peer's `screen_control/` owns the running loop** — observe → decide → guard → act → verify — and the `kernel/` owns perception (capture/DPI math) and supervision (overseer). The kernel's five-rung ladder (`resolve.py`) and the unwritten `act.py` (A1/A2, blocked pending a desktop session) remain documented policy, not a second runtime.
+
+| Concern | Owner | Notes |
+|---|---|---|
+| Perception / capture | `kernel/capture.py` | Window-scoped capture, per-monitor-v2 DPI math, `Rect` logical↔physical↔client mapping. No click path lives here. |
+| Rung decision / surface ladder | `kernel/resolve.py` | Five-rung ladder (API → A11Y → TEXT → MARKS → PIXELS) with per-window caching and re-probe on resize. Documented policy; not wired into the running loop. |
+| Verbs + Action schema + planners | `screen_control/schema.py`, `screen_control/policy.py` | 9 verbs, `Action`/`StepResult` validation, Scripted/LLM/Agent planners. |
+| Policy gate | `screen_control/guard.py` | Host allowlist, irreversibility gate (`confirm=True`), step/time/repeat budget. |
+| Actuation / click path | `screen_control/transports.py` | The single execution path for click/type/key/scroll/navigate/read; box-model coordinates resolved at act time. |
+| Observe→decide→guard→act→verify loop | `screen_control/loop.py` | Transcript + `MockTransport` for certification, CDP transport live. |
+| Supervision | `kernel/overseer.py` | Stop classifier, signature hashing, brief injection, budgets, `STOP` file. |
+| Mechanics certification | `tests/` | `test_capture.py`, `test_resolve.py`, `test_overseer.py` (kernel) and `test_loop.py` (loop); CI-enforced via `.github/workflows/screen-control-tests.yml`. |
+
+No duplicated capture path: the loop observes through its transport, never through `kernel/capture.py`. No duplicated click path: `screen_control/transports.py.execute()` is the only execution path; `kernel/act.py` does not exist and is not called anywhere.
