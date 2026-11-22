@@ -52,6 +52,15 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 | 10:15 | FAIL | **Its OPEN trade is mispriced:** TRADE_0002 entry 1690.73 @09:26 is 0.26 pct above Kraken's high (1686.36) and 0.10 pct above Binance's (1689.35) - unattainable on both, and it is still accumulating | `../REVIEWS/GEMINI_TRADE_0001_AUDIT.md` §4 |
 | 10:16 | PASS | Confirmed two design choices in my own harness were the right ones: venue is fixed on the trade at open (a fallback would mark it unverified, never re-price it), and the ledger is append-only JSONL with state rebuilt from it, not a mutable JSON document | `realtime_challenge/ledger.py`, `live.py` |
 
+| 10:21 | RUN | **First equity/ETF class test (roadmap P1, R28-R31).** H-E1 dual-momentum rotation: 10 ETFs across 6 classes, 12-1m momentum, top-2, 10m SMA filter, monthly rebalance, month-end signal -> next-day OPEN fill, 5bps/side, 2004-2026 (22.9 y) | `realtime_challenge/proof/etf_rotation.py`, `results/etf_rotation.json` |
+| 10:21 | FAIL | H-E1 vs buy-and-hold: CAGR **5.37 pct vs 10.28 pct**, Sharpe **0.410 vs 0.620**, maxDD -32.8 pct vs -55.2 pct. Gives up 4.9 points of CAGR and 0.21 of Sharpe | `ETF_ROTATION_H-E1.md` |
+| 10:22 | FAIL | **Permutation control kills it:** shuffle each ETF's returns independently (destroys the cross-section, keeps each series' volatility) -> real Sharpe 0.408, shuffled **p95 0.741**, **p = 0.66**. A destroyed cross-section does better than two thirds of random draws | `results/etf_rotation.json` |
+| 10:22 | RUN | **Strictly dominated by one line of code:** SPY + 200d SMA = CAGR 7.51 pct, Sharpe **0.693**, maxDD -21.5 pct; SPY + 100d = 7.34 pct, **0.702**, -19.3 pct. H-E1 loses on all three axes | `ETF_ROTATION_H-E1.md` |
+| 10:23 | PASS | **Reproduced the repo's own benchmark independently:** peer verdict quotes SPY 10.27 pct CAGR / -55.2 pct DD (2006-2026); this separately written script gets **10.28 pct / -55.19 pct** on 2004-2026. Two decimals of agreement. Peer's trend-overlay row (8.37 pct / -20.5 pct) vs mine (7.51 pct / -21.54 pct) is a 0.9-point gap -> roadmap R191-R192 | `ETF_ROTATION_H-E1.md` |
+| 10:23 | RUN | Sub-period decay: rotation beat SPY in 2004-2012 (Sharpe 0.465 vs 0.331) and lost badly after (0.096 vs 1.102 in 2013-2019). A 2004-start test alone would have proven it; a 2013-start test alone would have killed it | `results/etf_rotation.json` |
+| 10:24 | DOC | Cost was never the constraint: turnover 6.6x/yr, Sharpe 0.429 at 0bps -> 0.322 at 52bps. **Low frequency trivially survives costs** - so surviving costs is not evidence of edge. Day trading died at the cost line; this dies at the no-alpha line. Frequency is necessary, not sufficient | `ETF_ROTATION_H-E1.md` |
+| 10:25 | DOC | H-E1 archived with its test. The only thing beating buy-and-hold risk-adjusted is the slow trend overlay (timed beta, not alpha) - which agrees with the peer capital-allocation verdict | `../REVIEWS/COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md` |
+
 ### Verdict changes after session 2
 
 - **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.

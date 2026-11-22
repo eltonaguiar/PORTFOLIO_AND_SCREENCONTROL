@@ -1,0 +1,260 @@
+{
+ "hypothesis": "H-E1 dual momentum ETF rotation (12-1m, top-2, above 10m SMA)",
+ "tests_peer_claim": "ETF rotation + trend following + multi-asset beats day trading after costs",
+ "peer": "Copilot / GPT-5 note, 2026-11-22",
+ "generated_utc": "2026-11-22T09:44:10+00:00",
+ "universe": [
+  "SPY",
+  "QQQ",
+  "IWM",
+  "EFA",
+  "EEM",
+  "TLT",
+  "IEF",
+  "GLD",
+  "DBC",
+  "VNQ"
+ ],
+ "class_of": {
+  "SPY": "us_large",
+  "QQQ": "us_tech",
+  "IWM": "us_small",
+  "EFA": "intl_developed",
+  "EEM": "emerging",
+  "TLT": "long_treasury",
+  "IEF": "mid_treasury",
+  "GLD": "gold",
+  "DBC": "commodities",
+  "VNQ": "reit"
+ },
+ "window": {
+  "start": "2004-01-02",
+  "end": "2026-11-20",
+  "years": 22.88
+ },
+ "execution_convention": "signal at month-end close, fill at next trading day OPEN, weights live from that close",
+ "base": {
+  "k": 2,
+  "lookback_m": 12,
+  "abs_filter_m": 10,
+  "cost_per_side": 0.0005,
+  "years": 22.88,
+  "cagr": 0.0537,
+  "sharpe": 0.408,
+  "max_drawdown": -0.3278,
+  "total_return": 2.3064,
+  "avg_turnover_per_year": 6.56,
+  "pct_days_in_market": 0.927,
+  "n_rebalances": 262
+ },
+ "spy_buy_and_hold": {
+  "cagr": 0.1028,
+  "sharpe": 0.619,
+  "max_drawdown": -0.5519,
+  "total_return": 8.3854
+ },
+ "excess_cagr_vs_spy": -0.0491,
+ "cost_sensitivity": [
+  {
+   "cost_per_side_bps": 0.0,
+   "round_trip_bps": 0.0,
+   "cagr": 0.0571,
+   "sharpe": 0.429,
+   "max_drawdown": -0.3237,
+   "total_return": 2.5641
+  },
+  {
+   "cost_per_side_bps": 2.0,
+   "round_trip_bps": 4.0,
+   "cagr": 0.0557,
+   "sharpe": 0.421,
+   "max_drawdown": -0.3254,
+   "total_return": 2.4587
+  },
+  {
+   "cost_per_side_bps": 5.0,
+   "round_trip_bps": 10.0,
+   "cagr": 0.0537,
+   "sharpe": 0.408,
+   "max_drawdown": -0.3278,
+   "total_return": 2.3064
+  },
+  {
+   "cost_per_side_bps": 13.0,
+   "round_trip_bps": 26.0,
+   "cagr": 0.0481,
+   "sharpe": 0.375,
+   "max_drawdown": -0.3342,
+   "total_return": 1.9322
+  },
+  {
+   "cost_per_side_bps": 26.0,
+   "round_trip_bps": 52.0,
+   "cagr": 0.0392,
+   "sharpe": 0.322,
+   "max_drawdown": -0.3675,
+   "total_return": 1.4116
+  }
+ ],
+ "parameter_neighbours": [
+  {
+   "k": 1,
+   "lookback_m": 6,
+   "cagr": 0.0434,
+   "sharpe": 0.307,
+   "max_drawdown": -0.4838,
+   "turnover_per_year": 10.36
+  },
+  {
+   "k": 1,
+   "lookback_m": 12,
+   "cagr": 0.0725,
+   "sharpe": 0.448,
+   "max_drawdown": -0.4374,
+   "turnover_per_year": 6.34
+  },
+  {
+   "k": 2,
+   "lookback_m": 6,
+   "cagr": 0.0556,
+   "sharpe": 0.409,
+   "max_drawdown": -0.2905,
+   "turnover_per_year": 7.78
+  },
+  {
+   "k": 2,
+   "lookback_m": 12,
+   "cagr": 0.0537,
+   "sharpe": 0.408,
+   "max_drawdown": -0.3278,
+   "turnover_per_year": 6.56
+  },
+  {
+   "k": 3,
+   "lookback_m": 6,
+   "cagr": 0.0641,
+   "sharpe": 0.493,
+   "max_drawdown": -0.3145,
+   "turnover_per_year": 6.77
+  },
+  {
+   "k": 3,
+   "lookback_m": 12,
+   "cagr": 0.0519,
+   "sharpe": 0.421,
+   "max_drawdown": -0.3092,
+   "turnover_per_year": 5.71
+  }
+ ],
+ "sub_periods": [
+  {
+   "period": "2004-2012",
+   "rotation_sharpe": 0.465,
+   "rotation_cagr": 0.0671,
+   "rotation_maxdd": -0.2169,
+   "spy_sharpe": 0.331,
+   "spy_cagr": 0.0488,
+   "spy_maxdd": -0.5519
+  },
+  {
+   "period": "2013-2019",
+   "rotation_sharpe": 0.096,
+   "rotation_cagr": 0.0043,
+   "rotation_maxdd": -0.2912,
+   "spy_sharpe": 1.102,
+   "spy_cagr": 0.1418,
+   "spy_maxdd": -0.1935
+  },
+  {
+   "period": "2020-2026",
+   "rotation_sharpe": 0.409,
+   "rotation_cagr": 0.0518,
+   "rotation_maxdd": -0.3278,
+   "spy_sharpe": 0.715,
+   "spy_cagr": 0.1311,
+   "spy_maxdd": -0.3372
+  }
+ ],
+ "permutation": {
+  "real": 0.408,
+  "shuffled_median": 0.496,
+  "p95": 0.741,
+  "p_value": 0.66,
+  "n_perm": 100
+ },
+ "verdict": "FAILS: does not beat buy-and-hold SPY on either CAGR or Sharpe",
+ "recent_fills": [
+  {
+   "signal_date": "2026-05-29",
+   "fill_date": "2026-06-01",
+   "picks": [
+    "EEM",
+    "DBC"
+   ],
+   "mom": {
+    "EEM": 0.5303,
+    "DBC": 0.4408
+   }
+  },
+  {
+   "signal_date": "2026-06-30",
+   "fill_date": "2026-07-01",
+   "picks": [
+    "EEM",
+    "IWM"
+   ],
+   "mom": {
+    "EEM": 0.4504,
+    "IWM": 0.4088
+   }
+  },
+  {
+   "signal_date": "2026-07-31",
+   "fill_date": "2026-08-03",
+   "picks": [
+    "DBC",
+    "EEM"
+   ],
+   "mom": {
+    "DBC": 0.3446,
+    "EEM": 0.3379
+   }
+  },
+  {
+   "signal_date": "2026-08-31",
+   "fill_date": "2026-09-01",
+   "picks": [
+    "DBC",
+    "EEM"
+   ],
+   "mom": {
+    "DBC": 0.4587,
+    "EEM": 0.3639
+   }
+  },
+  {
+   "signal_date": "2026-09-30",
+   "fill_date": "2026-10-01",
+   "picks": [
+    "DBC",
+    "EEM"
+   ],
+   "mom": {
+    "DBC": 0.4769,
+    "EEM": 0.2803
+   }
+  },
+  {
+   "signal_date": "2026-10-30",
+   "fill_date": "2026-11-02",
+   "picks": [
+    "DBC",
+    "IWM"
+   ],
+   "mom": {
+    "DBC": 0.5298,
+    "IWM": 0.1431
+   }
+  }
+ ]
+}

@@ -19,6 +19,7 @@ tracker's profit factor as evidence of edge.
 |---|---|
 | [`realtime_challenge/`](realtime_challenge/) | the running harness: costs · data · engine · 6 pre-registered strategies · stats · live round · ledger · GH Actions worker · 2 proof suites |
 | [`REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD`](REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD) | **the challenge write-up** — setup, results, the live round, the verdict |
+| [`ETF_ROTATION_H-E1.md`](ETF_ROTATION_H-E1.md) | **first equity/ETF class test** — 22.9 y dual-momentum rotation, dominated by SPY + a 200-day SMA; includes the independent reproduction of the repo's own SPY benchmark |
 | [`TIMEFRAME_MATRIX.md`](TIMEFRAME_MATRIX.md) | **the class census** — 126 cells across 1h/4h/1d, per-family results, the horizon flip, and what it changes in the plan |
 | [`ROADMAP_200_deepseek-flash.md`](ROADMAP_200_deepseek-flash.md) | 200 rounds, 10 phases, explicit gates and kill conditions |
 | [`HARNESS_CERTIFICATION.md`](HARNESS_CERTIFICATION.md) | the 5 tests that make the engine allowed to say "no" |
