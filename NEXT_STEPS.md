@@ -135,3 +135,20 @@ dead-on-arrival against the cost wall, because it competes on liquidity rather t
 ### Standing rule for this loop
 Before reporting "queue complete", check this file and `03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`
 for unstarted items. "Nothing to do" is only true when both are exhausted.
+
+### Q4 — Cost-model validation gates (from the CRYPTO/BOND/ETF harvest, kept only after removing an echo)
+
+The usable half of that answer proposed **measurement** tests rather than new alpha, which is the right
+instinct for a programme whose binding constraint is cost honesty. Pre-registered thresholds, to be
+applied to our own measured series before any new strategy work:
+
+| Gate | Test | Kill |
+|---|---|---|
+| G-COST-1 | median realised fill cost over >= 30 live fills, 15m horizon | kill the cost assumption if median >= 8.0 bp |
+| G-COST-2 | slippage distribution on liquid pairs at 15m | kill if P50 > 8 bp or P90 > 20 bp |
+| G-COST-3 | is the 1D cost premium real? recompute on one instrument | kill the +24.21 bp figure if 1D cost > 24.21 bp or < 19 bp (no edge survives the spread) |
+| G-COST-4 | vol-target gap decomposition (2.3 vs 10.7 bp/day) on one instrument | kill the vol-target overlay if the gap persists > 5 bp/day after 20 sessions |
+
+Note on provenance: the *other* answer to the same question was an **echo** from the local 8B — it reused
+prompt numbers as thresholds and inverted the logic ("kill if next-open gross > +12.43 bp"). Rejected.
+A model that cannot produce a number independent of the prompt has not measured anything.
