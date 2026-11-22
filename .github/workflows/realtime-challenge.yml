@@ -25,6 +25,7 @@ on:
         default: "1"
   schedule:
     - cron: "7 * * * *"      # forward pod, hourly
+    - cron: "30 * * * *"     # carry series, hourly (offset from forward-pod :07)
     - cron: "20 6 * * *"     # daily backtest refresh
 
 permissions:
@@ -78,6 +79,46 @@ jobs:
             exit 0
           fi
           git commit -m "rtc: forward pod pass $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git fetch origin main
+            git merge --no-edit origin/main || true
+            sleep 3
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1
+
+  carry-series:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 * * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install ccxt==4.5.38
+
+      - name: Measure one carry tick across the majors
+        run: python -m realtime_challenge.proof.carry_roundtrip
+
+      - name: Recompute running median + n
+        run: python -m realtime_challenge.proof.carry_series
+
+      - name: Commit series + summary
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.name  "realtime-challenge-bot"
+          git config user.email "realtime-challenge@users.noreply.github.com"
+          git add 03-trading-strategies/results/carry_roundtrip.jsonl 03-trading-strategies/results/carry_series_summary.json
+          if git diff --cached --quiet; then
+            echo "no series change this pass"
+            exit 0
+          fi
+          git commit -m "rtc: carry series tick $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
           for i in 1 2 3 4 5; do
             if git push; then exit 0; fi
             git fetch origin main
