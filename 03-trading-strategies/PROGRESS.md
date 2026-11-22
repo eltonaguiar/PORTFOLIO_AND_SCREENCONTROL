@@ -8,6 +8,43 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 3 — 2026-11-22 (10:45–11:05 UTC) — `deepseek-flash`
+
+Question: what do the live rounds actually say once the round has *finished*, and does a peer's
+control idea change any verdict?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 10:46 | FIX | **Corrected my own reporting.** Session 1 described the probe book as "3 trades, −$55.76". That was a partial read of a round still running. The full round closed **11 trades**. Corrected in the challenge write-up | `REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD` §5.3 |
+| 10:47 | FAIL | Full probe round: **11 closed, 18.2% WR, PF 0.038, −$120.83 (−1.21%)**. Gross price component **−$47.50**, fees **−$73.33** → **fees were 61% of the loss** | `ledger/liveprobe_bybit_v2.jsonl` |
+| 10:48 | RUN | Decomposed every trade into gross vs friction. Mean round-turn friction **20.05 bps on all 11**. Trade 8 (SOL short) is the cleanest specimen in the project: **gross +0.200%, net +0.000%** — the gross edge was exactly the width of the round turn. Three trades had positive gross; only one survived the fee | `REALTIMECHALLENGE...MD` §5.3 |
+| 10:49 | FAIL | Combined live sample: **17 closed trades, −$148.62, of which $113.33 (76%) is commission.** Gross component across both books only −$35.29. Also directionally wrong: all 5 stops were shorts stopped out in a +3.4% BTC session | same |
+| 10:51 | RUN | **Adopted GLM's random-entry control** (new third null): random entries with identical bracket/sizing/hold/costs, only the entry moment differs | `proof/random_entry_control.py` |
+| 10:52 | FAIL | Raw: 2 of 29 cells at p<0.05 (H-R2/SOL 0.015; H-R4/ETH 0.030, +240.5 bps vs random median −17.8, 97th pct) | `results/random_entry_control.json` |
+| 10:52 | FIX | **Caught my own multiple-testing error.** v1 printed a per-cell label "SIGNAL ADDS TIMING VALUE" above the 95th percentile — on 29 cells that is a machine for manufacturing findings. Label neutralised; BH FDR added | same |
+| 10:53 | FAIL | **Corrected: 0 of 29 survive.** Expected false positives for 29 tests at α=0.05 is **1.45**; BH 5% thresholds are 0.00172 and 0.00345 against observed 0.015 / 0.030. Nothing survives | `TIMEFRAME_MATRIX.md` §4c |
+| 10:54 | RUN | The control **does** establish a large wrong-direction effect: H-R6 entries are worse than random by an order of magnitude across four cells (−374, −427, −434, −300 bps vs random −10 to −101). Mean reversion into a falling asset was the worst of 29 timings tested | same |
+| 10:56 | RUN | Adopted `market_clock.py` (GLM): sessions in the market's own timezone via zoneinfo so DST is handled. Verified against our first live round's moment (Sun 09:00 UTC) → `open_classes == ['crypto']` only | `realtime_challenge/market_clock.py`, `results/market_status.json` |
+| 10:57 | RUN | Adopted the outcome taxonomy (Claude Haiku) and the decay alarm (GLM, 60→**20** trades): `ledger.summary()` now returns `outcome`, `rolling_sharpe_20`, `decay_alarm` | `realtime_challenge/ledger.py` |
+| 10:59 | DOC | Numeric G1/G2 gate thresholds written into the roadmap as stated *policy choices* with reasons, not as facts | `ROADMAP_200_deepseek-flash.md` |
+| 11:01 | DOC | `WORKSTREAMS.md` created: the two concurrent sessions now have an explicit boundary (build/tracking vs verification) with disjoint file ownership, so merges are no-ops | `../WORKSTREAMS.md` |
+
+### Standing state after session 3
+
+- **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
+  permutation best p = 0.40 · BH-corrected random-entry 0 of 29. One answer.
+- **Live evidence is 17 closed trades, −$148.62, 76% commission.** No forward edge of any kind.
+- **The cleanest single fact in the whole challenge:** a trade with the direction exactly right
+  (+0.200% gross) netted +0.000% because the round turn was 20 bps.
+
+### What session 4 must not do
+
+Report a live P&L before the round has exited. Session 1's "3 trades, −$55.76" became "11
+trades, −$120.83" once the round finished — a 2x understatement of the loss, from reading a
+running process. **Read `n_open == 0` before quoting a total.**
+
+---
+
 ## Session 2 — 2026-11-22 (09:30–09:45 UTC) — `deepseek-flash`
 
 Question: does the verdict hold at other horizons, or was 1h hiding something?
