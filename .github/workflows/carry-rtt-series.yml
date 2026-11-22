@@ -1,0 +1,70 @@
+name: carry-rtt-series
+
+# Mercury3's fleet ask, answered on a schedule: one measured carry round-trip snapshot is a floor,
+# not a mean. This appends a reading per venue/pair/hour to ledger/carry_rtt_series.jsonl and
+# commits it, so the number becomes a distribution with an n attached instead of an anecdote.
+#
+# The measurement separates FEES (deterministic per venue/tier, constant tick to tick) from SPREAD
+# (variable, and the part a time series actually informs). Fee share is ~89-95% of the round trip
+# at base tiers, which is why a single snapshot is dominated by the tier rather than by the market.
+
+on:
+  schedule:
+    - cron: "23 * * * *"        # hourly, off the top of the hour to avoid the thundering herd
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: carry-rtt-series
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install ccxt
+
+      - name: Measure and append
+        working-directory: 03-trading-strategies
+        run: |
+          python -m realtime_challenge.carry_rtt
+        continue-on-error: false
+
+      - name: Show what was added
+        run: |
+          echo "--- series size ---"
+          wc -l 03-trading-strategies/ledger/carry_rtt_series.jsonl || echo "no series file"
+          echo "--- last readings ---"
+          tail -5 03-trading-strategies/ledger/carry_rtt_series.jsonl || true
+
+      - name: Commit the series
+        run: |
+          git config user.name  "carry-rtt-bot"
+          git config user.email "carry-rtt-bot@users.noreply.github.com"
+          git add 03-trading-strategies/ledger/carry_rtt_series.jsonl
+          if git diff --cached --quiet; then
+            echo "No new readings to commit (venues unreachable this tick)."
+            exit 0
+          fi
+          TICKS=$(wc -l < 03-trading-strategies/ledger/carry_rtt_series.jsonl)
+          git commit -m "carry rtt series: hourly reading (total rows ${TICKS})"
+          # peers and the other workflows push constantly; retry the rebase+push loop
+          for i in 1 2 3 4 5; do
+            if git push; then echo "pushed on attempt $i"; break; fi
+            git pull --rebase --autostash || true
+            sleep 5
+          done
