@@ -47,8 +47,8 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [ ] **A5 — CI enforcement of approval classes** · S · a test that fails if any verb marked class 2/3 can execute
       without a gate; wired into `.github/workflows/screen-control-tests.yml`. **DoD:** the test fails when the gate
       is deliberately removed.
-- [ ] **A6 — `overseer.py`** · L · stop classifier + signature hashing + brief injection + budgets + `STOP` file
-      (§5). **DoD:** passes a simulated session (stop → continue → loop → steer with a new fact → done) without
+- [x] **A6 — `overseer.py`** · L · stop classifier + signature hashing + brief injection + budgets + `STOP` file (§5).
+      **DoD:** passes a simulated session (stop → continue → loop → steer with a new fact → done) without
       touching a real vendor agent; test committed.
 - [ ] **A7 — reconcile with the peer's `screen_control/`** · M · two drivers now exist under `01-`: the peer's
       guarded loop and this kernel. Decide the merge — kernel as perception/actuation layer, or adopt the peer's
