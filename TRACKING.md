@@ -36,7 +36,7 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 34 (12 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 36 (13 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
 | `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 105 (17 md) | 73 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
@@ -52,6 +52,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40245 |
 | [`01-screen-control-llm/PROGRESS.md`](01-screen-control-llm/PROGRESS.md) | 69 | 5411 |
 | [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 92 | 6098 |
+| [`01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md`](01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md) | 56 | 4080 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
 | [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8099 |
@@ -111,7 +112,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 8 | 615 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 9 | 851 |
 | [`README.md`](README.md) | 145 | 12400 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6349 |
 

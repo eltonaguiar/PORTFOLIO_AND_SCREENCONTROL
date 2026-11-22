@@ -1,0 +1,50 @@
+{
+  "name": "multi-site-quant-research",
+  "version": 1,
+  "why": "Second prototype, higher complexity: two sites, a real OAuth gate, three sequential prompts, a clear-all between sets, and extraction from both surfaces. Tests everything the one-site run did plus sequencing and state reset.",
+  "sites": [
+    {
+      "id": "arena",
+      "url": "https://arena.ai/",
+      "login": {
+        "entry": "Login button, bottom-left of the page",
+        "method": "Continue with Google",
+        "account": "zerounderscore@gmail.com",
+        "gate": "class-2 approval. Choosing an existing Google session is a click; typing a password, a 2FA code, or creating an account is NOT permitted — park in PAUSED_NEEDS_HUMAN"
+      }
+    },
+    {
+      "id": "chatplayground",
+      "url": "https://web.chatplayground.ai/",
+      "login": "already signed in in this Chrome profile (verified 2026-11-22)"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "p1_strategies",
+      "text": "List the trading strategies with the strongest documented out-of-sample evidence across asset classes — risk premia, time-series momentum, cross-sectional momentum, trend following, mean reversion, carry, volatility risk premium. For each: the canonical academic source, the asset classes where it replicated, the sample period, and the specific way it fails. Be explicit about what 'proven' can and cannot mean for a retail trader."
+    },
+    {
+      "id": "p2_metrics",
+      "text": "What metrics does a professional quant check before trusting a backtest? Give the exact statistic and a decision threshold for each: Sharpe, deflated Sharpe / DSR, PBO via CSCV, walk-forward efficiency, turnover, capacity and market impact, slippage sensitivity (2x cost test), information ratio vs a matched benchmark, max drawdown and recovery, tail ratio, hit rate vs payoff. Which single check kills the most strategies, and why?"
+    },
+    {
+      "id": "p3_forward",
+      "text": "Design a forward-test protocol that proves a strategy works without risking live money: pre-registration requirements, paper-trading fill assumptions, sample size and power calculation, stopping rules, multiple-testing correction across many strategies, and the specific evidence that would falsify the strategy. Include what most retail forward tests get wrong."
+    }
+  ],
+  "sequence": [
+    "arena: open, login (Google, zerounderscore@gmail.com), run p1..p3, extract, clear all",
+    "chatplayground: open (already signed in), run p1..p3 to all panels, wait for every 'finished responding', extract, clear all"
+  ],
+  "extraction": {
+    "chatplayground": "prototype/extract.py rebuilds the paste-all doc from the AX tree; per-panel 'Copy message' is the clipboard fallback",
+    "arena": "no known paste-all yet — discover the per-answer copy controls on first run and record them in prototype/transcripts/",
+    "verify": "every panel/section must be non-empty and name its model; a partial sweep is recorded as UNFINISHED, never smoothed over"
+  },
+  "reset": {
+    "control": "Clear all (broom icon) in the composer toolbar — click between prompt sets so answers never mix",
+    "verify": "the transcript column shows the empty state ('Ready when you are' / 'Message every model') before the next prompt is sent"
+  },
+  "cost_note": "each prompt fans out to every selected model and spends credits; 3 prompts x 3 panels x 2 sites is the budget for this run"
+}
