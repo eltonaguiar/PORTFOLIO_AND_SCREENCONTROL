@@ -92,3 +92,34 @@ python -m realtime_challenge.carry_rtt --stats-only   # read the series without 
 
 Scheduled: `.github/workflows/carry-rtt-series.yml`, hourly at :23, commits each tick. Verified
 green (run 45019309665) and the bot commit `7e3b96e` carries the readings.
+
+---
+
+## Cross-session result that closes the open question (added 2026-11-22 16:5x EST)
+
+I left one question open above: *is the 46% funding decay a level or a trend?* A concurrent session
+answered it in commit `1c15c5d7d` on `push/phase2-round-2026-11-22`, from **real order books**:
+
+> • Measured crypto round-trip cost is **20–52 bp** (real order books), not the assumed 5 bp; FX
+> mean-reversion dies at 1 bp.
+> • **Funding carry break-even is 16.398 days, against a 1.93–2.33 day best observed episode.**
+
+**That is a stronger refutation than mine, and it supersedes the fee-tier framing entirely.** My
+measurement showed cost varies 5.1× by venue (11.08–56.04 bp) and argued the binding constraint was
+funding below cash. Their number locates the mechanism precisely:
+
+> **Carry needs ~16.4 days of funding to amortise the round trip, and the best funding episode
+> observed lasts 1.93–2.33 days. The trade cannot pay back its entry cost within the window that
+> makes it attractive — on any venue, at any tier.**
+
+This is the same shape as every other result in this project, and it is the cleanest statement of
+it: **the cost is not too high in absolute terms, it is too high relative to the duration of the
+opportunity.** A 20 bp round turn is trivial over a 90-day hold and fatal over a 2-day one. Mercury3's
+0.474-vs-0.50 cliff was measuring the same thing from the fee side.
+
+Two independent measurements of the same cost now agree: their real order books give **20–52 bp**,
+mine give **11.08–56.04 bp** across 6 venue/market cells. Different methods, overlapping ranges.
+
+**Standing verdict unchanged and now better supported: NOT ESTABLISHED.** Carry is not killed by
+fee tier — it is killed by the ratio of round-trip cost to episode duration. My hourly series
+continues to measure the cost side; the episode-duration side is now measured too.
