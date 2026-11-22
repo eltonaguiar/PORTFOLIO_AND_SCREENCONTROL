@@ -66,24 +66,6 @@ FUTURES_TICKERS = {"AUD": "6A=F", "NZD": "6N=F", "JPY": "6J=F", "CHF": "6S=F"}
 INVERSE_SPOT = {"JPY", "CHF"}
 
 
-
-def next_imm_date(from_date=None):
-    if from_date is None:
-        from_date = date.today()
-    year, month = from_date.year, from_date.month
-    for _ in range(12):
-        if month in (3, 6, 9, 12):
-            d = date(year, month, 1)
-            offset = (2 - d.weekday()) % 7
-            third_wed = date(year, month, 1 + offset + 14)
-            if third_wed >= from_date:
-                return third_wed
-        month += 1
-        if month > 12:
-            month = 1
-            year += 1
-    raise ValueError("no IMM date found")
-
 def load_pair(tkr: str) -> pd.DataFrame | None:
     import yfinance as yf
     try:
@@ -100,43 +82,17 @@ def load_pair(tkr: str) -> pd.DataFrame | None:
     return df if len(df) > 500 else None
 
 
-def fetch_rate_differentials():
-    """Current central bank policy rates (as of November 2026).
+def fetch_rate_differentials() -> dict | None:
+    """FX rate differentials from a verified source.
 
-    Sourced from published central bank policy decisions. These change infrequently
-    (typically every 6 weeks), so hardcoding with an as-of date is acceptable for
-    making the carry baseline quotable. The rate differential term is added to the
-    spot return so carry = spot move + interest differential.
-
-    Rates (annual, %):
-      USD 4.25  (Federal Reserve)
-      AUD 4.10  (Reserve Bank of Australia)
-      NZD 4.00  (Reserve Bank of New Zealand)
-      JPY 0.50  (Bank of Japan)
-      CHF 1.00  (Swiss National Bank)
-
-    Cross differential r_base - r_quote in bp/yr and bp/day.
+    No reachable, quotable source for current AUD/NZD/JPY/CHF policy rates was
+    available in this run: Yahoo CME futures quotes are stale/illiquid (they imply
+    double-digit annual differentials), central-bank sites block bots or render by
+    JavaScript, and FRED carries only stale BOJ and current Fed rates. Returning
+    None keeps the carry baseline spot-only and honestly labeled instead of
+    quoting fabricated differentials.
     """
-    policy_rates = {"AUD": 0.0410, "NZD": 0.0400, "JPY": 0.0050, "CHF": 0.0100}
-    diffs = {}
-    for base, quote in CARRY_LEGS:
-        annual = policy_rates[base] - policy_rates[quote]
-        diffs[f"{base}/{quote}"] = {
-            "annual_bps": round(annual * 1e4, 2),
-            "daily_bps": round(annual * 1e4 / 365, 4),
-            "r_base_bps": round(policy_rates[base] * 1e4, 2),
-            "r_quote_bps": round(policy_rates[quote] * 1e4, 2),
-        }
-    return {
-        "imm_date": None,
-        "days_to_imm": None,
-        "T_years": None,
-        "spot_usd_per_foreign": {},
-        "futures_usd_per_foreign": {},
-        "rate_vs_usd_bps": {k: round(v * 1e4, 2) for k, v in policy_rates.items()},
-        "cross_differentials_bps": diffs,
-        "rate_source": "central bank policy rates (as of Nov 2026)",
-    }
+    return None
 
 def summarise(res, cost_bps: float) -> dict:
     nr = np.array([t["net_ret"] for t in res.trades
@@ -333,10 +289,11 @@ def main() -> int:
         "class_note": ("n per cell is small (daily bars, one pair): FX daily signals fire rarely. "
                        "A null here is a statement about these six families on daily bars over "
                        "this decade, not a proof the class is untradeable."),
-        "carry_note": ("carry baseline now includes futures-implied interest-rate differentials "
-                       "(CME FX futures via covered interest parity, T to next IMM). The prior "
-                       "spot-only figure (−3.7% CAGR) must not be quoted as the carry trade's "
-                       "return; the rate-inclusive figure above is the quotable carry baseline."),
+        "carry_note": ("carry baseline is spot-only in this run: no verified source for "
+                       "current AUD/NZD/JPY/CHF policy rates was reachable, so rate_differentials "
+                       "is null and daily carry accrual is zero. The spot-only figure must not "
+                       "be quoted as the carry trade's return; adding verified rate differentials "
+                       "is required before carry is quotable."),
     }
     RESULTS.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

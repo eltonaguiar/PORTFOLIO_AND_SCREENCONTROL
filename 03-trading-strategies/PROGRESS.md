@@ -8,6 +8,16 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 4 — 2026-11-22 (12:16–12:30 UTC) — `hermes` (Session B, verification axis)
+
+Question: can the FX carry baseline be made quotable with verified rate differentials, and does the broken P8 module run end to end?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 12:17 | FIX | Removed fabricated hardcoded policy rates (AUD 4.10 / NZD 4.00 / JPY 0.50 / CHF 1.00 — not verifiable from any reachable source) and the unused next_imm_date stub from fx_census.py; fetch_rate_differentials() now returns None and the module degrades to an honestly labeled spot-only baseline. The committed module previously had a syntax error and could not import; it now compiles and runs end to end. | proof/fx_census.py |
+| 12:23 | RUN | Re-ran P8 FX census end to end with the fixed module: 7 majors, ~3,094 daily bars each (2015-01-02 -> 2026-11-22), 6 families x 3 cost levels, 60-shuffle permutation control at 5bps. 0 of 35 cells clear both gates - 8 of 35 positive on point estimate (coin flip predicts 17.5), 0 CI intervals exclude zero, 1 perm p<=0.05 (H-R1/USDJPY p=0.017, n=16, CI [-26.5,+94.2], below the 1.75 expected false positives). Clean null, same as the prior published run. | results/fx_census_20261122T122903Z.json, results/fx_census_latest.json |
+| 12:28 | BLOCKER | FX rate differentials unavailable: Yahoo CME futures quotes stale/illiquid (double-digit artifacts), RBA JS-only, RBNZ Cloudflare, SNB/BOJ 404, FRED only stale BOJ (Dec 2023) plus current Fed 3.88%, DDG captcha. Carry baseline stays spot-only (-3.7% CAGR) and is recorded as not quotable; honestly labeled in carry_note. No rate-differential number published. | results/fx_census_latest.json carry_note |
+
 ## Session 3 — 2026-11-22 (10:45–11:05 UTC) — `deepseek-flash`
 
 Question: what do the live rounds actually say once the round has *finished*, and does a peer's
