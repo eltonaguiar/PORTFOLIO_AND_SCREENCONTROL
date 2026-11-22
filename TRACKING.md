@@ -51,7 +51,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
 | [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40245 |
 | [`01-screen-control-llm/PROGRESS.md`](01-screen-control-llm/PROGRESS.md) | 69 | 5411 |
-| [`01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md`](01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md) | 49 | 2822 |
+| [`01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md`](01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md) | 74 | 4480 |
 | [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 92 | 6098 |
 | [`01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md`](01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md) | 56 | 4080 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
@@ -113,7 +113,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 10 | 1022 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 11 | 1194 |
 | [`README.md`](README.md) | 145 | 12400 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6349 |
 

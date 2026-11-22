@@ -47,3 +47,28 @@ chrome.exe --remote-debugging-port=9222 --user-data-dir=C:/Users/zerou/chrome-ag
 ```
 
 After that, `python prototype/cdp_multi_site.py --discover` and `--ask "<prompt>"` run unattended.
+
+## Retry with the real profile (2026-11-22, later)
+
+`chrome.exe --source-shortcut-location=taskbar --remote-debugging-port=9222` **did not bind the port**:
+the surviving process (pid 45600) carries only `--source-shortcut-location=taskbar`, because an existing
+Chrome already owned the default profile and swallowed the new flags. Chrome 136+ also refuses
+`--remote-debugging-port` on the default data dir by design, so relaunching it unchanged will not help.
+
+Copying the session into a separate profile also fails, and that is a *feature*, not a bug:
+
+| copied | result |
+|---|---|
+| `Local State`, `Default/Network/Cookies` (3.4 MB), `Default/Login Data`, `Default/Preferences` → `C:/Users/zerou/chrome-agent-profile` | CDP binds (Chrome 157), but chatplayground still shows its login page — Chrome's app-bound cookie encryption stops the transplant exactly as intended |
+
+**Conclusion: one sign-in per site in the agent-profile window is unavoidable.** After that the CDP path
+works unattended.
+
+### Kernel rules earned on the second attempt
+
+- `keyboard.type(delay=8)` into a TipTap editor **dropped characters** — "sentence" → "sence",
+  "single" → "ingle". `keyboard.insert_text()` wrote the same text intact (73 → 97 chars, no loss).
+  Use insert-text for rich editors; reserve keystroke typing for apps that need key events.
+- `select_option("select", "work")` is the whole Chat→Agent switch; verified `mode: work`.
+- Submitting with `Enter` works, and the answer is gated behind a ToS consent modal + sign-in — a class-2
+  gate, paused rather than clicked.
