@@ -36,7 +36,7 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 56 (20 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 57 (21 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
 | `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 126 (20 md) | 91 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
@@ -48,9 +48,10 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8645 |
 | [`01-screen-control-llm/harvest/1min_methodology.md`](01-screen-control-llm/harvest/1min_methodology.md) | 85 | 10558 |
 | [`01-screen-control-llm/harvest/arena_methodology.md`](01-screen-control-llm/harvest/arena_methodology.md) | 1040 | 38556 |
-| [`01-screen-control-llm/harvest/CAPTURE_CONTRACT.md`](01-screen-control-llm/harvest/CAPTURE_CONTRACT.md) | 73 | 3622 |
+| [`01-screen-control-llm/harvest/askanymodel_methodology.md`](01-screen-control-llm/harvest/askanymodel_methodology.md) | 305 | 26812 |
+| [`01-screen-control-llm/harvest/CAPTURE_CONTRACT.md`](01-screen-control-llm/harvest/CAPTURE_CONTRACT.md) | 76 | 4297 |
 | [`01-screen-control-llm/harvest/chatplayground_methodology.md`](01-screen-control-llm/harvest/chatplayground_methodology.md) | 416 | 33727 |
-| [`01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md`](01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md) | 118 | 8021 |
+| [`01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md`](01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md) | 118 | 8045 |
 | [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6506 |
 | [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6321 |
 | [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
@@ -122,7 +123,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 14 | 1752 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 15 | 1949 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

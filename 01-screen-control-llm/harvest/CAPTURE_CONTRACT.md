@@ -58,9 +58,12 @@ Capture order matters:
 
 | Symptom | Cause | Handling |
 |---|---|---|
+| select-all returns **nothing** | the caret was placed inside a column/pane whose content is a scroll container | **click a blank gutter between columns first**, then `Ctrl+A`/`Ctrl+C` — that recovered 27 KB where a click inside a pane gave 0 bytes |
 | prose captured, files missing | select-all copies text only | enumerate + fetch files separately |
 | only one model's answer captured | one pane at a time behind an avatar row | click each pane selector, capture per model |
-| answer body truncated | a11y tree exposes only the rendered viewport | scroll + capture, or clipboard |
+| **several panes hold the same text** | the platform routes several model names to one backend (`answered by <backend>` appears on each pane) | hash normalised bodies and count **distinct** answers, not panes; label the shared body once |
+| answer body ends with "This answer reached its length limit" | per-answer output cap | record `truncated: true` and the cap text; never present it as a complete answer |
+| answer body truncated silently | a11y tree exposes only the rendered viewport | scroll + capture, or clipboard |
 | click does nothing | a modal overlay intercepts pointer events | dismiss the overlay first, then retry once |
 | "temporarily unavailable" from one model | provider-side routing failure | rotate in a different model and re-run; do not count it as a task failure |
 | mode selector will not open | custom control that ignores synthetic clicks | set the mode in the product UI once, or drive the DOM over CDP |

@@ -1,1 +1,360 @@
-﻿
+AskAnyModel
+Home
+Chat
+Multi-Chat
+Images
+Library
+Models
+Apps
+Status
+Team
+Settings
+Power
+
+Power
+upgrade
+Research
+Workflows
+Workspaces
+Founders rate: $14/mo
+Install app
+
+Back to Home
+Elton
+500 credits
+
+20 unread
+Toggle theme
+
+E
+Ask several at once
+Pick a few, ask one question, and see how the answers differ. Up to 6 at a time. Teams compare up to 10.
+
+Gemma 4 26B A4B
+
+Nemotron 3.5 Super VL
+
+Nemotron 3.5 Lightning
+
+GPT-5 Nano
+
+Gemini
+
+Claude Haiku 4.5
+3
+
+Add
+6 picked · 3 credits to ask
+
+Give a rigorous methodology for proving a stock trading strategy actually works: (1) candidate discovery without self-deception, including pre-registration and trial accounting; (2) backtest construction rules: point-in-time data, survivorship, look-ahead, costs, corporate actions; (3) the statistics a professional checks with decision thresholds: deflated Sharpe DSR, PBO via CSCV, walk-forward efficiency, information ratio versus a matched benchmark, 2x cost test, capacity, tail ratio; (4) a forward/paper-test protocol with sample size and power, stopping rules, multiple-testing correction; (5) the evidence that would falsify the strategy. Use tables and be concrete.
+Everyone answers the same question
+Clear
+Compare
+Gemini answered first and went into the most detail, and Claude Haiku 4.5 kept it shortest.
+
+One answer from all 6?
+
+A judge model weighs the answers and writes the one to use. 2 free syntheses left on this account.
+
+Synthesise
+Gemma 4 26B A4B IT
+answered by GPT-OSS 20B Reasoning LLM · Pollinations community
+1. Candidate Discovery – “Self‑Deception‑Free” Design
+Step	What to Do	Why It Matters	Practical Tips
+1.1 Hypothesis Definition	Formulate a clear, non‑parametric “statement of value” (e.g., Price‑to‑Volatility yields >10% excess return).	Avoids ad‑hoc fitting; ensures repeatability.	Write it as a testable equation: return_t = f(var_t) + ε_t.
+1.2 Pre‑Registration	Publish the hypothesis, data source, entry rules, exit rules, and pre‑selected evaluation metrics before looking at the data.	Eliminates hindsight bias and data‑mining; satisfies academic rigor.	Use a platform (e.g., Open Science Framework) or institutional repository.
+1.3 Out‑of‑Sample “Trial” Window	Run the strategy on a dry‑run period that is excluded from both the discovery and final evaluation (T₀–T₁).	Detects over‑fitting within the discovery window; acts like a “mock‑live” test.	Choose a window that is temporally distant from the final backtest; e.g., 5–10 years before the final test.
+1.4 Forward‑Whisker Validation	Perform the same strategy on a new period (T₁–T₂) to see if signals persist.	Spot time‑varying regimes or structural breaks.	Repeat with different calendar months or market cycles.
+2. Backtest Construction Rules
+Issue	Rule	Implementation
+2.1 Point‑in‑Time Data	Use transaction‑level or daily open‑high‑low‑close prices that are contemporaneously available at the decision time.	Store a snapshot of the market at each candle close; never use “future‑looked” tick data.
+2.2 Survivorship Bias	Include delisted, bankrupt, and merged securities.	Pull full universe history from a source that records delistings (e.g., CRSP, Datastream).
+2.3 Look‑Ahead Bias	Ensure signals are computed only from information available before the decision horizon.	Keep a lag of one period between signal calculation and order placement.
+2.4 Transaction Costs	Add realistic bid‑ask spread, commission, overnight financing, and slippage.	Calibrate to historical trading data or use proprietary cost models.
+2.5 Corporate Actions	Adjust returns for splits, dividends, spinoffs, and mergers.	Use a corporate actions file to retroactively adjust price series.
+Backtest Skeleton (Pseudo‑Python)
+
+python
+Copy
+for date in dates:
+    market = get_market_snapshot(date)          # point‑in‑time
+    universe = filter_universe(market)         # survivorship, corporate actions
+    signals = compute_signals(universe, date)  # no look‑ahead
+    trades = decide_trades(signals, date)
+    cost = estimate_cost(trades, date)          # bid‑ask, commission, slippage
+    returns = execute(trades, cost, date)
+3. Statistical Validation – Professional Benchmarks
+Metric	Formula	Decision Threshold	Interpretation
+3.1 Deflated Sharpe Ratio (DSR)	DSR = (μ - f) / σₜ * sqrt(totalPeriods) / sqrt(1 + (μ - f)²/σ²)	≥ 1.5 (statistically significant at 5%)	Robust Sharpe after adjusting for estimation error.
+3.2 Deflated Information Ratio (DIR)	DIR = (α̂) / sqrt(σ̂_α²)	≥ 1.8	Outperformance over benchmark accounting for alpha variance.
+3.3 Probability of Backtest Overperformance (PBO)	PBO = 1 - Φ((α̂ - δ)/σ̂_α)	≥ 90% for a 10% expected excess	High probability that outperformance persists.
+3.4 Capacity‑Adjusted Sharpe (CAS)	CAS = DSR * (1 - γ*W) where γ is volatility decay per unit dollar	CAS > DSR × 0.8	Ensures capacity constraints are respected.
+3.5 Walk‑Forward Efficiency (WFE)	WFE = (median_turnover / mean_backtest_return) * 1.5	≥ 0.8	Combining turnover and return consistency.
+3.6 Tail Ratio (TR)	`TR =	μₜail	/ σₜail`
+3.7 Cost-Test Ratio (CTR)	CTR = (Annualized Return – Cost) / (Annualized Volatility)	≥ 1.2	Confirms strategy earns more than it costs to implement.
+Decision Matrix
+Criterion	Accept	Reject	Notes
+DSR ≥ 1.5	✔︎	✘	If <1.5, consider alternative features.
+PBO ≥ 90%	✔︎	✘	If <90%, strategy might be a “fluke”.
+TR between 1.5‑3.0	✔︎	✘	Extremely high TR indicates pathological risk.
+WFE ≥ 0.8	✔︎	✘	Low WFE suggests model overfits.
+Capacity Reduction ≤ 20%	✔︎	✘	Over‑reduced capacity signals hidden risk.
+4. Forward / Paper‑Testing Protocol
+Phase	Sample Size	Statistical Power	Stopping Rules	Multiple‑Testing Correction
+4.1 Live Paper‑Trading	100+ positions, ~1M cash, 3–6 months	80 %	Stop if Cumulative Drawdown > 2× strategy’s historic peak drawdown	False Discovery Rate (FDR) ≤ 5 %
+4.2 Live Trading (if approved)	Unlimited (within risk limits)	—	Stop if Cumulative Loss > 10 % of initial capital	—
+4.3 Statistical Monitoring	Rolling 200‑day window	90 % (for alpha decay)	If Rolling DSR < 1.0 for 3 consecutive windows, suspend trading	Bonferroni adjustment for daily checks
+**4.4 End‑of‑Year Review				
+This answer reached its length limit. Ask Gemma 4 26B A4B IT in a single chat to carry on.
+
+
+
+Nemotron 3.5 Super VL
+answered by GPT-OSS 20B Reasoning LLM · Pollinations community
+1. Candidate Discovery – “Self‑Deception‑Free” Design
+Step	What to Do	Why It Matters	Practical Tips
+1.1 Hypothesis Definition	Formulate a clear, non‑parametric “statement of value” (e.g., Price‑to‑Volatility yields >10% excess return).	Avoids ad‑hoc fitting; ensures repeatability.	Write it as a testable equation: return_t = f(var_t) + ε_t.
+1.2 Pre‑Registration	Publish the hypothesis, data source, entry rules, exit rules, and pre‑selected evaluation metrics before looking at the data.	Eliminates hindsight bias and data‑mining; satisfies academic rigor.	Use a platform (e.g., Open Science Framework) or institutional repository.
+1.3 Out‑of‑Sample “Trial” Window	Run the strategy on a dry‑run period that is excluded from both the discovery and final evaluation (T₀–T₁).	Detects over‑fitting within the discovery window; acts like a “mock‑live” test.	Choose a window that is temporally distant from the final backtest; e.g., 5–10 years before the final test.
+1.4 Forward‑Whisker Validation	Perform the same strategy on a new period (T₁–T₂) to see if signals persist.	Spot time‑varying regimes or structural breaks.	Repeat with different calendar months or market cycles.
+2. Backtest Construction Rules
+Issue	Rule	Implementation
+2.1 Point‑in‑Time Data	Use transaction‑level or daily open‑high‑low‑close prices that are contemporaneously available at the decision time.	Store a snapshot of the market at each candle close; never use “future‑looked” tick data.
+2.2 Survivorship Bias	Include delisted, bankrupt, and merged securities.	Pull full universe history from a source that records delistings (e.g., CRSP, Datastream).
+2.3 Look‑Ahead Bias	Ensure signals are computed only from information available before the decision horizon.	Keep a lag of one period between signal calculation and order placement.
+2.4 Transaction Costs	Add realistic bid‑ask spread, commission, overnight financing, and slippage.	Calibrate to historical trading data or use proprietary cost models.
+2.5 Corporate Actions	Adjust returns for splits, dividends, spinoffs, and mergers.	Use a corporate actions file to retroactively adjust price series.
+Backtest Skeleton (Pseudo‑Python)
+
+python
+Copy
+for date in dates:
+    market = get_market_snapshot(date)          # point‑in‑time
+    universe = filter_universe(market)         # survivorship, corporate actions
+    signals = compute_signals(universe, date)  # no look‑ahead
+    trades = decide_trades(signals, date)
+    cost = estimate_cost(trades, date)          # bid‑ask, commission, slippage
+    returns = execute(trades, cost, date)
+3. Statistical Validation – Professional Benchmarks
+Metric	Formula	Decision Threshold	Interpretation
+3.1 Deflated Sharpe Ratio (DSR)	DSR = (μ - f) / σₜ * sqrt(totalPeriods) / sqrt(1 + (μ - f)²/σ²)	≥ 1.5 (statistically significant at 5%)	Robust Sharpe after adjusting for estimation error.
+3.2 Deflated Information Ratio (DIR)	DIR = (α̂) / sqrt(σ̂_α²)	≥ 1.8	Outperformance over benchmark accounting for alpha variance.
+3.3 Probability of Backtest Overperformance (PBO)	PBO = 1 - Φ((α̂ - δ)/σ̂_α)	≥ 90% for a 10% expected excess	High probability that outperformance persists.
+3.4 Capacity‑Adjusted Sharpe (CAS)	CAS = DSR * (1 - γ*W) where γ is volatility decay per unit dollar	CAS > DSR × 0.8	Ensures capacity constraints are respected.
+3.5 Walk‑Forward Efficiency (WFE)	WFE = (median_turnover / mean_backtest_return) * 1.5	≥ 0.8	Combining turnover and return consistency.
+3.6 Tail Ratio (TR)	`TR =	μₜail	/ σₜail`
+3.7 Cost-Test Ratio (CTR)	CTR = (Annualized Return – Cost) / (Annualized Volatility)	≥ 1.2	Confirms strategy earns more than it costs to implement.
+Decision Matrix
+Criterion	Accept	Reject	Notes
+DSR ≥ 1.5	✔︎	✘	If <1.5, consider alternative features.
+PBO ≥ 90%	✔︎	✘	If <90%, strategy might be a “fluke”.
+TR between 1.5‑3.0	✔︎	✘	Extremely high TR indicates pathological risk.
+WFE ≥ 0.8	✔︎	✘	Low WFE suggests model overfits.
+Capacity Reduction ≤ 20%	✔︎	✘	Over‑reduced capacity signals hidden risk.
+4. Forward / Paper‑Testing Protocol
+Phase	Sample Size	Statistical Power	Stopping Rules	Multiple‑Testing Correction
+4.1 Live Paper‑Trading	100+ positions, ~1M cash, 3–6 months	80 %	Stop if Cumulative Drawdown > 2× strategy’s historic peak drawdown	False Discovery Rate (FDR) ≤ 5 %
+4.2 Live Trading (if approved)	Unlimited (within risk limits)	—	Stop if Cumulative Loss > 10 % of initial capital	—
+4.3 Statistical Monitoring	Rolling 200‑day window	90 % (for alpha decay)	If Rolling DSR < 1.0 for 3 consecutive windows, suspend trading	Bonferroni adjustment for daily checks
+**4.4 End‑of‑Year Review				
+This answer reached its length limit. Ask Nemotron 3.5 Super VL in a single chat to carry on.
+
+
+
+Nemotron 3.5 Lightning
+answered by GPT-OSS 20B Reasoning LLM · Pollinations community
+1. Candidate Discovery – “Self‑Deception‑Free” Design
+Step	What to Do	Why It Matters	Practical Tips
+1.1 Hypothesis Definition	Formulate a clear, non‑parametric “statement of value” (e.g., Price‑to‑Volatility yields >10% excess return).	Avoids ad‑hoc fitting; ensures repeatability.	Write it as a testable equation: return_t = f(var_t) + ε_t.
+1.2 Pre‑Registration	Publish the hypothesis, data source, entry rules, exit rules, and pre‑selected evaluation metrics before looking at the data.	Eliminates hindsight bias and data‑mining; satisfies academic rigor.	Use a platform (e.g., Open Science Framework) or institutional repository.
+1.3 Out‑of‑Sample “Trial” Window	Run the strategy on a dry‑run period that is excluded from both the discovery and final evaluation (T₀–T₁).	Detects over‑fitting within the discovery window; acts like a “mock‑live” test.	Choose a window that is temporally distant from the final backtest; e.g., 5–10 years before the final test.
+1.4 Forward‑Whisker Validation	Perform the same strategy on a new period (T₁–T₂) to see if signals persist.	Spot time‑varying regimes or structural breaks.	Repeat with different calendar months or market cycles.
+2. Backtest Construction Rules
+Issue	Rule	Implementation
+2.1 Point‑in‑Time Data	Use transaction‑level or daily open‑high‑low‑close prices that are contemporaneously available at the decision time.	Store a snapshot of the market at each candle close; never use “future‑looked” tick data.
+2.2 Survivorship Bias	Include delisted, bankrupt, and merged securities.	Pull full universe history from a source that records delistings (e.g., CRSP, Datastream).
+2.3 Look‑Ahead Bias	Ensure signals are computed only from information available before the decision horizon.	Keep a lag of one period between signal calculation and order placement.
+2.4 Transaction Costs	Add realistic bid‑ask spread, commission, overnight financing, and slippage.	Calibrate to historical trading data or use proprietary cost models.
+2.5 Corporate Actions	Adjust returns for splits, dividends, spinoffs, and mergers.	Use a corporate actions file to retroactively adjust price series.
+Backtest Skeleton (Pseudo‑Python)
+
+python
+Copy
+for date in dates:
+    market = get_market_snapshot(date)          # point‑in‑time
+    universe = filter_universe(market)         # survivorship, corporate actions
+    signals = compute_signals(universe, date)  # no look‑ahead
+    trades = decide_trades(signals, date)
+    cost = estimate_cost(trades, date)          # bid‑ask, commission, slippage
+    returns = execute(trades, cost, date)
+3. Statistical Validation – Professional Benchmarks
+Metric	Formula	Decision Threshold	Interpretation
+3.1 Deflated Sharpe Ratio (DSR)	DSR = (μ - f) / σₜ * sqrt(totalPeriods) / sqrt(1 + (μ - f)²/σ²)	≥ 1.5 (statistically significant at 5%)	Robust Sharpe after adjusting for estimation error.
+3.2 Deflated Information Ratio (DIR)	DIR = (α̂) / sqrt(σ̂_α²)	≥ 1.8	Outperformance over benchmark accounting for alpha variance.
+3.3 Probability of Backtest Overperformance (PBO)	PBO = 1 - Φ((α̂ - δ)/σ̂_α)	≥ 90% for a 10% expected excess	High probability that outperformance persists.
+3.4 Capacity‑Adjusted Sharpe (CAS)	CAS = DSR * (1 - γ*W) where γ is volatility decay per unit dollar	CAS > DSR × 0.8	Ensures capacity constraints are respected.
+3.5 Walk‑Forward Efficiency (WFE)	WFE = (median_turnover / mean_backtest_return) * 1.5	≥ 0.8	Combining turnover and return consistency.
+3.6 Tail Ratio (TR)	`TR =	μₜail	/ σₜail`
+3.7 Cost-Test Ratio (CTR)	CTR = (Annualized Return – Cost) / (Annualized Volatility)	≥ 1.2	Confirms strategy earns more than it costs to implement.
+Decision Matrix
+Criterion	Accept	Reject	Notes
+DSR ≥ 1.5	✔︎	✘	If <1.5, consider alternative features.
+PBO ≥ 90%	✔︎	✘	If <90%, strategy might be a “fluke”.
+TR between 1.5‑3.0	✔︎	✘	Extremely high TR indicates pathological risk.
+WFE ≥ 0.8	✔︎	✘	Low WFE suggests model overfits.
+Capacity Reduction ≤ 20%	✔︎	✘	Over‑reduced capacity signals hidden risk.
+4. Forward / Paper‑Testing Protocol
+Phase	Sample Size	Statistical Power	Stopping Rules	Multiple‑Testing Correction
+4.1 Live Paper‑Trading	100+ positions, ~1M cash, 3–6 months	80 %	Stop if Cumulative Drawdown > 2× strategy’s historic peak drawdown	False Discovery Rate (FDR) ≤ 5 %
+4.2 Live Trading (if approved)	Unlimited (within risk limits)	—	Stop if Cumulative Loss > 10 % of initial capital	—
+4.3 Statistical Monitoring	Rolling 200‑day window	90 % (for alpha decay)	If Rolling DSR < 1.0 for 3 consecutive windows, suspend trading	Bonferroni adjustment for daily checks
+**4.4 End‑of‑Year Review				
+This answer reached its length limit. Ask Nemotron 3.5 Lightning in a single chat to carry on.
+
+
+
+GPT-5 Nano
+answered by GPT-OSS 20B Reasoning LLM · Pollinations community
+1. Candidate Discovery – “Self‑Deception‑Free” Design
+Step	What to Do	Why It Matters	Practical Tips
+1.1 Hypothesis Definition	Formulate a clear, non‑parametric “statement of value” (e.g., Price‑to‑Volatility yields >10% excess return).	Avoids ad‑hoc fitting; ensures repeatability.	Write it as a testable equation: return_t = f(var_t) + ε_t.
+1.2 Pre‑Registration	Publish the hypothesis, data source, entry rules, exit rules, and pre‑selected evaluation metrics before looking at the data.	Eliminates hindsight bias and data‑mining; satisfies academic rigor.	Use a platform (e.g., Open Science Framework) or institutional repository.
+1.3 Out‑of‑Sample “Trial” Window	Run the strategy on a dry‑run period that is excluded from both the discovery and final evaluation (T₀–T₁).	Detects over‑fitting within the discovery window; acts like a “mock‑live” test.	Choose a window that is temporally distant from the final backtest; e.g., 5–10 years before the final test.
+1.4 Forward‑Whisker Validation	Perform the same strategy on a new period (T₁–T₂) to see if signals persist.	Spot time‑varying regimes or structural breaks.	Repeat with different calendar months or market cycles.
+2. Backtest Construction Rules
+Issue	Rule	Implementation
+2.1 Point‑in‑Time Data	Use transaction‑level or daily open‑high‑low‑close prices that are contemporaneously available at the decision time.	Store a snapshot of the market at each candle close; never use “future‑looked” tick data.
+2.2 Survivorship Bias	Include delisted, bankrupt, and merged securities.	Pull full universe history from a source that records delistings (e.g., CRSP, Datastream).
+2.3 Look‑Ahead Bias	Ensure signals are computed only from information available before the decision horizon.	Keep a lag of one period between signal calculation and order placement.
+2.4 Transaction Costs	Add realistic bid‑ask spread, commission, overnight financing, and slippage.	Calibrate to historical trading data or use proprietary cost models.
+2.5 Corporate Actions	Adjust returns for splits, dividends, spinoffs, and mergers.	Use a corporate actions file to retroactively adjust price series.
+Backtest Skeleton (Pseudo‑Python)
+
+python
+Copy
+for date in dates:
+    market = get_market_snapshot(date)          # point‑in‑time
+    universe = filter_universe(market)         # survivorship, corporate actions
+    signals = compute_signals(universe, date)  # no look‑ahead
+    trades = decide_trades(signals, date)
+    cost = estimate_cost(trades, date)          # bid‑ask, commission, slippage
+    returns = execute(trades, cost, date)
+3. Statistical Validation – Professional Benchmarks
+Metric	Formula	Decision Threshold	Interpretation
+3.1 Deflated Sharpe Ratio (DSR)	DSR = (μ - f) / σₜ * sqrt(totalPeriods) / sqrt(1 + (μ - f)²/σ²)	≥ 1.5 (statistically significant at 5%)	Robust Sharpe after adjusting for estimation error.
+3.2 Deflated Information Ratio (DIR)	DIR = (α̂) / sqrt(σ̂_α²)	≥ 1.8	Outperformance over benchmark accounting for alpha variance.
+3.3 Probability of Backtest Overperformance (PBO)	PBO = 1 - Φ((α̂ - δ)/σ̂_α)	≥ 90% for a 10% expected excess	High probability that outperformance persists.
+3.4 Capacity‑Adjusted Sharpe (CAS)	CAS = DSR * (1 - γ*W) where γ is volatility decay per unit dollar	CAS > DSR × 0.8	Ensures capacity constraints are respected.
+3.5 Walk‑Forward Efficiency (WFE)	WFE = (median_turnover / mean_backtest_return) * 1.5	≥ 0.8	Combining turnover and return consistency.
+3.6 Tail Ratio (TR)	`TR =	μₜail	/ σₜail`
+3.7 Cost-Test Ratio (CTR)	CTR = (Annualized Return – Cost) / (Annualized Volatility)	≥ 1.2	Confirms strategy earns more than it costs to implement.
+Decision Matrix
+Criterion	Accept	Reject	Notes
+DSR ≥ 1.5	✔︎	✘	If <1.5, consider alternative features.
+PBO ≥ 90%	✔︎	✘	If <90%, strategy might be a “fluke”.
+TR between 1.5‑3.0	✔︎	✘	Extremely high TR indicates pathological risk.
+WFE ≥ 0.8	✔︎	✘	Low WFE suggests model overfits.
+Capacity Reduction ≤ 20%	✔︎	✘	Over‑reduced capacity signals hidden risk.
+4. Forward / Paper‑Testing Protocol
+Phase	Sample Size	Statistical Power	Stopping Rules	Multiple‑Testing Correction
+4.1 Live Paper‑Trading	100+ positions, ~1M cash, 3–6 months	80 %	Stop if Cumulative Drawdown > 2× strategy’s historic peak drawdown	False Discovery Rate (FDR) ≤ 5 %
+4.2 Live Trading (if approved)	Unlimited (within risk limits)	—	Stop if Cumulative Loss > 10 % of initial capital	—
+4.3 Statistical Monitoring	Rolling 200‑day window	90 % (for alpha decay)	If Rolling DSR < 1.0 for 3 consecutive windows, suspend trading	Bonferroni adjustment for daily checks
+**4.4 End‑of‑Year Review				
+This answer reached its length limit. Ask GPT-5 Nano in a single chat to carry on.
+
+
+
+Gemini
+Google
+Answered first
+Developing and rigorously proving the efficacy of a stock trading strategy is a complex process that requires meticulous attention to detail to avoid common pitfalls like self-deception, data biases, and overfitting. A professional approach involves a multi-stage methodology, from initial idea generation to live forward testing, supported by robust statistical validation.
+
+(1) Candidate Discovery Without Self-Deception
+The first step is to ensure that potential trading strategies are discovered in a way that minimizes bias and maintains the integrity of subsequent testing. This involves formalizing the process before any data is analyzed.
+
+| Control | Description
+
+This answer reached its length limit. Ask Gemini in a single chat to carry on.
+
+
+
+Claude Haiku 4.5
+Anthropic
+Rigorous Methodology for Trading Strategy Validation
+1. CANDIDATE DISCOVERY: PRE-REGISTRATION & TRIAL ACCOUNTING
+Pre-Registration Protocol
+Before touching any data:
+
+Step	Action	Deliverable
+1a	Write a specific hypothesis: factor, mechanism, return source, expected Sharpe ≥ X	Dated document with signature or blockchain timestamp
+1b	Specify universe: asset class, geography, market cap/liquidity floor, survivorship treatment	Universe definition immutable before backtest
+1c	Define signal: exact computation, rebalance frequency, holding period, rank/threshold rule	Python/pseudo-code with mock data
+1d	State trading rules: entry/exit, position sizing, leverage, margin, slippage model	Discrete specification, not narrative
+1e	Declare ex-ante expected Sharpe, max drawdown, capacity (AUM where α → 0)	Stored in tamper-evident location
+1f	List researcher degrees of freedom: all parameter sweeps you plan	e.g., "MA windows 5–250 by 5; breakout threshold ±0.5–3σ"
+Example pre-registration (GitHub timestamp or formal registry like OSF):
+
+code
+Copy
+Strategy: Mean-reversion in SPY via 20-day Bollinger Band squeeze
+Universe: SPY only, survivorship bias: N/A (single liquid asset)
+Signal: Close < BB_lower(20, 1.8σ) → long; Close > BB_upper(20, 1.8σ) → flatten
+Rebalance: daily, hold 5 days
+Expected Sharpe (gross): 0.8 | Max DD: 25% | Capacity: $500M
+Degrees of freedom: will optimize band width [1.5, 2.5] and period [15, 25]
+Trial Accounting (Bonferroni-style correction)
+If testing N independent parameter sets, apply correction upfront:
+
+Number of Trials (N)	Sharpe × Correction	IR × Correction	p-value threshold
+1	1.0×	1.0×	0.05
+5	1.4×	1.1×	0.01
+10	1.6×	1.2×	0.005
+25	1.8×	1.3×	0.002
+100	2.1×	1.5×	0.0005
+Rule: Sharpe ≥ 1.0 is not acceptable if 10 variants tested; require Sharpe ≥ 1.6 or apply False Discovery Rate (FDR) correction instead.
+
+2. BACKTEST CONSTRUCTION RULES
+Critical Data & Methodology Checklist
+Issue	Requirement	Violation Cost
+Point-in-Time Data	Use only data available at decision time; no lookahead. Fundamental data lagged ≥ 60 days.	++ 0.3–0.8 Sharpe overstated
+Survivorship	Include delisted, bankrupt, merged securities from inception (not partial history).	++ 0.4–1.2 Sharpe overstated
+Corporate Actions	Adjust prices (splits, dividends, spin-offs) correctly; use adjusted close, not split-adjusted naively.	++ 0.1–0.4 Sharpe overstated
+Slippage	Implementation shortfall: 0.5–2 bps per side (varies by asset/volume). Never ignore.	++ 0.1–0.5 annual return
+Commissions	Equities: 1–5 bps, futures: $2–$10/contract. Options: include bid–ask, gamma slippage.	++ 0.05–0.3 annual return
+Market Impact	For capacity ≥ $100M: scale cost as sqrt(notional/ADV). Model separately.	++ nonlinear cost scaling
+Borrowing Cost	Shorts pay borrow rate (varies 50–1000 bps for hard-to-borrow); update dynamically.	++ 0.1–0.8 annual return
+FX Conversion	Spot rates at trade time, not close. Hedge costs if relevant.	++ 0.05–0.2 annual return
+Dividends	Use ex-date, not payment date. Cash reinvested same day at close.	++ 0.05–0.3 annual return
+Gaps & Halts	Trade at next open if stock halted/limit-down at signal. Discard < X% of trials.	++ 0.1–0.3 Sharpe if ignored
+Sample Backtest Specification
+code
+Copy
+Backtest Period: 2010–2024 (live forward test starts 2024-01-15)
+Data: Bloomberg (adjusted OHLCV), FactSet (fundamentals lagged 60d), 
+      Ancerno (institutional transactions for slippage calibration)
+
+Universe: Russell 1000 as of month-start; include all delists/bankruptcies
+Rebalance: monthly; momentum rank signal (12-month past return, exclude last month)
+
+Costs:
+  - Commissions: 2 bps round-trip (eq $500/contract for index futures)
+  - Slippage: Almgren–Chriss model, calibrated to Ancerno, ≈ 1.5 × sqrt(notional/ADV) bps
+  - Borrow: 25 bps short, updated monthly from SLB desk
+  - FX: N/A
+
+Treatment of Drops:
+  - Dividends: reinvest same day at close
+  - Splits: adjust price series from split-date backward
+  - Delists: liquidate at last traded price (conservative)
+  - Halts: skip order, replace at next open
+
+Capacity: test separately for $10M, $100M, $1B portfolios
+3. STATISTICAL TESTS & PROFESSIONAL DECISION THRESHOLDS
+Core Metrics Table
+Metric	Computation	Threshold (Accept/Reject)	Rationale
+Deflated Sharpe Ratio (DSR)	Sharpe × [1 − (k ln(N)/n)] where k=trials, N=obs	≥ 0.4 on backtest	Adjusts for peeking; Sharpe > 0.4 after deflation suggests real signal
+Probability of Backtest Overfitting (PBO)	Computed via CSCV (see below)	≤ 0.10	> 10% chance of chance discovery is unacceptable
+Calmar Ratio	annual return / max drawdown	≥ 0.5	Returns must justify downside risk; filters weak strategies
+Information Ratio (vs. benchmark)	(Strat return − Bench return) / tracking error	≥	
+This answer reached its length limit. Ask Claude Haiku 4.5 in a single chat to carry on.

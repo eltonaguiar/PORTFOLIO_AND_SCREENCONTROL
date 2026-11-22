@@ -10,7 +10,7 @@ criteria. Four sites driven in the user's own logged-in Chrome (`zerounderscore@
 |---|---|---|---|
 | **web.chatplayground.ai** | ChatGPT-6 Luna, Claude (Latest Model), GLM 5.3 Flash — **3/3** | **complete** (33.7 KB) | `harvest/chatplayground_methodology.md` |
 | **app.1min.ai** | GPT-4.1 mini (6 models selected, 1 responded in full) | **complete** (10.6 KB) | `harvest/1min_methodology.md` |
-| **askanymodel.xyz** | Second pass with 6 selected: Gemma 4 26B A4B, Nemotron 3.5 Super VL, Nemotron 3.5 Lightning, **GPT-5 Nano, Gemini, Claude Haiku 4.5** — 6/6 answered (Gemini first + most detailed, Claude Haiku shortest) | **partial** — page text is not selectable and the a11y tree is virtualised; only fragments captured | `prototype/transcripts/askanymodel_tree_raw.txt` |
+| **askanymodel.xyz** | Six panes selected; **4 distinct answers** — Gemma 4 26B A4B, Gemini, Claude Haiku 4.5, and one body shared verbatim by *Nemotron 3.5 Super VL / Nemotron 3.5 Lightning / GPT-5 Nano* | **complete** (26.8 KB) — needs a click in the **blank gutter between columns** before `Ctrl+A`; every pane ended with "This answer reached its length limit" | `harvest/askanymodel_methodology.md` |
 | **arena.ai** | Blind pair `Assistant A` / `Assistant B` (identities hidden until a vote) — **2/2 answered** | **complete** (38.6 KB) — Chat mode; the Chat→Agent switch ignores synthetic clicks, so the run went through Chat | `harvest/arena_methodology.md` |
 
 Failure worth recording: on the first askanymodel pass, `Gemma 4 31B` returned *"This model is

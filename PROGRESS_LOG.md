@@ -12,3 +12,4 @@ One line per scheduled run: `YYYY-MM-DDTHH:MMZ | item N | verdict | commit`.
 2026-11-22T13:40Z | harvest 4 sites | BLOCKED — all four auth-gate in the CDP profile (1min login modal, arena signup modal, chatplayground Clerk+Google, askanymodel /login); methodology doc written from verified sources instead
 2026-11-22T14:20Z | harvest | PARTIAL PASS — chatplayground 3/3 (33.7KB) + 1min GPT-4.1 mini (10.6KB) complete; askanymodel 6/6 answered but text virtualised; arena no answer in Chat mode
 2026-11-22T14:55Z | arena harvest | PASS — blind pair A/B completed in Chat mode, 41KB clipboard -> 38.6KB parsed (A 814 lines, B 217)
+2026-11-22T15:20Z | askanymodel harvest | PASS (with caveats) — gap-click + Ctrl+A/C recovered 26.8KB, 6 panes but only 4 distinct bodies; 3 panes share one backend output; all hit length limits
