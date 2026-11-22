@@ -54,6 +54,26 @@ Capture order matters:
 6. **Verify the count**: attachments claimed by the UI == attachments written to disk. If not,
    `verdict = PARTIAL` and say which one is missing.
 
+## A/B comparison surfaces (blind pairwise)
+
+Some surfaces present two answers and a **vote row**: `A is better` · `Both are good` · `Both are bad` ·
+`B is better`. That row is the product's competition/leaderboard control, not part of the answer, and it has
+three consequences for a capture:
+
+1. **It is the reliable end sentinel.** The transcript is `Assistant A` … `Assistant B` … vote row, so
+   splitting on the row gives clean sections — that is how `harvest/arena_methodology.md` was parsed.
+2. **Do not click it.** A vote writes to the account's leaderboard record and is irreversible from the agent's
+   side. It is the user's decision, never a side effect of harvesting. Same for the
+   `Did you mean to do something else? → Search the Web / No, please hide` prompt that can sit above it and
+   steal clicks.
+3. **Identities are hidden until a vote.** Capture as `Assistant A` / `Assistant B` and say so; do not infer
+   which vendor produced which, and do not vote merely to unmask them. If attribution matters, ask the user
+   to vote deliberately.
+
+Markdown survives this copy well when the answer is tabular (arena B); LaTeX-heavy answers (arena A) come back
+with formulas split across lines, so read equations from the rendered page or capture the math node's
+`alttext` instead of select-all.
+
 ## Failure modes seen on real surfaces
 
 | Symptom | Cause | Handling |
