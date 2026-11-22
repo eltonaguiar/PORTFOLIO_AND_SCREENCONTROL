@@ -8,6 +8,16 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 12 — 2026-11-22 (21:12 UTC) — `hermes` (Session B, cron queue axis)
+
+Question: after the peer push (f84427e, +15 carry_rtt ledger rows, +7 carry_roundtrip ticks), does results/carry_series_summary.json still recompute exactly from results/carry_roundtrip.jsonl, with a clean tree at origin/main?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 21:12 | PASS | Empirical verification of the peer's updated carry series: 63 round-trip ticks (7 symbols × 9, public endpoints only), recomputed median round-trip 11.1428 bp, median net carry −11.0397 bp, carry-positive 0/63; committed results/carry_series_summary.json matches the recomputation exactly (medians, mins, maxes, first/last ts, per-symbol n=9); no number corrected, none authored | 03-trading-strategies/results/carry_roundtrip.jsonl, results/carry_series_summary.json |
+
+Standing state: queue complete — (a) daily walk-forward 0 of 42 survive, (b) FX rate differentials measurable and carry quotable, (c) bracket gate wired at 45 * * * *, (d)-(g) done and committed. Nothing PROVEN or CANDIDATE; nothing to allocate to yet.
+
 ## Session 11 — 2026-11-22 (17:55–18:10 UTC) — `hermes` (Session B, cron queue axis)
 Question: are FX rate differentials reachable now, and does adding them make the FX carry baseline quotable?
 
