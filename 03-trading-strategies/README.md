@@ -99,6 +99,13 @@ Nothing here is financial advice.
 
 ---
 
+## Catch a fabricated result first
+
+[`FABRICATION_CHECKLIST.md`](FABRICATION_CHECKLIST.md) — ten cheap checks for any claimed trade or backtest
+(timestamp before the brief? fill inside the bar? exits contradicting each other? P&L reconciling? artifact
+present?). The worked example is a challenge document that reported a completed BTC trade at a price the market
+never traded — see [`../REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md`](../REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md).
+
 ## Contract before any run
 
 Every strategy in this folder must satisfy [`STRATEGY_SPEC.md`](STRATEGY_SPEC.md) before it can be
