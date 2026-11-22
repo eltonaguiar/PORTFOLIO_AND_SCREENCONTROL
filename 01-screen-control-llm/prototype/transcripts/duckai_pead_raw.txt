@@ -1,0 +1,35 @@
+﻿Evidence comparison: value premium vs. post-earnings drift
+
+Privacy protected and anonymized by DuckDuckGo. No AI training. Learn more
+You said
+Give the strongest published evidence for (a) the equity value premium and (b) post-earnings-announcement drift: effect sizes in bps or percent per month, sample periods, and the specific conditions under which each decays or fails. Then, for a systematic trader with 12-20bp round-trip costs who must beat a 4.3% T-bill hurdle, say which of the two is worth testing first and the exact measurement that would kill it. Use a table. No generic advice.
+
+Duck.ai said
+
+
+
+
+Effect	Strongest published evidence and scale	When it decays or fails	First-pass test for your constraints
+Equity value premium (HML)	The classic U.S. evidence is a long–short portfolio of high versus low book-to-market stocks. The historical U.S. premium is commonly summarized as roughly 3–5% a year—about 25–42 bp/month before costs—but it is highly sample-dependent, not a stable monthly payoff. The standard HML series spans 1927–2024; a recent study also constructs size-adjusted book-to-market portfolios for 1977–2023. 
+quantt.co.uk
+1
+It can go through long, severe drawdowns: one published summary reports that HML lost about half its cumulative value after 2007. Traditional book-to-market can also misclassify firms with substantial intangible assets; newer work tests composite value and operating-cash-flow-to-market measures as alternatives. 
+cfainstitute.org
+1
+Test first. It is a transparent monthly factor portfolio, so you can apply your actual rebalance and costs directly. At 12–20 bp round-trip costs, the historical 25–42 bp/month gross figure leaves only a rough 5–30 bp/month before other implementation effects—and that is not a forecast.
+Post-earnings-announcement drift (PEAD)	The seminal result is that returns continue drifting in the direction of earnings surprises for roughly 60 days. Bernard and Thomas report the top-minus-bottom standardized-surprise spread was positive in 41 of 48 quarters, 1974–1985. A later summary reports roughly 6% abnormal return over 60 days in cited evidence, but estimates vary substantially by sample and strategy definition. 
+Wikipedia
+1
+A major modern challenge: Martineau reports that PEAD was non-existent for large stocks since 2006 and disappeared only more recently for microcaps. Trading frictions matter: a literature survey reports one 12-month extreme-portfolio result falling from 11.92% to 3.36% after its highest transaction-cost estimate; it also reports revenue-surprise drift of 6.59% becoming unprofitable after costs. 
+ssrn.com
+1
+Second. The headline 60-day effect is not a reliable net return estimate for your universe; it is especially exposed to the large-stock disappearance finding and event-level execution costs. Test only if your signal and trading universe are specified tightly enough to measure those costs.
+Choice: test value first, using a point-in-time, investable long–short portfolio and your actual 12–20 bp round-trip cost schedule. The deciding comparison is not raw HML versus 4.3%: a market-neutral long–short return is not directly comparable to a T-bill yield unless you specify capital, leverage, collateral, and financing. For a fully funded strategy, compare its net annualized total return with 4.3%; for a factor strategy, compare the return on the capital actually committed, including cash collateral, with that hurdle.
+
+Kill rule: after fixing the portfolio, rebalance, universe, and cost model before evaluating the holdout, kill value if its out-of-sample annualized net return on committed capital is ≤4.3%. Also kill it if the one-sided 95% upper confidence bound for that net return is ≤4.3%: even the optimistic bound then fails the hurdle. Count all turnover costs in the measurement; do not subtract costs a second time. The exact same hurdle rule applies to PEAD if you test it later. 
+dartmouth.edu
+1
+
+
+
+
