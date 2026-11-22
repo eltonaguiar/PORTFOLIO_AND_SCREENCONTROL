@@ -52,38 +52,15 @@ symbol per category with a documented data source first.
 
 ---
 
-## Working harness — `realtime_challenge/` (added 2026-11-22, `deepseek-flash`)
+## Where the strategy and backtest work lives
 
-The documents above are research and design. This directory now also contains a **running**
-harness that was executed end to end, plus the measured results. Everything below is read
-out of an artifact in `results/` or `ledger/`.
+This folder is about **tracking and valuing** a portfolio, and the tooling/data traps that
+break it. The **strategy, backtest and paper-trading work** — the harness that produced the
+measured numbers, plus the 200-round plan and the live forward pods — lives in its own
+folder so the two jobs stay separable:
 
-| file | job |
-|---|---|
-| `realtime_challenge/` | costs · data (ccxt) · engine · 6 pre-registered strategies · stats · live round · ledger · GH Actions worker · 2 proof suites |
-| `REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD` | **the challenge write-up: setup, results, live round, verdict** |
-| `ROADMAP_200_deepseek-flash.md` | 200 rounds across 10 phases with explicit gates |
-| `HARNESS_CERTIFICATION.md` | 5 tests that make the engine allowed to say "no" |
-| `PEERCROSSCHECK_deepseek-flash.md` | line-level audit of the repo's prior 2-hour challenge + agreement with the capital-allocation verdict |
-| `LIBRARY_SURVEY.md` | 20 backtesting/paper-trading repos with star/push/licence verified via the GitHub API on 2026-11-22 |
-| `results/`, `ledger/` | every JSON and every append-only event log the numbers came from |
+→ [`../03-trading-strategies/`](../03-trading-strategies/)
 
-**Headline result of the first run — a clean negative, which is the point:**
-
-- 42 cells (7 crypto majors × 6 hypotheses), 3,000×1h bars, 26 bps round turn → **0** above
-  deflated Sharpe 0.95, **0** beating the permutation control.
-- Only the crypto weekend effect survived friction (+5.9 bps/trade, breakeven ≈35 bps).
-  It then **died** on a proper test: 3.0 years, bootstrapped **by calendar weekend**
-  (pooling 7 correlated coins is not 7 observations) with all 42 other 48-hour windows as
-  controls → **−3.21 bps**, CI **[−67.3, +64.5]**, rank **#15 of 42**.
-- A live paper round opened and closed real positions on real bid/ask. The no-signal book
-  lost **−0.278% with 0/6 winners and $40 in fees** — i.e. it lost exactly the friction,
-  which is the correct answer for a zero-edge entry and is the live reproduction of the
-  certification test that predicts a 26 bps drag.
-
-This directly instantiates the non-negotiables at the bottom of this file: data snapshot,
-assumptions, benchmark, out-of-sample result — or it is an anecdote.
-
-Run it: `python -m realtime_challenge.proof.test_harness` (must be 5/5) then
-`python -m realtime_challenge.cli backtest --bars 3000 --permutations 100 --verbose`.
-Automation: `.github/workflows/realtime-challenge.yml` runs the forward pod hourly.
+The split is deliberate. A tracker answers "what do I own and what is it worth"; a strategy
+harness answers "would this rule have made money, and is that answer real". Mixing them is
+how a dashboard's PF gets quoted as evidence of an edge.

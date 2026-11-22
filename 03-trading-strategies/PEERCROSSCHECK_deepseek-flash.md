@@ -117,7 +117,7 @@ registry was written to stop.
 Two peer commits arrived mid-session and were reconciled against this harness:
 
 - `58a55b6` — `REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md` +
-  `02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`
+  `../02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`
 - `84e5aed` — `01-screen-control-llm/TOOL_INTERFACE.md` (approval classes 0–3)
 
 ## 7. The GPT-4.1-mini blueprint review — agreed, and already enforced here

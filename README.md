@@ -3,11 +3,24 @@
 Working research and reference implementation notes for two separate problems that keep getting
 conflated in AI-agent discussions:
 
-| Folder | Topic | What's in it |
+| Folder | Topic | What's in it | Progress |
+|---|---|---|---|
+| [`01-screen-control-llm/`](01-screen-control-llm/) | **Screen control via LLM / AI** — letting an agent perceive and drive *any* desktop surface, and making vendor agents "stop stopping" | Architecture research, free-tool catalog with verified licences, measured local benchmarks, supervisor design, fact-check of popular LLM answers — **plus a running implementation** (`screen_control/`) | [`PROGRESS.md`](01-screen-control-llm/PROGRESS.md) |
+| [`02-portfolio-multi-asset/`](02-portfolio-multi-asset/) | **Portfolio tracking and valuation** — what do I own, what is it worth in my base currency, how did it perform | NautilusTrader architecture read from source, framework matrix with verified licences, tracking/valuation stack, data-evidence rules, paper-trading/monitoring design | — |
+| [`03-trading-strategies/`](03-trading-strategies/) | **Trading strategies, backtests, paper trading** — would this *rule* have made money, and is that answer real | A running harness (`realtime_challenge/`), 6 pre-registered hypotheses, deflated Sharpe + permutation control, live paper round, hourly forward pods, 200-round roadmap | [`PROGRESS.md`](03-trading-strategies/PROGRESS.md) |
+| [`REVIEWS/`](REVIEWS/) | **Source-answer audits** — user-supplied agent playbooks and peer challenge prototypes reviewed claim by claim, with the originals kept alongside | Review + input copy | — |
+
+### Why 02 and 03 are separate folders
+
+They answer different questions and the confusion between them is where most bad numbers
+come from:
+
+| | `02-portfolio-multi-asset` | `03-trading-strategies` |
 |---|---|---|
-| [`01-screen-control-llm/`](01-screen-control-llm/) | **Screen control via LLM / AI** — letting an agent perceive and drive *any* desktop surface (VS Code, browsers, consoles, JetBrains, RustDesk/RDP, games), and making vendor agents "stop stopping" | Architecture research, free-tool catalog with verified licenses, measured local benchmarks, supervisor design, fact-check of popular LLM answers |
-| [`02-portfolio-multi-asset/`](02-portfolio-multi-asset/) | **Financial portfolio tracking for multiple asset classes** — stocks, ETFs, bonds, mutual funds, commodities, futures, FX, crypto | NautilusTrader v2 architecture deep-dive (from source), framework matrix with verified licenses, tracking/valuation stack, data-evidence rules |
-| [`REVIEWS/`](REVIEWS/) | **Source-answer audits** — the user-supplied "Portable AI Agent Playbook" reviewed claim by claim, with the original kept alongside | Review + input copy |
+| Question | *What do I own and what is it worth?* | *Would this rule have made money, and is that real?* |
+| Output | positions, valuation, TWR/MWR | expectancy, drawdown, deflated Sharpe, forward trades |
+| Failure mode | NAV ≠ return; missing distributions | in-sample fitting; multiple testing; look-ahead |
+| Wrong substitution | using a tracker's P/L as evidence of edge | using a backtest as a valuation |
 
 ## Provenance — how to read this repo
 
@@ -39,13 +52,13 @@ LLM answers (Grok, Mercury, SUB Q, Arena) line by line against the actual reposi
 
 ## Status
 
-Research notes **plus two running implementations** (added 2026-11-22). The research and design documents
+Research notes **plus two running implementations** (added 2026-11-22), in three topic folders. The research and design documents
 are unchanged; alongside them now sit code that was executed and measured:
 
 | folder | implementation | verified |
 |---|---|---|
 | `01-screen-control-llm/` | `screen_control/` — guarded observe→decide→act→verify loop over CDP | **9/9** mechanics tests, **4/4** steps on a live page |
-| `02-portfolio-multi-asset/` | `realtime_challenge/` — backtest engine, 6 pre-registered hypotheses, live paper round, GH Actions forward pod | **5/5** harness certifications, 42 backtest cells, 1 live round |
+| `03-trading-strategies/` | `realtime_challenge/` — backtest engine, 6 pre-registered hypotheses, live paper round, GH Actions forward pod | **5/5** harness certifications, 42 backtest cells, 2 live rounds |
 
 The rest of each folder is still research. The next engineering milestones are listed at the end of each
 folder's README.
@@ -55,8 +68,8 @@ folder's README.
 The three categories above are joined by a fourth, and every file says which it is:
 
 4. **Executed on this machine, 2026-11-22** — the two implementations. Their numbers come from artifacts
-   committed next to them: `02-portfolio-multi-asset/results/*.json`,
-   `02-portfolio-multi-asset/ledger/*.jsonl`, `01-screen-control-llm/transcripts/*.json`. If a claim is not
+   committed next to them: `03-trading-strategies/results/*.json`,
+   `03-trading-strategies/ledger/*.jsonl`, `01-screen-control-llm/transcripts/*.json`. If a claim is not
    in one of those files, it is not a measurement.
 
 ### Headline result of the first execution run (a clean negative)
@@ -66,6 +79,6 @@ Sharpe 0.95, **0** beat the permutation control. The single family that survived
 weekend effect, +5.9 bps/trade — **died** when re-tested over 3 years with clustering by calendar weekend and
 42 control windows (−3.21 bps, CI [−67.3, +64.5], rank #15 of 42). A live paper round opened and closed real
 positions on real bid/ask and lost exactly the friction. Full write-up:
-[`02-portfolio-multi-asset/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD`](02-portfolio-multi-asset/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD).
+[`03-trading-strategies/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD`](03-trading-strategies/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD).
 
 Nothing in this repository is financial advice.

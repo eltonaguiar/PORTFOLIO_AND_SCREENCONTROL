@@ -1,6 +1,6 @@
 name: realtime-challenge
 
-# Forward evidence generator for 02-portfolio-multi-asset/realtime_challenge.
+# Forward evidence generator for 03-trading-strategies/realtime_challenge.
 #
 #   forward-pod    hourly — mark live positions, enforce TP / SL / time-stop, open at
 #                  most N new positions on the pre-registered book, commit the ledger.
@@ -36,7 +36,7 @@ concurrency:
 
 defaults:
   run:
-    working-directory: 02-portfolio-multi-asset
+    working-directory: 03-trading-strategies
 
 jobs:
   forward-pod:
@@ -71,8 +71,8 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           git config user.name  "realtime-challenge-bot"
           git config user.email "realtime-challenge@users.noreply.github.com"
-          git add 02-portfolio-multi-asset/realtime_challenge/state \
-                  02-portfolio-multi-asset/results 2>/dev/null || true
+          git add 03-trading-strategies/realtime_challenge/state \
+                  03-trading-strategies/results 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no state change this pass"
             exit 0
@@ -118,7 +118,7 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           git config user.name  "realtime-challenge-bot"
           git config user.email "realtime-challenge@users.noreply.github.com"
-          git add 02-portfolio-multi-asset/results 2>/dev/null || true
+          git add 03-trading-strategies/results 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no result change"
             exit 0
