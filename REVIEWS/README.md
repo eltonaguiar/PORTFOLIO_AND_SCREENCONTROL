@@ -23,5 +23,19 @@ checked against the original wording.
   than a supervisor, and "the engine is not the data". All three are correct and are load-bearing here.
 - **Recurring failures:** inflated or stale star counts, invented tools (`UIA-X` appeared twice with a detailed
   feature list and no repository), and confident performance numbers with no measurement behind them.
+
+### 2026-11-22 — Subq stack recommendation
+
+[`SUBQ_STACK_RECOMMENDATION_REVIEW.md`](SUBQ_STACK_RECOMMENDATION_REVIEW.md) — the Windows agent/desktop half
+checks out (agent-desktop 26,040★, Browser MCP 7,398★, Windows-MCP real at **11,999★** not the stated ~6,750).
+The backtesting half recommends **backtrader** (last push 2024-08-19) and **qstrader** (2024-06-30) as the
+validation and portfolio layers without disclosing that both are 2+ years stale — the same defect the note
+criticises in others.
+
+Its one quantitative claim — *"combining strategies improved risk-adjusted returns by 30-50%"* — was **tested,
+not accepted**: `03-trading-strategies/realtime_challenge/proof/portfolio_combination.py`. Combined Sharpe
+**−0.123** versus best single **+0.243** (−150.6%), with a diversification ratio of **1.841**. The mix really
+is much less volatile than its parts and that did not help, because only 2 of 6 components had positive
+expectancy. Diversification reduces variance; it does not create return.
 - **Encoding:** every review marks claims ✅ verified / 🟡 unverified / ❌ unsupported, and each ✅ names the
   artefact it was checked against.

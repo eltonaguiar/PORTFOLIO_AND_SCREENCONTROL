@@ -180,6 +180,14 @@ change is a **new cell** with a new ID and its own forward clock starting at zer
 | R157–R160 | Paper portfolios: `portfolio_10k`, `portfolio_100k` with rebalance rules and a kill switch at −15% |
 | R161–R162 | Attribution: how much of the portfolio return is beta to BTC, and how much is selection alpha |
 
+**Already implemented (2026-11-22):** `proof/portfolio_combination.py` builds a daily
+mark-to-market equity curve per strategy (a flat day is 0.0%, not a missing observation),
+forms the equal-capital combination, and reports each book's Sharpe, max drawdown,
+correlation matrix and diversification ratio. First result: combined Sharpe **−0.123** vs
+best single **+0.243** with a diversification ratio of **1.841** — the mix is genuinely less
+volatile, and that did not help, because only 2 of 6 components had positive expectancy.
+Portfolio construction is downstream of per-strategy edge, not a substitute for it.
+
 **The test that matters:** selection alpha = pick return − direction-adjusted buy-and-hold
 over the same holding windows. If its CI upper bound is below zero, the portfolio loses to
 holding and must be reported as such regardless of any single cell's PF.
