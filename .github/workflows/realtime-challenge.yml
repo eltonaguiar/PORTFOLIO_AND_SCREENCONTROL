@@ -172,3 +172,69 @@ jobs:
             sleep 3
           done
           exit 1
+
+  bracket-gate:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '45 * * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run the bracket gate unattended (evaluate + exit-mix test)
+        working-directory: 03-trading-strategies
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from realtime_challenge.bracket import evaluate, exit_mix_test
+
+          # Live probe bracket from the P7 audit: BTC 59,700, 1h ATR 426,
+          # tp 0.9xATR / sl 0.55xATR, 3-bar hold. The gate must refuse it.
+          probe = evaluate(59700.0, 426.0, tp_atr=0.9, sl_atr=0.55, hold_bars=3)
+          assert not probe.fail_reach, "barriers are inside the expected excursion"
+          assert probe.fail_ev, "probe bracket is negative-EV at its own implied probabilities"
+
+          # Follow-up: 0 of 27 take-profits against a geometry-implied ~34% TP exit rate.
+          em = exit_mix_test(probe.p_tp_exit, n_tp=0, n_total=27)
+          assert em["p_value_two_sided"] < 0.001, "0/27 incompatible with bracket geometry"
+          assert "driftless assumption is violated" in em["verdict"], em["verdict"]
+
+          report = {
+            "generated_utc": datetime.now(timezone.utc).isoformat(),
+            "gate": "bracket-gate",
+            "probe_bracket": {"price": 59700.0, "atr": 426.0, "tp_atr": 0.9, "sl_atr": 0.55, "hold_bars": 3},
+            "evaluate": probe.as_dict(),
+            "exit_mix_test": em,
+            "verdict": "REFUSE — bracket cannot pay at the win rate its own geometry implies; 0/27 TPs is incompatible with the driftless walk (direction problem, not a bracket problem)",
+          }
+          Path("results").mkdir(parents=True, exist_ok=True)
+          Path("results/bracket_gate_latest.json").write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")
+          print(json.dumps(report, indent=1))
+          PY
+
+      - name: Commit gate verdict
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.name  "realtime-challenge-bot"
+          git config user.email "realtime-challenge@users.noreply.github.com"
+          git add 03-trading-strategies/results/bracket_gate_latest.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "no gate change this pass"
+            exit 0
+          fi
+          git commit -m "rtc: bracket gate unattended run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git fetch origin main
+            git merge --no-edit origin/main || true
+            sleep 3
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1

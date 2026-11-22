@@ -1,0 +1,47 @@
+{
+ "generated_utc": "2026-11-22T13:05:12.597312+00:00",
+ "gate": "bracket-gate",
+ "probe_bracket": {
+  "price": 59700.0,
+  "atr": 426.0,
+  "tp_atr": 0.9,
+  "sl_atr": 0.55,
+  "hold_bars": 3
+ },
+ "evaluate": {
+  "price": 59700.0,
+  "atr": 426.0,
+  "hold_bars": 3,
+  "tp_dist": 383.4,
+  "sl_dist": 234.3,
+  "expected_excursion": 737.85364402,
+  "p_touch_any": 0.9012,
+  "p_tp_first": 0.3793,
+  "p_tp_exit": 0.3418,
+  "p_sl_exit": 0.5593,
+  "p_timeout": 0.0988,
+  "fail_reach": false,
+  "fail_balance": false,
+  "fail_ev": true,
+  "exp_net_r": -0.0023,
+  "required_win_rate": 0.3803,
+  "geometry_win_rate": 0.3793,
+  "required_edge_pp": 0.1,
+  "required_n_to_verify": 3873050,
+  "assumed_p_tp": 0.3793,
+  "reasons": [
+   "NEGATIVE-EV: at the supplied hit rate (37.9%) the expected net is -0.0023R after 26 bps. At geometry it is always -p_any*cost; the entry must beat 37.9% to make this pay, which is +0.1pp of edge the signal has not demonstrated"
+  ],
+  "ok": false
+ },
+ "exit_mix_test": {
+  "predicted_p_tp": 0.3418,
+  "expected_tp_count": 9.23,
+  "observed_tp_count": 0,
+  "n_total": 27,
+  "observed_rate": 0.0,
+  "p_value_two_sided": 1.698e-05,
+  "verdict": "INCONSISTENT \u2014 the driftless assumption is violated; this is a direction or volatility-estimate problem, not a bracket problem"
+ },
+ "verdict": "REFUSE \u2014 bracket cannot pay at the win rate its own geometry implies; 0/27 TPs is incompatible with the driftless walk (direction problem, not a bracket problem)"
+}
