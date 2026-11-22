@@ -84,6 +84,36 @@ That second point is the most valuable line in this document. A horizon scan tha
 only §2 would have promoted H-R4 to a forward pod on the strength of a sign flip. The
 shuffle control is what stops that.
 
+## 4b. The same rule, three windows, three wildly different answers
+
+The weekend family is the clearest demonstration of why a short window cannot estimate a
+small edge. Same rule, same 26 bps cost, three different samples:
+
+| window | observations | mean per trade | source |
+|---|---:|---:|---|
+| 42 days (2026-10-11 → 11-22) | 42 | **−162.5 bps** | early run, before the pagination fix — window valid, sample 1/3 the size |
+| 125 days (2026-07-20 → 11-22) | 126 | **+5.93 bps** | `results/backtest_latest_1h.json` |
+| 3.01 years, clustered by weekend | 156 events | **−3.21 bps** | `results/weekend_test.json` |
+
+A spread from **−162 bps to +6 bps** on the same rule is not noise around a stable mean; it
+is a mean that a short sample cannot locate. The 125-day figure is the one that *cleared
+friction* and would have justified a forward pod. It is also the one that a 3-year clustered
+test reversed.
+
+Two lessons, both now enforced:
+
+1. **Pooled n overstates evidence when the observations share a cause.** 7 coins × 18
+   weekends is ~18 events, not 126. The clustered bootstrap in `proof/weekend_test.py`
+   resamples *weekends*, which is the reason its CI is honest.
+2. **A cell that only clears costs on a short window has not cleared costs.** The breakeven
+   cost table (§2) is a statement about a point estimate; it is only meaningful next to the
+   window that produced it.
+
+The two failing artifacts from the buggy data path (`..._090644Z.json`, 1,000 bars instead of
+3,000) were **removed from `results/`** rather than kept with a caveat, because a committed
+JSON with the wrong window is indistinguishable from a correct one to anyone who does not
+read `bars`. Its numbers survive only in this table, labelled.
+
 ## 5. What this changes in the plan
 
 | change | why |
