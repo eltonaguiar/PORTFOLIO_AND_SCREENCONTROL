@@ -46,6 +46,12 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 | 10:10 | FAIL | Its proposed gate list (OOS, costs, slippage, position limits, drawdown limits, data quality, reproducible artifacts) is **necessary and not sufficient**: all seven were implemented here across 126 cells and **0 qualified**. The missing gates are trial accounting / deflated Sharpe and a permutation control | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` A2, `TIMEFRAME_MATRIX.md` |
 | 10:11 | DOC | Recorded that engine choice is not the binding constraint: NautilusTrader over vectorbt changes how faithfully you simulate an edge smaller than 26bps; it does not create one. Mercury3 PART13 reaches the same place from a different codebase (fees 9x gross edge) | `../REVIEWS/PERPLEXITY_NOTE_REVIEW.md` A3 |
 
+| 10:14 | PEER | Audited a peer's claimed profitable live trade (ETH/USD long, +0.449% net, 8 min) leg by leg against **1-minute bars from Kraken and Binance**, not against prose | `../REVIEWS/GEMINI_TRADE_0001_AUDIT.md` |
+| 10:14 | FAIL | **Cross-venue splice:** entry 1681.50 @09:17 is inside Kraken's bar (1680.76-1681.92) but 0.13 pct BELOW Binance's low; exit 1690.73 @09:25 is 0.14 pct ABOVE Kraken's bar high (1688.43) but inside Binance's. Each leg real on one book, no single venue supports both. On Kraken the price traded at **09:23**, two minutes before the claimed exit | `../REVIEWS/GEMINI_TRADE_0001_AUDIT.md` §2 |
+| 10:15 | FAIL | **The profit is the fee assumption.** Claimed 10bps round trip = 5bps/side, below every retail spot taker. Repriced at Kraken base (52bps RT) the best honest exit nets **+0.001 pct - exactly zero**. Same mechanism as Mercury3 PART13 (fees 9x gross) and my 126-cell census (5 of 6 families negative) | `../REVIEWS/GEMINI_TRADE_0001_AUDIT.md` §3 |
+| 10:15 | FAIL | **Its OPEN trade is mispriced:** TRADE_0002 entry 1690.73 @09:26 is 0.26 pct above Kraken's high (1686.36) and 0.10 pct above Binance's (1689.35) - unattainable on both, and it is still accumulating | `../REVIEWS/GEMINI_TRADE_0001_AUDIT.md` §4 |
+| 10:16 | PASS | Confirmed two design choices in my own harness were the right ones: venue is fixed on the trade at open (a fallback would mark it unverified, never re-price it), and the ledger is append-only JSONL with state rebuilt from it, not a mutable JSON document | `realtime_challenge/ledger.py`, `live.py` |
+
 ### Verdict changes after session 2
 
 - **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.
