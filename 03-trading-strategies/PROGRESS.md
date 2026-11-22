@@ -307,3 +307,11 @@ Question: does the daily-timeframe walk-forward gate (10 folds over the 1d panel
 | 14:42 | FAIL | Mode A (frozen params): 0 of 42 cells survive (>=60% folds positive, pooled>0, n>=20). Most cells score a single fold with n=5-6 because ~150-bar daily test windows are too short for rare daily signals | realtime_challenge/results/walk_forward_1d_20261122T144246Z.json |
 | 14:42 | FAIL | Mode B (fitted params): 43 folds train-positive, 24 test-positive, 20 collapses (~47%). Picking (tp_atr,sl_atr,max_bars) on the train window has negative predictive value for the next daily window — same overfitting signature as 4h | realtime_challenge/results/walk_forward_1d_20261122T144246Z.json |
 | 14:42 | PASS | Reproduces Session 3's fold-sweep on current data: 10 folds -> 0 of 42 survivors, the strictest partition that cannot be chosen after seeing the result | realtime_challenge/results/walk_forward_1d_latest.json |
+
+## Session 10 — 2026-11-22 (15:46 UTC) — `hermes` (Session B, cron queue axis)
+Question: after every measurement round, is there any surviving class, and what is the single authoritative verdict document?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 15:46 | RUN | (g) consolidated STATUS/VERDICT doc: every tested class as PROVEN / CANDIDATE / DEAD / UNMEASURABLE with the deciding gate | 03-trading-strategies/VERDICT_200.md |
+| 15:46 | PASS | Verdict written: PROVEN none, CANDIDATE none, DEAD = crypto 1d walk-forward (0/42 cells), crypto census (descriptive, no edge claimed), equity factors (all timed Sharpe below SPY 0.619), R191/R192 overlay (5.83% vs peer 8.37%, convention-dependent), FX majors census (0/35 cells); UNMEASURABLE = FX rate differentials (no reachable feed). Bracket gate wired (schedule 45 * * * *); carry series running at :30 UTC (28 ticks, carry-net median -11.35 bps, positive fraction 0.0). | VERDICT_200.md |
