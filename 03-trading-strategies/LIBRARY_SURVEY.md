@@ -66,4 +66,5 @@ source of truth.
 | independent check | vectorbt on the same signals | catches engine-specific artefacts |
 | live paper | own simulator on real ticks now; Alpaca paper later | no credentials required to start |
 | portfolio maths | PyPortfolioOpt (later phase) | standard, maintained, MIT |
-| avoid | backtrader, blankly | no push in 2 years |
+| avoid | backtrader, blankly, **qstrader** | no push in 2+ years. Dates verified via the GitHub API 2026-11-22: `mementum/backtrader` **2024-08-19**, `blankly-finance/blankly` **2024-12-30**, `mhallsmoore/qstrader` **2024-06-30**. All three still run; none is being fixed. Recommending any of them as *the* validation or portfolio layer is a support risk, not a feature choice |
+| portfolio layer (real, maintained) | PyPortfolioOpt · `bt` · `ArturSepp/OptimalPortfolios` (99★, MIT, 2026-11-19 — research code, read it, don't depend on it) | verified 2026-11-22 |

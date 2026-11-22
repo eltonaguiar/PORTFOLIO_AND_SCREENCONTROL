@@ -27,6 +27,13 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 | 09:42 | FIX | The 1h/4h/1d runs all predate the `cli.py` patch, so no `backtest_latest_<tf>.json` existed. Copied each verified timestamped artifact to its per-timeframe name — a copy, **not a re-run**; no number was re-derived | `results/backtest_latest_{1h,4h,1d}.json` |
 | 09:43 | DOC | **New finding from the batch of earlier runs:** the weekend family returned **−162.5 bps** (42 obs, 42-day window), **+5.93 bps** (126 obs, 125 days), **−3.21 bps** (156 clustered events, 3.01 years) on the same rule at the same 26 bps cost. A spread from −162 to +6 bps is a mean a short sample cannot locate — and the +5.93 figure is the one that cleared friction and would have justified a forward pod | `TIMEFRAME_MATRIX.md` §4b |
 
+| 09:52 | PEER | Audited the Subq stack note via the GitHub API: `agent-desktop` 26,040★, Browser MCP 7,398★, `bt` 3,045★, `OptimalPortfolios` 99★ all accurate; **Windows-MCP is 11,999★, not the stated ~6,750**; **backtrader (push 2024-08-19) and qstrader (2024-06-30) recommended as the validation and portfolio layers without disclosing they are 2+ years stale** | `../REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md` §1 |
+| 09:53 | RUN | **Tested the note's headline claim** ("combining strategies improves risk-adjusted return 30-50%") on our own trades: 6 hypotheses × 7 majors, 1d, 3.3 y, 26 bps, daily mark-to-market where a flat day is 0.0% | `realtime_challenge/proof/portfolio_combination.py`, `results/portfolio_combination.json` |
+| 09:53 | FAIL | **Claim does not reproduce.** Combined Sharpe **−0.123** vs best single (H-R4) **+0.243** = **−150.6%**. Average pairwise correlation 0.105 and diversification ratio **1.841** — the mix genuinely is far less volatile (4.7% vs 7.4-17.9% annualised) and it still lost. Only **2 of 6** strategies had positive Sharpe | `results/portfolio_combination.json` |
+| 09:53 | DOC | Conclusion recorded: diversification reduces variance, it does not create expected return. Portfolio construction is downstream of per-strategy edge — combining four negative-expectancy families with two positive ones yields a diversified near-zero (−2.27% over 3.3 years) | `../REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md` §3 |
+| 09:54 | FIX | The note's multi-asset-vs-portfolio distinction exposed a **real gap I own**: this harness sizes each symbol independently with no shared cash constraint. Mitigated by the pod's `max_open = 4`, but a per-bar shared-cash simulation is still missing (roadmap P5 R157-R160) | `ROADMAP_200_deepseek-flash.md` P5 |
+| 09:54 | DOC | `portfolio_combination.py` is a **permanent** portfolio-layer check, not a one-off rebuttal; added qstrader to the avoid list with its verified push date | `realtime_challenge/proof/`, `LIBRARY_SURVEY.md` |
+
 ### Verdict changes after session 2
 
 - **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.
@@ -36,6 +43,9 @@ Question: does the verdict hold at other horizons, or was 1h hiding something?
 - **H-R4 is the single cell family worth a forward pod, at 1d only** — with its permutation
   p=0.40 disclosed next to any PF it is ever quoted with.
 - **The 1h window is low-power** (125 days). Quote 4h and 1d results.
+- **Portfolio combination is not a rescue.** Combined Sharpe −0.123 vs best single +0.243 on
+  a book where only 2 of 6 families have positive expectancy. Do not present diversification
+  as a path to profitability while the components are negative.
 
 ### What session 3 must not do
 

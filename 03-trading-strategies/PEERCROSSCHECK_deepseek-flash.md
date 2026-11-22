@@ -190,3 +190,28 @@ while this implementation infers it from the **target's name**. A button labelle
 that submits a payment would pass. The fix is to let a policy declare an action's class
 explicitly and require the guard to take the **maximum** of declared and inferred — noted
 in `01-screen-control-llm/IMPLEMENTATION.md` limitations.
+
+## 10. Subq stack recommendation (2026-11-22) — claim tested, not accepted
+
+Full audit with line-level GitHub API checks:
+[`../REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md`](../REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md).
+
+Three things matter for this folder specifically:
+
+1. **It recommends backtrader (push 2024-08-19) and qstrader (2024-06-30)** as the
+   validation and portfolio layers, without disclosing that both are 2+ years stale. That is
+   the same defect the note criticises in other answers. `LIBRARY_SURVEY.md` now lists all
+   three stale engines with API-verified dates.
+2. **Its central quantitative claim was tested here and failed.**
+   *"Combining strategies improved risk-adjusted returns by 30-50%."* Measured:
+   combined Sharpe **−0.123** vs best single **+0.243** (−150.6%), with correlation 0.105 and
+   a diversification ratio of 1.841 — the mix is genuinely less volatile and that did not
+   help, because only 2 of 6 components had positive expectancy. Artifact:
+   `results/portfolio_combination.json`.
+3. **It caught a real gap in this harness.** "A multi-asset run tests rules per symbol; a
+   portfolio run has one cash account where holdings compete bar by bar." This harness does
+   the former only. Owned and scheduled: roadmap P5, R157–R160.
+
+Where the note is right and agrees with measurements here: OHLCV cannot sequence a stop and
+a target inside one bar (certification **T3** resolves it to the stop), and parameter plateaus
+matter more than a single best Sharpe.
