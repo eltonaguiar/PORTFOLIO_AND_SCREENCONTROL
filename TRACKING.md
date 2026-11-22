@@ -38,96 +38,97 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 61 (23 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 126 (20 md) | 91 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 173 (21 md) | 95 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8645 |
+| [`01-screen-control-llm/FACTCHECK.md`](01-screen-control-llm/FACTCHECK.md) | 82 | 8727 |
 | [`01-screen-control-llm/harvest/1min_methodology.md`](01-screen-control-llm/harvest/1min_methodology.md) | 85 | 10558 |
 | [`01-screen-control-llm/harvest/arena_methodology.md`](01-screen-control-llm/harvest/arena_methodology.md) | 1040 | 38556 |
 | [`01-screen-control-llm/harvest/askanymodel_methodology.md`](01-screen-control-llm/harvest/askanymodel_methodology.md) | 305 | 26812 |
-| [`01-screen-control-llm/harvest/CAPTURE_CONTRACT.md`](01-screen-control-llm/harvest/CAPTURE_CONTRACT.md) | 96 | 5617 |
+| [`01-screen-control-llm/harvest/CAPTURE_CONTRACT.md`](01-screen-control-llm/harvest/CAPTURE_CONTRACT.md) | 96 | 5713 |
 | [`01-screen-control-llm/harvest/chatplayground_methodology.md`](01-screen-control-llm/harvest/chatplayground_methodology.md) | 416 | 33727 |
 | [`01-screen-control-llm/harvest/duckai_methodology.md`](01-screen-control-llm/harvest/duckai_methodology.md) | 88 | 10376 |
-| [`01-screen-control-llm/harvest/FREE_ENDPOINTS.md`](01-screen-control-llm/harvest/FREE_ENDPOINTS.md) | 58 | 3516 |
+| [`01-screen-control-llm/harvest/FREE_ENDPOINTS.md`](01-screen-control-llm/harvest/FREE_ENDPOINTS.md) | 58 | 3574 |
 | [`01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md`](01-screen-control-llm/harvest/SUMMARY_multi_ai_methodology.md) | 151 | 9997 |
-| [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6506 |
-| [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6321 |
-| [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 5940 |
-| [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40245 |
+| [`01-screen-control-llm/IMPLEMENTATION.md`](01-screen-control-llm/IMPLEMENTATION.md) | 126 | 6632 |
+| [`01-screen-control-llm/INTERVENTION.md`](01-screen-control-llm/INTERVENTION.md) | 94 | 6415 |
+| [`01-screen-control-llm/MEASUREMENTS.md`](01-screen-control-llm/MEASUREMENTS.md) | 119 | 6059 |
+| [`01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md`](01-screen-control-llm/PC_AGENT_CONTROL_RESEARCH.md) | 389 | 40634 |
 | [`01-screen-control-llm/PROGRESS.md`](01-screen-control-llm/PROGRESS.md) | 69 | 5411 |
 | [`01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md`](01-screen-control-llm/prototype/runs/20261122_cdp_breakthrough.md) | 74 | 4480 |
-| [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 92 | 6098 |
-| [`01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md`](01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md) | 56 | 4080 |
+| [`01-screen-control-llm/prototype/runs/20261122_chatplayground.md`](01-screen-control-llm/prototype/runs/20261122_chatplayground.md) | 92 | 6190 |
+| [`01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md`](01-screen-control-llm/prototype/runs/20261122_multi_site_blockers.md) | 56 | 4136 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md`](01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md) | 42 | 2297 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
-| [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
-| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8099 |
-| [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
-| [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
-| [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8357 |
-| [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 130 | 6795 |
-| [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
-| [`02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md`](02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md) | 291 | 16353 |
-| [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
-| [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
-| [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
+| [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2773 |
+| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 109 | 8208 |
+| [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3072 |
+| [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7436 |
+| [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8479 |
+| [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 130 | 6925 |
+| [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6935 |
+| [`02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md`](02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md) | 291 | 16644 |
+| [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6232 |
+| [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 7025 |
+| [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5738 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
+| [`03-trading-strategies/CARRY_SERIES.md`](03-trading-strategies/CARRY_SERIES.md) | 68 | 3820 |
 | [`03-trading-strategies/ETF_ROTATION_H-E1.md`](03-trading-strategies/ETF_ROTATION_H-E1.md) | 144 | 7413 |
-| [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5862 |
+| [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5968 |
 | [`03-trading-strategies/FOLD_SENSITIVITY_T3.md`](03-trading-strategies/FOLD_SENSITIVITY_T3.md) | 92 | 4206 |
 | [`03-trading-strategies/FX_CENSUS_P8.md`](03-trading-strategies/FX_CENSUS_P8.md) | 98 | 5130 |
-| [`03-trading-strategies/GPT5NANO_REVIEW.md`](03-trading-strategies/GPT5NANO_REVIEW.md) | 52 | 4684 |
-| [`03-trading-strategies/HARNESS_CERTIFICATION.md`](03-trading-strategies/HARNESS_CERTIFICATION.md) | 56 | 3919 |
-| [`03-trading-strategies/IMPLEMENTATION.md`](03-trading-strategies/IMPLEMENTATION.md) | 77 | 3902 |
-| [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
+| [`03-trading-strategies/GPT5NANO_REVIEW.md`](03-trading-strategies/GPT5NANO_REVIEW.md) | 52 | 4736 |
+| [`03-trading-strategies/HARNESS_CERTIFICATION.md`](03-trading-strategies/HARNESS_CERTIFICATION.md) | 56 | 3975 |
+| [`03-trading-strategies/IMPLEMENTATION.md`](03-trading-strategies/IMPLEMENTATION.md) | 77 | 3979 |
+| [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5954 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
-| [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 241 | 38194 |
-| [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
-| [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7718 |
-| [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 19700 |
-| [`03-trading-strategies/STATIC_GATE_AUDIT.md`](03-trading-strategies/STATIC_GATE_AUDIT.md) | 37 | 3470 |
-| [`03-trading-strategies/STRATEGY_SPEC.md`](03-trading-strategies/STRATEGY_SPEC.md) | 133 | 6196 |
-| [`03-trading-strategies/TIMEFRAME_MATRIX.md`](03-trading-strategies/TIMEFRAME_MATRIX.md) | 202 | 10945 |
+| [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17713 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 241 | 38435 |
+| [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9486 |
+| [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7847 |
+| [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 20027 |
+| [`03-trading-strategies/STATIC_GATE_AUDIT.md`](03-trading-strategies/STATIC_GATE_AUDIT.md) | 37 | 3507 |
+| [`03-trading-strategies/STRATEGY_SPEC.md`](03-trading-strategies/STRATEGY_SPEC.md) | 133 | 6329 |
+| [`03-trading-strategies/TIMEFRAME_MATRIX.md`](03-trading-strategies/TIMEFRAME_MATRIX.md) | 202 | 11147 |
 | [`03-trading-strategies/VOL_SCALING_H-VS1.md`](03-trading-strategies/VOL_SCALING_H-VS1.md) | 94 | 4754 |
 | [`03-trading-strategies/WALKFORWARD_P6.md`](03-trading-strategies/WALKFORWARD_P6.md) | 115 | 6127 |
-| [`REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md`](REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md) | 53 | 6177 |
-| [`REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md`](REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md) | 171 | 12575 |
+| [`REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md`](REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md) | 53 | 6230 |
+| [`REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md`](REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md) | 171 | 12746 |
 | [`REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md`](REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md) | 156 | 8628 |
-| [`REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md`](REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md) | 96 | 6975 |
-| [`REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW.md`](REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW.md) | 87 | 7249 |
+| [`REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md`](REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md) | 96 | 7071 |
+| [`REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW.md`](REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW.md) | 87 | 7336 |
 | [`REVIEWS/COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md`](REVIEWS/COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md) | 84 | 6454 |
 | [`REVIEWS/GEMINI_TRADE_0001_AUDIT.md`](REVIEWS/GEMINI_TRADE_0001_AUDIT.md) | 204 | 10859 |
-| [`REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md`](REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md) | 68 | 6540 |
-| [`REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md`](REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md) | 97 | 11968 |
+| [`REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md`](REVIEWS/GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md) | 68 | 6608 |
+| [`REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md`](REVIEWS/inputs/AGENT_MARKET_AUTOMATION_PLAYBOOK.md) | 97 | 12065 |
 | [`REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md`](REVIEWS/inputs/ALLOCATION_FOUR_MODEL_ANSWERS.md) | 483 | 41739 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Claude-4.5-Opus.md`](REVIEWS/inputs/REALTIMECHALLENGE_Claude-4.5-Opus.md) | 3186 | 114814 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Claude-5.5-Haiku.md`](REVIEWS/inputs/REALTIMECHALLENGE_Claude-5.5-Haiku.md) | 379 | 23658 |
-| [`REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md`](REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md) | 254 | 22199 |
-| [`REVIEWS/inputs/REALTIMECHALLENGE_GLM-5.3-Flash.md`](REVIEWS/inputs/REALTIMECHALLENGE_GLM-5.3-Flash.md) | 111 | 10274 |
+| [`REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md`](REVIEWS/inputs/REALTIMECHALLENGE_Gemini-3.1-Pro.md) | 254 | 22452 |
+| [`REVIEWS/inputs/REALTIMECHALLENGE_GLM-5.3-Flash.md`](REVIEWS/inputs/REALTIMECHALLENGE_GLM-5.3-Flash.md) | 111 | 10384 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Meta-MuseSpark.md`](REVIEWS/inputs/REALTIMECHALLENGE_Meta-MuseSpark.md) | 260 | 16326 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Pi.md`](REVIEWS/inputs/REALTIMECHALLENGE_Pi.md) | 148 | 4525 |
 | [`REVIEWS/inputs/REALTIMECHALLENGE_Qwen-Plus.md`](REVIEWS/inputs/REALTIMECHALLENGE_Qwen-Plus.md) | 131 | 7711 |
-| [`REVIEWS/META_MUSESPARK_CHALLENGE_REVIEW.md`](REVIEWS/META_MUSESPARK_CHALLENGE_REVIEW.md) | 73 | 6028 |
-| [`REVIEWS/PERPLEXITY_NOTE_REVIEW.md`](REVIEWS/PERPLEXITY_NOTE_REVIEW.md) | 158 | 12937 |
-| [`REVIEWS/PI_CHALLENGE_REVIEW.md`](REVIEWS/PI_CHALLENGE_REVIEW.md) | 61 | 4338 |
-| [`REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md`](REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md) | 84 | 5640 |
-| [`REVIEWS/README.md`](REVIEWS/README.md) | 125 | 11136 |
-| [`REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md`](REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md) | 52 | 7095 |
+| [`REVIEWS/META_MUSESPARK_CHALLENGE_REVIEW.md`](REVIEWS/META_MUSESPARK_CHALLENGE_REVIEW.md) | 73 | 6101 |
+| [`REVIEWS/PERPLEXITY_NOTE_REVIEW.md`](REVIEWS/PERPLEXITY_NOTE_REVIEW.md) | 158 | 13095 |
+| [`REVIEWS/PI_CHALLENGE_REVIEW.md`](REVIEWS/PI_CHALLENGE_REVIEW.md) | 61 | 4399 |
+| [`REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md`](REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md) | 84 | 5724 |
+| [`REVIEWS/README.md`](REVIEWS/README.md) | 125 | 11261 |
+| [`REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md`](REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md) | 52 | 7147 |
 | [`REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md`](REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md) | 116 | 8590 |
 
 ### Top level
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 17 | 2381 |
-| [`README.md`](README.md) | 196 | 16360 |
-| [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8465 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 21 | 3119 |
+| [`README.md`](README.md) | 196 | 16556 |
+| [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6589 |
 
 _Generated by `scripts/update_index.py`; do not edit this block by hand._
 <!-- INDEX:END -->
