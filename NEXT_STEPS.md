@@ -31,12 +31,12 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 
 - [ ] **A1 — `kernel/resolve.py`** · M · the five-rung ladder (§4.6: native → a11y selector → text/OCR → marks →
       pixels) with per-window-class caching and re-probe on resize. **DoD:** prints the rung chosen for VS Code,
-      Windows Terminal, Explorer and Chrome on this machine, plus the evidence it used (node counts / text lines).
+      Windows Terminal, Explorer and Chrome on this machine, plus the evidence it used (node counts / text lines). · blocked: no interactive desktop in this unattended cron; DoD needs live windows on VS Code, Terminal, Explorer and Chrome with real node counts / text lines — never faked
 - [ ] **A2 — `kernel/act.py`** · M · the twelve verbs, each returning `{ok, effect, verified, evidence}`, with
       approval classes 0–3 enforced in code. **DoD:** click/type/set_value on three surfaces with read-back
       verification; a class-3 verb raises without an approval token; **`coordinate=` is refused when an element
       handle exists for the target** (proven necessary 2026-11-22: a coordinate click was rescaled by the driver
-      from `(3108,739)` to `(5029,798)` and missed, while the element click landed).
+      from `(3108,739)` to `(5029,798)` and missed, while the element click landed). · blocked: act.py is unwritten and its DoD needs read-back verification on three live surfaces — no desktop session in this cron — not faked
 - [ ] **A3 — kernel unit tests beyond capture** · S · resolve and act covered by tests that do not need a GUI (mock
       the transport). **DoD:** `pytest 01-screen-control-llm/tests -q` covers all three modules; no test requires an
       open window.
