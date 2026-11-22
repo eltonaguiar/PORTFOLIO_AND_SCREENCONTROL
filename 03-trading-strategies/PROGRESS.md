@@ -64,6 +64,13 @@ control idea change any verdict?
 | 12:10 | FAIL | **The real constraint is the edge, not the sample.** +5 bps/trade requires beating geometry by 4.93pp of win rate; +20 bps requires 18.95pp. No family in 435 tested cells has come within a fraction of that | same |
 | 12:11 | FAIL | **The live books are conclusively unprofitable, not inconclusive.** p=6.7e-9 at n=27, running 31.7 bps/trade worse than break-even. Calling them "too small a sample" would have been a way of not saying so | same |
 
+| 12:52 | RUN | **t3 daily walk-forward, 10 folds.** 1d, binance, 7 symbols, 2,000 bars (2021-06 → 2026-11), purge 24 bars, 10 folds: **0 of 42 cells survive.** Most cells scored only ONE fold (n=5-6) because ~160-bar test windows are too short for rare daily signals | `results/walk_forward_1d_*.json` |
+| 12:54 | RUN | **4 folds on the SAME data: 2 of 42 survive** (H-R4/SOL 3/3 folds n=24 +122.9bps; H-R6/ETH 2/3 n=27 +56.53bps). Same strategies, same costs, same window — different answer | same |
+| 12:56 | FAIL | **Swept the fold count: 3→6 survivors, 4→2, 5→2, 6→3, 8→1, 10→0 of 42.** A SIX-FOLD swing in survivor count from one undisclosed setting. Try 3 folds and you find six significant strategies; pre-register 10 and you find none | `FOLD_SENSITIVITY_T3.md` |
+| 12:57 | DOC | **Generalisable rule extending Mercury3's split_basis ask:** the partition is a degree of freedom. Fold count, split basis, window length, purge and embargo each change the survivor count on identical data. **Publishing a strategy without its partition is publishing a selected result.** A walk-forward claim needs folds + split_basis + test_window_bars + purge_bars attached | same |
+| 12:58 | DOC | Standing default from here: **pre-register the fold count before looking, and report the whole sensitivity curve** rather than whichever split produced survivors. For this dataset the strictest partition (10 folds) is the one that cannot be chosen after seeing the result — it says zero | same |
+| 12:59 | FIX | Fixed a log line that printed "fetching 4h panel" while actually fetching daily bars — a misreported artifact label is how a 1d result gets cited as a 4h one | `proof/walk_forward.py` |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
@@ -74,6 +81,9 @@ control idea change any verdict?
   cells survive frozen-parameter stability and both were already killed by other controls; with
   fitted brackets **73% of in-sample winners lose money in the next window**.
 - **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
+- **The partition decides the answer.** Same daily data, same strategies: 6 survivors at 3 folds,
+  0 at 10. Fold count is an undisclosed multiple-testing axis, and the strictest partition is the
+  only one that cannot be chosen after the fact.
 - **The sample-size gate was never the binding constraint; the edge requirement is.** +5 bps/trade
   needs +4.93pp of win-rate edge over geometry, verifiable in 121 trades. The live books ran
   31.7 bps/trade worse than break-even (p=6.7e-9), so they are conclusively bad, not underpowered.

@@ -67,7 +67,7 @@ each does not.
 | 6 | Walk-forward harness with purge+embargo (the gate never run here) | **done** — 2 of 42 survive frozen, 73% bracket collapse when fitted. `WALKFORWARD_P6.md` |
 | 6a | Live-round accounting: always read `n_open == 0` before quoting a P&L (session 1 understated the probe loss 2x by reading a running process) | **done** — rule in PROGRESS session 3 |
 | 6b | All five live books aggregated from ledgers: 27 closed, 7.4% WR, −$285.14, 63% fees, **0 take-profits in 27** | **done** — challenge doc §5.4 |
-| 7 | Re-run the crypto census with a real walk-forward split | pending |
+| 7 | Re-run the crypto census with a real walk-forward split | pending — but t3 showed the SPLIT ITSELF is a degree of freedom (6 survivors at 3 folds, 0 at 10), so the census must publish the fold count it used |
 | 8 | FX class census — opens 17:00 EST Sunday, measurable from tonight | pending |
 | 9 | Equity single-name and ETF factor set beyond H-E1 | pending |
 | 10 | Reconcile the trend-overlay discrepancy for R191–R192 on one shared script | pending |
