@@ -46,12 +46,47 @@ indices. It does not work on raw coordinates, which is the finding that matters.
   `Copy all answers` is only present mid-stream. `Copy all answers` stays the fast path when the run
   is still streaming and the caller wants a partial sweep.
 
+## Extraction — what actually works
+
+`Copy all answers` exists **only while a response is streaming**; once the last panel finishes it is gone
+from the tree (measured twice, 129 elements both times, no copy-all node). So a completed sweep is
+extracted two ways, both verified:
+
+1. **Per-panel `Copy message`** (assistant row, e.g. `#72`) → clipboard. Verified: clipboard returned
+   `PROTOTYPE OK` (12 chars). The user-message copy at `#57` returns the *prompt* — row matters.
+2. **Rebuild from the accessibility tree** — [`../extract.py`](../extract.py) groups panels by their
+   `Model: <name>. Change model` headers, finds each panel's `Assistant` marker, and reads the `Text`
+   nodes below it until the telemetry strip (detected by shape: `TTFT 634 ms`, `14 → 8 tokens`,
+   `1 credit`). Output was diffed against the app's own paste-all document:
+
+   ```
+   # Reply with exactly: PROTOTYPE OK
+
+   ## ChatGPT-6 Luna
+
+   PROTOTYPE OK
+
+   ## Claude (Latest Model)
+
+   PROTOTYPE OK
+
+   ## GLM 5.3 Flash
+
+   PROTOTYPE OK
+   ```
+
+   **Result: MATCH** (byte-identical after newline normalisation), 3/3 panels, including GLM whose panel
+   is off-viewport. Saved as [`../transcripts/chatplayground_pasteall_20261122.md`](../transcripts/chatplayground_pasteall_20261122.md).
+   Two filters were needed: GLM emits a `Thought for 1s` reasoning marker and a `Response stats`
+   header that the app's own export omits.
+
 ## Not proven by this run
 
-- The `paste all` path end-to-end (the control was gone by the time the run completed; per-panel copy
-  is the fallback and is untested live).
+- The `Copy all answers` control used mid-stream for a *partial* sweep (it exists then; not exercised).
 - The login gate (`Continue with Google` → auto-sign-in). The user's Chrome was already signed in, so
   step `ensure_login` was a no-op. The pause-on-credential path is designed (`INTERVENTION.md` §3) but
   has not been exercised.
 - Any non-browser surface. That is the point of the kernel, and it remains the bigger test: items A4
   and A7 in `NEXT_STEPS.md`.
+- Multi-paragraph answers: the tree-based rebuild was verified on one-line answers; long answers may
+  split across many `Text` nodes whose paragraph boundaries still need a rule.
