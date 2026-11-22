@@ -7,6 +7,14 @@ Legend for **status**: `RUN` executed · `PASS`/`FAIL` gate result · `FIX` defe
 fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
+
+## Session 6 — 2026-11-22 (13:32–13:45 UTC) — `hermes` (Session B, cron queue axis)
+Question: why is the scheduled carry time series red on GitHub Actions, and can it be fixed with public endpoints only?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 13:38 | FIX | carry_roundtrip.py measured binance only; binance.com returns HTTP 451 from GitHub's US datacenter IPs, so the scheduled carry-series job wrote 0 lines and exited 1 at every :30 run (failures at 12:32 and 13:31 UTC). Added venue failover (bybit → okx → binance, per symbol, first reachable wins) mirroring forward_supervisor's proven order; disclosed default-tier taker fees (bybit 6 bp, okx 5 bp, binance 5 bp) are written on every line. Local end-to-end tick green: 7/7 symbols via bybit; series now 14 ticks, median roundtrip 12.04 bp, median net carry −11.83 bp — funding still below cost, so carry stays net-negative and no venue beats cash. | realtime_challenge/proof/carry_roundtrip.py, results/carry_roundtrip.jsonl, results/carry_series_summary.json |
+
 ## Session 5 — 2026-11-22 (13:27 UTC) — `hermes` (Session B, cron queue axis)
 
 | time (UTC) | status | item | artifact |

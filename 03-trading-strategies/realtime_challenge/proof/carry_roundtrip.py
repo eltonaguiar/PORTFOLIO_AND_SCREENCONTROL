@@ -46,10 +46,27 @@ DEFAULT_OUT = ROOT / "results" / "carry_roundtrip.jsonl"
 # comparable. Perp = USDT-M swap quoted against USDT spot.
 SYMBOLS = ["BTC", "ETH", "SOL", "XRP", "ADA", "DOGE", "LINK"]
 
-# Published venue defaults (binance USDT-M, non-VIP tier). A scheduled run can
-# only read public endpoints, so the fee line is a disclosed constant, not a
-# measured fill. Round-trip cost = 2 x taker + one full spread crossing.
+# Scheduled runs iterate venues in this order and stop at the first one that
+# answers for a given symbol. binance.com returns HTTP 451 from GitHub's US
+# datacenter IPs, so it is last: bybit and OKX keep the series alive there.
+# Every venue's taker fee is a published default-tier constant, disclosed
+# here and written on every line — never a measured fill. Round-trip cost
+# = 2 x taker + one full spread crossing. All three fund every 8 hours.
+VENUE_ORDER = ["bybit", "okx", "binance"]
+
 VENUES = {
+    "bybit": {
+        "interval_hours": 8.0,        # funding pays at 08:00 / 16:00 / 00:00 UTC
+        "taker_fee_bps": 6.0,         # published USDT-M taker, default tier
+        "spot": lambda base: f"{base}/USDT",
+        "perp": lambda base: f"{base}/USDT:USDT",
+    },
+    "okx": {
+        "interval_hours": 8.0,
+        "taker_fee_bps": 5.0,         # published USDT-M taker, default tier
+        "spot": lambda base: f"{base}/USDT",
+        "perp": lambda base: f"{base}/USDT:USDT",
+    },
     "binance": {
         "interval_hours": 8.0,        # funding pays at 08:00 / 16:00 / 00:00 UTC
         "taker_fee_bps": 5.0,         # published USDT-M taker, default tier
@@ -137,7 +154,8 @@ def measure_one(exchange: ccxt.Exchange, venue: str, cfg: dict, base: str) -> di
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Measure one live carry round-trip tick across the majors")
-    ap.add_argument("--venue", default="binance", choices=list(VENUES))
+    ap.add_argument("--venue", default=None, choices=list(VENUES),
+                    help="single venue to measure; default is all venues in failover order")
     ap.add_argument(
         "--symbols",
         default=",".join(SYMBOLS),
@@ -150,32 +168,31 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    if args.venue not in VENUES:
-        print(f"unknown venue {args.venue}", file=sys.stderr)
-        return 2
-
-    cfg = VENUES[args.venue]
+    venues = VENUE_ORDER if args.venue is None else [args.venue]
+    exchanges = {venue: getattr(ccxt, venue)({"enableRateLimit": True}) for venue in venues}
     symbols = [s.strip().upper() for s in args.symbols.split(",") if s.strip()]
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    exchange = ccxt.binance({"enableRateLimit": True})
-
     n_ok = 0
     with out_path.open("a", encoding="utf-8") as fh:
         for base in symbols:
-            line = measure_one(exchange, args.venue, cfg, base)
+            line = None
+            for venue in venues:
+                line = measure_one(exchanges[venue], venue, VENUES[venue], base)
+                if line["ok"]:
+                    break
             fh.write(json.dumps(line, separators=(",", ":")) + "\n")
             fh.flush()
             if line["ok"]:
                 n_ok += 1
                 print(
-                    f"{line['ts']} {base}: funding {line['funding_bps']:+.2f} bp/interval "
+                    f"{line['ts']} {base} [{line['venue']}]: funding {line['funding_bps']:+.2f} bp/interval "
                     f"roundtrip {line['roundtrip_cost_bps']:.2f} bp "
                     f"carry_net {line['carry_net_bps']:+.2f} bp"
                 )
             else:
-                print(f"{line['ts']} {base}: FAILED {line['error']}", file=sys.stderr)
+                print(f"{line['ts']} {base}: FAILED on all venues; last error: {line['error']}", file=sys.stderr)
 
     print(f"wrote {n_ok}/{len(symbols)} lines to {out_path}")
     return 0 if n_ok > 0 else 1
