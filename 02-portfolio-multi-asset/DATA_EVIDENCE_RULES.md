@@ -46,6 +46,8 @@ gate 3  staleness   last observation within one session of "now" for live claims
 gate 4  sanity      |return| > 50% in one bar → require explanation (split? error? halt?)
 gate 5  range       OHLC invariants: low ≤ open,close ≤ high; no negative volume
 gate 6  coverage    each asset class in scope has ≥ 1 validated series, not just the easy one
+gate 7  intrabar    if the strategy uses both a stop and a target, OHLCV cannot order the two inside one
+                    bar — validate the critical periods on tick/L2 data, or reframe the rule
 ```
 
 If any gate fails: **stop the cycle and report**, do not reason on the data. This single habit prevents most

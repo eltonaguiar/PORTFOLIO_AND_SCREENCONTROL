@@ -150,6 +150,13 @@ Notes that matter: AT-SPI needs `DBUS_SESSION_BUS_ADDRESS` **and** `AT_SPI_BUS_A
 - Compression artifacts hurt OCR on small text; crop-and-upscale the region of interest (2×) before OCR. Measured rule of thumb: full-frame OCR is fine for prose, region-crop+2× is what saves 9-px UI labels.
 - Detect "is it still working?" from pixels: a spinner/Stop-button present = busy. Never inject "continue" while busy — you'll queue a message that lands mid-turn and derails it.
 - Prefer RustDesk for **watching** and SSH for **acting**: same host, different channels.
+- **Install RustDesk as a service, not a portable exe**, if you need unattended access: the service starts
+  before any interactive login (so the login screen is reachable) and survives logout, while a portable
+  binary lives inside the user session and cannot reach the Windows **UAC secure desktop**.
+- If the target is a real RDP session, consider a daemon that speaks RDP natively instead of driving a
+  viewer window — e.g. `thisnick/agent-rdp` (Apache-2.0, but only ~28★, so treat it as experimental) which
+  keeps a per-session daemon and reads the remote accessibility tree over a virtual channel. The principle
+  (native session > compressed pixels) is right; the specific project needs your own hardening pass.
 
 ### 4.3 Browser (topology D) — LinkedIn-shaped tasks
 
@@ -293,6 +300,7 @@ The GUI path is legitimate and sometimes the *only* path (a vendor agent with no
 | **Quota/credits** | Verified: your Copilot quota is out right now; a blind continue loop cannot fix it. | Classify before continuing; fail loud. |
 | **Context compaction** | Long runs "forget" the task mid-way → the classic stop-with-narration behaviour. | `PLAN.md` on disk, re-injected every cycle. |
 | **DPI / scaling** | 125%/150% display scaling silently offsets every coordinate. | Per-monitor-v2 DPI awareness; always compute screen→window-relative with the live window rect; verify one click before a batch. |
+| **Unauthenticated control endpoint** | Any MCP/HTTP desktop-control server bound to an open port is remote code execution on your desktop. | Bind to loopback, require a token, and expose only an explicit tool allowlist (e.g. Windows-MCP `--tools`). |
 
 ---
 
