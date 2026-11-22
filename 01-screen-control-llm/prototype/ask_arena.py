@@ -63,6 +63,15 @@ def main(argv=None) -> int:
 
         editor = page.locator("div[contenteditable='true']").first
         editor.click(timeout=8000)
+        # A TipTap editor keeps whatever was left in it: the first run sent a stale test sentence
+        # concatenated onto the real prompt ("In one sence: ... risk premium?You are advising ...").
+        # Clear before composing, always — insert_text appends at the caret.
+        page.keyboard.press("Control+A")
+        page.keyboard.press("Delete")
+        if editor.inner_text().strip():
+            editor.evaluate("el => { el.innerHTML = ''; }")
+            print("cleared via DOM (keyboard clear insufficient)")
+        print("editor cleared, len:", len(editor.inner_text()))
         page.keyboard.insert_text(args.prompt)          # intact; type() loses characters
         print("typed chars:", len(editor.inner_text()))
         page.keyboard.press("Enter")
