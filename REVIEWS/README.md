@@ -9,6 +9,7 @@ repositories (GitHub API), the installed software, or the measurements in
 | [`AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md`](AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md) | "Portable AI Agent Playbook" (Arena, 97 lines) | soundest of the batch; evidence rules adopted, one unverifiable citation removed |
 | [`SUBQ_FURTHER_NOTE_REVIEW.md`](SUBQ_FURTHER_NOTE_REVIEW.md) | SUB Q "further note" (decided-stack version, ~3.8k words) | best-shaped answer, stale numbers, one repeated hallucination; RustDesk/RDP and intrabar advice adopted |
 | [`PERPLEXITY_NOTE_REVIEW.md`](PERPLEXITY_NOTE_REVIEW.md) | Perplexity two-layer plan (~2.2k words) | most accurate on frameworks (the only answer that gets NautilusTrader's Rust core right); its twelve-tool MCP sketch became `01-*/TOOL_INTERFACE.md` |
+| [`GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md`](GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md) | "REALTIMECHALLENGE" 200-round blueprint (GPT-4.1 mini, ~2.8k words) | best project structure, worst tool list (two dead libraries, dead data provider, wrong MCP expansion); its multiple-testing blind spot became `02-*/DATA_EVIDENCE_RULES.md` §6 and its paper loop became `02-*/PAPER_TRADING_AND_MONITORING.md` |
 
 Inputs are preserved verbatim in [`inputs/`](inputs/) where they were supplied as files, so the reviews can be
 checked against the original wording.

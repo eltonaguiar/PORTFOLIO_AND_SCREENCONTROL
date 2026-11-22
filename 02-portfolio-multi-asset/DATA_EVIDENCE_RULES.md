@@ -102,7 +102,28 @@ Rules:
 4. When a check fails, escalate with the failing artifact — not with a summary of it.
 5. Finish with: `status (done|blocked|failed)`, evidence links, artifact/run IDs, checks passed/failed, remaining work, next action.
 
-## 6. Scope boundary
+## 6. Multiple testing — the reason "200 rounds found a winner" is not evidence
+
+Every variant you evaluate is a draw from a noisy distribution. Take a maximum over thousands of draws and the
+best in-sample Sharpe rises **even when nothing has edge**. A search process that reports only its winners is
+reporting its search effort, not the market.
+
+Rules:
+
+1. **Count trials.** Log every variant evaluated, including the discarded ones. `rounds × parameter sets` is
+   the number that inflates your headline result.
+2. **Pre-register.** Write the hypothesis and the acceptance test *before* looking at the equity curve. A rule
+   drafted after seeing the result is a fitted parameter wearing a story.
+3. **Hold out once.** Reserve a final period, touch it at the end. Reusing it in the next round converts your
+   holdout into training data.
+4. **Report deflated metrics** — probability of backtest overfitting (PBO) through combinatorially symmetric
+   cross-validation, or a deflated Sharpe ratio that accounts for the number of trials, skew and kurtosis.
+5. **Prefer plateaus to peaks.** A parameter region that holds up across neighbours is a candidate; an isolated
+   spike surrounded by losses is an artefact.
+6. **Two passes, every time:** per-symbol (does the edge generalise?) then portfolio (does it survive sharing
+   one cash balance?). Most ideas pass the first and fail the second.
+
+## 7. Scope boundary
 
 This repository is research and paper-trading infrastructure. **No agent places live orders, changes broker
 logins, moves money, or handles credentials.** Those actions require an explicit, scoped, human approval step

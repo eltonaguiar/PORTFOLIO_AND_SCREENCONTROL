@@ -29,7 +29,8 @@ here cover both, plus the data-evidence rules that make either one honest.
 | [`NAUTILUS_ARCHITECTURE.md`](NAUTILUS_ARCHITECTURE.md) | NautilusTrader **v2.0.0** read from source: crate map with real LOC, kernel, message bus, threading model, quote and order flows, component lifecycle FSM, crash-only design, backtest/live parity, migration deltas from v1 |
 | [`FRAMEWORK_MATRIX.md`](FRAMEWORK_MATRIX.md) | Backtest and tracking options with **verified** licence/★/last-push, fit notes, and the failure mode of each |
 | [`PORTFOLIO_TRACKING.md`](PORTFOLIO_TRACKING.md) | The tracking/valuation stack: ledgers, aggregators, multi-currency valuation, TWR vs MWR, reconciliation, broker imports |
-| [`DATA_EVIDENCE_RULES.md`](DATA_EVIDENCE_RULES.md) | Mandatory provenance for every series and every backtest report; `observed` / `derived` / `assumed` labelling |
+| [`DATA_EVIDENCE_RULES.md`](DATA_EVIDENCE_RULES.md) | Mandatory provenance for every series and every backtest report; `observed` / `derived` / `assumed` labelling; multiple-testing discipline |
+| [`PAPER_TRADING_AND_MONITORING.md`](PAPER_TRADING_AND_MONITORING.md) | The audit loop between backtest and money: fill model assumptions, TP/SL sequencing, event log schema, latency/slippage metrics, a scheduler that is actually suitable, kill switches |
 
 ## Recommendation in one paragraph
 
