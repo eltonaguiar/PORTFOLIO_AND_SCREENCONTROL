@@ -92,3 +92,30 @@ A tag appearing in `/api/tags` does not mean it is served. Prefer the router ali
 **Kilo `192.168.2.32:53401`** — 15 imported GGUFs, all `Not loaded` until first use, **one model at a
 time**; `/v1/models` itself times out while a load is in flight (busy, not down). First call can return
 `''` after ~27 s with the model still loading.
+
+## The Linux pool cannot serve a large model right now (measured)
+
+`192.168.2.52` answers `/api/tags` with 26 models and `/api/ps` shows **0 loaded** — yet every real load
+fails in ~2 seconds:
+
+| Model | Result |
+|---|---|
+| `gemma3:12b` | HTTP 500 — `llama-server startup failed … CUDA error: out of memory` in **2.17 s** |
+| `qwen3.5:35b-a3b` | same 500, **2.25 s** |
+
+So it is **not** an ollama queue problem: the card is either occupied by something outside ollama or not
+usable by it. Consequences:
+
+1. **The Linux pool is not a valid second opinion host today.** Rotation must fall back to the Windows
+   router (`ULTRA_FREE_*`) rather than to `.52`.
+2. Diagnosing it needs `nvidia-smi` on that host — and **SSH from this Windows box is refused**
+   (`eaguiar2015@192.168.2.52: Permission denied (publickey,password)`), so the Linux seat has to report it.
+3. A 2-second 500 with `CUDA out of memory` is a *routing* fact. Do not retry smaller-and-smaller models
+   hoping one fits; find out what holds VRAM first.
+
+## Vision models are a trap as a default
+
+The script's first version defaulted to the first model in `/api/tags`, which was `qwen3-vl:2b` — a vision
+model. It answered a text prompt with **0 characters after 179.7 s**. Defaults now skip `-vl`, `vision`,
+`embed`, `bge`, `nomic`, `sqlcoder` and `starcoder`, and prefer a known text model (`qwen3:8b`,
+`llama3.1:8b`, …).
