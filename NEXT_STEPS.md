@@ -40,11 +40,11 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [x] **A3 — kernel unit tests beyond capture** · S · resolve and act covered by tests that do not need a GUI (mock
       the transport). **DoD:** `pytest 01-screen-control-llm/tests -q` covers all three modules; no test requires an
       open window.
-- [ ] **A4 — four-surface acceptance test** · S · one script drives VS Code (type), Windows Terminal (run), Explorer
+- [ ] **A4 — four-surface acceptance test** · S · blocked: no desktop session in this unattended cron; the four-surface script needs live VS Code, Terminal, Explorer and Chrome windows with read-back verification — never faked · one script drives VS Code (type), Windows Terminal (run), Explorer
       (rename), Chrome (open) — each verified, no per-app code. **DoD:** exits 0 from a clean shell; transcript
       committed under `01-screen-control-llm/transcripts/`. **Needs the desktop:** if unattended desktop use is not
       wanted, mark blocked and run manually.
-- [ ] **A5 — CI enforcement of approval classes** · S · a test that fails if any verb marked class 2/3 can execute
+- [ ] **A5 — CI enforcement of approval classes** · S · blocked: prerequisite `kernel/act.py` with per-verb approval classes 0–3 does not exist (A2, blocked); nothing to gate-enforce yet · a test that fails if any verb marked class 2/3 can execute
       without a gate; wired into `.github/workflows/screen-control-tests.yml`. **DoD:** the test fails when the gate
       is deliberately removed.
 - [x] **A6 — `overseer.py`** · L · stop classifier + signature hashing + brief injection + budgets + `STOP` file (§5).
