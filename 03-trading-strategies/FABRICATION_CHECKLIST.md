@@ -18,6 +18,8 @@ caught a real document in this collection (`REVIEWS/CLAUDE_OPUS_CHALLENGE_REVIEW
 | S2 | **Exit ordering** | SL/TP compared against `low`/`high`, not `close`, and the stop booked when both are touched | optimistic bias |
 | S3 | **Annualisation** | `sqrt(bars_per_year)` derived from the interval, not hard-coded 252 | Sharpe off by √(bars) |
 | S4 | **Trials** | every sweep counts and reports the number of variants evaluated | selection effect; the "best" is the maximum of a search |
+| S5 | **Schedule** | cron expressions are UTC and are described as UTC; a "9 AM" comment next to `0 9 * * *` is a bug | the job runs at the wrong time, silently |
+| S6 | **Landing** | the workflow declares `permissions: contents: write` and its commit step verifiably lands (check for the artifact after a run) | green run, nothing written — the failure that looks like success |
 
 ## 1. Does the timestamp precede the question?
 
