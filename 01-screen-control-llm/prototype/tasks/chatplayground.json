@@ -1,0 +1,86 @@
+{
+  "name": "chatplayground-multi-model-sweep",
+  "version": 2,
+  "why": "First end-to-end prototype of the control kernel on a surface we do not own: a logged-in SPA in the user's own Chrome. Deliberately written as DATA so the same file runs against any surface (Electron, native, remote viewer) once a transport exists.",
+  "surface": {
+    "app_match": ["chrome.exe", "msedge.exe"],
+    "title_match": ["ChatPlayground"],
+    "class": "browser",
+    "ladder_expectation": ["api", "a11y", "text", "pixels"],
+    "measured": "A11Y on this window returned 24 elements, all browser furniture, 0 page nodes -> resolver must fall to TEXT/API, not claim success"
+  },
+  "politeness": {
+    "never_type_credentials": true,
+    "stop_if_selector": ["input[type=password]", "Enter your email address", "2-step verification"],
+    "note": "If LastPass or a Google account chooser appears, that is the user's decision, not ours: stop and ask."
+  },
+  "steps": [
+    {
+      "id": "ensure_login",
+      "kind": "click_any_text",
+      "match": ["Log in", "Login", "Continue with Google", "Sign in"],
+      "optional": true,
+      "done_when": "composer_visible",
+      "on_absent": "already signed in (the normal case for the user's own Chrome profile)"
+    },
+    {
+      "id": "add_models",
+      "kind": "assert",
+      "expect": "at least one model panel present",
+      "evidence": "panel header text, e.g. 'ChatGPT-6 Luna'"
+    },
+    {
+      "id": "composer",
+      "kind": "focus_text_field",
+      "match_placeholder": ["Message 3 models", "Message 1 model", "Send to", "Ask"],
+      "verify": "caret present in the composer (typing one char and reading it back)"
+    },
+    {
+      "id": "prompt",
+      "kind": "type",
+      "text": "{{prompt}}",
+      "verify": "composer text contains the last 30 characters of the prompt"
+    },
+    {
+      "id": "send",
+      "kind": "click_any_text",
+      "match": ["Send"],
+      "verify": "a user message bubble containing the first 30 characters of the prompt is visible in the transcript column",
+      "note": "Send is disabled until the composer has text - verify enabled state, do not click a disabled control"
+    },
+    {
+      "id": "wait_done",
+      "kind": "wait_all_panels",
+      "done_signature": {
+        "positive": ["finished responding", "TTFT"],
+        "negative": ["Stop all models"],
+        "stability": "one poll is enough when a live region says '<model> finished responding'; TTFT alone is not sufficient because it appears while tokens still stream"
+      },
+      "measured_2026_11_22": "all three panels emitted Text '<model> finished responding'; TTFT 634 ms / total 851 ms and TTFT 338 ms / total 494 ms",
+      "poll_interval_s": 3,
+      "timeout_s": 240,
+      "evidence_note": "the footer strip 'TTFT 6.3s . 14s . 69 -> 1,427 + 1,072 reasoning tokens' is the per-panel done marker"
+    },
+    {
+      "id": "extract",
+      "kind": "click_any_text",
+      "match": ["Paste all", "Copy all", "Copy answers"],
+      "then": "read_clipboard",
+      "fallback": "per-panel copy buttons, left to right, stitched in DOM order",
+      "verify": "clipboard length > 200 chars and contains every panel's model name"
+    },
+    {
+      "id": "save",
+      "kind": "write_transcript",
+      "path": "transcripts/chatplayground_{{utc}}.md",
+      "manifest": ["step id", "rung used", "verdict", "latency_ms", "evidence hash"]
+    }
+  ],
+  "failure_modes": [
+    "login wall appears -> stop, ask the user (never type credentials)",
+    "LastPass overlay steals the composer -> dismiss once (escape), re-focus, else stop",
+    "a panel errors -> record 'PANEL_ERROR: <model>' and continue; a partial sweep is still a result",
+    "done signature never appears -> after timeout, capture each panel and save; mark verdict UNFINISHED",
+    "Paste all missing -> fall back to per-panel copy; if both fail, OCR the panels"
+  ]
+}

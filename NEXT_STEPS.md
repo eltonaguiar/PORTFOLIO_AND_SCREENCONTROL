@@ -34,7 +34,9 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
       Windows Terminal, Explorer and Chrome on this machine, plus the evidence it used (node counts / text lines).
 - [ ] **A2 — `kernel/act.py`** · M · the twelve verbs, each returning `{ok, effect, verified, evidence}`, with
       approval classes 0–3 enforced in code. **DoD:** click/type/set_value on three surfaces with read-back
-      verification; a class-3 verb raises without an approval token.
+      verification; a class-3 verb raises without an approval token; **`coordinate=` is refused when an element
+      handle exists for the target** (proven necessary 2026-11-22: a coordinate click was rescaled by the driver
+      from `(3108,739)` to `(5029,798)` and missed, while the element click landed).
 - [ ] **A3 — kernel unit tests beyond capture** · S · resolve and act covered by tests that do not need a GUI (mock
       the transport). **DoD:** `pytest 01-screen-control-llm/tests -q` covers all three modules; no test requires an
       open window.
