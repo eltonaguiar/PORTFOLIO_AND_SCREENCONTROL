@@ -1,0 +1,31 @@
+name: screen-control-tests
+
+# Certifies the screen-control loop mechanics on every push. These tests need no browser
+# and no model — they run against MockTransport on purpose, so a failure always means a
+# loop/guard bug rather than "the model had a bad day".
+
+on:
+  push:
+    paths:
+      - "01-screen-control-llm/**"
+  pull_request:
+    paths:
+      - "01-screen-control-llm/**"
+  workflow_dispatch:
+
+jobs:
+  mechanics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: 01-screen-control-llm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Mechanics certification (9 tests)
+        run: python tests/test_loop.py

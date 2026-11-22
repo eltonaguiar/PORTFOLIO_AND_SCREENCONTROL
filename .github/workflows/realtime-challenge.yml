@@ -1,0 +1,133 @@
+name: realtime-challenge
+
+# Forward evidence generator for 02-portfolio-multi-asset/realtime_challenge.
+#
+#   forward-pod    hourly — mark live positions, enforce TP / SL / time-stop, open at
+#                  most N new positions on the pre-registered book, commit the ledger.
+#                  This is the thing that accumulates closed forward trades (n).
+#   daily-refresh  06:20 UTC — re-run the backtest matrix + permutation control so the
+#                  cost grid and deflated Sharpe stay current as the trial count grows.
+#
+# No API keys are needed: every price is a public exchange endpoint and no order is ever
+# sent. To pause the forward pod, disable this workflow — the ledger is committed, so
+# nothing is lost.
+
+on:
+  workflow_dispatch:
+    inputs:
+      book:
+        description: "pod_a (pre-registered consensus) or none (supervise only)"
+        default: "pod_a"
+        type: choice
+        options: [pod_a, none]
+      max_new:
+        description: "max positions to open in this pass"
+        default: "1"
+  schedule:
+    - cron: "7 * * * *"      # forward pod, hourly
+    - cron: "20 6 * * *"     # daily backtest refresh
+
+permissions:
+  contents: write
+
+concurrency:
+  group: realtime-challenge
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: 02-portfolio-multi-asset
+
+jobs:
+  forward-pod:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '7 * * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install ccxt==4.5.38 pandas numpy
+
+      - name: Supervise open positions (TP / SL / time stop) and open new ones
+        env:
+          BOOK: ${{ github.event.inputs.book || 'pod_a' }}
+          MAX_NEW: ${{ github.event.inputs.max_new || '1' }}
+        run: |
+          python -m realtime_challenge.worker.forward_supervisor \
+            --book "$BOOK" --run-id pod_a_crypto_1h --venue bybit \
+            --max-open 4 --max-new "$MAX_NEW" --min-votes 2
+
+      - name: Commit ledger
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.name  "realtime-challenge-bot"
+          git config user.email "realtime-challenge@users.noreply.github.com"
+          git add 02-portfolio-multi-asset/realtime_challenge/state \
+                  02-portfolio-multi-asset/results 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "no state change this pass"
+            exit 0
+          fi
+          git commit -m "rtc: forward pod pass $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git fetch origin main
+            git merge --no-edit origin/main || true
+            sleep 3
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1
+
+  daily-refresh:
+    if: github.event_name == 'schedule' && github.event.schedule == '20 6 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install ccxt==4.5.38 pandas numpy scipy
+
+      - name: Certify the harness before trusting any number
+        run: python -m realtime_challenge.proof.test_harness
+
+      - name: Backtest matrix + permutation control
+        run: |
+          python -m realtime_challenge.cli backtest \
+            --venue binance --timeframe 1h --bars 3000 --permutations 200 --verbose
+
+      - name: Commit results
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.name  "realtime-challenge-bot"
+          git config user.email "realtime-challenge@users.noreply.github.com"
+          git add 02-portfolio-multi-asset/results 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "no result change"
+            exit 0
+          fi
+          git commit -m "rtc: backtest refresh $(date -u +%Y-%m-%d) [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then exit 0; fi
+            git fetch origin main
+            git merge --no-edit origin/main || true
+            sleep 3
+          done
+          exit 1

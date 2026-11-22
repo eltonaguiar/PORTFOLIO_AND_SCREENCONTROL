@@ -70,3 +70,38 @@ Details, commands and caveats: [`MEASUREMENTS.md`](MEASUREMENTS.md).
 
 Live-trading actions, credential handling, CAPTCHA solving, and any cloud computer-use API that ships your
 screen off-machine. Automating consumer web apps can violate their terms — decide that per site, deliberately.
+
+---
+
+## Working implementation — `screen_control/` (added 2026-11-22, `deepseek-flash`)
+
+The research above describes what *should* be built. This directory now also contains a
+**running** implementation of the core loop, and it was exercised against a real browser.
+
+| file | job |
+|---|---|
+| `screen_control/schema.py` | the 9 allowed verbs, `Action`/`StepResult`, validation |
+| `screen_control/guard.py` | host allowlist · irreversibility gate · step/time/repeat budget |
+| `screen_control/policy.py` | `ScriptedPlanner` · `LLMPlanner` (OpenAI-compatible) · `AgentPlanner` |
+| `screen_control/transports.py` | `BrowserUseTransport` (CDP) · `MockTransport` (tests) |
+| `screen_control/loop.py` | observe → decide → guard → act → verify → transcript |
+| `tests/test_loop.py` | **9/9** mechanics tests, no browser, no model |
+| `examples/live_demo.py` | **4/4** steps against a live page through CDP |
+| `IMPLEMENTATION.md` | design notes, what was measured, and the honest limitations |
+| `SAFETY.md` | threat model and the rules that follow from it |
+
+It agrees with this folder's reliability ladder and picks the same rung: **DOM/CDP with the
+accessibility tree**, not pixels. Two implementation choices are worth flagging because
+they are failure modes the research above predicts:
+
+- **Coordinates are resolved at act time** from `DOM.getBoxModel`, never baked in at decide
+  time — this is the concrete fix for "coordinates drift".
+- **Every action declares a post-condition**, so a click that changes nothing is recorded
+  as a *failure*. Without it, a grounder that resolves the wrong element looks like success.
+
+Two bugs were found only by running the demo, not by reading the code: `example.com` does
+not resolve on the reference machine, and `Input.dispatchMouseEvent(type="mouseWheel")`
+times out against this CDP daemon after 5 s (the transport now falls back to
+`window.scrollBy`). Both are recorded in `IMPLEMENTATION.md`.
+
+Run it: `python tests/test_loop.py` (mechanics, CI-enforced) then `python examples/live_demo.py`.

@@ -1,0 +1,18 @@
+{
+ "run_id": "live_smoke_bybit",
+ "starting_cash": 10000.0,
+ "equity": 9972.21,
+ "n_closed": 6,
+ "n_open": 0,
+ "n_skips": 0,
+ "win_rate": 0.0,
+ "profit_factor": 0.0,
+ "total_pnl": -27.79,
+ "gross_win": 0,
+ "gross_loss": 27.79,
+ "fees_paid": 40.0,
+ "exit_mix": {
+  "TIME": 6
+ },
+ "skip_reasons": {}
+}

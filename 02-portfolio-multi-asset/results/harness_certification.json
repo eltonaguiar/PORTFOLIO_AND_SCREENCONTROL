@@ -1,0 +1,47 @@
+{
+ "tests": [
+  {
+   "test": "T1a look-ahead is detectable",
+   "passed": true,
+   "detail": "peeking mean +36.7bps vs honest -3.5bps",
+   "value": {
+    "peeking_bps": 36.74,
+    "honest_bps": -3.52
+   }
+  },
+  {
+   "test": "T1b signals are causal",
+   "passed": true,
+   "detail": "signal at bar i unchanged when bars >i are deleted",
+   "value": null
+  },
+  {
+   "test": "T2 cost drag matches the round turn",
+   "passed": true,
+   "detail": "drag 25.4bps vs expected ~26bps (n=1665)",
+   "value": {
+    "drag_bps": 25.42,
+    "expected_bps": 26.0
+   }
+  },
+  {
+   "test": "T3 both-touched bar resolves to STOP",
+   "passed": true,
+   "detail": "exit_reason=SL (must be SL, not TP)",
+   "value": {
+    "exit_reason": "SL"
+   }
+  },
+  {
+   "test": "T4 pure noise almost never clears DSR 0.95",
+   "passed": true,
+   "detail": "0/60 noise cells at DSR>=0.95 (0.0%), max DSR 0.0017",
+   "value": {
+    "false_positive_rate": 0.0,
+    "n_cells": 60
+   }
+  }
+ ],
+ "passed": 5,
+ "total": 5
+}

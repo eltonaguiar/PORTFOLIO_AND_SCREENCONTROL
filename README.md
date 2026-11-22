@@ -39,5 +39,33 @@ LLM answers (Grok, Mercury, SUB Q, Arena) line by line against the actual reposi
 
 ## Status
 
-Research notes and design documents, not production code. The next engineering milestones are listed at
-the end of each folder's README. Nothing in this repository is financial advice.
+Research notes **plus two running implementations** (added 2026-11-22). The research and design documents
+are unchanged; alongside them now sit code that was executed and measured:
+
+| folder | implementation | verified |
+|---|---|---|
+| `01-screen-control-llm/` | `screen_control/` — guarded observe→decide→act→verify loop over CDP | **9/9** mechanics tests, **4/4** steps on a live page |
+| `02-portfolio-multi-asset/` | `realtime_challenge/` — backtest engine, 6 pre-registered hypotheses, live paper round, GH Actions forward pod | **5/5** harness certifications, 42 backtest cells, 1 live round |
+
+The rest of each folder is still research. The next engineering milestones are listed at the end of each
+folder's README.
+
+### Four provenance categories (the fourth is new)
+
+The three categories above are joined by a fourth, and every file says which it is:
+
+4. **Executed on this machine, 2026-11-22** — the two implementations. Their numbers come from artifacts
+   committed next to them: `02-portfolio-multi-asset/results/*.json`,
+   `02-portfolio-multi-asset/ledger/*.jsonl`, `01-screen-control-llm/transcripts/*.json`. If a claim is not
+   in one of those files, it is not a measurement.
+
+### Headline result of the first execution run (a clean negative)
+
+42 cells across 7 crypto majors and 6 hypotheses, 3,000×1h bars, 26 bps round turn: **0** clear deflated
+Sharpe 0.95, **0** beat the permutation control. The single family that survived friction — the crypto
+weekend effect, +5.9 bps/trade — **died** when re-tested over 3 years with clustering by calendar weekend and
+42 control windows (−3.21 bps, CI [−67.3, +64.5], rank #15 of 42). A live paper round opened and closed real
+positions on real bid/ask and lost exactly the friction. Full write-up:
+[`02-portfolio-multi-asset/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD`](02-portfolio-multi-asset/REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD).
+
+Nothing in this repository is financial advice.

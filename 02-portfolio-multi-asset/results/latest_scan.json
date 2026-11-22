@@ -1,0 +1,222 @@
+{
+ "generated_utc": "2026-11-22T09:03:00+00:00",
+ "signals": {
+  "BTC": {
+   "close": 59759.99,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "ETH": {
+   "close": 1685.75,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "SOL": {
+   "close": 69.83,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "XRP": {
+   "close": 0.9262,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "DOGE": {
+   "close": 0.05481,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "ADA": {
+   "close": 0.1441,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  },
+  "LINK": {
+   "close": 8.647,
+   "bar_ts": "2026-11-22 09:00:00+00:00",
+   "strategies": {
+    "H-R1_trend_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R2_donchian_breakout": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R3_bollinger_meanrev": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R4_vol_compression": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R5_weekend_effect": {
+     "signal": 0,
+     "fired_last_3": 0
+    },
+    "H-R6_rsi2_pullback": {
+     "signal": 0,
+     "fired_last_3": 0
+    }
+   },
+   "n_agreeing": 0
+  }
+ }
+}
