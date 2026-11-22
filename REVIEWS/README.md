@@ -27,6 +27,26 @@ checked against the original wording.
 - **Recurring failures:** inflated or stale star counts, invented tools (`UIA-X` appeared twice with a detailed
   feature list and no repository), and confident performance numbers with no measurement behind them.
 
+### 2026-11-22 — Copilot/GPT-5 stack + ETF-rotation hypothesis
+
+[`COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md`](COPILOT_GPT5_STACK_AND_ETF_HYPOTHESIS_REVIEW.md) — the
+best-reasoned note of the set and the only one arguing for **low** frequency. Its premise is right and its
+conclusion is wrong, which was settled the same day with a 22.9-year test.
+
+Its hypothesis (ETF rotation + trend + multi-asset beats day trading) was run as **H-E1**:
+[`../03-trading-strategies/ETF_ROTATION_H-E1.md`](../03-trading-strategies/ETF_ROTATION_H-E1.md). Rotation
+returned CAGR **5.37%** / Sharpe **0.410** against SPY's **10.28%** / **0.620** — and is **strictly dominated
+by SPY plus a 200-day SMA** (7.51% / 0.693 / −21.5% DD). Shuffle control **p = 0.66**: a destroyed
+cross-section does better than two thirds of the time.
+
+The reason the premise and conclusion diverge: turnover is 6.6×/year, so friction barely registers
+(Sharpe 0.429 → 0.322 as round-trip cost goes 0 → 52 bps). **Low frequency trivially survives costs**, which
+is exactly why surviving costs is not evidence of an edge. Day trading died at the cost line; this died at
+the no-alpha line.
+
+Also flags the note's most dangerous line: "Phase 76–125: generate thousands of strategies" is a
+multiple-testing machine unless every variant increments a trial counter.
+
 ### 2026-11-22 — Gemini TRADE_0001 live-trade audit
 
 [`GEMINI_TRADE_0001_AUDIT.md`](GEMINI_TRADE_0001_AUDIT.md) — the only peer note that claims an actual closed
