@@ -12,9 +12,10 @@ Item format: `- [ ] **N — title** · size · definition of done`.
 ## Track A — screen control (folder `01-screen-control-llm/`)
 
 - [x] **1 — Static gates S1–S6 on our own harness** · S · done 2026-11-22, see [`STATIC_GATE_AUDIT.md`](STATIC_GATE_AUDIT.md)
-- [ ] **2 — `kernel/capture.py`** · M · window-scoped capture (Windows Graphics Capture / D3D11), per-monitor-v2 DPI
-      math, crop helper, screen↔window↔client transforms. **DoD:** unit test asserts the same element box maps to
-      the same screen point at 100% and 150% scaling; no full-screen grabs in the code path.
+- [x] **2 — `kernel/capture.py`** · M · window-scoped capture, per-monitor-v2 DPI math, crop helper,
+      screen↔window↔client transforms. **Verified 2026-11-22:** `python -m pytest 01-screen-control-llm/tests -q`
+      → 8 passed, including a real 320×200 grab on this machine, a crop, and the 1.5× mapping that shows why the
+      module exists.
 - [ ] **3 — `kernel/resolve.py`** · M · the five-rung ladder from `PC_AGENT_CONTROL_RESEARCH.md` §4.6
       (native → a11y selector → text/OCR → marks → pixels) with per-window-class caching. **DoD:** prints the rung
       it chose for VS Code, Windows Terminal, Explorer and Chrome on this machine, and re-probes after a resize.

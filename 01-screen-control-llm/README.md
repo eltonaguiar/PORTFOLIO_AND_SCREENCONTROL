@@ -40,6 +40,7 @@ Details, commands and caveats: [`MEASUREMENTS.md`](MEASUREMENTS.md).
 | [`IMPLEMENTATION.md`](IMPLEMENTATION.md) | Peer implementation: a guarded observe → decide → act → verify loop (accessibility tree + viewport, one JSON action per turn, allowlist/irreversibility gate/budget, CDP click resolved at call time) |
 | [`FACTCHECK.md`](FACTCHECK.md) | Four popular LLM answers audited against the actual repositories — what's real, what's unverified, what's wrong |
 | [`probes/probe_ocr_vlm.py`](probes/probe_ocr_vlm.py) | The probe used for the OCR/VLM numbers (RapidOCR + Ollama vision) |
+| [`kernel/capture.py`](kernel/capture.py) | Window-scoped capture + per-monitor-v2 DPI math: `Rect`, logical↔physical, client↔screen, `capture_region`, `crop_png`. Tests: [`tests/test_capture.py`](tests/test_capture.py) (8 passing) |
 
 ## Recommended stack (free, nothing to buy)
 
