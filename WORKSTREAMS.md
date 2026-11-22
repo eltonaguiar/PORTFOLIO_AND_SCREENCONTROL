@@ -66,6 +66,7 @@ each does not.
 | 5 | Numeric G1/G2 gate thresholds | **done** — in `ROADMAP_200` |
 | 6 | Walk-forward harness (the gate that has never been run here) | **next** |
 | 6a | Live-round accounting: always read `n_open == 0` before quoting a P&L (session 1 understated the probe loss 2x by reading a running process) | **done** — rule in PROGRESS session 3 |
+| 6b | All five live books aggregated from ledgers: 27 closed, 7.4% WR, −$285.14, 63% fees, **0 take-profits in 27** | **done** — challenge doc §5.4 |
 | 7 | Re-run the crypto census with a real walk-forward split | pending |
 | 8 | FX class census — opens 17:00 EST Sunday, measurable from tonight | pending |
 | 9 | Equity single-name and ETF factor set beyond H-E1 | pending |

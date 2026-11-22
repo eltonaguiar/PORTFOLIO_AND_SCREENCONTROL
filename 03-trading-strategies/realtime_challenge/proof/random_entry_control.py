@@ -211,7 +211,14 @@ def main() -> int:
         ),
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(out, indent=1, default=str), encoding="utf-8")
+    body = json.dumps(out, indent=1, default=str)
+    # Timestamped copy first, canonical second. Two concurrent runs of this script write the
+    # same path, and a stale run finishing last silently overwrites the fresh one — the exact
+    # race already fixed for backtest_latest.json. `generated_utc` makes a stale copy
+    # detectable; the timestamped filename makes it recoverable.
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    (OUT.parent / f"random_entry_control_{stamp}.json").write_text(body, encoding="utf-8")
+    OUT.write_text(body, encoding="utf-8")
 
     print(f"\npowered cells: {len(powered)}   beating random at p<0.05: {len(sig)}")
     if sig:

@@ -35,11 +35,18 @@ control idea change any verdict?
 | 11:14 | FAIL | **It hurts exactly the strategies it claims to help.** The two with real timing value get WORSE: SPY+200d −0.029 (unlev) / −0.101 (lev); SPY 6m ECM −0.034 / −0.089. Vol targeting is itself a trend overlay, so stacking it on a trend signal double-counts the signal and pays turnover twice | same |
 | 11:15 | PASS | The useful half survives and is recorded separately: vol targeting does cut realised vol (18.6 pct to 10.2 pct) and drawdown reliably — it belongs in the RISK section of the allocation doc, not the RETURN section | same |
 
+| 11:24 | RUN | **All five live books are now complete.** Read from the ledgers, not the summaries: bybit smoke 6 closed, bybit probe v1 3, bybit probe v2 11, kraken 3, okx 4 = **27 closed trades, 2 winners (7.4% WR), −$285.14** | `REALTIMECHALLENGE...MD` §5.4 |
+| 11:25 | FAIL | Fees **$180.00** of a **−$285.14** result = **63%**. Gross price component across all 27 is −$105.14. Mean round-turn friction 20 bps on every trade | same |
+| 11:26 | FAIL | **The take-profit fired 0 times in 27 trades** (12 SL, 14 TIME, 0 TP). With tp_atr 0.8-1.2 and sl_atr 0.5-0.6 on a 1h ATR of ~0.7%, the target sat ~0.57% away inside 8-12 min holds where the market moved 0.2-0.5%. This is the roadmap P7 rule confirmed empirically: a bracket wider than the expected move over the hold is unreachable, so the outcome is decided by the clock and the stop, never by the thesis | same |
+| 11:27 | PASS | Four venues (bybit ×2, kraken, okx) agree on direction: all lost. Not four independent tests — one wrong idea (shorting 5m dips in a +3.4% session) repeated on four exchanges — but it does confirm the fill/exit plumbing behaves identically across venues, which is what these books existed to check | same |
+| 11:28 | FIX | **Silent-overwrite race closed in the new proof.** The stale v1 random-entry run finished after the BH-corrected v2 and wrote the same path; the artifact was verified to be v2 both on disk and on origin, but the race is the same class as `backtest_latest.json`. Script now writes a timestamped copy first, then the canonical file, and carries `generated_utc` | `proof/random_entry_control.py` |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
   permutation best p = 0.40 · BH-corrected random-entry 0 of 29. One answer.
-- **Live evidence is 17 closed trades, −$148.62, 76% commission.** No forward edge of any kind.
+- **Live evidence is 27 closed trades, −$285.14, 63% commission, 7.4% win rate, and the target
+  fired zero times.** No forward edge of any kind.
 - **The cleanest single fact in the whole challenge:** a trade with the direction exactly right
   (+0.200% gross) netted +0.000% because the round turn was 20 bps.
 

@@ -291,16 +291,42 @@ recorded here for completeness, not as evidence.
 
 Across four books on live markets:
 
-| book | trades opened | trades closed | net result |
-|---|---:|---:|---|
-| pre-registered consensus | **0** | 0 | declined to trade — trend filters false in a −27% market |
-| SMOKE_TEST (no signal, deterministic long) | 6 | 6 | **−$27.79 (−0.278%)**, 0.0% WR, $40.00 fees |
-| HARNESS_PROBE_5M_BURST | 11 | 11 | **−$120.83 (−1.21%)**, 18.2% WR, PF 0.038, $73.33 fees |
+Five books ran. All five are below, read from the ledgers rather than from the printed
+summaries:
 
-Combined live sample: **17 closed trades, −$148.62, and $113.33 of that −$148.62 is fees
-(76%).** The gross price component across both books is only −$35.29. Every hour of live
-trading in this challenge has lost money in a way that the fee schedule alone explains
-most of.
+| book | venue | closed | winners | WR | net | fees | exits |
+|---|---|---:|---:|---:|---:|---:|---|
+| pre-registered consensus | bybit / kraken | **0** | — | — | $0.00 | $0.00 | declined — trend filters false in a −27% market |
+| SMOKE_TEST (no signal) | bybit | 6 | 0 | 0.0% | −$27.79 | $40.00 | TIME 6 |
+| HARNESS_PROBE v1 | **bybit** | 3 | 0 | 0.0% | −$46.49 | $20.00 | SL 3 |
+| HARNESS_PROBE v2 | **bybit** | 11 | 2 | 18.2% | −$121.00 | $73.33 | SL 5, TIME 6 |
+| HARNESS_PROBE | **kraken** | 3 | 0 | 0.0% | −$37.03 | $20.00 | SL 2, TIME 1 |
+| HARNESS_PROBE | **okx** | 4 | 0 | 0.0% | −$52.83 | $26.67 | SL 4 |
+| | | **27** | **2** | **7.4%** | **−$285.14** | **$180.00** | SL 12, TIME 14 |
+
+**Three things this sample establishes, and one it does not.**
+
+**1. Fees were 63% of the loss.** Gross price component across all 27 trades is **−$105.14**;
+commission is **$180.00** on a **−$285.14** result. Mean round-turn friction was 20 bps on every
+trade.
+
+**2. The take-profit never fired — 0 times in 27 trades.** 12 stops, 14 time stops, **0 targets**.
+With `tp_atr` 0.8–1.2 and `sl_atr` 0.5–0.6 on a 1h ATR of ~0.7%, the target sat ~0.57% away and
+the stop ~0.43%, inside 8–12 minute holds where the market moved 0.2–0.5%. This is the exact
+failure the roadmap's P7 rule predicts: **a bracket wider than the expected move over the
+holding period cannot be hit, so the exit is decided by the clock and the stop rather than by
+the thesis.** The asymmetry is structural, not bad luck — a target further away than the stop
+with a hold too short to reach either produces stops and timeouts and never targets.
+
+**3. Four venues agree on the direction of the result.** bybit (two rounds), kraken and okx all
+lost, at 0%, 0%, 0% and 18.2% win rates. The strategy was shorting 5-minute down-impulses while
+BTC rallied +3.4%; that is one wrong idea repeated on four exchanges, not four independent
+tests. It does confirm the plumbing works identically across venues, which is what these books
+existed to check.
+
+**What it does not establish: an edge or the absence of one.** n = 27 against a G4 requirement of
+100, one session, one regime. It is plumbing evidence plus a hard cost measurement, and it is
+recorded as such.
 
 **No.** In a short timeframe, on live markets, this system did not find a profit. The
 reason is specific and measurable, not mysterious:
