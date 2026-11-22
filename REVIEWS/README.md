@@ -10,6 +10,7 @@ repositories (GitHub API), the installed software, or the measurements in
 | [`SUBQ_FURTHER_NOTE_REVIEW.md`](SUBQ_FURTHER_NOTE_REVIEW.md) | SUB Q "further note" (decided-stack version, ~3.8k words) | best-shaped answer, stale numbers, one repeated hallucination; RustDesk/RDP and intrabar advice adopted |
 | [`PERPLEXITY_NOTE_REVIEW.md`](PERPLEXITY_NOTE_REVIEW.md) | Perplexity two-layer plan (~2.2k words) | most accurate on frameworks (the only answer that gets NautilusTrader's Rust core right); its twelve-tool MCP sketch became `01-*/TOOL_INTERFACE.md` |
 | [`GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md`](GPT41MINI_CHALLENGE_BLUEPRINT_REVIEW.md) | "REALTIMECHALLENGE" 200-round blueprint (GPT-4.1 mini, ~2.8k words) | best project structure, worst tool list (two dead libraries, dead data provider, wrong MCP expansion); its multiple-testing blind spot became `02-*/DATA_EVIDENCE_RULES.md` §6 and its paper loop became `02-*/PAPER_TRADING_AND_MONITORING.md` |
+| [`CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md`](CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md) | Two challenge prototypes: GLM-5.3-Flash (111 lines) and Gemini 3.1 Pro (254 lines) | Gemini is the best document here (refuses to fake a closed trade, finds the fee trap, market data verified); GLM has the best strategy schema but a trade thesis that contradicts its own cited data |
 
 Inputs are preserved verbatim in [`inputs/`](inputs/) where they were supplied as files, so the reviews can be
 checked against the original wording.
