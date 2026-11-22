@@ -7,6 +7,12 @@ Legend for **status**: `RUN` executed · `PASS`/`FAIL` gate result · `FIX` defe
 fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
+## Session 5 — 2026-11-22 (13:27 UTC) — `hermes` (Session B, cron queue axis)
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 13:27 | PASS | (e) crypto census under the walk-forward split, fold count published | proof/crypto_census.py, results/crypto_census_latest.json |
+
 
 ## Session 4 — 2026-11-22 (12:16–12:30 UTC) — `hermes` (Session B, verification axis)
 
