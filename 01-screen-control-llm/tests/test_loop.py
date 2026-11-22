@@ -53,7 +53,7 @@ def loop(script, cfg=None, guard=None, transport=None):
 
 
 # ---------------------------------------------------------------- 1 happy path
-def t1_happy():
+def test_t1_happy():
     l = loop([
         {"verb": "click", "thought": "open the form", "target": "1", "expect": "enter your name"},
         {"verb": "read", "thought": "confirm the page", "target": "body", "meta": {"selector": "body"}},
@@ -67,7 +67,7 @@ def t1_happy():
 
 
 # ---------------------------------------------------------------- 2 host allowlist
-def t2_host():
+def test_t2_host():
     g = Guard(GuardConfig(allowed_hosts={"example.com"}, allow_any_host=False))
     l = loop([{"verb": "navigate", "thought": "go elsewhere", "url": "https://evil.test/x"},
               {"verb": "done", "thought": "stop"}], guard=g)
@@ -78,7 +78,7 @@ def t2_host():
 
 
 # ---------------------------------------------------------------- 3 destructive gate
-def t3_destructive():
+def test_t3_destructive():
     g = Guard(GuardConfig(allow_any_host=True, max_steps=5))
     l = loop([{"verb": "click", "thought": "delete it", "target": "2"},
               {"verb": "done", "thought": "stop"}], guard=g)
@@ -89,7 +89,7 @@ def t3_destructive():
 
 
 # ---------------------------------------------------------------- 4 Enter gate
-def t4_enter():
+def test_t4_enter():
     g = Guard(GuardConfig(allow_any_host=True, max_steps=5))
     t = MockTransport({"home": {"title": "T", "text": "",
                                 "elements": [{"handle": "9", "role": "button", "name": "Send money"}]}})
@@ -102,7 +102,7 @@ def t4_enter():
 
 
 # ---------------------------------------------------------------- 5 repeat budget
-def t5_repeat():
+def test_t5_repeat():
     g = Guard(GuardConfig(allow_any_host=True, max_steps=12, max_consecutive_failures=99))
     benign = {"title": "Home", "text": "welcome",
               "elements": [{"handle": "5", "role": "button", "name": "Refresh"}]}
@@ -114,7 +114,7 @@ def t5_repeat():
 
 
 # ---------------------------------------------------------------- 6 invalid action
-def t6_invalid():
+def test_t6_invalid():
     l = loop([{"verb": "teleport", "thought": "nonsense"},
               {"verb": "done", "thought": "gave up"}])
     out = l.run("x")
@@ -124,7 +124,7 @@ def t6_invalid():
 
 
 # ---------------------------------------------------------------- 7 verify mismatch
-def t7_verify():
+def test_t7_verify():
     l = loop([{"verb": "click", "thought": "click continue", "target": "1",
                "expect": "completely unrelated phrase about submarines"},
               {"verb": "done", "thought": "stop"}])
@@ -134,7 +134,7 @@ def t7_verify():
 
 
 # ---------------------------------------------------------------- 8 failure abort
-def t8_abort():
+def test_t8_abort():
     g = Guard(GuardConfig(allow_any_host=True, max_steps=20, max_consecutive_failures=2))
     bad = [{"verb": "click", "thought": "bad handle", "target": "999"} for _ in range(20)]
     # vary so the repeat limiter is not what fires
@@ -146,7 +146,7 @@ def t8_abort():
 
 
 # ---------------------------------------------------------------- 9 transcript
-def t9_transcript():
+def test_t9_transcript():
     import tempfile
     d = tempfile.mkdtemp()
     l = loop([{"verb": "click", "thought": "go", "target": "1"},
@@ -163,7 +163,7 @@ def t9_transcript():
 
 if __name__ == "__main__":
     print("SCREEN-CONTROL MECHANICS CERTIFICATION")
-    for fn in (t1_happy, t2_host, t3_destructive, t4_enter, t5_repeat, t6_invalid, t7_verify, t8_abort, t9_transcript):
+    for fn in (test_t1_happy, test_t2_host, test_t3_destructive, test_t4_enter, test_t5_repeat, test_t6_invalid, test_t7_verify, test_t8_abort, test_t9_transcript):
         fn()
     n = sum(1 for _, ok, _ in RESULTS if ok)
     print(f"\n{n}/{len(RESULTS)} passed")

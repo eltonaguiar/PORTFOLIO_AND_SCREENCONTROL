@@ -38,7 +38,7 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 62 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 7 (7 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 139 (22 md) | 101 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 140 (22 md) | 102 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 24 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -127,8 +127,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8360 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 20 | 3342 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 105 | 8682 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 23 | 3949 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

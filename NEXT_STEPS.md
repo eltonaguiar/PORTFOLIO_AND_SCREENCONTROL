@@ -37,7 +37,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
       verification; a class-3 verb raises without an approval token; **`coordinate=` is refused when an element
       handle exists for the target** (proven necessary 2026-11-22: a coordinate click was rescaled by the driver
       from `(3108,739)` to `(5029,798)` and missed, while the element click landed). · blocked: act.py is unwritten and its DoD needs read-back verification on three live surfaces — no desktop session in this cron — not faked
-- [ ] **A3 — kernel unit tests beyond capture** · S · resolve and act covered by tests that do not need a GUI (mock
+- [x] **A3 — kernel unit tests beyond capture** · S · resolve and act covered by tests that do not need a GUI (mock
       the transport). **DoD:** `pytest 01-screen-control-llm/tests -q` covers all three modules; no test requires an
       open window.
 - [ ] **A4 — four-surface acceptance test** · S · one script drives VS Code (type), Windows Terminal (run), Explorer
