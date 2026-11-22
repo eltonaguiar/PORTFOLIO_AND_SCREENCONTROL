@@ -7,6 +7,7 @@ conflated in AI-agent discussions:
 |---|---|---|
 | [`01-screen-control-llm/`](01-screen-control-llm/) | **Screen control via LLM / AI** — letting an agent perceive and drive *any* desktop surface (VS Code, browsers, consoles, JetBrains, RustDesk/RDP, games), and making vendor agents "stop stopping" | Architecture research, free-tool catalog with verified licenses, measured local benchmarks, supervisor design, fact-check of popular LLM answers |
 | [`02-portfolio-multi-asset/`](02-portfolio-multi-asset/) | **Financial portfolio tracking for multiple asset classes** — stocks, ETFs, bonds, mutual funds, commodities, futures, FX, crypto | NautilusTrader v2 architecture deep-dive (from source), framework matrix with verified licenses, tracking/valuation stack, data-evidence rules |
+| [`REVIEWS/`](REVIEWS/) | **Source-answer audits** — the user-supplied "Portable AI Agent Playbook" reviewed claim by claim, with the original kept alongside | Review + input copy |
 
 ## Provenance — how to read this repo
 
