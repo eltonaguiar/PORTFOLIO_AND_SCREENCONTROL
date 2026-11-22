@@ -59,6 +59,11 @@ control idea change any verdict?
 | 11:56 | PASS | Shipped the gate as enforceable code rather than a docstring: `evaluate()` returns `fail_reach` / `fail_balance` / `fail_ev` (the third was initially missing — it only printed a reason while `ok()` still returned True; caught by a test that asserted the probe bracket was refused), `exit_mix_test()` asks whether realised exits match the geometry, and the formulas are validated against 20,000-path Monte Carlo | `realtime_challenge/bracket.py` |
 | 11:57 | DOC | Roadmap P7 rule rewritten from "the bracket must be reachable" to the provable form: **"a bracket must have positive expectancy at its own geometry-implied hit rates, which is only possible if the entry carries directional skill"** | `ROADMAP_200_deepseek-flash.md` |
 
+| 12:08 | RUN | **Re-derived the forward gate (`proof/power.py`).** required_n = (z_a+z_b)²·(σ/μ)² from each strategy's own measured dispersion, replacing the arbitrary `n>=100`. Result on the pooled 27 live trades: mean **−31.68 bps**, sd 19.56 bps, **t=−8.42, p=6.7×10⁻⁹**, required n = **3** | `results/power_analysis.json` |
+| 12:09 | **CORRECTION** | **I had claimed `n>=100` was "off by four to five orders of magnitude". That was wrong and this calculation refuted it.** The 1.2–28M figure is the *break-even* margin (edge earning exactly zero). For a *useful* +5 bps/trade the requirement is a **+4.93pp win-rate edge over geometry**, verifiable in **121 trades** — so the 100 gate is approximately correct, not absurd | `BRACKET_P7.md` correction section |
+| 12:10 | FAIL | **The real constraint is the edge, not the sample.** +5 bps/trade requires beating geometry by 4.93pp of win rate; +20 bps requires 18.95pp. No family in 435 tested cells has come within a fraction of that | same |
+| 12:11 | FAIL | **The live books are conclusively unprofitable, not inconclusive.** p=6.7e-9 at n=27, running 31.7 bps/trade worse than break-even. Calling them "too small a sample" would have been a way of not saying so | same |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
@@ -69,6 +74,9 @@ control idea change any verdict?
   cells survive frozen-parameter stability and both were already killed by other controls; with
   fitted brackets **73% of in-sample winners lose money in the next window**.
 - **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
+- **The sample-size gate was never the binding constraint; the edge requirement is.** +5 bps/trade
+  needs +4.93pp of win-rate edge over geometry, verifiable in 121 trades. The live books ran
+  31.7 bps/trade worse than break-even (p=6.7e-9), so they are conclusively bad, not underpowered.
 - **Brackets provably cannot create an edge** (algebraic identity, 16/16 verified): every one of
   the 27 live trades was negative-EV at its own implied hit rates, and 0 targets against 7.3
   expected says the direction was wrong too.

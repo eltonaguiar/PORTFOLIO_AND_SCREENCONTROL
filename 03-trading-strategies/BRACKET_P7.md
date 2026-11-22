@@ -104,16 +104,39 @@ EQUITY **22,569**, ETF **1,730,370**, FOREX **2,366**, CRYPTO **917**. Same orde
 derived from a completely different direction — bracket geometry here versus the picks ledger
 there. **Two independent routes, one number.**
 
-That is the arithmetic reason this field is stuck, and it is the strongest result the project has:
+### Correction: the "100-trade" gate is fine. The edge requirement is the problem.
 
-> **A bracket strategy needs an edge of 0.02–0.17 percentage points of win rate to beat friction,
-> and between 1.2 and 28 million trades to demonstrate it at 80% power. A live book of 27 trades —
-> or 100, or 1,000 — cannot confirm or refute a bracket strategy at all. The "100 closed trades"
-> checkpoint this project has been using as its forward gate is not a conservative bar; it is
-> off by four to five orders of magnitude.**
+I first concluded from the table above that the project's `n ≥ 100` forward gate was "off by four
+to five orders of magnitude". **That was wrong, and the next calculation refuted it.** The 0.02–0.17
+pp figure is the **break-even margin** — the edge that earns exactly zero. Verifying a
+zero-profit margin is indeed hopeless, but nothing useful lives there. Computing the edge needed
+for a *useful* profit, on this repo's actual 1.5:1 bracket (64 bps TP / 43 bps SL) and its
+observed live dispersion of 19.6 bps per trade:
 
-The 27-trade live book was not a small sample of a real edge. It was a sample from a distribution
-whose mean cannot be distinguished from zero by any realistic experiment.
+| target net profit | win rate needed | edge over geometry | trades to verify |
+|---|---:|---:|---:|
+| 0 bps (break-even) | 40.45% | +0.26 pp | unreachable |
+| **+5 bps/trade** | 45.12% | **+4.93 pp** | **121** |
+| +10 bps/trade | 49.79% | +9.61 pp | 31 |
+| +20 bps/trade | 59.14% | +18.95 pp | 8 |
+
+**`n ≥ 100` is approximately correct for detecting a 5 bps/trade edge.** It is not too strict and
+it is not off by orders of magnitude. What is brutal is the *edge itself*: a 5 bps net profit
+requires beating the geometry by **4.93 percentage points of win rate** — because friction has to
+be paid out of a margin that geometry hands you at exactly zero.
+
+So the honest statement, corrected:
+
+> **The sample-size gate was never the binding constraint. To earn 5 bps per trade on this
+> bracket, an entry must beat random by 4.93 percentage points of win rate — and no family in this
+> repo has come within a fraction of that in 435 tested cells. The live books did not fail for
+> want of sample; they ran 31.7 bps per trade *worse* than break-even, which is detectable at
+> n = 3.**
+
+That last number is worth stopping on. `proof/power.py` on the pooled 27 live trades: mean
+**−31.68 bps**, sd 19.56 bps, **t = −8.42, p = 6.7 × 10⁻⁹**, and the required n to detect an effect
+that large is **3**. The live books are not inconclusive. They are **conclusively unprofitable**,
+and calling them "too small a sample" would have been a way of not saying so.
 
 ## The gate, as shipped
 
