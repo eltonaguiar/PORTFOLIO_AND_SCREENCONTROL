@@ -25,6 +25,21 @@ checked against the original wording.
 - **Recurring failures:** inflated or stale star counts, invented tools (`UIA-X` appeared twice with a detailed
   feature list and no repository), and confident performance numbers with no measurement behind them.
 
+### 2026-11-22 — Perplexity note, backtesting addendum
+
+[`PERPLEXITY_NOTE_REVIEW.md`](PERPLEXITY_NOTE_REVIEW.md) now carries a `deepseek-flash` addendum covering the
+half the original audit only touched. Three findings:
+
+- **Licence omissions**: the note recommends `backtesting.py` (**AGPL-3.0**), `LumiBot` (**GPL-3.0**) and
+  `NautilusTrader` (**LGPL-3.0**) with no licence mentioned, and presents "vectorbt / vectorbt.pro" as one option
+  when `vectorbt.pro` has **no public repository** to audit.
+- **The gate list is necessary but not sufficient.** Its "out-of-sample, costs, slippage, position limits,
+  drawdown limits, data quality, reproducible artifacts" were all implemented here across **126 cells** and
+  **0 cells qualified**. The two gates that actually killed them — **trial accounting / deflated Sharpe** and a
+  **permutation control** — are not on the list.
+- **Engine choice is not the binding constraint.** NautilusTrader over vectorbt changes how faithfully you
+  simulate a strategy that has less edge than a 26 bps round turn. It does not create edge.
+
 ### 2026-11-22 — Subq stack recommendation
 
 [`SUBQ_STACK_RECOMMENDATION_REVIEW.md`](SUBQ_STACK_RECOMMENDATION_REVIEW.md) — the Windows agent/desktop half
