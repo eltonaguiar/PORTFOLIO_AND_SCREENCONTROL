@@ -102,7 +102,7 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 65 | 4904 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 103 | 8119 |
 | [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 6 | 334 |
 | [`README.md`](README.md) | 145 | 12400 |
 
