@@ -1,0 +1,71 @@
+# 01 — Screen control via LLM / AI
+
+Goal: an agent that can **perceive and drive anything on screen** — VS Code, a browser with logged-in
+sessions, a terminal, JetBrains, Office, Explorer, a RustDesk/RDP session, a game — and that **acts like a
+competent human at the turn boundary**: it does not stop after one reply, and when it stalls it gets new
+information instead of a blind "continue".
+
+## The five layers (keep them separate)
+
+| Layer | Job | Best free choice | What breaks if you skip it |
+|---|---|---|---|
+| **Actuator** | move mouse, send keys, click a control | `cua` / `cua-driver` (MIT, 32.7k★) — already installed on the reference machine and healthy | coordinates drift, focus theft, DPI breakage |
+| **Perceiver** | know what's on screen | UIA / AT-SPI first, then RapidOCR, then a grounding model | you OCR a screenshot and lose hit targets |
+| **Grounder** | "where is X?" in pixels | UI-TARS / ShowUI-2B / OmniParser — **not** a chat VLM | 10 s per frame and empty answers (measured) |
+| **Orchestrator** | decide the next action, own the loop | Copilot CLI `--autopilot`, Copilot SDK `session.idle`, Claude Code `Stop` hooks, or your own loop | the agent stops at every turn boundary |
+| **Supervisor** | judge progress vs. stall, inject facts, enforce budget | nothing off the shelf — ~200 lines bespoke | blind `continue` forever |
+
+Reliability ladder, do not skip rungs:
+**app API / CLI → DOM/CDP → UIA/AT-SPI selector → vision grounding → image template → raw coordinates.**
+
+## What was actually measured here
+
+| Finding | Value |
+|---|---|
+| Windows UIA capture of VS Code as configured | **3 elements** (Minimize/Maximize/Close) — the chat panel is invisible until accessibility is switched on |
+| RapidOCR over the same 1456×818 frame | 106 boxes, **18.99 s**; prose and button labels correct, embedded Python and every number mangled |
+| `qwen3-vl:4b` reading a single button label | `Keep`, **~1.0 s**, 1241-token prompt |
+| `qwen3-vl:2b/4b/8b` returning a click coordinate | **all empty** — thinking trace consumed the budget, `think:false` ignored |
+| Copilot CLI 1.0.49 autopilot smoke test | `402 … monthly quota exceeded`, 0 changes |
+
+Details, commands and caveats: [`MEASUREMENTS.md`](MEASUREMENTS.md).
+
+## Files
+
+| File | Contents |
+|---|---|
+| [`PC_AGENT_CONTROL_RESEARCH.md`](PC_AGENT_CONTROL_RESEARCH.md) | The main report: five layers, four topologies, ~20-tool catalog with licenses, universal surface matrix for every app class, the surface resolver, the 12-verb action grammar, the supervisor design (§5), guardrails, phased plan |
+| [`MEASUREMENTS.md`](MEASUREMENTS.md) | Every number measured on the reference machine, with reproduction commands |
+| [`FACTCHECK.md`](FACTCHECK.md) | Four popular LLM answers audited against the actual repositories — what's real, what's unverified, what's wrong |
+| [`probes/probe_ocr_vlm.py`](probes/probe_ocr_vlm.py) | The probe used for the OCR/VLM numbers (RapidOCR + Ollama vision) |
+
+## Recommended stack (free, nothing to buy)
+
+1. **Actuator:** `cua-driver` (already present) — background input, no cursor theft, UIA + AT-SPI + X11.
+   Add `CursorTouch/Windows-MCP` (MIT, 12k★) if you want desktop control exposed as MCP tools inside
+   Claude Desktop / Cursor. `munim-computer-use` (Apache-2.0) and `vercel-labs/agent-desktop`
+   (Apache-2.0, 26k★) are real, credible alternatives — both accessibility-first with background input.
+2. **Perceiver:** turn accessibility *on* wherever it is off (VS Code `editor.accessibilitySupport`,
+   Electron `--force-renderer-accessibility`, JetBrains `jabswitch -enable`), then UIA/AT-SPI selectors;
+   RapidOCR on **cropped regions** for text; never OCR for code or numbers.
+3. **Grounder (only for the residue):** ShowUI-2B or UI-TARS-2B on a 12 GB card; OmniParser v2 if you
+   want a labelled element list instead of a bare coordinate.
+4. **Browsers:** Chrome DevTools MCP (`--autoConnect`) or Playwright MCP. Not pixels.
+5. **Consoles:** `tmux send-keys` / `capture-pane`, or own the process and read stdout.
+6. **Keep-going:** harness-native first (`copilot -p … --autopilot --max-autopilot-continues N`,
+   Copilot SDK `session.idle` + `task_complete`, Claude Code `Stop` hook), then a supervisor that
+   classifies the stop, injects a brief, and enforces budgets.
+7. **Remote desktop:** control over SSH when it exists; RustDesk for watching. Pixels only as a last resort.
+
+## Build order
+
+- **Phase 0 — flip structure switches** (config only): Electron/JetBrains/terminal/browser accessibility, viewer scale for RustDesk.
+- **Phase 1 — kernel** (`capture` / `resolve` / `act`, ~400 lines): one codebase, every app; acceptance test = drive VS Code + Windows Terminal + Explorer + Chrome in one run with no per-app code.
+- **Phase 2 — channel upgrades:** tmux for consoles, CDP for browsers/Electron, adb for phones, SSH+AT-SPI for Linux hosts.
+- **Phase 3 — supervisor:** task ledger, stop classifier, loop signatures, injected briefs, budgets, audit log.
+- **Phase 4 — grounder** for canvas/game/RustDesk residue.
+
+## Not in scope
+
+Live-trading actions, credential handling, CAPTCHA solving, and any cloud computer-use API that ships your
+screen off-machine. Automating consumer web apps can violate their terms — decide that per site, deliberately.
