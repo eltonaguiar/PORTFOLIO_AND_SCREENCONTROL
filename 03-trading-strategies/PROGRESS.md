@@ -71,6 +71,14 @@ control idea change any verdict?
 | 12:58 | DOC | Standing default from here: **pre-register the fold count before looking, and report the whole sensitivity curve** rather than whichever split produced survivors. For this dataset the strictest partition (10 folds) is the one that cannot be chosen after seeing the result — it says zero | same |
 | 12:59 | FIX | Fixed a log line that printed "fetching 4h panel" while actually fetching daily bars — a misreported artifact label is how a 1d result gets cited as a 4h one | `proof/walk_forward.py` |
 
+| 13:05 | RUN | **Mercury3's fleet ask delivered: scheduled carry round-trip series.** `carry_rtt.py` + `.github/workflows/carry-rtt-series.yml` (hourly at :23, commits each tick). Verified green: run 45019309665, bot commit 7e3b96e, **40 rows on origin**. Fees and spread measured separately | `CARRY_RTT_T4.md` |
+| 13:06 | PASS | First cross-venue readings (5 ticks, 6 cells): **okx/perp 11.08bp RTT**, bybit/perp 16.25, binance/spot 21.07, bybit/spot 21.07, okx/spot 31.07, **kraken/spot 56.04**. A **5.1x spread** across venues for the same asset | `results`/`ledger/carry_rtt_series.jsonl` |
+| 13:07 | **CORRECTION** | **Mercury3's verdict is right and their mechanism is wrong.** They measured 42.64bp, concluded carry is cash-dominated at VIP0 fees. **Five of six venues I can reach are far below their 33.5bp break-even** (okx perp 11.08 = 3.8x cheaper) and all five clear the 0.50 cliff comfortably. Cost is not what kills carry on a competitive venue | same |
+| 13:08 | FAIL | **And yet 0 of 6 beat cash.** Net 0.527–0.749bp/day against a 3.5% T-bill at **0.96bp/day**. The binding constraint is **funding decay, not friction**: forward-honest funding of 0.872bp/day sits *below* the risk-free rate, so fixing the fee tier cannot rescue carry. Structural and venue-independent | same |
+| 13:09 | DOC | Both statements hold: **cost decides WHICH VENUE** (kraken/spot at 56bp does fail the cliff), **funding decides WHETHER**. The one open question left is whether Mercury3's 46% funding decay is a level or a trend — the series answers it without another backtest | same |
+| 13:12 | RUN | **Cross-checked a peer's "sub-2.5bp" assessment against the measured floor.** Three harvested ideas (cross-venue latency arb, auction-imbalance fade, ETF-constituents lead-lag) were judged to need <2.5bp round trips. Measured crypto floor is **11.08bp** → they are **4.4x short on crypto**, dead by a factor rather than a margin | same |
+| 13:13 | RUN | But Copilot retracted its ETF round trip from 41.05bp to **~1.4–2.1bp**, which IS under 2.5. So those ideas belong on **equities, not crypto** — the crypto venue is where friction lives. Roughly **40x** across the two classes, so any strategy stating an edge in bps must state its venue class | same |
+
 ### Standing state after session 3
 
 - **Three independent null hypotheses now agree.** Deflated Sharpe best 0.256 vs a 0.95 bar ·
@@ -81,6 +89,9 @@ control idea change any verdict?
   cells survive frozen-parameter stability and both were already killed by other controls; with
   fitted brackets **73% of in-sample winners lose money in the next window**.
 - **FX is the third class to return a clean null:** 0 of 35 cells pass CI + permutation.
+- **Carry is not killed by fees; it is killed by funding below cash.** Measured round trips 11.08–56.04bp
+  across six venue/market cells, five of which clear the 0.50bp/day cliff — yet 0 of 6 beat a 3.5%
+  T-bill, because forward-honest funding (0.872bp/day) sits under the risk-free 0.96bp/day.
 - **The partition decides the answer.** Same daily data, same strategies: 6 survivors at 3 folds,
   0 at 10. Fold count is an undisclosed multiple-testing axis, and the strictest partition is the
   only one that cannot be chosen after the fact.
