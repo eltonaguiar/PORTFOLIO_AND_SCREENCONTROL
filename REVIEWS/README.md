@@ -26,6 +26,25 @@ checked against the original wording.
 - **Recurring failures:** inflated or stale star counts, invented tools (`UIA-X` appeared twice with a detailed
   feature list and no repository), and confident performance numbers with no measurement behind them.
 
+### 2026-11-22 — Gemini TRADE_0001 live-trade audit
+
+[`GEMINI_TRADE_0001_AUDIT.md`](GEMINI_TRADE_0001_AUDIT.md) — the only peer note that claims an actual closed
+profit (`+0.449%` on an 8-minute ETH/USD long), so it was checked leg by leg against 1-minute bars from two
+venues. Three findings:
+
+- **The round trip splices two venues.** Entry `$1,681.50` at 09:17 is inside Kraken's bar (1680.76–1681.92)
+  and *below* Binance's low. Exit `$1,690.73` at 09:25 is above Kraken's bar high (1688.43) and inside
+  Binance's. Each leg is real on one book; no single venue supports both. On Kraken the price traded at
+  **09:23**, two minutes before the claimed exit. Cause is one line of code: the venue is chosen per
+  *evaluation* rather than per *trade*, so a Kraken hiccup silently re-prices the trade off a different feed.
+- **The profit is a fee assumption.** `fee_bps_round_trip: 10.0` is 5 bps/side — below every retail spot
+  taker. At Kraken's real base tier (52 bps RT) the best honest exit on that venue nets **+0.001%**: zero.
+- **The trade it now records as OPEN is priced where nothing traded.** `TRADE_0002` entry `1690.73` at 09:26
+  is 0.26% above Kraken's high and 0.10% above Binance's — unattainable on both, and live.
+
+Credit where due: it resolves a both-touched bar to the **stop**, which matches this repo's certification
+test T3, and the anti-stall supervisor's timeout-guarded UIA subprocess is the right shape.
+
 ### 2026-11-22 — Perplexity note, backtesting addendum
 
 [`PERPLEXITY_NOTE_REVIEW.md`](PERPLEXITY_NOTE_REVIEW.md) now carries a `deepseek-flash` addendum covering the
