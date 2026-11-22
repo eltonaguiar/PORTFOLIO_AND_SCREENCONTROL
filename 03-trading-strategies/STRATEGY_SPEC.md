@@ -1,0 +1,124 @@
+# Strategy spec — the contract before any backtest, monitor or paper trade
+
+Synthesis of the schema proposed by GLM, the ledger schema from Gemini, the harness gates already implemented by
+the peer `realtime_challenge` package, and the evidence rules in
+[`../02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](../02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md).
+
+A strategy that cannot fill in every field below is a hypothesis, not a candidate. No field is optional; "not
+applicable" is a valid value, silence is not.
+
+## 1. Declaration
+
+```yaml
+id: ema_cross_btc_1h
+version: 3                      # bump on any rule change; results are only comparable within a version
+author: <model-or-person>
+created_utc: 2026-11-22T09:40:00Z
+hypothesis: >                   # one sentence, falsifiable, written BEFORE looking at results
+  A 5/15 EMA cross on 1h BTC has positive expectancy after 10 bps round-trip costs
+  over 2023-2026, and does not depend on the 2024 trend regime.
+instrument:
+  symbol: BTC/USDT
+  venue: binance
+  asset_class: crypto
+  price_type: trade            # trade | mid | nav | settlement  → never mix
+timeframe: 1h                  # bar aggregation, and whether bars are time- or tick-based
+data:
+  source: binance_vision
+  snapshot_hash: sha256:…
+  period: {start: 2023-01-01, end: 2026-11-01, timezone: UTC}
+  adjustment: none             # splits/dividends/rolls, explicitly
+entry:
+  rule: "ema(5) crosses above ema(15) on bar close"
+  order_type: market
+  fill_assumption: next_bar_open
+exit:
+  tp: "2.2%"                   # absolute % or ATR multiple, and which
+  sl: "2.2%"
+  time_stop: "24h"
+  order_types: {tp: limit, sl: market-on-trigger}
+sizing:
+  model: fixed_fractional
+  risk_per_trade: "0.5%"
+  max_positions: 1
+costs:
+  commission_bps_per_side: 10   # retail standard; 5 only with an explicit fee-tier justification
+  spread_bps: 2
+  slippage_bps: 3
+  funding: "per-8h, from venue history"
+  borrow_bps_pa: 0
+regime_filter: none             # or a named, pre-declared filter
+trials: 24                      # how many variants were evaluated to find this one (see §4)
+```
+
+## 2. Acceptance gates (all must pass, in this order)
+
+| # | Gate | Pass condition | Failure means |
+|---|---|---|---|
+| G1 | Data provenance | source + snapshot hash + `price_type` present, no unresolved gaps > 1 session | not a result |
+| G2 | Causality | truncating future bars leaves every signal unchanged | look-ahead; kill |
+| G3 | Cost drag | a zero-information strategy loses ≈ the round-turn cost per trade | costs not charged correctly |
+| G4 | Intrabar conflict | a bar that touches both TP and SL books as a **stop-out** | optimistic fill model |
+| G5 | Out-of-sample | purged walk-forward, positive net expectancy on unseen data | not a candidate |
+| G6 | Deflation | DSR ≥ 0.95 / PBO below threshold **given `trials`** | search artefact |
+| G7 | Stability | neighbouring parameter values are also positive (plateau, not spike) | overfit |
+| G8 | Portfolio | survives sharing one cash balance with the other strategies | position-level only |
+
+G2–G4 already exist as executable tests in the peer harness (`02-*/HARNESS_CERTIFICATION.md`, T1–T4). Reuse them
+rather than re-deriving.
+
+## 3. Run manifest (written next to every result)
+
+```json
+{
+  "run_id": "ema_cross_btc_1h_v3_20261122T094500Z",
+  "code_ref": "git:9f2c1ab",
+  "strategy": "ema_cross_btc_1h@3",
+  "data_snapshot": "sha256:…",
+  "costs": {"commission_bps": 10, "spread_bps": 2, "slippage_bps": 3},
+  "metrics": {"cagr": 0.0, "vol": 0.0, "mdd": 0.0, "sharpe": 0.0, "trades": 0, "hit_rate": 0.0},
+  "oos": {"method": "purged_walk_forward", "folds": 0, "sharpe_range": [0.0, 0.0]},
+  "trials": 24,
+  "verdict": "rejected",
+  "reason": "negative expectancy after costs in 4 of 6 folds"
+}
+```
+
+`verdict` ∈ `candidate | rejected | inconclusive`. A leaderboard containing only `candidate` rows is a lie by
+omission: rejected rows stay in the file.
+
+## 4. Trial accounting (the anti-self-deception rule)
+
+`trials` is not documentation, it is an input to the statistics:
+
+- count every parameter set, timeframe, asset and variant you evaluated for this hypothesis, including the ones
+  discarded for being "obviously bad";
+- recompute the significance threshold against that count (deflated Sharpe, or the Bailey/López de Prado PBO);
+- if `trials` is unknown, the result is `inconclusive` regardless of Sharpe.
+
+## 5. Paper-trade handoff
+
+A strategy may go to paper only when G1–G7 pass **and** the monitor knows how to resolve it:
+
+```json
+{
+  "trade_id": "TRADE_0007",
+  "strategy": "ema_cross_btc_1h@3",
+  "side": "LONG",
+  "entry_utc": "…", "entry_price": 0.0, "notional_usd": 0.0,
+  "tp_price": 0.0, "sl_price": 0.0, "time_stop_utc": "…",
+  "resolution": {"rule": "1m_candles_since_entry", "pessimistic": true, "venue_fallback": ["kraken", "binance"]},
+  "status": "OPEN"
+}
+```
+
+`pessimistic: true` means: if the resolution data cannot order TP and SL inside one bar, book the loss. Venue
+fallback exists because cloud IPs are blocked by some venues from CI runners (observed in this repo, commit
+`7cfb713`).
+
+## 6. What this contract is designed to stop
+
+- "It made money in the test" without a snapshot, a cost model, or an out-of-sample number.
+- A TP/SL pair placed inside the normal noise band (see the GLM trade: stop = 0.17× the daily range).
+- A leaderboard whose denominator is not stated.
+- A paper trade resolved by a 15-minute poll instead of by the price history that actually occurred.
