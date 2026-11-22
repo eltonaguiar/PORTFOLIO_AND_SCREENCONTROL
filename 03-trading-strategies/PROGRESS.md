@@ -8,6 +8,39 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 2 — 2026-11-22 (09:30–09:45 UTC) — `deepseek-flash`
+
+Question: does the verdict hold at other horizons, or was 1h hiding something?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 09:31 | RUN | 4h census: 7 majors × 6 × 4,000 bars (2025-01-24 → 2026-11-22, 22 months) | `results/backtest_binance_4h_20261122T093118Z.json` |
+| 09:31 | RUN | 1d census: 7 majors × 6 × 1,200 bars (2023-08-11 → 2026-11-22, 3.3 y) | `results/backtest_binance_1d_20261122T093116Z.json` |
+| 09:33 | FAIL | Across **126 cells** at three horizons, nothing clears DSR 0.95. Best deflated Sharpe per timeframe: 1h **0.071**, 4h **0.256**, 1d **0.183** | `TIMEFRAME_MATRIX.md` §3 |
+| 09:33 | PASS | Permutation control holds at every horizon — best p-value 0.20 (1h) / 0.28 (4h) / 0.40 (1d). No cell beats a shuffled price path | `TIMEFRAME_MATRIX.md` §3 |
+| 09:34 | RUN | **Horizon flip found:** H-R4 vol_compression is the worst family at 1h (−32.1 bps) and the best at 1d (**+20.4 bps**, PF 1.075, n=119). Mechanically plausible: 36 bars vs 36 days to let the expansion pay for the round trip | `TIMEFRAME_MATRIX.md` §4 |
+| 09:34 | FAIL | …but H-R4 1d still fails: bootstrap 95% CI on mean trade return **[−87.90, +132.99]**, P(>0)=0.646, pooled DSR 0.0118, permutation **p=0.40**. On *shuffled* returns the same rule reproduces the mean, so the +20 bps is a bracket/timing property, not market structure | `TIMEFRAME_MATRIX.md` §4 |
+| 09:35 | FIX | `backtest_latest.json` was silently overwritten by whichever timeframe finished last, making a committed artifact ambiguous about what it measured. Now writes `backtest_latest_<tf>.json` alongside the timestamped copy | `realtime_challenge/cli.py` |
+| 09:36 | DOC | Timeframe matrix written: windows and power, pooled per-family table, significance table, the horizon flip with its disconfirming evidence, and what it changes in the plan | `TIMEFRAME_MATRIX.md` |
+
+### Verdict changes after session 2
+
+- **Trial count: 42 → 126.** Every deflated Sharpe quoted from here deflates against 126.
+- **H-R1, H-R3, H-R6 archived across all horizons.** Negative at every timeframe and every
+  cost level. Not to be re-run with new parameters.
+- **H-R2 survives only at 1d and only at breakeven** (+4.77 bps, CI [−72.2, +81.2]).
+- **H-R4 is the single cell family worth a forward pod, at 1d only** — with its permutation
+  p=0.40 disclosed next to any PF it is ever quoted with.
+- **The 1h window is low-power** (125 days). Quote 4h and 1d results.
+
+### What session 3 must not do
+
+Promote H-R4 on the strength of the sign flip. The shuffle control already says the effect
+is reproducible without any market structure, and a forward pod that ignores that is
+measuring the bracket, not the market.
+
+---
+
 ## Session 1 — 2026-11-22 (08:56–09:35 UTC) — `deepseek-flash`
 
 Topic split: this folder was created out of `02-portfolio-multi-asset/` so that

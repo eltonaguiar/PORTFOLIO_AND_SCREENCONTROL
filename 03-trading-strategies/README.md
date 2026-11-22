@@ -19,6 +19,7 @@ tracker's profit factor as evidence of edge.
 |---|---|
 | [`realtime_challenge/`](realtime_challenge/) | the running harness: costs · data · engine · 6 pre-registered strategies · stats · live round · ledger · GH Actions worker · 2 proof suites |
 | [`REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD`](REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD) | **the challenge write-up** — setup, results, the live round, the verdict |
+| [`TIMEFRAME_MATRIX.md`](TIMEFRAME_MATRIX.md) | **the class census** — 126 cells across 1h/4h/1d, per-family results, the horizon flip, and what it changes in the plan |
 | [`ROADMAP_200_deepseek-flash.md`](ROADMAP_200_deepseek-flash.md) | 200 rounds, 10 phases, explicit gates and kill conditions |
 | [`HARNESS_CERTIFICATION.md`](HARNESS_CERTIFICATION.md) | the 5 tests that make the engine allowed to say "no" |
 | [`PEERCROSSCHECK_deepseek-flash.md`](PEERCROSSCHECK_deepseek-flash.md) | line-level audit of prior work + reconciliation with peers that landed mid-session |
@@ -53,11 +54,12 @@ Each of these has a failing test that proves it works — see
 
 | question | answer |
 |---|---|
-| Any asset class back-test proven profitable? | **No.** 42 cells (7 majors × 6 hypotheses), 0 above deflated Sharpe 0.95, 0 beating the permutation control |
+| Any asset class back-test proven profitable? | **No.** **126 cells** (7 majors × 6 hypotheses × 3 timeframes), 0 above deflated Sharpe 0.95, 0 beating the permutation control. Best DSR per horizon: 0.071 / 0.256 / 0.183 |
 | Anything survive 26 bps friction? | One family: the crypto weekend effect, +5.9 bps/trade, breakeven ≈35 bps |
 | Did it survive a proper test? | **No.** 3.0 years, bootstrapped **by calendar weekend**, with all 42 other 48-hour windows as controls → **−3.21 bps**, CI [−67.3, +64.5], rank **#15 of 42** |
 | Did the live paper round trade? | The pre-registered book opened **0** trades — correctly, the market was 25 days into a −27% decline and every long filter was false |
 | Did the forced books make money? | **No.** The no-signal book lost **−0.278%** (0/6 winners, $40 fees — exactly the friction); the signal book lost **−0.56%** shorting a 5-min dip inside a +3.4% day |
+| Did any horizon hide an edge? | **No, but one flip is real and disconfirmed.** H-R4 vol-compression goes from −32 bps at 1h to **+20 bps at 1d** — and its permutation p=0.40 says the effect reproduces on shuffled prices, i.e. it is the bracket, not the market |
 
 The negative is the deliverable. It is cheaper than discovering it live with money.
 

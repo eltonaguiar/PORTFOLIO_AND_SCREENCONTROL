@@ -153,8 +153,12 @@ def cmd_backtest(args) -> int:
         "permutation": perm_rows,
     }
     path = RESULTS_DIR / f"backtest_{venue}_{tf}_{_stamp()}.json"
-    path.write_text(json.dumps(out, indent=1, default=str), encoding="utf-8")
-    (RESULTS_DIR / "backtest_latest.json").write_text(json.dumps(out, indent=1, default=str), encoding="utf-8")
+    body = json.dumps(out, indent=1, default=str)
+    path.write_text(body, encoding="utf-8")
+    # One "latest" per timeframe. A single backtest_latest.json silently overwrote the
+    # 1h result whenever a 4h or 1d run finished, which makes a committed artifact
+    # ambiguous about what it measured.
+    (RESULTS_DIR / f"backtest_latest_{tf}.json").write_text(body, encoding="utf-8")
     print(f"\nwrote {path}")
     return 0
 
