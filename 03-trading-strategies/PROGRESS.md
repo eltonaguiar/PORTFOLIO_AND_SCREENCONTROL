@@ -8,6 +8,16 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 13 — 2026-11-23 (00:16 UTC) — `hermes` (Session B, cron queue axis)
+Question: after the peer push advanced origin/main past Session 12's verified state (6a76102: +15 ledger rows, +7 carry_roundtrip ticks, summary regenerated at 23:32Z), does results/carry_series_summary.json still recompute exactly from results/carry_roundtrip.jsonl?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 00:16 | PASS | Re-verified the committed carry summary against the current ledger: 84 ticks (7 symbols × 12, public endpoints only), median round-trip 11.1401 bp (range 10.0163–18.8942), median net carry −11.0405 bp (range −18.2136–−9.5248), funding median 0.2034 bp, carry-positive 0/84, first 2026-11-22T11:35:21Z -> last 2026-11-22T23:32:08Z. Recomputation via realtime_challenge.proof.carry_series differs from committed results/carry_series_summary.json in 0 fields (excluding generated_at). Confirmation only — no number corrected, none authored; tree left clean | results/carry_roundtrip.jsonl, results/carry_series_summary.json |
+
+Standing state: queue complete — (a) daily walk-forward 0 of 42 survive, (b) FX rate differentials measurable and carry quotable, (c) bracket gate wired at 45 * * * *, (d)-(g) done and committed. Nothing PROVEN or CANDIDATE; nothing to allocate to yet.
+
+
 ## Session 12 — 2026-11-22 (21:12 UTC) — `hermes` (Session B, cron queue axis)
 
 Question: after the peer push (f84427e, +15 carry_rtt ledger rows, +7 carry_roundtrip ticks), does results/carry_series_summary.json still recompute exactly from results/carry_roundtrip.jsonl, with a clean tree at origin/main?
