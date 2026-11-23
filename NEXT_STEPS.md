@@ -86,7 +86,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
       driver or model gets repo-existence + licence + last-push checks. **DoD:** table row added with ✅/🟡/❌.
 - [ ] **C3 — weekly COMS reconcile** · S · weekly: read `roster` + `check`, answer asks, re-register the seat with an
       updated `done`, flag any seat duplicating this repo's work. **DoD:** one broadcast per week; seat row current.
-- [ ] **C4 — keep `TRACKING.md` current** · S · automated (`pasc-index-sync`, every 3 h). **DoD:** `python
+- [x] **C4 — keep `TRACKING.md` current** · S · automated (`pasc-index-sync`, every 3 h). **DoD:** `python
       scripts/update_index.py --check` exits 0 on `main`.
 - [ ] **C5 — prune the backlog honestly** · S · monthly: cancel items that no longer matter, with a reason, instead
       of letting the list grow. **DoD:** item count stable or lower; every cancellation has a reason.
