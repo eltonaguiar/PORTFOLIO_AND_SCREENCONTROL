@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
-| 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 87 |  |
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 82 |  |
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
@@ -32,28 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 116 |  |
 | 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
 | 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
+| 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 | **YES** |
+| 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 137 |  |
 
 ## Latest answers
-
-### round 31 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**Claim most likely wrong: (c) — "value is the last untested family."**
-
-It's not untested; it's been tested and failed. The AQR/Vanguard evidence: Fama-French HML net of 12–20 bps round trip and fund fees has been statistically indistinguishable from zero since ~2007, with deflated Sharpe (accounting for the dozens of value-tilted smart-beta trials run since 2013) collapsing below the gate. The 2020–2021 value rebound is consistent with a single lucky draw inside a multiple-testing family, not a live premium.
-
-**Falsifying observation:** A diversified value portfolio (e.g., HML or a broad value index) beating the 4.3% T-bill by ≥2% annually over 2015–2025 net of 15 bps round trip, with a deflated Sharpe > 1 after trial accounting.
-
-### round 31 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**Claim (c) is most likely wrong.**
-
-"Value is the last untested family" is falsified by the existence of net-of-cost evidence on value funds. Any of these observations kills it:
-
-- A deflated Sharpe (trial-accounted) for a long-only value index fund or active value fund, net of the 12–20 bps round trip and the fund's expense ratio, at or below the 4.3% T-bill's risk-adjusted benchmark.
-- CRSP/Vanguard value index (e.g., VVIAX) showing cumulative alpha ≤ 0 net of fees over a full cycle including 2020–2021.
-- A published, cost-adjusted long-short value factor with deflated Sharpe ≤ 0 after trial accounting.
-
-Value has been tested net of cost; it failed like the others.
 
 ### round 32 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -74,3 +54,16 @@ URLError: <urlopen error [WinError 10061] No connection could be made because th
 ### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_OPENROUTER
 
 URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 34 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
+
+Claim (a) is most likely wrong for equity index options. Its "gross edge ≈ round trip" arithmetic assumes the edge is a static, harvestable spread; for index options, the edge is in the variance risk premium, whose magnitude (typically 200–400 bps annualized) dwarfs 12–20 bps round-trip cost. The claim conflates the *level* of a premium with its *harvestability*. Falsifying observation: a deflated-Sharpe (with trial accounting) for a short-dated, delta-hedged straddle/short-vol program on SPX, net of 12–20 bps round trips, that clears the gate versus 4.3% T-bills. Every prior class failed; this is the one where gross edge plausibly exceeds cost by an order of magnitude, so (a) is the weakest link.
+
+### round 34 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+## Claim most likely wrong: (a) — "gross edge ≈ round trip, so most premia are unharvestable"
+
+**Why it's the weakest for index options:** The 12–20 bps round-trip is a *spot/linear* cost. Index options embed a variance risk premium that is structurally large: realized-vs-implied vol gaps on SPX run 2–4 vol points annually, i.e. roughly 150–300 bps of gross carry in short-dated straddles or put-overwrites. That's an order of magnitude above the stated cost band — the premise "edge ≈ cost" doesn't hold for vol-selling, which is the dominant documented option premium.
+
+**Falsifying observation:** Net of 12–20 bps, a deflated Sharpe (trial-accounted) on a delta-hedged short-vol sleeve that fails to clear the 4.3% T-bill hurdle — i.e. the gross VR gap is fully consumed by hedging slippage, gap risk, and margin, not by the quoted round trip.
