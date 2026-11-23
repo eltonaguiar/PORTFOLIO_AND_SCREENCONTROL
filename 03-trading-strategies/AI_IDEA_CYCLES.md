@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 70 |  |
-| 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 81 |  |
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
@@ -32,18 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 105 |  |
 | 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 |  |
 | 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
+| 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
+| 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 111 |  |
 
 ## Latest answers
-
-### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**(b) is most likely wrong for crypto.**
-
-Post-earnings drift "death" is an equity-market regularity tied to disclosure events and analyst coverage. Crypto has no earnings calendar, no consensus estimates, and no mandated disclosure cycle — so the finding doesn't transfer as a structural prior. The falsifiable observation: take a large-cap crypto asset with a scheduled, information-dense event (e.g., major protocol upgrade activation, spot-ETF flow disclosure, or a dominant exchange's quarterly proof-of-reserves). Measure forward returns over 5/20/60 days net of a 16 bps round trip. If the post-event drift is statistically indistinguishable from zero across a deflated-Sharpe trial accounting (and the T-bill alternative), claim (b) holds for crypto; if a persistent, cost-surviving drift appears, (b) is falsified.
-
-### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**Claim (b) is most likely wrong for crypto.** Post-earnings drift requires a scheduled, information-dense event with broad analyst coverage and slow diffusion. Crypto has no earnings calendar; the analogue would be major protocol upgrades, halvings, or ETF approvals. The falsifying observation: measure forward returns after major scheduled events (e.g., Bitcoin halvings, large exchange listings, major protocol hard forks) against a matched control window. If drift persists net of the 12–20 bps round trip with a deflated Sharpe surviving trial accounting across multiple events, (b) is wrong for crypto. The event structure is different enough that the equity death post-2006 doesn't transfer.
 
 ### round 29 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -74,3 +64,23 @@ Value has been extensively tested on the exact terms the programme uses. Fama-Fr
 The "death" of PEAD is usually documented on equal-weighted universes with stale definitions and no cost accounting. Sector-ETF implementations can harvest drift via post-earnings-announcement momentum *conditioned on surprise persistence*: earnings revisions in sector leaders (XLK, XLF) show multi-quarter autocorrelation that single-name PEAD tests miss because idiosyncratic noise dominates. 
 
 **Falsification:** A long-short sector-ETF portfolio, long top-decile surprise sectors, short bottom-decile, held 60 days, with 12-20 bps round-trip applied and deflated-Sharpe trial accounting, fails to beat the 4.3% T-bill net. If DSR stays below 1.0 across rolling 5-year windows post-2006, the claim survives.
+
+### round 31 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**Claim most likely wrong: (c) — "value is the last untested family."**
+
+It's not untested; it's been tested and failed. The AQR/Vanguard evidence: Fama-French HML net of 12–20 bps round trip and fund fees has been statistically indistinguishable from zero since ~2007, with deflated Sharpe (accounting for the dozens of value-tilted smart-beta trials run since 2013) collapsing below the gate. The 2020–2021 value rebound is consistent with a single lucky draw inside a multiple-testing family, not a live premium.
+
+**Falsifying observation:** A diversified value portfolio (e.g., HML or a broad value index) beating the 4.3% T-bill by ≥2% annually over 2015–2025 net of 15 bps round trip, with a deflated Sharpe > 1 after trial accounting.
+
+### round 31 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**Claim (c) is most likely wrong.**
+
+"Value is the last untested family" is falsified by the existence of net-of-cost evidence on value funds. Any of these observations kills it:
+
+- A deflated Sharpe (trial-accounted) for a long-only value index fund or active value fund, net of the 12–20 bps round trip and the fund's expense ratio, at or below the 4.3% T-bill's risk-adjusted benchmark.
+- CRSP/Vanguard value index (e.g., VVIAX) showing cumulative alpha ≤ 0 net of fees over a full cycle including 2020–2021.
+- A published, cost-adjusted long-short value factor with deflated Sharpe ≤ 0 after trial accounting.
+
+Value has been tested net of cost; it failed like the others.
