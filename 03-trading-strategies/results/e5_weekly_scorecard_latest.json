@@ -1,0 +1,41 @@
+{
+  "item": "E5 weekly scorecard (owner H, gate G5)",
+  "run_at": "2026-11-23T21:23:25.552605+00:00",
+  "git_hash": "f93ae761831851b44be6aa088c724bae4f3c0038",
+  "books": {
+    "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_aggressive.jsonl": {
+      "book": "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_aggressive.jsonl",
+      "n": 0,
+      "resolved_ids": [],
+      "mean_bp": null,
+      "hit_rate": null,
+      "max_drawdown_bp": null,
+      "ci_95_bp": null,
+      "declared_trial_count": 0,
+      "status": "INSUFFICIENT_DATA"
+    },
+    "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_moderate.jsonl": {
+      "book": "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_moderate.jsonl",
+      "n": 0,
+      "resolved_ids": [],
+      "mean_bp": null,
+      "hit_rate": null,
+      "max_drawdown_bp": null,
+      "ci_95_bp": null,
+      "declared_trial_count": 0,
+      "status": "INSUFFICIENT_DATA"
+    },
+    "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_stable.jsonl": {
+      "book": "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_stable.jsonl",
+      "n": 0,
+      "resolved_ids": [],
+      "mean_bp": null,
+      "hit_rate": null,
+      "max_drawdown_bp": null,
+      "ci_95_bp": null,
+      "declared_trial_count": 0,
+      "status": "INSUFFICIENT_DATA"
+    }
+  },
+  "total_resolved": 0
+}\n

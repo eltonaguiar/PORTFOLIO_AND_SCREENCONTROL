@@ -53,6 +53,7 @@ import argparse
 import json
 import os
 import re
+import random
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -457,6 +458,98 @@ def cmd_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def score_series(bps: list[float]) -> dict:
+    """E5 weekly scorecard math for one tier's realized picks.
+
+    n, mean bp, hit rate, max drawdown on the realized-bp path (cumulative in
+    ts order, drawdown measured from the flat start), and a fixed-seed
+    bootstrap percentile 95% CI on the mean (n >= 2). Returns nulls, never
+    invented numbers, when there is nothing to score.
+    """
+    n = len(bps)
+    if n == 0:
+        return {"n": 0, "mean_bp": None, "hit_rate": None,
+                "max_drawdown_bp": None, "ci_95_bp": None}
+    mean_bp = sum(bps) / n
+    hit_rate = sum(1 for b in bps if b > 0) / n
+    cum = 0.0
+    peak = 0.0
+    max_drawdown_bp = 0.0
+    for b in bps:
+        cum += b
+        if cum > peak:
+            peak = cum
+        drawdown = peak - cum
+        if drawdown > max_drawdown_bp:
+            max_drawdown_bp = drawdown
+    ci_95_bp = None
+    if n >= 2:
+        rng = random.Random(42)  # fixed seed: CI is reproducible, not cherry-picked
+        boots = []
+        for _ in range(2000):
+            boots.append(sum(rng.choice(bps) for _ in range(n)) / n)
+        boots.sort()
+        lo_i = min(len(boots) - 1, int(0.025 * len(boots)))
+        hi_i = min(len(boots) - 1, int(0.975 * len(boots)))
+        ci_95_bp = [boots[lo_i], boots[hi_i]]
+    return {"n": n, "mean_bp": mean_bp, "hit_rate": hit_rate,
+            "max_drawdown_bp": max_drawdown_bp, "ci_95_bp": ci_95_bp}
+
+
+def cmd_score(args: argparse.Namespace) -> int:
+    """E5 weekly scorecard: per-tier realized stats, never aggregated across tiers."""
+    out: dict[str, object] = {
+        "item": "E5 weekly scorecard (owner H, gate G5)",
+        "run_at": utc_now(),
+        "git_hash": repo_git_hash(),
+        "books": {},
+        "total_resolved": 0,
+    }
+    if getattr(args, "log", None):
+        logs = [Path(args.log)]
+    elif args.tier:
+        logs = [tier_log_path(args.tier)]
+    else:
+        logs = [tier_log_path(t) for t in sorted(TIERS)]
+    for log in logs:
+        records = read_records(log) if log.exists() else []
+        resolved = [r for r in records
+                    if r.get("status") in ("closed", "killed")
+                    and isinstance(r.get("realized_bp"), (int, float))
+                    and not isinstance(r["realized_bp"], bool)]
+        bps = [float(r["realized_bp"]) for r in resolved]
+        stats = score_series(bps)
+        entry = {
+            "book": str(log),
+            "n": stats["n"],
+            "resolved_ids": [int(r["id"]) for r in resolved],
+            "mean_bp": stats["mean_bp"],
+            "hit_rate": stats["hit_rate"],
+            "max_drawdown_bp": stats["max_drawdown_bp"],
+            "ci_95_bp": stats["ci_95_bp"],
+            "declared_trial_count": stats["n"],
+            "status": "OK" if stats["n"] > 0 else "INSUFFICIENT_DATA",
+        }
+        out["books"][str(log)] = entry
+        out["total_resolved"] += stats["n"]
+        print(f"{log.name:<9} n={stats['n']} mean_bp={stats['mean_bp']} "
+              f"hit_rate={stats['hit_rate']} max_dd_bp={stats['max_drawdown_bp']} "
+              f"ci95={stats['ci_95_bp']} declared_trials={stats['n']} "
+              f"status={entry['status']}")
+    print(f"total resolved picks: {out['total_resolved']}")
+    artifact = REPO / "03-trading-strategies" / "results" / "e5_weekly_scorecard_latest.json"
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    tmp = artifact.with_suffix(artifact.suffix + ".tmp")
+    with tmp.open("w", encoding="utf-8") as fh:
+        json.dump(out, fh, ensure_ascii=False, indent=2)
+        fh.write("\\n")
+        fh.flush()
+        os.fsync(fh.fileno())
+    tmp.replace(artifact)
+    print(f"artifact written: {artifact}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Append-only pretend-money paper book (E2/E3, owner H, gate G5).")
@@ -518,6 +611,10 @@ def main(argv: list[str] | None = None) -> int:
     p_val = sub.add_parser("validate", help="validate every row against the schema + append-only invariants")
     tier_arg(p_val)
     p_val.set_defaults(func=cmd_validate)
+
+    p_score = sub.add_parser("score", help="weekly scorecard per tier (E5)")
+    tier_arg(p_score)
+    p_score.set_defaults(func=cmd_score)
 
     args = parser.parse_args(argv)
     return args.func(args)
