@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 87 |  |
-| 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 82 |  |
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 72 |  |
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
@@ -32,20 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
 | 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 | **YES** |
 | 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 137 |  |
+| 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 110 |  |
+| 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 
 ## Latest answers
-
-### round 32 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-Claim (a) is most likely wrong. If the gross edge in liquid FX majors is truly ~the size of the round trip (12–20 bps), then systematic strategies should still show gross Sharpe ratios of 0.5–1.5 across liquid crosses, which would survive deflated Sharpe accounting once trial costs are accounted. Falsifier: a broad, out-of-sample screen of standard FX momentum and carry signals across G10 and liquid crosses, computed gross of cost, fails to produce a single signal with deflated Sharpe > 0 after trial accounting. If even the best gross signals have deflated Sharpe indistinguishable from zero, the "edge ≈ round trip" claim is empirically unsupported.
-
-### round 32 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**Claim (a) is most likely wrong for FOREX.**
-
-The round-trip cost applies per trade, but FX majors trade on deep books with persistent, slow-moving macro flows (carry, terms-of-trade shifts, rate-differential drift). A position sized on 12–20 bps cost can be held for weeks; the cost is amortized, not repeated. The claim conflates "edge ≈ cost" with "edge < cost net" — if the gross edge accrues over a holding period while cost is one-off, the ratio is favorable.
-
-**Falsifying observation:** A carry/momentum composite on G10 majors, traded at monthly frequency, fails to clear a deflated Sharpe ≥ 1.0 (trial-accounted) net of 15 bps round trip versus the 4.3% T-bill over 2004–2024. That would confirm cost dominates.
 
 ### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -67,3 +55,15 @@ Claim (a) is most likely wrong for equity index options. Its "gross edge ≈ rou
 **Why it's the weakest for index options:** The 12–20 bps round-trip is a *spot/linear* cost. Index options embed a variance risk premium that is structurally large: realized-vs-implied vol gaps on SPX run 2–4 vol points annually, i.e. roughly 150–300 bps of gross carry in short-dated straddles or put-overwrites. That's an order of magnitude above the stated cost band — the premise "edge ≈ cost" doesn't hold for vol-selling, which is the dominant documented option premium.
 
 **Falsifying observation:** Net of 12–20 bps, a deflated Sharpe (trial-accounted) on a delta-hedged short-vol sleeve that fails to clear the 4.3% T-bill hurdle — i.e. the gross VR gap is fully consumed by hedging slippage, gap risk, and margin, not by the quoted round trip.
+
+### round 35 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**(b) is most likely wrong for prediction markets.** PEAD's death reflects post-2006 market microstructure: faster diffusion, crowded arbitrage, and the mechanical disappearance of slow retail-sized drift. Prediction markets are structurally pre-2006: low liquidity, fragmented attention, no dedicated statistical-arbitrage capital, and event windows measured in hours/days rather than quarters. The "death" is an artifact of the venue, not the underlying behavioral bias.
+
+**Falsifying observation:** On Kalshi/Polymarket, systematically taking the side implied by the surprise direction (e.g., "Will [ticker] beat?") after high-profile earnings events shows a deflated Sharpe (with trial accounting) statistically indistinguishable from zero net of a 12–20 bps round trip across 200+ events with position sizing capped by book depth.
+
+### round 35 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**(b) is most likely wrong for prediction markets.**
+
+PEAD is a *price* anomaly requiring continuous re-pricing of a share. Polymarket/Kalshi contracts are discrete, bounded (0–100¢), and resolved by a dated event — the drift mechanism doesn't map. But the deeper issue: if post-earnings drift is truly dead in the underlying, the *prediction market* version should be even weaker, since the event itself (earnings release) is the resolution trigger, leaving no post-event drift window. Falsify by finding a family of contracts where the market-implied probability *conditional on the earnings outcome* systematically diverges from the subsequent resolution frequency, with the gap exceeding ~15bps after cost, surviving trial-deflated Sharpe across ≥200 resolved contracts.
