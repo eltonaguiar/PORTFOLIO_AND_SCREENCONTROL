@@ -1,0 +1,27 @@
+{
+  "item": "E3 H — One book per risk tier (stable/moderate/aggressive); agents compete inside a tier only.",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 56",
+  "session": "Session 30 — 2026-11-23 (20:09 EST / cron run) — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "script": "04-investment-strategy/paper_book.py",
+  "schema": "03-trading-strategies/picks_schema.json (E1, JSON Schema draft-07, enum gates)",
+  "change": "Replaced the single shared ledger (results/paper_book.jsonl, tier column only) with one PHYSICAL ledger per risk tier: results/paper_book_stable.jsonl, results/paper_book_moderate.jsonl, results/paper_book_aggressive.jsonl. A pick lands only in its tier's book; ids restart at 1 inside each book (per-tier id namespace, so cross-tier ranking is impossible at the book layer). Every command addresses --tier (stable/moderate/aggressive) or --log <path> (scratch mode, exact file); validate/list/pending/view work per tier or across all three books without merging ids. E2/E6/E7 contracts unchanged: git_hash = `git rev-parse HEAD` auto-captured at insert, append-only, revisions via new rows with `supersedes`, kill books a loss even if it later recovers, flat day = 0.0 bp, weekly mark-to-market.",
+  "done_condition": "paper_book.py committed; one insert per tier creates three separate ledgers with id=1 in each (per-book sequencing proven), git_hash stamped to HEAD 5588c73e731ca363a40a9e49207c420fad373128 on every row, `validate` green per tier and across all tiers, `list --tier <tier>` shows only that tier's rows (cross-tier isolation proven), `kill`/`mtm` operate within a tier only, scratch ledgers removed afterward so real books stay empty for E4.",
+  "verification": {
+    "git_head": "5588c73e731ca363a40a9e49207c420fad373128",
+    "scratch_inserts": [
+      { "tier": "stable", "instrument": "SPY", "side": "long", "id": 1, "git_hash": "5588c73e731ca363a40a9e49207c420fad373128" },
+      { "tier": "moderate", "instrument": "QQQ", "side": "long", "id": 1, "git_hash": "5588c73e731ca363a40a9e49207c420fad373128" },
+      { "tier": "aggressive", "instrument": "TSLA", "side": "short", "id": 1, "git_hash": "5588c73e731ca363a40a9e49207c420fad373128" }
+    ],
+    "validate_all_tiers": "VALID: 3 record(s) across all tier books, schema-conformant and append-only.",
+    "validate_per_tier": "VALID: 1 record(s) ... schema-conformant and append-only. (stable tier, post-kill)",
+    "cross_tier_isolation": "list --tier stable shows only SPY row; moderate only QQQ; aggressive only TSLA.",
+    "scratch_cleanup": "All three scratch ledgers deleted after verification; 04-investment-strategy/results/ contains no paper_book_*.jsonl — first real picks arrive via E4."
+  },
+  "artifacts_produced": [
+    "04-investment-strategy/paper_book.py (restructured to one physical ledger per tier)",
+    "03-trading-strategies/results/e3_per_tier_books.json (this file)"
+  ],
+  "not_done": "E4 (agents submit >=5 pre-registered picks per tier within 48h), E5 (weekly scorecard per tier), E8 (first honest read at n>=30 per tier) remain open; no real picks recorded yet.",
+  "coms": "none — E3 is a structural book-layer change; no new measured number and no corrected published one (rule 6 not triggered)"
+}

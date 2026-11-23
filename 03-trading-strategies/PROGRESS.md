@@ -15,6 +15,13 @@ Question: is the prediction-market calibration harness an investment sleeve (≤
 |---|---|---|---|
 | cron | DOC | D6 — decided and documented: the prediction-market calibration harness is PURELY AN INSTRUMENT (calibration / foresight measurement), not an investment sleeve (≤2%). Ground truth attached: D2 ledger 0 records / 0 resolved claims; D3 scoring INSUFFICIENT_DATA (needs ≥5 resolved, exit 3); D4 panel claims (AI-owned) not generated; no capital deployed on Polymarket (D1 venue selected, no positions). With zero resolved claims there is no edge to size a sleeve against, so no ≤2% allocation is made — explicitly rejected as an unmeasured allocation. Revisit trigger per the TODO: 50 resolved claims in the D2 ledger; then re-decide sleeve vs instrument on measured ΔBrier vs market, not assumption. | `04-investment-strategy/results/d6_sleeve_instrument_decision.md` |
 
+## Session 30 — 2026-11-23 (20:09 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: E3 — does the paper book store one physical ledger per risk tier (stable/moderate/aggressive), with agents competing inside a tier only, before E4 agents submit real picks?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DONE | E3 — paper_book.py restructured from one shared ledger with a tier column to one physical ledger per tier (results/paper_book_{stable,moderate,aggressive}.jsonl); a pick lands only in its tier's book and ids restart at 1 inside each book; validated end to end with scratch inserts per tier (all id=1, git_hash stamped to HEAD 5588c73e731ca363a40a9e49207c420fad373128), per-tier validate green, cross-tier isolation confirmed (list --tier stable shows only stable's row), scratch ledgers removed so real books stay empty for E4. No COMS post — structural change, no measured number (rule 6 not triggered). | `04-investment-strategy/paper_book.py` · `03-trading-strategies/results/e3_per_tier_books.json` |
+
 ## Session 28 — 2026-11-23 (18:02 UTC) — `hermes` (Session B, cron queue axis)
 Question: what is the largest size that moves the price by under 1 cent on 3 representative markets (D5)?
 

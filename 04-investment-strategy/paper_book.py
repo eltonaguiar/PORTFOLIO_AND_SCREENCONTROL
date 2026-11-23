@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-"""E2 (owner H) — pretend-money paper book for the G5 sleeve.
+"""E3 (owner H) — pretend-money paper book: ONE BOOK PER RISK TIER.
 
-Append-only ledger of picks conforming to 03-trading-strategies/picks_schema.json
+Append-only ledgers of picks conforming to 03-trading-strategies/picks_schema.json
 (E1). One row per pick; rows are inserted once and never edited or deleted.
 Revisions are NEW rows with `supersedes` pointing at the id they replace.
+
+Structure (E3): one PHYSICAL ledger per risk tier -- stable / moderate / aggressive:
+
+  04-investment-strategy/results/paper_book_stable.jsonl
+  04-investment-strategy/results/paper_book_moderate.jsonl
+  04-investment-strategy/results/paper_book_aggressive.jsonl
+
+A pick lands ONLY in its tier's book. Ids restart at 1 inside each book, so id N
+is unique within a tier, never across tiers. Agents compete inside a tier only:
+list / pending / scorecards (E5) group by tier and never aggregate tiers into a
+single cross-tier ranking.
 
 Contracts
 ---------
@@ -22,18 +33,18 @@ Usage:
   python paper_book.py add --tier stable --agent Hermes --instrument SPY \
       --side long --claim "thesis" --entry-price 442.10 --size 1000 \
       --kill-type stop_loss --trigger-level 437.68 [--git-hash <sha>]
-  python paper_book.py mtm --id 1 --price 445.00          # weekly mark to market
-  python paper_book.py close --id 1 --outcome 1 --exit-price 445.00
-  python paper_book.py kill --id 1 --price 437.68
-  python paper_book.py supersede --original 1               # marks a row superseded
+  python paper_book.py mtm --tier stable --id 1 --price 445.00   # weekly MTM
+  python paper_book.py close --tier stable --id 1 --outcome 1 --exit-price 445.00
+  python paper_book.py kill --tier stable --id 1 --price 437.68
+  python paper_book.py supersede --tier stable --original 1
   python paper_book.py list [--tier stable] [--status open]
-  python paper_book.py view
-  python paper_book.py pending
-  python paper_book.py validate                             # schema + invariants
+  python paper_book.py view [--tier stable]
+  python paper_book.py pending [--tier stable]
+  python paper_book.py validate [--tier stable]   # omit --tier to check all three books
 
-Log (created on first add): 04-investment-strategy/results/paper_book.jsonl
-One ledger holds all tiers; the `tier` column separates the three books (E3),
-and scorecards (E5) group by tier. Agents compete inside a tier only.
+Logs (created on first add per tier):
+  04-investment-strategy/results/paper_book_<tier>.jsonl
+  (--log <path> overrides and addresses a single file directly, for scratch runs)
 """
 
 from __future__ import annotations
@@ -48,13 +59,37 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-DEFAULT_LOG = REPO / "04-investment-strategy" / "results" / "paper_book.jsonl"
+DEFAULT_LOG_DIR = REPO / "04-investment-strategy" / "results"
 
 TIERS = {"stable", "moderate", "aggressive"}
 SIDES = {"long", "short"}
 KILL_TYPES = {"stop_loss", "time_based", "none"}
 STATUSES = {"open", "closed", "killed", "superseded"}
 GIT_SHA = re.compile(r"^[0-9a-f]{40}$")
+
+
+def tier_log_path(tier: str) -> Path:
+    """Path of the physical book for one risk tier (E3: one book per tier)."""
+    if tier not in TIERS:
+        raise SystemExit(f"error: unknown tier {tier!r}; must be one of {sorted(TIERS)}")
+    return DEFAULT_LOG_DIR / f"paper_book_{tier}.jsonl"
+
+
+def all_tier_logs() -> list[Path]:
+    return [tier_log_path(t) for t in sorted(TIERS)]
+
+
+def resolve_log(args: argparse.Namespace) -> Path:
+    """--log (exact path, scratch mode) beats --tier (per-tier book); else error."""
+    if getattr(args, "log", None):
+        return Path(args.log)
+    tier = getattr(args, "tier", None)
+    if tier:
+        return tier_log_path(tier)
+    print("error: specify --tier (stable/moderate/aggressive) or --log <path>",
+          file=sys.stderr)
+    raise SystemExit(2)
+
 
 REQUIRED = [
     "id", "ts", "tier", "agent", "instrument", "side", "claim",
@@ -227,7 +262,7 @@ def find_record(records: list[dict], rid: int) -> dict | None:
 # --------------------------------------------------------------------------- commands
 
 def cmd_add(args: argparse.Namespace) -> int:
-    log = Path(args.log)
+    log = resolve_log(args)
     records = read_records(log)
     git_hash = args.git_hash or repo_git_hash()
     kill_rule: dict = {"type": args.kill_type}
@@ -274,7 +309,7 @@ def cmd_add(args: argparse.Namespace) -> int:
 
 
 def cmd_mtm(args: argparse.Namespace) -> int:
-    log = Path(args.log)
+    log = resolve_log(args)
     records = read_records(log)
     rec = find_record(records, args.id)
     if rec is None:
@@ -299,7 +334,7 @@ def _terminalize(rec: dict, status: str, resolution: int, exit_px: float | None)
 
 
 def cmd_close(args: argparse.Namespace) -> int:
-    log = Path(args.log)
+    log = resolve_log(args)
     records = read_records(log)
     rec = find_record(records, args.id)
     if rec is None:
@@ -318,7 +353,7 @@ def cmd_close(args: argparse.Namespace) -> int:
 
 
 def cmd_kill(args: argparse.Namespace) -> int:
-    log = Path(args.log)
+    log = resolve_log(args)
     records = read_records(log)
     rec = find_record(records, args.id)
     if rec is None:
@@ -335,7 +370,7 @@ def cmd_kill(args: argparse.Namespace) -> int:
 
 
 def cmd_supersede(args: argparse.Namespace) -> int:
-    log = Path(args.log)
+    log = resolve_log(args)
     records = read_records(log)
     rec = find_record(records, args.original)
     if rec is None:
@@ -351,58 +386,88 @@ def cmd_supersede(args: argparse.Namespace) -> int:
     return 0
 
 
+def tier_records(args: argparse.Namespace) -> dict[str, list[dict]]:
+    """Read every tier book (or just --tier's book) and return {tier: records}."""
+    tiers = [args.tier] if args.tier else sorted(TIERS)
+    out: dict[str, list[dict]] = {}
+    for tier in tiers:
+        out[tier] = read_records(tier_log_path(tier))
+    return out
+
+
 def cmd_list(args: argparse.Namespace) -> int:
-    records = read_records(Path(args.log))
-    for rec in records:
-        if args.tier and rec["tier"] != args.tier:
-            continue
-        if args.status and rec["status"] != args.status:
-            continue
-        res = rec["resolution"] if rec["resolution"] is not None else "PENDING"
-        print(f"{rec['id']:>3}  {rec['ts']}  {rec['tier']:<9} {rec['agent']:<8} "
-              f"{rec['side']:<5} {rec['instrument']:<10} {res:<7} "
-              f"bp={rec['realized_bp'] if rec['realized_bp'] is not None else '-'}  {rec['claim']}")
+    for tier, records in tier_records(args).items():
+        for rec in records:
+            if args.tier and rec["tier"] != args.tier:
+                continue
+            if args.status and rec["status"] != args.status:
+                continue
+            res = rec["resolution"] if rec["resolution"] is not None else "PENDING"
+            print(f"{tier:<9} {rec['id']:>3}  {rec['ts']}  {rec['agent']:<8} "
+                  f"{rec['side']:<5} {rec['instrument']:<10} {res:<7} "
+                  f"bp={rec['realized_bp'] if rec['realized_bp'] is not None else '-'}  {rec['claim']}")
     return 0
 
 
 def cmd_view(args: argparse.Namespace) -> int:
-    print(json.dumps(read_records(Path(args.log)), ensure_ascii=False, indent=2))
+    for tier, records in tier_records(args).items():
+        print(f"## tier {tier}: {len(records)} record(s)")
+        print(json.dumps(records, ensure_ascii=False, indent=2))
     return 0
 
 
 def cmd_pending(args: argparse.Namespace) -> int:
-    records = read_records(Path(args.log))
-    pending = [r for r in records if r["status"] == "open"]
-    print(f"{len(pending)} open / {len(records)} total")
-    for r in pending:
-        print(f"  {r['id']:>3}  {r['ts']}  {r['tier']}  {r['instrument']}  {r['claim']}")
+    total_open = 0
+    total = 0
+    for tier, records in tier_records(args).items():
+        pending = [r for r in records if r["status"] == "open"]
+        total_open += len(pending)
+        total += len(records)
+        for r in pending:
+            print(f"  {tier:<9} {r['id']:>3}  {r['ts']}  {r['instrument']}  {r['claim']}")
+    print(f"{total_open} open / {total} total")
     return 0
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
-    log = Path(args.log)
-    records = read_records(log)
     problems: list[str] = []
-    for i, rec in enumerate(records):
-        for p in validate_record(rec):
-            problems.append(f"line {i + 1}: {p}")
-    for p in validate_append_only(records):
-        problems.append(f"append-only: {p}")
+    any_file = False
+    for tier, records in tier_records(args).items():
+        log = tier_log_path(tier)
+        if not log.exists():
+            print(f"{tier}: absent (no picks yet)")
+            continue
+        any_file = True
+        for i, rec in enumerate(records):
+            for p in validate_record(rec):
+                problems.append(f"{tier} line {i + 1}: {p}")
+        for p in validate_append_only(records):
+            problems.append(f"{tier} append-only: {p}")
+    if not any_file:
+        print("no tier books exist yet (created on first add per tier)")
+        print("VALID: 0 record(s)")
+        return 0
     if problems:
         print(f"{len(problems)} problem(s):")
         for p in problems:
             print(f"  - {p}")
         return 1
-    print(f"VALID: {len(records)} record(s), schema-conformant and append-only.")
+    total = sum(len(r) for r in tier_records(args).values())
+    print(f"VALID: {total} record(s) across all tier books, schema-conformant and append-only.")
     return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Append-only pretend-money paper book (E2, owner H, gate G5).")
-    parser.add_argument("--log", default=str(DEFAULT_LOG),
-                        help="path to the JSONL ledger")
+        description="Append-only pretend-money paper book (E2/E3, owner H, gate G5).")
+    parser.add_argument("--log", default=None,
+                        help="path to a single JSONL ledger (scratch mode; "
+                             "defaults to results/paper_book_<tier>.jsonl per tier)")
     sub = parser.add_subparsers(dest="cmd", required=True)
+
+    def tier_arg(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--tier", default=None, choices=sorted(TIERS),
+                       help="risk tier: stable / moderate / aggressive")
 
     p_add = sub.add_parser("add", help="log a new pick BEFORE resolution")
     p_add.add_argument("--tier", required=True, choices=sorted(TIERS))
@@ -419,35 +484,40 @@ def main(argv: list[str] | None = None) -> int:
     p_add.set_defaults(func=cmd_add)
 
     p_mtm = sub.add_parser("mtm", help="weekly mark-to-market price for an open pick")
+    tier_arg(p_mtm)
     p_mtm.add_argument("--id", required=True, type=int)
     p_mtm.add_argument("--price", required=True, type=float)
     p_mtm.set_defaults(func=cmd_mtm)
 
     p_close = sub.add_parser("close", help="resolve an open pick (1 win / 0 loss)")
+    tier_arg(p_close)
     p_close.add_argument("--id", required=True, type=int)
     p_close.add_argument("--outcome", required=True, type=int, choices=[0, 1])
     p_close.add_argument("--exit-price", required=True, type=float)
     p_close.set_defaults(func=cmd_close)
 
     p_kill = sub.add_parser("kill", help="book a loss at the kill price (E6)")
+    tier_arg(p_kill)
     p_kill.add_argument("--id", required=True, type=int)
     p_kill.add_argument("--price", required=True, type=float)
     p_kill.set_defaults(func=cmd_kill)
 
-    p_sup = sub.add_parser("supersede", help="mark a row superseded; revision added via add --supersedes")
+    p_sup = sub.add_parser("supersede", help="mark a row superseded; revision added via add")
+    tier_arg(p_sup)
     p_sup.add_argument("--original", required=True, type=int)
     p_sup.set_defaults(func=cmd_supersede)
 
-    sub.add_parser("list", help="show every pick (optionally filtered)").add_argument \
-        if False else None
     p_list = sub.add_parser("list", help="show every pick (optionally filtered)")
-    p_list.add_argument("--tier", default=None, choices=sorted(TIERS))
+    tier_arg(p_list)
     p_list.add_argument("--status", default=None, choices=sorted(STATUSES))
     p_list.set_defaults(func=cmd_list)
-    sub.add_parser("view", help="emit the full ledger as JSON").set_defaults(func=cmd_view)
-    sub.add_parser("pending", help="show open picks only").set_defaults(func=cmd_pending)
-    sub.add_parser("validate", help="validate every row against the schema + append-only invariants") \
-        .set_defaults(func=cmd_validate)
+    sub.add_parser("view", help="emit the full ledger(s) as JSON").set_defaults(func=cmd_view)
+    p_pend = sub.add_parser("pending", help="show open picks only")
+    tier_arg(p_pend)
+    p_pend.set_defaults(func=cmd_pending)
+    p_val = sub.add_parser("validate", help="validate every row against the schema + append-only invariants")
+    tier_arg(p_val)
+    p_val.set_defaults(func=cmd_validate)
 
     args = parser.parse_args(argv)
     return args.func(args)
