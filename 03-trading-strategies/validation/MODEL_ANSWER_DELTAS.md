@@ -232,6 +232,59 @@ against our own numbers: our measured micro-cap-adjacent costs (MEME 13.59 bp, s
 table) mean the "only structural edge" is also the one our gate sheet rejects first. Worth holding as a hypothesis,
 not a conclusion.
 
+## 2f. 1F — Claude 5.5 Haiku (1min.ai): strong and comprehensive, two arithmetic defects
+
+The most *complete* answer of the seven — 17 numbered falsifiers, a decision table, MinTRL, permutation tests, and an
+explicit rejected-trade log. Four things it contributes that none of the others had:
+
+1. **"Parsimony: each parameter typically adds about one to two effective trials."** A usable heuristic for
+   estimating N_eff *before* you have the trial matrix — the cheapest possible defence against the debt.
+2. **"Record all rejected trades: count orders that could not be filled."** Nobody else asks for the *unfilled*
+   orders, and they are the difference between a simulated portfolio and a portfolio.
+3. **A neighbourhood rule stated operably:** *"an edge that exists only at lookback = 37 and disappears at 36 or 38
+   is an artifact."* Concrete enough to implement as a test.
+4. **Hypothesis budget framed as capital:** *"each hypothesis tested on the same data consumes statistical capital."*
+
+### Verified
+
+Its DSR worked example reproduces exactly:
+
+> `N=100`, variance of per-period trial Sharpes `0.0004` (sd `0.02`), `(1−γ)Φ⁻¹(0.99) = 0.4228 × 2.326 = 0.983`,
+> `γΦ⁻¹(1−1/(100e)) = 0.5772 × 2.6808 = 1.547`, `SR₀ = 0.02 × 2.530 = **0.0506**` → **computed 0.0506 ✓**
+
+### Defect 1 — its power table is the crude formula
+
+| True SR | 1F "single test" | crude `6.185/SR²` | variance-corrected (adopted) |
+|---|---|---|---|
+| 0.5 | 24.8 | 24.7 ✓ | **27.8** |
+| 1.0 | 6.2 | 6.2 ✓ | **9.3** |
+| 2.0 | 1.6 | 1.5 ✓ | **4.6** |
+
+So its own table is internally consistent with the crude formula and inherits the same 50% understatement at
+SR 1.0 that `MODEL_ANSWER_DELTAS` §2e corrected. 1E is the only answer that got this right.
+
+### Defect 2 — its Bonferroni column is 24% overstated at low Sharpe
+
+Claimed vs recomputed at `α = 0.0025` one-sided (`z = 2.81`, sum `3.652`):
+
+| True SR | 1F claims | `(3.652/SR)²` | Error |
+|---|---|---|---|
+| 0.3 | **183** | **148.2** | +23% |
+| 0.5 | **66** | **53.3** | +24% |
+| 1.0 | 13.4 | 13.3 | ✓ |
+| 1.5 | 6.0 | 5.9 | ✓ |
+| 2.0 | 3.4 | 3.3 | ✓ |
+
+The high-Sharpe rows are right and the low-Sharpe rows are wrong by a quarter — the direction of error is
+conservative (it discourages), but it is still wrong, and a table where two adjacent rows use different arithmetic
+is the same defect class as 1D's MinBTL contradiction.
+
+### Scoreboard update
+
+**1F joins 1E and 1D at the top on breadth, but is the weakest of those three on arithmetic** (one exact example,
+one crude power table, one miscalculated column). Rank on content: 1F ≈ 1E > 1D > Luna > Claude > GLM > 1A > 1B > 1C.
+Rank on arithmetic integrity: **1E > 1D > 1F**.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a
