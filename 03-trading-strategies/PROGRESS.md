@@ -388,3 +388,12 @@ Question: does the FX live leg produce a trade in the first 25 minutes after the
 | 22:25 | PASS | Round complete: 0 trades opened, 0 closed, n_open = 0 (read before quoting any total), net $0.00, fees $0.00, outcome NO_SIGNAL. "No signal in the window" — a valid zero-trade result, not padded. Had it fired, the bracket would have been TP = entry + 2·ATR, SL = entry − 1·ATR with stop-first on ambiguous bars, force-flat at the 25-minute cap. Census caveat restated: p = 0.017 but CI [−26.5, +94.2] straddles zero — 1 of 35 cells at α = 0.05 is below the 1.75 false-positive expectation, not an established edge | ledger/fx_paper_usdjpy_20261122_2221Z.jsonl |
 
 Also updated: `REALTIMECHALLENGE_deepseek-flash_2026-11-22_0356_EST.MD` §5.4 live-evidence table with the FX paper probe row (0 closed, $0.00 net, $0.00 fees, NO_SIGNAL).
+
+## Session 16 — 2026-11-23 (02:29 UTC) — `hermes` (cron queue axis)
+Question: can B6 (owner H) be closed using the committed Session 7 value test (VLUE) rather than re-running, given fresh yfinance fetch is blocked (HTTP 429) and no PIT fundamentals store (B1–B5) exists?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 02:29 | PASS | B6 — value/HML test run once against the frozen rule (committed Session 7 measurement, real code): VLUE timed CAGR 3.07%/yr net (≈25 bp/month) vs 4.32%/yr T-bill hurdle, Sharpe 0.372 vs SPY 0.619, permutation p=0.61 (n=100 shuffles), 262 rebalances / 5759 daily bars, 2004–2026. Kill verdict: KILLED — value underperforms SPY (7.06%/yr vs 10.28%/yr buy-and-hold) and cash. INVESTMENT_DECISION_FRAMEWORK.md §2a +0.11%/yr value figure flagged NOT evidence (no committed implementation anywhere in repo; not recomputable). | `03-trading-strategies/results/b6_value_test_latest.json` |
+
+Standing state: B6 closed. Value/HML research line is dead (measured) — nothing to allocate. Next unchecked H items in order: B7, C3, C4, H2, H3, D2/D3, E1/E2, F1–F5, H1. B7 (reconcile 25–42 vs 50–70 bp/month against the ≈25 bp/month measured number) is next.
