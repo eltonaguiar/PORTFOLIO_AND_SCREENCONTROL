@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 84 | **YES** |
-| 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 90 | **YES** |
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 90 | **YES** |
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 73 |  |
@@ -32,26 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 72 |  |
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 88 |  |
+| 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 100 |  |
+| 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 
 ## Latest answers
-
-### round 23 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** GBPJPY 20-period momentum (weekly close), long only, 1990–2024.
-
-**Measurement that kills it:** Deflated Sharpe (DSR with trial factor ~50) < 0.95 after 15 bps round-trip. If DSR falls below 0.95, the edge is indistinguishable from noise at this cost.
-
-**Data required:** GBPJPY weekly OHLC, 1990–2024. Free via Dukascopy historical feed or TrueFX; point-in-time (no look-ahead). T-bill series from FRED (free, point-in-time).
-
-**Why this one:** GBPJPY has the largest realized drift among majors; weekly momentum avoids daily noise that cost destroys. Single instrument, single parameter—minimal multiple-testing inflation.
-
-### round 23 - FOREX (majors and crosses) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** On daily EUR/USD 15:00 London fix, go long the higher-yielding G10 currency vs USD if its 1-month OIS yield exceeds USD by >50bps, held 5 days. Signal is computable before execution.
-
-**Data:** G10 1-month OIS fixings (FRB H.15, ECB SDW) — free, point-in-time with publication lags. WM/Reuters 16:00 fix — free daily close, point-in-time.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado, 2 trials) < 1.0 net of 16 bps round-trip, or annualized net return < 4.3% T-bill. Either outcome kills it.
 
 ### round 24 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -84,3 +66,23 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Kill measurement:** Deflated Sharpe (accounting for the number of distinct configurations tried across this programme) below 1.0 net of 15 bps assumed round-trip cost, evaluated against the 4.3% T-bill hurdle.
 
 **Data:** Daily SPX index closes and Cboe SPX end-of-day option prices (strike, bid, ask, expiry, delta). Free at Cboe Datashop, but point-in-time reconstruction requires the historical snapshot files; delayed public data is not point-in-time.
+
+### round 26 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test: Polymarket "high-probability resolution" drift.**
+
+Long the "Yes" side of binary contracts priced ≥92¢ in the final 48 hours before a *mechanically scheduled, non-discretionary* resolution event (Fed rate decisions, CPI prints, scheduled earnings). Exit at resolution. Thesis: late-stage buyers overpay for certainty; prices compress toward 100¢ slower than efficient.
+
+**Kill measurement:** After 12-20 bps round-trip, net hit rate × $1 payout minus losses < T-bill return on capital over identical holding windows, on ≥40 resolved contracts. If net annualized return ≤4.3%, falsified.
+
+**Data:** Polymarket Gamma API (free, point-in-time via CLOB price history with timestamps). Historical resolution timestamps from event calendars.
+
+### round 26 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_OPENROUTER
+
+**Test: Polymarket "Will [candidate] win [state]?" vs. state-level polling averages, sampled at 2pm ET daily.**
+
+Enter long "Yes" when market implied probability trails the state's polling-average-implied probability by ≥8 points, exit at resolution or when the gap closes. Net of 12–20 bps round-trip and the 4.3% T-bill hurdle, the strategy must clear a deflated Sharpe ≥1.0 with trial accounting.
+
+**Kill measurement:** Net-of-cost deflated Sharpe <1.0 after accounting for all trials, or a mean net edge below zero across ≥20 resolved contracts.
+
+**Data:** Polymarket historical binary prices (free via Gamma/CLOB API, point-in-time); state polling averages (free, 538/Silver Bullet, point-in-time archived).

@@ -57,7 +57,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [x] **A8 — measure the crop-vs-full-frame claim** · S · capture.py's docstring asserts a panel crop beats the
       measured 18.99 s full-frame OCR. Measure a 400×800 crop with RapidOCR. **DoD:** `01-*/MEASUREMENTS.md` gains a
       row with real elapsed time.
-- [ ] **A9 — Linux/RustDesk path** · M · verify SSH + AT-SPI from this host to the Linux box, or document exactly
+- [x] **A9 — Linux/RustDesk path** · M · verify SSH + AT-SPI from this host to the Linux box, or document exactly
       which step blocks it. **DoD:** one scripted read of a remote window's tree, or a written blocker.
 - [x] **A10 — wire approval classes into the docs** · S · link `TOOL_INTERFACE.md` §6 from `02-*`'s evidence rules
       and from `act.py`; add the class table to `01-*/README.md`. **DoD:** no broken links; index regenerated.
