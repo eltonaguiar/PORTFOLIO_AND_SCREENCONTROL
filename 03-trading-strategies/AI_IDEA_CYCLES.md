@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 126 |  |
-| 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 133 |  |
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 68 |  |
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 84 |  |
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 70 |  |
@@ -32,28 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 | 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
 | 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 101 |  |
+| 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 131 |  |
+| 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 105 |  |
 
 ## Latest answers
-
-### round 26 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test: Polymarket "high-probability resolution" drift.**
-
-Long the "Yes" side of binary contracts priced ≥92¢ in the final 48 hours before a *mechanically scheduled, non-discretionary* resolution event (Fed rate decisions, CPI prints, scheduled earnings). Exit at resolution. Thesis: late-stage buyers overpay for certainty; prices compress toward 100¢ slower than efficient.
-
-**Kill measurement:** After 12-20 bps round-trip, net hit rate × $1 payout minus losses < T-bill return on capital over identical holding windows, on ≥40 resolved contracts. If net annualized return ≤4.3%, falsified.
-
-**Data:** Polymarket Gamma API (free, point-in-time via CLOB price history with timestamps). Historical resolution timestamps from event calendars.
-
-### round 26 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_OPENROUTER
-
-**Test: Polymarket "Will [candidate] win [state]?" vs. state-level polling averages, sampled at 2pm ET daily.**
-
-Enter long "Yes" when market implied probability trails the state's polling-average-implied probability by ≥8 points, exit at resolution or when the gap closes. Net of 12–20 bps round-trip and the 4.3% T-bill hurdle, the strategy must clear a deflated Sharpe ≥1.0 with trial accounting.
-
-**Kill measurement:** Net-of-cost deflated Sharpe <1.0 after accounting for all trials, or a mean net edge below zero across ≥20 resolved contracts.
-
-**Data:** Polymarket historical binary prices (free via Gamma/CLOB API, point-in-time); state polling averages (free, 538/Silver Bullet, point-in-time archived).
 
 ### round 27 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -76,3 +56,17 @@ Post-earnings drift "death" is an equity-market regularity tied to disclosure ev
 ### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
 
 **Claim (b) is most likely wrong for crypto.** Post-earnings drift requires a scheduled, information-dense event with broad analyst coverage and slow diffusion. Crypto has no earnings calendar; the analogue would be major protocol upgrades, halvings, or ETF approvals. The falsifying observation: measure forward returns after major scheduled events (e.g., Bitcoin halvings, large exchange listings, major protocol hard forks) against a matched control window. If drift persists net of the 12–20 bps round trip with a deflated Sharpe surviving trial accounting across multiple events, (b) is wrong for crypto. The event structure is different enough that the equity death post-2006 doesn't transfer.
+
+### round 29 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**Claim (b) — “large-cap post-earnings drift has been dead since ~2006” — is most likely wrong for BONDS.**
+
+It is an equity microstructure claim about *equity* price drift. In govt/credit there is no “earnings” event in that sense; the closest analogue is the scheduled auction/settlement cycle and the post-auction/settlement price move. For govt futures and liquid IG/HY credit indices, a systematic post-event drift can be tested directly. Falsifier: measure the forward excess return of on-the-run 10y UST futures (and CDX IG/HY) from auction/settlement close to +1, +5, +20 sessions, net of the 12–20 bp round trip, with trial accounting. If the deflated Sharpe across the event family stays below the 4.3% T-bill hurdle, the claim survives; if a net-of-cost, trial-adjusted edge persists, the “dead since 2006” claim is wrong for bonds.
+
+### round 29 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**Claim (b) is most likely wrong for bonds.**
+
+Post-earnings drift is an equity phenomenon with no direct analogue in govt/credit. Credit spreads and rates do exhibit post-FOMC and post-CPI announcement drift, and post-supply auction effects—documented in primary-dealer positioning data. So the claim misidentifies the relevant event.
+
+**Falsifying observation:** Estimate cumulative average abnormal returns (CAAR) on IG/HY CDS indices and 10y futures in event windows [0,+5] days after scheduled FOMC/CPI prints, 2006–2024, using a deflated Sharpe with trial accounting across event types and subsamples. If CAAR exceeds 12–20 bps round trip with a deflated Sharpe > 1, claim (b) fails for bonds—drift survives, just not post-earnings.
