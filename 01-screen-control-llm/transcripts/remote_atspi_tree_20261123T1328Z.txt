@@ -1,0 +1,101 @@
+# A9 probe — scripted read of the remote Linux AT-SPI tree over SSH (topology B)
+#
+# Command run from this host (Windows cron, unattended, no local desktop):
+#   ssh -o BatchMode=yes -o ConnectTimeout=10 \
+#     -i C:/Users/zerou/AppData/Local/NVIDIA Corporation/Sync/config/nvsync.key \
+#     eaguiar2015@192.168.2.52 'python3 ~/remote_atspi_tree.py'
+#
+# Exit code: 0. The remote box (gx10-c9b9 / eltonsGX10) runs a GNOME/X11 session
+# with a live AT-SPI bus (at-spi2-registryd pid 5056, bus unix:path=/run/user/1000/at-spi/bus_0).
+# pyatspi is NOT installed on the remote box, so the probe uses dbus-python against
+# the well-known name org.a11y.atspi.Registry and reads /org/a11y/atspi/accessible/root.
+#
+# Result: one scripted read of the remote window tree — A9 DoD met (not a blocker;
+# SSH + AT-SPI both work from this unattended cron host).
+
+root /org/a11y/atspi/accessible/root | name=dbus.String('main', variant_level=1) | role=desktop frame | children=21
+  [0] /org/a11y/atspi/accessible/root | name=dbus.String('xdg-desktop-portal-gtk', variant_level=1) | role=application | children=0
+  [1] /org/a11y/atspi/accessible/root | name=dbus.String('gnome-shell', variant_level=1) | role=application | children=1
+    [0] /org/a11y/atspi/accessible/1 | name=dbus.String('', variant_level=1) | role=window | children=2
+      [0] /org/a11y/atspi/accessible/2 | name=dbus.String('', variant_level=1) | role=panel | children=62
+        [0] /org/a11y/atspi/accessible/4 | name=dbus.String('', variant_level=1) | role=panel | children=7
+        [1] /org/a11y/atspi/accessible/5 | name=dbus.String('', variant_level=1) | role=panel | children=2
+        [2] /org/a11y/atspi/accessible/6 | name=dbus.String('', variant_level=1) | role=panel | children=2
+        [3] /org/a11y/atspi/accessible/7 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [4] /org/a11y/atspi/accessible/8 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [5] /org/a11y/atspi/accessible/9 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [6] /org/a11y/atspi/accessible/10 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [7] /org/a11y/atspi/accessible/11 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [8] /org/a11y/atspi/accessible/12 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [9] /org/a11y/atspi/accessible/13 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [10] /org/a11y/atspi/accessible/14 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [11] /org/a11y/atspi/accessible/15 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [12] /org/a11y/atspi/accessible/16 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [13] /org/a11y/atspi/accessible/17 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [14] /org/a11y/atspi/accessible/18 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [15] /org/a11y/atspi/accessible/19 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [16] /org/a11y/atspi/accessible/20 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [17] /org/a11y/atspi/accessible/21 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [18] /org/a11y/atspi/accessible/22 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [19] /org/a11y/atspi/accessible/23 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [20] /org/a11y/atspi/accessible/24 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [21] /org/a11y/atspi/accessible/25 | name=dbus.String('Files', variant_level=1) | role=label | children=1
+        [22] /org/a11y/atspi/accessible/26 | name=dbus.String('Rhythmbox', variant_level=1) | role=label | children=1
+        [23] /org/a11y/atspi/accessible/27 | name=dbus.String('LibreOffice Writer', variant_level=1) | role=label | children=1
+        [24] /org/a11y/atspi/accessible/28 | name=dbus.String('Help', variant_level=1) | role=label | children=1
+        [25] /org/a11y/atspi/accessible/29 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [26] /org/a11y/atspi/accessible/30 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [27] /org/a11y/atspi/accessible/31 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [28] /org/a11y/atspi/accessible/32 | name=dbus.String('', variant_level=1) | role=label | children=1
+        [29] /org/a11y/atspi/accessible/33 | name=dbus.String('', variant_level=1) | role=label | children=1
+          ... 32 more children not shown
+      [1] /org/a11y/atspi/accessible/3 | name=dbus.String('', variant_level=1) | role=panel | children=5
+        [0] /org/a11y/atspi/accessible/66 | name=dbus.String('', variant_level=1) | role=panel | children=0
+        [1] /org/a11y/atspi/accessible/67 | name=dbus.String('', variant_level=1) | role=panel | children=0
+        [2] /org/a11y/atspi/accessible/68 | name=dbus.String('', variant_level=1) | role=panel | children=0
+        [3] /org/a11y/atspi/accessible/69 | name=dbus.String('', variant_level=1) | role=panel | children=0
+        [4] /org/a11y/atspi/accessible/70 | name=dbus.String('', variant_level=1) | role=panel | children=0
+  [2] /org/a11y/atspi/accessible/root | name=dbus.String('mutter-x11-frames', variant_level=1) | role=application | children=1
+    [0] /org/gtk/application/mutter_x11_frames/a11y/64d5154a_302d_4633_a6a4_a4f72c8cf5f1 | name=dbus.String('TeamViewer', variant_level=1) | role=application | children=2
+      [0] /org/gtk/application/mutter_x11_frames/a11y/08e6a4fc_517b_440a_9527_ff9a3ea0dbc1 | name=dbus.String('', variant_level=1) | role=generic | children=0
+      [1] /org/gtk/application/mutter_x11_frames/a11y/3d3bb851_7aa0_440a_9527_ff9a3ea0dbc1 | name=dbus.String('', variant_level=1) | role=generic | children=1
+        [0] /org/gtk/application/mutter_x11_frames/a11y/b22d9f0e_683d_4c0b_90f3_bf71c48e63a9 | name=dbus.String('', variant_level=1) | role=group | children=1
+  [3] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-keyboard', variant_level=1) | role=application | children=0
+  [4] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-color', variant_level=1) | role=application | children=0
+  [5] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-media-keys', variant_level=1) | role=application | children=0
+  [6] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-wacom', variant_level=1) | role=application | children=0
+  [7] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-power', variant_level=1) | role=application | children=0
+  [8] /org/a11y/atspi/accessible/root | name=dbus.String('ibus-extension-gtk3', variant_level=1) | role=application | children=0
+  [9] /org/a11y/atspi/accessible/root | name=dbus.String('ibus-x11', variant_level=1) | role=application | children=0
+  [10] /org/a11y/atspi/accessible/root | name=dbus.String('evolution-alarm-notify', variant_level=1) | role=application | children=0
+  [11] /org/a11y/atspi/accessible/root | name=dbus.String('gsd-xsettings', variant_level=1) | role=application | children=0
+  [12] /org/a11y/atspi/accessible/root | name=dbus.String('blueman-applet', variant_level=1) | role=application | children=0
+  [13] /org/a11y/atspi/accessible/root | name=dbus.String('org.remmina.Remmina', variant_level=1) | role=application | children=0
+  [14] /org/a11y/atspi/accessible/root | name=dbus.String('gnome-terminal-server', variant_level=1) | role=application | children=1
+    [0] /org/a11y/atspi/accessible/1 | name=dbus.String('eaguiar2015@gx10-c9b9: ~', variant_level=1) | role=frame | children=3
+      [0] /org/a11y/atspi/accessible/2 | name=dbus.String('', variant_level=1) | role=panel | children=5
+        [0] /org/a11y/atspi/accessible/5 | name=dbus.String('', variant_level=1) | role=filler | children=4
+        [1] /org/a11y/atspi/accessible/6 | name=dbus.String('Find', variant_level=1) | role=push button | children=0
+        [2] /org/a11y/atspi/accessible/7 | name=dbus.String('Menu', variant_level=1) | role=toggle button | children=0
+        [3] /org/a11y/atspi/accessible/8 | name=dbus.String('', variant_level=1) | role=filler | children=2
+        [4] /org/a11y/atspi/accessible/9 | name=dbus.String('', variant_level=1) | role=filler | children=2
+      [1] /org/a11y/atspi/accessible/3 | name=dbus.String('', variant_level=1) | role=filler | children=2
+        [0] /org/a11y/atspi/accessible/10 | name=dbus.String('', variant_level=1) | role=menu bar | children=6
+        [1] /org/a11y/atspi/accessible/11 | name=dbus.String('', variant_level=1) | role=page tab list | children=1
+      [2] /org/a11y/atspi/accessible/4 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [0] /org/a11y/atspi/accessible/12 | name=dbus.String('', variant_level=1) | role=panel | children=1
+  [15] /org/a11y/atspi/accessible/root | name=dbus.String('ibus-ui-gtk3', variant_level=1) | role=application | children=0
+  [16] /org/a11y/atspi/accessible/root | name=dbus.String('ibus-x11', variant_level=1) | role=application | children=0
+  [17] /org/a11y/atspi/accessible/root | name=dbus.String('rustdesk', variant_level=1) | role=application | children=0
+  [18] /org/a11y/atspi/accessible/root | name=dbus.String('rustdesk', variant_level=1) | role=application | children=1
+    [0] /org/a11y/atspi/accessible/3 | name=dbus.String('132609493 - RustDesk', variant_level=1) | role=frame | children=2
+      [0] /org/a11y/atspi/accessible/4 | name=dbus.String('', variant_level=1) | role=panel | children=2
+        [0] /org/a11y/atspi/accessible/6 | name=dbus.String('', variant_level=1) | role=filler | children=4
+        [1] /org/a11y/atspi/accessible/7 | name=dbus.String('', variant_level=1) | role=filler | children=2
+      [1] /org/a11y/atspi/accessible/5 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [0] /org/a11y/atspi/accessible/2 | name=dbus.String('', variant_level=1) | role=filler | children=1
+  [19] /org/a11y/atspi/accessible/root | name=dbus.String('blueman-tray', variant_level=1) | role=application | children=0
+  [20] /org/a11y/atspi/accessible/root | name=dbus.String('gjs', variant_level=1) | role=application | children=1
+    [0] /org/a11y/atspi/accessible/1 | name=dbus.String('Desktop Icons 1', variant_level=1) | role=frame | children=1
+      [0] /org/a11y/atspi/accessible/2 | name=dbus.String('', variant_level=1) | role=panel | children=1
+        [0] /org/a11y/atspi/accessible/3 | name=dbus.String('', variant_level=1) | role=panel | children=5
