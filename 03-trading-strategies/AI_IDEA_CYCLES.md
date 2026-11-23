@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T02:08 | 6 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
-| 2026-11-23T02:08 | 6 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 78 |  |
 | 2026-11-23T02:28 | 7 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
 | 2026-11-23T02:28 | 7 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 60 |  |
 | 2026-11-23T02:29 | 8 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 170 |  |
@@ -32,18 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 429 | 21 |  |
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 126 |  |
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 133 |  |
+| 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 68 |  |
+| 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 84 |  |
 
 ## Latest answers
-
-### round 15 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-The claim most likely to be wrong is (a): "gross edge in liquid markets is about the size of the round trip, so most published premia are unharvestable at retail cost." If a systematic strategy in commodities consistently generates returns exceeding the round-trip costs (e.g., average returns of 25 bps or more after adjusting for execution costs), this would falsify the claim. Observing a significant and sustained performance differential between retail costs and generated premia across multiple liquid commodity markets would demonstrate that inefficiencies can be exploited beyond transaction costs.
-
-### round 15 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_OPENROUTER
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-The claim most likely to be wrong is (a) that gross edge in liquid markets is about the size of the round trip, making published premia unharvestable. A specific observation that would falsify this claim would be an extended period where systematic trading strategies in commodities (energy, metals, ags) consistently generate alpha exceeding the sum of transaction costs (12-20 bps) after accounting for slippage and market impact. Demonstrating that these strategies can reliably produce net positive returns net of costs would challenge the assertion of unharvestable premia in liquid markets.
 
 ### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -66,3 +56,19 @@ On Polymarket/Kalshi, "value" isn't a residual factor you harvest from a panel; 
 **(b) is most likely wrong.** Post-earnings-announcement drift maps onto prediction markets more directly than the other claims: the market *is* the forecast, and event-resolution windows (earnings, Fed decisions, data prints) create exactly the setup where prices can underreact to announced information. The "dead since 2006" result comes from equities with heavy arbitrage capital; prediction markets have structurally thin arbitrage (position limits, capital constraints, retail-dominated flow), so underreaction can persist.
 
 **Falsifying observation:** A systematic scan of resolved Polymarket/Kalshi markets tied to scheduled announcements showing that conditional on the surprise sign, the market price 24–72 hours post-announcement still moves in the surprise direction net of the 12–20 bps round trip, with a deflated Sharpe (trial-accounted) above the T-bill hurdle. If no such drift appears across a broad event sample, (b) holds for this class too.
+
+### round 18 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Long S&P 500 constituent stocks whose 5-day return ranks in the top quintile; short the bottom quintile. Equal weight, hold 5 days, rebalance daily.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) of the net-of-cost return series, using all historical daily observations, must be below 1.0 at the 95% confidence level after accounting for trial multiplicity.
+
+**Data:** CRSP daily returns, shares outstanding, and delisting returns. Free, point-in-time, survivorship-bias-free.
+
+### round 18 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Short stocks in the top quintile of trailing 63-day return dispersion (cross-sectional std of daily returns) when the median stock's Amihud illiquidity ratio is below its 252-day median. Hold 21 days, equal-weight, rebalance weekly.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) with trial count = 1. If DS < 1.64 (95% one-sided), the edge is indistinguishable from luck.
+
+**Data:** CRSP daily returns + dollar volume, 1990–2024. Free via WRDS. Point-in-time: dispersion and Amihud use only data available at signal date; delisting returns included.
