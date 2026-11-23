@@ -221,6 +221,31 @@ SR 1.0; and 18.4 / 36.8 / 55.3 / 73.7 y at SR 0.5).
 `≥ 0.8` soft (v1.0 ≥ 1.0) · raw net Sharpe `≥ 0.7` as a hard gate (v1.0 gates the statistics, not the raw Sharpe).
 Capacity `≥ 10×` is *stricter* than v1.0's 5×.
 
+### Full-text addendum (the first paste was truncated at Part 3.5)
+
+**1. Its assumed cost table would have killed the one thing we measured as cheap.** 1E prices round trips at
+**mega-cap ~21 bp, mid-cap ~43 bp, small-cap ~82 bp, micro-cap ~220 bp**. Our measured values are **ETF 6.7122 bp and
+direct equity 12.0749 bp** — so its *assumed* mega-cap band is ~3.5× our measured direct-equity cost and ~9× the ETF.
+Had we used its table instead of measuring, the ETF wrapper — the single component that passes today — would have been
+rejected as uneconomic. That is the entire argument for measuring on our own bars in one comparison, and it is why the
+profession's own reference table is not admissible as a cost input here.
+
+**2. Its O'Brien–Fleming boundaries corroborate 1D** — `4.049, 2.863, 2.337, 2.024` at 25/50/75/100% information
+fractions, with the Pocock alternative `2.361` constant. Two independent answers produced identical 4-look OBF
+boundaries, which is the standard-correct value; those numbers are now safe to code.
+
+**3. A futility rule with teeth:** *"conditional power < 20% at any look → stop; do not 'give it more time'."* That is
+the most actionable stopping rule any answer gave, because it is computable at interim analysis and it forecloses the
+exact behaviour — extending a losing test — that the protocol exists to prevent.
+
+**4. Four falsifiers in its 18-row table that we had not captured:** removing the single best month (or top 1% of
+days) dropping Sharpe below 0.4; *"performance exists only pre-2005 or only pre-decimalization"*; a second independent
+data vendor giving materially different signals (vendor artifact, not strategy); and capacity < 3× intended capital.
+
+Its leakage battery is also the most complete of the nine: lag, shuffle, **canary**, universe-count plot (no jumps at
+reconstitution dates), delisting audit (~1–3%/yr bankruptcy rate), corporate-action spot check 20/20, sub-period
+coverage stability, and independent re-implementation to < 1 bp.
+
 ### The one argument in any answer that is strategically useful to us
 
 > *"Retail advantage: your capacity constraint is usually irrelevant ($50k–$500k), which means micro-cap and
