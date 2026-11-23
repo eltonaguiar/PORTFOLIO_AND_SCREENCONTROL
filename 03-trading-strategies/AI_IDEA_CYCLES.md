@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T01:48 | 5 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 72 |  |
-| 2026-11-23T01:48 | 5 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 151 |  |
 | 2026-11-23T02:08 | 6 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
 | 2026-11-23T02:08 | 6 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 78 |  |
 | 2026-11-23T02:28 | 7 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
@@ -32,20 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 90 | **YES** |
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 73 |  |
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 429 | 21 |  |
+| 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 126 |  |
+| 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 133 |  |
 
 ## Latest answers
-
-### round 14 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-The claim that "value is the last untested family" is likely to be the incorrect one for FOREX (majors and crosses). 
-
-Falsification: A specific observation that would contradict this claim is the consistent underperformance of value strategies in FOREX markets. If value strategies, which typically seek to capitalize on undervalued assets, consistently underperform the broader market or even the alternative asset (4.3% T-bill) in FOREX, it would indicate that value is not the last untested family and that other strategies might offer more opportunities.
-
-### round 14 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_OPENROUTER
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-
 
 ### round 15 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
@@ -64,3 +52,17 @@ Claim (c) is most likely wrong. "Value is the last untested family" for equity i
 ### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
 
 {"error":{"message":"litellm.RateLimitError: Deployment has all max_parallel_requests slots in use. Deployment model_group=free-mode-large, id=4b3fc2d5d3bbd6066aa4f983c0339b491dab2a1744e093be03b71b2660c8aa02 already has max_parallel_requests=1 requests in flight. Raise max_parallel_requests (or the
+
+### round 17 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**Claim (c) — "value is the last untested family" — is most likely wrong.**
+
+On Polymarket/Kalshi, "value" isn't a residual factor you harvest from a panel; it's embedded in how markets price correlated outcomes (e.g., "Will X win the nomination?" vs. "Will X win the presidency?" vs. conditional markets). The deflated Sharpe gate with trial accounting almost certainly kills any naive value tilt tested across multiple event types, because the effective number of independent trials is large and the per-trade edge is thin relative to 12–20 bps round-trip.
+
+**Falsifier:** A pre-registered value screen (e.g., systematically buying contracts priced below a calibrated conditional-probability model across recurring event categories) producing a deflated Sharpe above threshold after trial accounting and net of 16 bps round-trip, versus the 4.3% T-bill.
+
+### round 17 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**(b) is most likely wrong.** Post-earnings-announcement drift maps onto prediction markets more directly than the other claims: the market *is* the forecast, and event-resolution windows (earnings, Fed decisions, data prints) create exactly the setup where prices can underreact to announced information. The "dead since 2006" result comes from equities with heavy arbitrage capital; prediction markets have structurally thin arbitrage (position limits, capital constraints, retail-dominated flow), so underreaction can persist.
+
+**Falsifying observation:** A systematic scan of resolved Polymarket/Kalshi markets tied to scheduled announcements showing that conditional on the surprise sign, the market price 24–72 hours post-announcement still moves in the surprise direction net of the 12–20 bps round trip, with a deflated Sharpe (trial-accounted) above the T-bill hurdle. If no such drift appears across a broad event sample, (b) holds for this class too.
