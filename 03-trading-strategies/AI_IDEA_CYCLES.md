@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 90 | **YES** |
-| 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 90 | **YES** |
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 73 |  |
 | 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 429 | 21 |  |
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 126 |  |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 88 |  |
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 100 |  |
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
+| 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 103 |  |
+| 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 
 ## Latest answers
-
-### round 24 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Time WTI crude oil by the sign of the weekly change in EIA commercial crude inventory, holding for one week.
-
-**Kill measurement:** Net-of-cost weekly return skew. If the strategy's net weekly returns show skew ≤ 0 (or a skew-to-mean ratio indistinguishable from zero at 95% bootstrap CI), the directional edge is dead — inventory signals would be providing no asymmetry beyond noise.
-
-**Data:** EIA weekly commercial crude inventory (free, point-in-time via archive/API with release-date timestamps), CME WTI front-month futures (free delayed, or paid real-time).
-
-### round 24 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Long WTI front-month futures, exit when 20-day rolling realized vol exceeds 60-day realized vol by ≥15%.
-
-**Kill measurement:** Deflated Sharpe (Harvey–Liu) with trial accounting < 0.5 net of 15 bps round-trip. That threshold is what kills it.
-
-**Data:** CME WTI front-month continuous settlement prices, daily, 2000–present. Free: Nasdaq Data Link (limited), Stooq. Point-in-time: settlement prices are, but rolling methodology (Gorton–Rouwenhorst vs constant-maturity) is not—survivorship in roll-date conventions is the silent killer.
 
 ### round 25 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -86,3 +70,15 @@ Enter long "Yes" when market implied probability trails the state's polling-aver
 **Kill measurement:** Net-of-cost deflated Sharpe <1.0 after accounting for all trials, or a mean net edge below zero across ≥20 resolved contracts.
 
 **Data:** Polymarket historical binary prices (free via Gamma/CLOB API, point-in-time); state polling averages (free, 538/Silver Bullet, point-in-time archived).
+
+### round 27 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**Claim (b) is most likely wrong.**
+
+PEAD's disappearance post-2006 is frequently asserted but rests on pooled, equal-weight long/short deciles with no cost overlay. Falsifier: a single-name long/short portfolio sorting on SUE (or standardized earnings surprise), implemented with realistic execution (VWAP, 12–20 bps round trip), restricted to top-1000 liquid names, holding 60–120 days, with proper trial accounting (deflated Sharpe across sort variants), still showing net IR > 0.5 after 2006. Several practitioner implementations report exactly this: the effect compressed in magnitude but survived in large caps when traded patiently and cost-aware. The "dead" claim typically reflects publication bias and implementation sloppiness, not genuine disappearance.
+
+### round 27 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**(b)** is most likely wrong. The "death since ~2006" is largely a post-2010 artifact of the mega-cap growth regime, and PEAD in single-name equities has shown intermittent revival tied to rate regimes and retail flow (e.g., 2020–21). The claim conflates a specific decade's drawdown with structural disappearance.
+
+**Falsifying observation:** A net-of-18bps long/short PEAD portfolio (SUE deciles, skip-one-day entry, 63-day holding) on Russell 1000 names delivers a deflated Sharpe (trial-adjusted, multiple-testing accounted) above the 4.3% T-bill over a post-2015 sample, robust across 2016–2019 and 2022–2024 subperiods. That would show the premium persists once mega-cap crowding and zero-commission noise are controlled.
