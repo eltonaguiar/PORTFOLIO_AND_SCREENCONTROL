@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
-| 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 71 |  |
 | 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 | 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 34 |  |
@@ -32,32 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 200 | 100 |  |
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
+| 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 87 |  |
+| 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 82 |  |
 
 ## Latest answers
-
-### round 20 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-
-
-### round 20 - BONDS (govt and credit) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Compare the Sharpe Ratio of a Bond Portfolio to a 4.3% T-Bill.
-
-**Falsifiable Measurement:** If the Sharpe Ratio of the Bond Portfolio is not significantly higher than 4.3% (net of costs), the test fails.
-
-**Data Required:**
-
-* Historical daily returns of the bond portfolio (govt and credit)
-* Historical daily returns of the 4.3% T-Bill
-* Transaction costs (12-20 bps)
-
-**Data Availability:**
-
-* Historical returns: Free, but may be point-in-time (requires historical data).
-* Transaction costs: Free, point-in-time.
-
-**Kill Measurement:** A Sharpe Ratio of the bond portfolio not significantly exceeding 4.3% (net of costs) would indicate that the portfolio doesn't offer a compelling risk-adjusted return advantage over the T-Bill.
 
 ### round 21 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -90,3 +66,21 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Kill measurement:** Deflated Sharpe (Bailey–López de Prado with trial accounting) of net excess return over the 4.3% T-bill must exceed the critical value at α = 0.05. Kill if deflated Sharpe ≤ 0 (or fails to reject zero at 5%).
 
 **Data:** FZROX (or Vanguard SPLG, 3 bps) daily NAV, 13-week T-bill secondary market yield. Free, point-in-time: FRED (DGS3MO), fund provider historical NAVs.
+
+### round 23 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** GBPJPY 20-period momentum (weekly close), long only, 1990–2024.
+
+**Measurement that kills it:** Deflated Sharpe (DSR with trial factor ~50) < 0.95 after 15 bps round-trip. If DSR falls below 0.95, the edge is indistinguishable from noise at this cost.
+
+**Data required:** GBPJPY weekly OHLC, 1990–2024. Free via Dukascopy historical feed or TrueFX; point-in-time (no look-ahead). T-bill series from FRED (free, point-in-time).
+
+**Why this one:** GBPJPY has the largest realized drift among majors; weekly momentum avoids daily noise that cost destroys. Single instrument, single parameter—minimal multiple-testing inflation.
+
+### round 23 - FOREX (majors and crosses) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** On daily EUR/USD 15:00 London fix, go long the higher-yielding G10 currency vs USD if its 1-month OIS yield exceeds USD by >50bps, held 5 days. Signal is computable before execution.
+
+**Data:** G10 1-month OIS fixings (FRB H.15, ECB SDW) — free, point-in-time with publication lags. WM/Reuters 16:00 fix — free daily close, point-in-time.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado, 2 trials) < 1.0 net of 16 bps round-trip, or annualized net return < 4.3% T-bill. Either outcome kills it.
