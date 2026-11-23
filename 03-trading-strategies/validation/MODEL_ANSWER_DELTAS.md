@@ -285,6 +285,60 @@ is the same defect class as 1D's MinBTL contradiction.
 one crude power table, one miscalculated column). Rank on content: 1F ≈ 1E > 1D > Luna > Claude > GLM > 1A > 1B > 1C.
 Rank on arithmetic integrity: **1E > 1D > 1F**.
 
+## 2g. The routed-panel failure (AskAnyModel, second batch) — four panes, one model
+
+**Provenance collapse.** Six panes were selected: Gemma 4 26B A4B, Nemotron 3.5 Super VL, Nemotron 3.5 Lightning,
+GPT-5 Nano, Gemini, Claude Haiku 4.5. The first four returned **byte-identical text** and every one carries the
+subtitle **"answered by GPT-OSS 20B Reasoning LLM · Pollinations community"**. Gemini and Claude Haiku 4.5 were cut
+off mid-answer by a length limit.
+
+> A "six-model comparison" was **one model × four labels**, plus two truncated answers. Diffing the pane text takes
+> five seconds and would have shown it; the labels actively hide it.
+
+**Operational rule adopted:** before treating a multi-pane result as a panel, **diff the answers**. Two or more
+byte-identical panes means the panel is fake and any "models disagree / models agree" claim from it is fiction.
+
+### The shared answer invents metrics that do not exist
+
+This is worse than a wrong threshold. A reader can look up a wrong number; an invented *name* looks advanced and
+cannot be checked, so it gets repeated.
+
+| Invented | What it claims | Reality |
+|---|---|---|
+| **"Deflated Information Ratio (DIR) ≥ 1.8"** | an alpha-variance-adjusted IR | **no such published metric** — web search returns only DSR |
+| **"Capacity-Adjusted Sharpe (CAS) = DSR × (1 − γW)"** | capacity-adjusted Sharpe | invented; γ and W undefined |
+| **"Cost-Test Ratio (CTR) ≥ 1.2"** | net return over vol | that is just a Sharpe on net returns, renamed |
+| **"Forward-Whisker Validation"** | a pre-holdout dry run | invented term for a third data split |
+| **"WFE = (median_turnover / mean_backtest_return) × 1.5"** | walk-forward efficiency | **has no in-sample or out-of-sample term in it at all** — it cannot measure walk-forward anything |
+| **"PBO = 1 − Φ((α̂ − δ)/σ̂_α)", accept at ≥ 90%** | probability of overfitting | **inverted.** PBO is the probability your selection is overfit; ≥ 0.5 is the standard reject, and 90% would be catastrophic, not acceptable |
+| **"DSR = (μ−f)/σ·√T / √(1+…) ≥ 1.5"** | deflated Sharpe | DSR is a probability in **[0,1]**; a ≥ 1.5 gate again cannot be passed by anything |
+| **"Tail ratio accept only between 1.5 and 3.0"** | tail behaviour | shifted scale; ≈1.0 is symmetric, and "extremely high TR indicates pathological risk" misreads right-skew as danger |
+
+### Even the best pane gets the core formula wrong
+
+**Claude Haiku 4.5** — the only pane that looked disciplined — writes
+`DSR = Sharpe × [1 − (k ln N / n)]` and sets the pass mark at **≥ 0.4**. That is not the DSR (it has no skew, no
+kurtosis, no expected-maximum term), and 0.4 is less than half of the adopted 0.95. A strategy passing it would be
+nowhere near defensible.
+
+**Gemini** was cut off inside its first table — it had the right structure and never got to numbers, so it is
+unscored rather than wrong.
+
+### What this round is worth
+
+Nothing on thresholds — worse than nothing, because four of its seven metrics cannot be computed. Two things are
+worth keeping:
+
+1. **The provenance test** (diff the panes) — this is the only round where the *collection method* failed rather than
+   the content, and that failure would have contaminated a comparison silently.
+2. **Its control list is complete in shape**: pre-registration with a declared list of degrees of freedom
+   (*"MA windows 5–250 by 5; breakout threshold ±0.5–3σ"*) is a better pre-registration discipline than any other
+   answer's — the exact sweeps you intend are what N_eff is computed from, and writing them down before running them
+   is the only way the count is honest.
+
+**Ranking impact: none.** This batch scores below 1C on usability, because 1C at least stated one impossible gate
+while this states seven, four of them under invented names.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a
