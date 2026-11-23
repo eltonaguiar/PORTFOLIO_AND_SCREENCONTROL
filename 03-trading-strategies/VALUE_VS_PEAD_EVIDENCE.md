@@ -59,10 +59,31 @@ Same prompt, no shared numbers, three independent surfaces:
 **Where all three agree, and it is the more useful finding:**
 
 1. **PEAD decayed post-2005/2006 and nothing after that is large-cap reliable.** Three independent models, three different citation sets, same conclusion.
-2. **Value is the better first test**, and it is a *monthly* strategy — the horizon our own cost ladder says survives (+24.21 bp at 1D vs −0.57 bp at 15m).
+2. **Value is the better first test**, and it is a *monthly* strategy — the horizon our own cost ladder says survives. Note: the (+24.21 bp at 1D vs −0.57 bp at 15m) figure quoted here is DEAD per A9 (no implementation, unit unstated, killed in HORIZON_LADDER_A9.md); the cost-horizon basis is annual cost drag = (365 / holding_days) x round_trip_bps.
 3. **Turnover costs are the binding constraint**, not signal strength: the router's own arithmetic takes 50–70 bp/month down to 30–40.
 
 **What this changes in practice:** the magnitude must be **measured on our data, not imported from literature**, because the literature disagrees with itself by a factor of two. The pre-registered kill rule is unchanged and is exactly what resolves it — OOS net return on committed capital ≤ 4.3%, or the one-sided 95% upper bound ≤ 4.3%.
+
+## H2 audit — model-sourced claim status (2026-11-23)
+
+Every number in this doc that came from a model (duck.ai / GPT-6 Luna; Router / ULTRA_FREE_OPENROUTER; Router / ULTRA_FREE_CLOUD_LARGE) rather than a primary paper, re-verified claim by claim:
+
+| # | Claim (location) | Model source | Primary-source check | Status |
+|---|---|---|---|---|
+| 1 | Value 3–5%/yr ≈ 25–42 bp/month gross; "highly sample-dependent" (L15) | duck.ai GPT-6 Luna | Band reconciled by B7 vs JFQA "Is the Value Premium Dead?" (HML −0.86%/yr post-2007); "3–5%/yr" and "highly sample-dependent" not traced to a primary paper | PARTIAL — band usable as long-run context, base claim not primary-verified |
+| 2 | HML sample 1927–2024; size-adjusted BtM study 1977–2023 (L16) | duck.ai GPT-6 Luna | 1927–2024 consistent with JFQA Jul 1926–Dec 2007; "1977–2023 study" not identified | UNVERIFIED at primary level |
+| 3 | HML "lost about half its cumulative value after 2007"; BtM misclassifies intangibles (L17) | duck.ai GPT-6 Luna | Direction consistent with JFQA post-2007 decay; "half" not traced to primary | PARTIAL — direction only |
+| 4 | PEAD "~6% abnormal over 60 days, later summary" (L24) | duck.ai GPT-6 Luna | Bernard & Thomas 41/48 quarters verified by C3; "~6% / later summary" not identified | UNVERIFIED |
+| 5 | Cost sensitivity 11.92% → 3.36%; 6.59% revenue-surprise drift unprofitable (L26) | duck.ai GPT-6 Luna | Web search found no paper with these figures; JSTOR PEAD-cost paper reports different results | KILLED — model-fabricated, not evidence |
+| 6 | Router 0.5–0.7%/mo = 50–70 bp/mo; HML ≈ −0.3%/mo 2007–2020; net 30–40 bp/mo (L54) | Router / ULTRA_FREE_OPENROUTER | 50–70 vs 25–42 reconciled by B7 (our net 25.23 bp/mo); HML −0.3%/mo roughly consistent with JFQA −7 bp/mo post-2007 | PARTIAL — reconciled band, router specifics not primary-verified |
+| 7 | Router SUE1 2.0–3.5%/yr ≈ 20–30 bp/mo; 4–6% over 60 days extreme SUE; sample 1971–2005; post-2005 compressed (L55) | Router / ULTRA_FREE_CLOUD_LARGE | Web search found no matching paper (Latane & Jones 1977: 9.74%/quarter 1971–75, different magnitude) | KILLED — model-fabricated, not evidence |
+
+Verified model claims (already primary-checked this programme): Bernard & Thomas 41/48 (C3), Martineau decay direction (C3), JFQA "Is the Value Premium Dead?" HML +5.20%/yr vs −0.86%/yr (Arena round, L104), Meursault et al. 2023 PEAD.txt 2.87%–1.54% (Arena round, L103), modern value figures from JFQA (L121–124 except +0.11%).
+
+H3 violations corrected this run:
+- L128: Martineau −32/0/−64 bp/month decade figures — DO NOT appear in Martineau (C3); false attribution removed.
+- L124: +0.11%/yr gross on 186 names — price-only/raw-close artifact per COMS total-return check e8dc5ca; dead as measurement.
+- L62: +24.21 bp at 1D vs −0.57 bp at 15m — dead per A9 (HORIZON_LADDER_A9.md).
 
 **Citations to verify at source** (Ball & Brown 1968 *JAR*, Bernard & Thomas 1989 *JAR*, Ball & Bartov 1996 *JAE* and Martineau SSRN 3111607 checked against primary sources this run — see `03-trading-strategies/results/c3_pead_citation_verification.json`; Fama & French 1992 *J Finance*, Fama & French 2019 *JFE*, Asness, Moskowitz & Pedersen 2013 *J Finance*, Livnat & Mendenhall 2006 *TAR* remain unchecked).
 
@@ -73,7 +94,7 @@ Same prompt, no shared numbers, three independent surfaces:
   currently researching exactly this — the honest deliverable is a *dated, universe-specific* number, and a
   null is the likely outcome rather than a failure.
 - **Value is the better first test**, and it is testable with monthly rebalancing, which is the one horizon
-  our own cost ladder says can survive (+24.21 bp at 1D vs −0.57 bp at 15m).
+  our own cost ladder says can survive. Note: (+24.21 bp at 1D vs −0.57 bp at 15m) is DEAD per A9 — killed in HORIZON_LADDER_A9.md; the cost-horizon basis is annual cost drag = (365 / holding_days) x round_trip_bps.
 - The killer arithmetic is unchanged: 25–42 bp/month gross against a 12–20 bp round trip leaves a thin
   margin, and any long-short construction adds financing and short-borrow that we have not measured.
 
@@ -121,12 +142,11 @@ the abstracts to the decimal. Contrast with the AskAnyModel table, where 3 of 7 
 **Value (HML), modern:** 49 → 10 bp/month all-cap from 1963–91 to 1991–2019; **big-stock 42 → 4 bp/month**; the
 largest-cap decile spread was only **25 bp/month** even in the 1992 discovery sample; HML alpha after profitability
 and investment controls is **−4 bp/month (t = −0.47)**; and post-2007 HML is **−0.86%/yr = −7 bp/month**. Our own
-measurement (+0.11%/yr gross on 186 names) sits inside that consensus rather than contradicting it.
+measurement (+0.11%/yr gross on 186 names) sits inside that consensus rather than contradicting it. ⚠ CORRECTION: the +0.11%/yr figure was computed on raw Close (unadjusted) prices — the value pipeline's total-return check (COMS e8dc5ca) showed it is a price-only artifact; dividend-adjusted total return is +2.89%/yr (range 2.89–3.89%). The +0.11%/yr figure is dead as a measurement and is not evidence.
 
 **PEAD, classic:** Bernard–Thomas 147 bp/month in 1974–86 but **size-dependent (large caps 98 bp)**; Chordia et al.
 value-weighted spread in the most liquid stocks **4 bp/month** with costs eating 70–100% of the paper profit;
-**Martineau (2022): non-microcap PEAD is −32 / 0 / −64 bp/month in 2006–10 / 2011–15 / 2016–19** — negative in the
-last window. ⚠ C3 check (2026-11-23): the qualitative decay claim — large-cap PEAD non-existent since 2006, microcaps later — is verified verbatim from Martineau's full text (SSRN 3111607, Critical Finance Review 11(3-4):613-646). The −32 / 0 / −64 bp/month decade figures DO NOT appear in the paper (it reports t-stats/significance of BHAR[2,60], not bp/month averages) — those figures are UNVERIFIED and must not be attributed to Martineau. Direction confirmed from primary source; numbers are not. This confirms, from primary sources, the direction of what we had recorded as an unverified external claim.
+Martineau (2022): qualitative direction confirmed from primary source — large-cap PEAD non-existent since 2006, microcaps later (SSRN 3111607, Critical Finance Review 11(3-4):613-646; C3 verified 2026-11-23). The −32 / 0 / −64 bp/month decade figures attributed to Martineau in an earlier draft DO NOT appear in the paper (it reports t-stats/significance of BHAR[2,60], not bp/month averages) — C3 check: those figures are UNVERIFIED and must not be attributed to Martineau; removed as evidence.
 
 **PEAD, text-conditioned:** **96 bp/month gross over 63 days, 2010–2019, and it survives in years when classic PEAD
 is ≈0.** That is the only modern published PEAD magnitude that clears a 35.8 bp/month cash hurdle before costs.

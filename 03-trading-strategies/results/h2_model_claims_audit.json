@@ -1,0 +1,36 @@
+{
+  "item": "H2 H — Re-verify every model-sourced claim in VALUE_VS_PEAD_EVIDENCE.md",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 82",
+  "session": "Session 24 — 2026-11-23 — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "question": "Which numbers in VALUE_VS_PEAD_EVIDENCE.md came from a model (duck.ai / two routers) rather than a primary paper, and do they hold at source?",
+  "method": "Catalogued all model-sourced claims (duck.ai GPT-6 Luna; Router ULTRA_FREE_OPENROUTER; Router ULTRA_FREE_CLOUD_LARGE) and cross-checked each against primary sources: C3 committed verification, B7 committed reconciliation, Arena-round JFQA verification, plus web search for router-specific figures.",
+  "result": {
+    "verified_or_reconciled": [
+      "Value 25–42 bp/month gross band — reconciled by B7 vs JFQA 'Is the Value Premium Dead?' (HML −0.86%/yr post-2007); the base '3–5%/yr' and 'highly sample-dependent' phrasing not traced to a primary paper",
+      "Bernard & Thomas 41/48 quarters 1974–85 — verified by C3",
+      "Martineau decay direction (large-cap PEAD non-existent since 2006, microcaps later) — verified by C3 verbatim from full text",
+      "JFQA 'Is the Value Premium Dead?' — HML +5.20%/yr Jul 1926–Dec 2007 vs −0.86%/yr Jan 2008–Mar 2025; value beat growth 55% → 43% of months — Arena round verified",
+      "Meursault et al. 2023 PEAD.txt — JFQA 58(6) 2299–2326, PEAD.txt vs classic PEAD 2.87%–1.54% — Arena round verified",
+      "Modern value figures from JFQA — L121–124 (49→10 bp/mo, big-stock 42→4 bp/mo, largest-cap 25 bp/mo, HML alpha −4 bp/mo t=−0.47)"
+    ],
+    "killed_unverified": [
+      "Cost sensitivity 11.92% → 3.36%; 6.59% revenue-surprise drift unprofitable after costs (L26) — web search found no paper with these figures; JSTOR PEAD-cost paper reports different results. KILLED — model-fabricated, not evidence.",
+      "Router SUE1 2.0–3.5%/yr ≈ 20–30 bp/mo; 4–6% over 60 days extreme SUE; sample 1971–2005 US; post-2005 SUE compressed (L55) — web search found no matching paper (Latane & Jones 1977 = 9.74%/quarter, different magnitude). KILLED — model-fabricated, not evidence."
+    ],
+    "partial_unverified": [
+      "HML sample 1927–2024; size-adjusted BtM study 1977–2023 (L16) — 1977–2023 study not identified",
+      "HML 'lost about half its cumulative value after 2007'; BtM misclassifies intangibles (L17) — direction consistent with JFQA post-2007 decay, 'half' not primary-traced",
+      "PEAD '~6% abnormal over 60 days, later summary' (L24) — Bernard & Thomas verified but the '~6% / later summary' not identified",
+      "Router 0.5–0.7%/mo = 50–70 bp/mo; HML ≈ −0.3%/mo 2007–2020; net 30–40 bp/mo (L54) — 50–70 vs 25–42 reconciled by B7; router specifics not primary-verified"
+    ]
+  },
+  "h3_violations_corrected": [
+    "L128: Martineau −32 / 0 / −64 bp/month decade figures — DO NOT appear in Martineau (paper reports t-stats/significance of BHAR[2,60], not bp/month averages); false attribution removed per C3.",
+    "L124: +0.11%/yr gross on 186 names — price-only/raw-Close artifact per value total-return check COMS e8dc5ca; dead as a measurement.",
+    "L62: (+24.21 bp at 1D vs −0.57 bp at 15m) — dead per A9 (no implementation, unit unstated, killed in HORIZON_LADDER_A9.md)."
+  ],
+  "artifact": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md (H2 audit appendix + inline corrections)",
+  "done_condition": "Every model-sourced claim marked verified / partial / killed; false attributions and dead figures corrected; no audited number remains without (source, date) or an explicit ASSUMED/killed status",
+  "blocked_still": "D3 remains blocked: D2 calibration ledger has 0 records and D4 panel claims (AI-owned) are not generated, so there is nothing to score.",
+  "next": "H3 full-document audit for (source, date) / ASSUMED violations remains open."
+}
