@@ -69,6 +69,25 @@ spot-checking — and no gate from that answer should be adopted, even the ones 
 
 ## 2c. 1D — the strongest of the six, and the only one whose worked example reproduces
 
+> **Correction found on re-read (this answer was submitted twice).** 1D states *"about 45 independent trials on 5
+> years of data are expected to produce a Sharpe of 1.0 from pure noise"* **and**, in the same paragraph,
+> *"a conservative bound on the minimum backtest length is 2·ln(N)/SR² years."* The two disagree. Recomputed with
+> `E[max SR] ≈ √(2 ln N / Y)`:
+>
+> | N | E[max SR] over 5 y | MinBTL at SR 1.0 |
+> |---|---|---|
+> | 12 | 0.997 | 4.97 y |
+> | 20 | 1.095 | 5.99 y |
+> | **45** | **1.234** | **7.61 y** |
+> | 100 | 1.357 | 9.21 y |
+>
+> So 45 trials over 5 years produce an expected **max Sharpe of ~1.23**, not 1.0; a 1.0 from noise on 5 years needs
+> only **~12 trials**; and 45 trials need **7.6 years** to be beaten at Sharpe 1.0 — which is exactly what its own
+> `2·ln(N)` formula says. **Its rule is right; its example misapplies it by 1.5×.** Directionally the paragraph is
+> correct (more trials, less data → higher noise Sharpe), and the operational message — *fewer trials, stronger
+> prior* — is unaffected. But a document that states a formula and then violates it three words later is precisely
+> the failure mode we file these audits for: quote the rule, not the illustration.
+
 The fourth 1min.ai answer is materially better than the others: it states formulas rather than names them, and its
 arithmetic holds. Verified here:
 
