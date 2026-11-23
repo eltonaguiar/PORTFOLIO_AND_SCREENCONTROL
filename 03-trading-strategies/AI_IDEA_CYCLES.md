@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T02:50 | 9 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
-| 2026-11-23T02:50 | 9 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 104 |  |
 | 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 81 |  |
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
+| 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
+| 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 200 | 100 |  |
 
 ## Latest answers
-
-### round 18 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Long S&P 500 constituent stocks whose 5-day return ranks in the top quintile; short the bottom quintile. Equal weight, hold 5 days, rebalance daily.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) of the net-of-cost return series, using all historical daily observations, must be below 1.0 at the 95% confidence level after accounting for trial multiplicity.
-
-**Data:** CRSP daily returns, shares outstanding, and delisting returns. Free, point-in-time, survivorship-bias-free.
-
-### round 18 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Short stocks in the top quintile of trailing 63-day return dispersion (cross-sectional std of daily returns) when the median stock's Amihud illiquidity ratio is below its 252-day median. Hold 21 days, equal-weight, rebalance weekly.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) with trial count = 1. If DS < 1.64 (95% one-sided), the edge is indistinguishable from luck.
-
-**Data:** CRSP daily returns + dollar volume, 1990–2024. Free via WRDS. Point-in-time: dispersion and Amihud use only data available at signal date; delisting returns included.
 
 ### round 19 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -90,3 +74,19 @@ Signal: close > 50D SMA AND 10D SMA > 50D SMA → long 1x notional. Flat otherwi
 * Transaction costs: Free, point-in-time.
 
 **Kill Measurement:** A Sharpe Ratio of the bond portfolio not significantly exceeding 4.3% (net of costs) would indicate that the portfolio doesn't offer a compelling risk-adjusted return advantage over the T-Bill.
+
+### round 21 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Monthly-rebalanced long/short sector momentum: long top-2, short bottom-2 of 11 GICS sector ETFs ranked on trailing 12-1 month return.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado, trial-adjusted) below 0.5 net of 15 bps round-trip, with p-value > 0.05 against the 4.3% T-bill alternative.
+
+**Data:** Daily adjusted closes and sector ETF constituents (SPY, XLB, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, XLRE). Free via Stooq or Yahoo Finance. Point-in-time: prices yes; constituent history requires CRSP (paid) — use fixed launch-date universe as paper proxy.
+
+### round 21 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Long-only S&P 500 equal-weight sector rotation: monthly, hold only the sector with highest 63-day trailing return. Rebalance monthly.
+
+**Kill measurement:** Deflated Sharpe (Harvey-Liu) with all trials in the class (sector, factor, cross-asset ETFS) < 1.0, net of 12–20 bps round-trip, after subtracting the 4.3% T-bill hurdle. If DS ≤ 1.0, the edge is indistinguishable from selection noise.
+
+**Data:** Daily total-return prices for 11 GICS sector ETFs (XLY, XLP, XLE, XLF, XLV, XLI, XLB, XLRE, XLK, XLU, XLC). Free: Yahoo Finance (adjusted close, survivorship-free since all survive). Point-in-time: yes, but verify inception dates — XLRE starts 2015, limiting pre-2015 history.
