@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 73 |  |
-| 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 429 | 21 |  |
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 126 |  |
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 133 |  |
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 68 |  |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 | 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 103 |  |
 | 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
+| 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
+| 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 101 |  |
 
 ## Latest answers
-
-### round 25 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Sell 1-month 2% OTM SPX put spreads (long put, short 1% OTM put) on liquid CBOE-listed SPX options, delta-hedged daily at close. Compare net-of-cost annualized return against 4.3% T-bill.
-
-**Kill measurement:** Deflated Sharpe (trial-adjusted) < 1.0 after subtracting 16 bps round-trip per rebalance and bid-ask slippage estimated from intraday quotes.
-
-**Data:** Daily SPX option chain (strike, bid, ask, open interest, expiry), SPX spot, realized intraday range. Free sources: CBOE (delayed, end-of-day only, not point-in-time intraday); historical option data is not freely available point-in-time.
-
-### round 25 - OPTIONS (equity index) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Short 30-day 2% OTM SPX put spreads (sell 2% OTM put, buy 4% OTM put), rolled at expiry, equal weight across all expiries.
-
-**Kill measurement:** Deflated Sharpe (accounting for the number of distinct configurations tried across this programme) below 1.0 net of 15 bps assumed round-trip cost, evaluated against the 4.3% T-bill hurdle.
-
-**Data:** Daily SPX index closes and Cboe SPX end-of-day option prices (strike, bid, ask, expiry, delta). Free at Cboe Datashop, but point-in-time reconstruction requires the historical snapshot files; delayed public data is not point-in-time.
 
 ### round 26 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -82,3 +66,13 @@ PEAD's disappearance post-2006 is frequently asserted but rests on pooled, equal
 **(b)** is most likely wrong. The "death since ~2006" is largely a post-2010 artifact of the mega-cap growth regime, and PEAD in single-name equities has shown intermittent revival tied to rate regimes and retail flow (e.g., 2020–21). The claim conflates a specific decade's drawdown with structural disappearance.
 
 **Falsifying observation:** A net-of-18bps long/short PEAD portfolio (SUE deciles, skip-one-day entry, 63-day holding) on Russell 1000 names delivers a deflated Sharpe (trial-adjusted, multiple-testing accounted) above the 4.3% T-bill over a post-2015 sample, robust across 2016–2019 and 2022–2024 subperiods. That would show the premium persists once mega-cap crowding and zero-commission noise are controlled.
+
+### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**(b) is most likely wrong for crypto.**
+
+Post-earnings drift "death" is an equity-market regularity tied to disclosure events and analyst coverage. Crypto has no earnings calendar, no consensus estimates, and no mandated disclosure cycle — so the finding doesn't transfer as a structural prior. The falsifiable observation: take a large-cap crypto asset with a scheduled, information-dense event (e.g., major protocol upgrade activation, spot-ETF flow disclosure, or a dominant exchange's quarterly proof-of-reserves). Measure forward returns over 5/20/60 days net of a 16 bps round trip. If the post-event drift is statistically indistinguishable from zero across a deflated-Sharpe trial accounting (and the T-bill alternative), claim (b) holds for crypto; if a persistent, cost-surviving drift appears, (b) is falsified.
+
+### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**Claim (b) is most likely wrong for crypto.** Post-earnings drift requires a scheduled, information-dense event with broad analyst coverage and slow diffusion. Crypto has no earnings calendar; the analogue would be major protocol upgrades, halvings, or ETF approvals. The falsifying observation: measure forward returns after major scheduled events (e.g., Bitcoin halvings, large exchange listings, major protocol hard forks) against a matched control window. If drift persists net of the 12–20 bps round trip with a deflated Sharpe surviving trial accounting across multiple events, (b) is wrong for crypto. The event structure is different enough that the equity death post-2006 doesn't transfer.
