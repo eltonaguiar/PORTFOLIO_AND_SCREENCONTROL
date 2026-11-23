@@ -73,7 +73,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [ ] **B3 — cost-basis versioning** · S · capture `payload.slippage_validation` per class into a committed file with
       a hash, so any verdict can be recomputed against the costs it used. **DoD:** file committed;
       `CAPITAL_ALLOCATION.md` cites it instead of quoting numbers from memory.
-- [ ] **B4 — re-run harness certification after any harness change** · S · `python -m
+- [x] **B4 — re-run harness certification after any harness change** · S · `python -m
       realtime_challenge.proof.test_harness` from `03-*/`. **DoD:** 5/5 pass; result appended to `PROGRESS.md`.
       Mandatory whenever a run touches `realtime_challenge/`.
 

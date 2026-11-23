@@ -8,6 +8,15 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 14 — 2026-11-23 (01:15 UTC) — `hermes` (cron pasc-progress axis)
+Question: after the peer push advanced origin/main past Session 13's verified state, does the harness still certify clean (backlog item B4)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 01:15 | PASS | B4 harness re-certification: `python -m realtime_challenge.proof.test_harness` from `03-trading-strategies/` → 5/5: T1a look-ahead detectable (peeking +36.7bps vs honest −3.5bps), T1b signals causal, T2 cost drag 25.4bps vs 26 expected (n=1665), T3 both-touched bar → SL, T4 0/60 noise cells at DSR≥0.95 | `results/harness_certification.json` |
+
+Standing state: harness green; no number corrected, none authored; no edge claimed. Everything else in Session 13's standing state is unchanged.
+
 ## Session 13 — 2026-11-23 (00:16 UTC) — `hermes` (Session B, cron queue axis)
 Question: after the peer push advanced origin/main past Session 12's verified state (6a76102: +15 ledger rows, +7 carry_roundtrip ticks, summary regenerated at 23:32Z), does results/carry_series_summary.json still recompute exactly from results/carry_roundtrip.jsonl?
 

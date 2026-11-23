@@ -77,7 +77,7 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
-| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 55 | 3650 |
+| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 75 | 5212 |
 | [`03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`](03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md) | 59 | 4359 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
 | [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 125 | 6582 |
@@ -93,7 +93,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 366 | 56962 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 375 | 57761 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
 | [`03-trading-strategies/README.md`](03-trading-strategies/README.md) | 129 | 7718 |
 | [`03-trading-strategies/ROADMAP_200_deepseek-flash.md`](03-trading-strategies/ROADMAP_200_deepseek-flash.md) | 327 | 19700 |
@@ -134,7 +134,7 @@ reflects new peer artifacts without a human in the loop.
 | Path | Lines | Bytes |
 |---|---:|---:|
 | [`NEXT_STEPS.md`](NEXT_STEPS.md) | 154 | 12321 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 30 | 6089 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 31 | 6441 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 
