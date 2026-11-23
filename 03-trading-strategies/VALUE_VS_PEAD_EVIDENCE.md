@@ -84,3 +84,86 @@ capital. This harvest does not change that — it names the two families that we
 the two that were measured and failed. Evidence class: **external claim, not verified against primary
 papers**; the Martineau result in particular should be confirmed at source before it is used to kill a
 research line.
+
+---
+
+# 2026-11-23 UPDATE — Arena A/B round, and it reverses the "value first" call above
+
+A later Arena comparison (Assistant A vs Assistant B, same value-premium/PEAD question with a **12–20 bp round-trip
+cost** and a **4.3% T-bill hurdle**) produced a materially better answer. Both of its recent citations were verified
+against primary sources, and its arithmetic checks. **It changes which family we test first.**
+
+> **Vote-row note:** the A/B "A is better / Both are good / Both are bad / B is better" control at the bottom of that
+> page writes to the operator's account and hides identities until voted. It was not clicked, per standing rule.
+
+## 1. Citation verification — both recent sources are real, with matching magnitudes
+
+| Cited | Verified | Magnitude match |
+|---|---|---|
+| **Meursault, Liang, Routledge & Scanlon (2023), "PEAD.txt: Post-Earnings-Announcement Drift Using Text", JFQA 58(6) 2299–2326** | ✅ real, exact volume/pages | ✅ the paper's own abstract states PEAD.txt vs classic PEAD of **2.87%–1.54%**, exactly as quoted |
+| **"Is the Value Premium Dead? Forecasting Value–Growth Cycles with the Implied Value Premium" (JFQA)** | ✅ real | ✅ HML **+5.20%/yr Jul 1926–Dec 2007 vs −0.86%/yr Jan 2008–Mar 2025**; value beat growth **55% → 43%** of months, verbatim match |
+
+That is the first answer in this programme whose 2023/2026 citations survived checking **and** whose numbers matched
+the abstracts to the decimal. Contrast with the AskAnyModel table, where 3 of 7 were invented.
+
+## 2. Arithmetic re-derived
+
+| Claim | Recompute | Verdict |
+|---|---|---|
+| 4.3% annual = 35.8 bp/month | 4.3/12 = 0.358% | ✅ |
+| 63-day hurdle `(1.043)^(63/252) − 1` = 1.058% | `exp(0.25·ln1.043) − 1 = 1.0584%` | ✅ |
+| Bernard–Thomas 4.2% over 60 trading days ≈ 147 bp/month | 4.2 × 21/60 = 1.47% | ✅ |
+| PEAD.txt 2.87% over 63 days ≈ 96 bp/month | 2.87 × 21/63 = 0.957% | ✅ |
+| Classic SUE in same design 1.54% over 63 days ≈ 51 bp/month | 1.54 × 21/63 = 0.513% | ✅ |
+
+## 3. The evidence that decides it
+
+**Value (HML), modern:** 49 → 10 bp/month all-cap from 1963–91 to 1991–2019; **big-stock 42 → 4 bp/month**; the
+largest-cap decile spread was only **25 bp/month** even in the 1992 discovery sample; HML alpha after profitability
+and investment controls is **−4 bp/month (t = −0.47)**; and post-2007 HML is **−0.86%/yr = −7 bp/month**. Our own
+measurement (+0.11%/yr gross on 186 names) sits inside that consensus rather than contradicting it.
+
+**PEAD, classic:** Bernard–Thomas 147 bp/month in 1974–86 but **size-dependent (large caps 98 bp)**; Chordia et al.
+value-weighted spread in the most liquid stocks **4 bp/month** with costs eating 70–100% of the paper profit;
+**Martineau (2022): non-microcap PEAD is −32 / 0 / −64 bp/month in 2006–10 / 2011–15 / 2016–19** — negative in the
+last window. This confirms, from primary sources, what we had recorded as an unverified external claim.
+
+**PEAD, text-conditioned:** **96 bp/month gross over 63 days, 2010–2019, and it survives in years when classic PEAD
+is ≈0.** That is the only modern published PEAD magnitude that clears a 35.8 bp/month cash hurdle before costs.
+
+## 4. What this changes — and the honest caveat
+
+**Text-conditioned PEAD is the first candidate in this programme with a published modern magnitude above our
+hurdle.** But three caveats travel with it, and they are load-bearing:
+
+1. **The portfolios are equal-weighted.** EW in a 5-quintile long-short over ~thousands of names is not implementable
+   at our ticket size without massive per-name costs; value-weighting will shrink the 96 bp substantially.
+2. **It is not transaction-cost-net.** The authors report gross. Our 12–20 bp round trip, doubled for a long-short
+   (two legs), plus borrow, is the first subtraction the published number has never faced.
+3. **It needs data we do not have: earnings-call transcripts**, plus a rolling eight-quarter text model. This is a
+   **procurement task, not a coding task** — the same wall that stopped PEAD at `BLOCKED_MISSING_DATA` and value at
+   "no point-in-time fundamentals store."
+
+## 5. Pre-registered kill rule adopted from this round
+
+> Universe: above the NYSE 20th-percentile market-cap cut (non-microcap).
+> Holdout: **2020Q1–2025Q4, untouched**.
+> Signal: published rolling eight-quarter text model (SUE.txt), top quintile long / bottom short.
+> Entry: first close after the call. Hold: **63 trading days**.
+> Costs: actual slippage + commissions + fees + borrow deducted.
+> Inference: overlapping-cohort returns with **63-lag HAC** standard error.
+> **Kill if the one-sided 95% upper bound on net 63-day return ≤ 1.058%** (equivalently ≤ 35.15 bp/month).
+> Breakeven gross before borrow is 1.298%–1.458% per 63-day cohort at 12–20 bp per leg.
+
+This is now the *second* pre-registered item in the programme that can actually kill something on our own data — the
+first being the ETF 12-month absolute-momentum test. Both are years from a verdict; both have a frozen threshold.
+
+## 6. Revision to the line above
+
+The earlier conclusion — *"Value is the better first test"* — was based on value being untested and PEAD being dead
+in large caps. Both remained true, but neither made value the better *first* test: value's modern expectancy
+(**−7 bp/month** post-2007) cannot clear a 35.8 bp/month hurdle **before** costs, while text-conditioned PEAD's
+96 bp can. **Value drops from "the live line" to "measured and insufficient"; text-conditioned PEAD takes its place
+as the only family whose published modern magnitude justifies an implementation test** — conditional on acquiring
+transcripts.
+
