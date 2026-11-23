@@ -3,6 +3,13 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 32 — 2026-11-23 (17:25 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: E6 — are kill rules enforced so a pick that hits its kill closes as a loss even if it later recovers, with no real picks yet (E4 not landed)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DONE | E6 — `enforce-kills` added to paper_book.py: open picks whose stop_loss trigger is breached (price <= trigger for long, price >= trigger for short) are booked killed at the trigger price; time_based picks past max_hold_days are killed at the snapshot price; every kill is resolution 0 with resolved_at stamped, terminal rows are skipped (idempotent re-runs), and close/mtm refuse killed rows so a later recovery cannot flip a kill into a win. Verified end to end on a scratch book (SPY: long 100 stop 95 killed -500 bp; short 100 stop 105 killed -500 bp; time_based 200 expired killed -5500 bp; wide stop 50 untouched at price 90; close on killed id exits 2; re-enforce kills nothing; score n=3 mean -2166.67 bp hit 0 max_dd 6500 bp ci [-5500,-500]; validate green). Real books untouched and empty (n=0) pending E4 agent picks; nothing fabricated; scratch ledger deleted after verification; no COMS post (scratch verification only, no measured market number). | `04-investment-strategy/paper_book.py` · `04-investment-strategy/results/e6_kill_enforcement.json` |
+
 ## Session 31 — 2026-11-23 (16:18 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: E5 — does the weekly scorecard (n, mean bp, hit rate, max drawdown, 95% interval, declared trial count) compute per tier from the per-tier paper books, and what does it report with no picks recorded yet?
 

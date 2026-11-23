@@ -56,7 +56,7 @@ import re
 import random
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -370,6 +370,70 @@ def cmd_kill(args: argparse.Namespace) -> int:
     return 0
 
 
+def _parse_ts(ts: str) -> datetime:
+    """Parse a UTC ISO8601 timestamp; a trailing Z is handled."""
+    return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+
+
+def cmd_enforce_kills(args: argparse.Namespace) -> int:
+    """E6: enforce kill rules across the open picks of one book.
+
+    A stop_loss pick is killed when the current snapshot price breaches its
+    trigger (price <= trigger_level for a long, price >= trigger_level for a
+    short) and the loss is booked at the trigger_level price. A time_based
+    pick is killed when now >= ts + max_hold_days and is booked at the
+    snapshot price. Every kill is resolution 0 with resolved_at stamped;
+    rows already in a terminal state are skipped, so re-runs are idempotent,
+    and close/mtm refuse killed rows -- a later price recovery cannot flip
+    a kill into a win. --price is the current market snapshot and is
+    required because a kill cannot be evaluated or booked without a price.
+    """
+    log = resolve_log(args)
+    records = read_records(log)
+    now = _parse_ts(args.as_of) if args.as_of else datetime.now(timezone.utc)
+    price = args.price
+    killed_ids: list[int] = []
+    for rec in records:
+        if rec["status"] != "open":
+            continue
+        kr = rec["kill_rule"]
+        ktype = kr.get("type")
+        hit = False
+        kill_px: float | None = None
+        if ktype == "stop_loss":
+            tl = kr.get("trigger_level")
+            if tl is None:
+                continue  # cannot evaluate a stop_loss with no trigger level
+            hit = (rec["side"] == "long" and price <= tl) or (
+                rec["side"] == "short" and price >= tl
+            )
+            kill_px = float(tl)
+        elif ktype == "time_based":
+            mhd = kr.get("max_hold_days")
+            if mhd is None:
+                continue
+            if now >= _parse_ts(rec["ts"]) + timedelta(days=int(mhd)):
+                hit = True
+                kill_px = price
+        if hit:
+            _terminalize(rec, "killed", 0, kill_px)
+            killed_ids.append(int(rec["id"]))
+    write_records(log, records)
+    print(
+        json.dumps(
+            {
+                "item": "E6 kill enforcement",
+                "log": str(log),
+                "price": price,
+                "as_of": now.isoformat(),
+                "killed_ids": killed_ids,
+            },
+            ensure_ascii=False,
+        )
+    )
+    return 0
+
+
 def cmd_supersede(args: argparse.Namespace) -> int:
     log = resolve_log(args)
     records = read_records(log)
@@ -594,6 +658,14 @@ def main(argv: list[str] | None = None) -> int:
     p_kill.add_argument("--id", required=True, type=int)
     p_kill.add_argument("--price", required=True, type=float)
     p_kill.set_defaults(func=cmd_kill)
+
+    p_enf = sub.add_parser("enforce-kills", help="enforce kill rules: book trigger hits as killed losses (E6)")
+    tier_arg(p_enf)
+    p_enf.add_argument("--price", required=True, type=float,
+                       help="current market snapshot price; required to evaluate and book kills")
+    p_enf.add_argument("--as-of", default=None,
+                       help="UTC ISO8601 reference time for time_based kills (default: now)")
+    p_enf.set_defaults(func=cmd_enforce_kills)
 
     p_sup = sub.add_parser("supersede", help="mark a row superseded; revision added via add")
     tier_arg(p_sup)
