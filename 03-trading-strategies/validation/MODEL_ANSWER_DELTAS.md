@@ -395,6 +395,78 @@ independent sources, one conclusion.
 **Best AskAnyModel round by a distance, and the second-best set of answers overall** (behind 1E on arithmetic
 integrity, ahead of it on breadth of real citations). Use it as a reading list; gate with v1.0.
 
+## 2i. 1G — Claude 5.2 Fable (1min.ai): the best answer of the nine, and it exposes an error in our own power table
+
+90.2 s, **1,177,361 credits** (~54× the 21.8K that Claude 5.5 Haiku cost for its answer). Twelve gates, 18 numbered
+falsifiers, a staged deployment ladder, and — the test that separates it — **a worked DSR computation that is exact**.
+
+### Verified to four decimals
+
+| Quantity | 1G claims | Recomputed |
+|---|---|---|
+| Daily SR from annual 1.0 | 0.063 | **0.0630** ✓ |
+| `Φ⁻¹(0.96)`, `Φ⁻¹(0.98529)` | 1.751, 2.178 | **1.7507, 2.1777** ✓ |
+| `SR₀` | 0.040 (≈0.63 annualised) | **0.0399** (0.634) ✓ |
+| Denominator `√(1 − γ₃SR + ((γ₄−1)/4)SR²)` | 1.021 | **1.0212** ✓ |
+| `z` | 1.39 | **1.388** ✓ |
+| **DSR** | **0.92** | **0.9174** ✓ |
+
+Its conclusion is the right one and it states it plainly: *"a 15-year, 1.0-Sharpe strategy fails once you admit to 25
+trials with realistic non-normality. That is the correct conclusion, not a bug."* Only 1E and this answer have a
+worked example that survives re-derivation.
+
+### Three tests it has that nobody else does — all adopted
+
+1. **Random-signal matched benchmark at the 99th percentile.** Build 1,000 random-ranking portfolios with the *same*
+   universe, weighting, rebalance frequency, costs and long/short structure — only the signal replaced. The strategy
+   must beat the **99th percentile** of that distribution. *"This single test kills most 'alphas' that are really
+   universe construction, equal-weighting, or rebalancing effects."* That is a sharper instrument than "placebo" as
+   everyone else describes it, because it controls the construction, not just the signal.
+2. **Execution-delay decay, quantified: `SR(1-day delay) ≥ 70% of baseline`.** The others said "must not halve";
+   this puts a number on it, and pairs it with a 2-day and 5-day sensitivity.
+3. **Prediction-scoring calibration.** *"Before opening the holdout, write down the numerical prediction for each of
+   the first 11 rows… Then score yourself. Someone who predicted 0.8 and saw 0.75 has learned something; someone who
+   saw 0.75 and then decides 0.75 is fine has learned nothing."* That is the cheapest anti-self-deception device in
+   any of the nine answers, and it costs one paragraph of writing.
+
+Also correct and worth keeping: *"the Sharpe standard error scales with √(years), not √(observations)"* — so more
+high-frequency data does not shorten a forward test; and its "testable in months" table (realised-vs-modelled cost,
+signal replication to 1e-6, turnover within ±20%, borrow locatable ≥90%, live-vs-sim PnL correlation ≥0.9) is the
+most useful answer anyone gave to "what *can* a short paper test actually verify".
+
+### The insight that corrects US
+
+1G's power table has a row that every other answer lacks: **`SR 1.0` tested against an `H₀` boundary of `0.5` needs
+24.8 years, not 6.2.** Testing against a hurdle rather than against zero multiplies the required sample.
+
+Our entire power discussion — 6.2 y crude, 9.3 y variance-corrected — has been stated for `H₀: SR ≤ 0`. But our actual
+question is **"does this beat the 4.32% T-bill?"**, which is a hurdle, not zero. On a strategy with ~10% vol, a 4.32%
+hurdle is roughly `SR = 0.43`. Substituting that offset into `Y ≈ 6.185/(SR − SR_hurdle)²`:
+
+| True SR | vs `H₀=0` (crude) | vs a 0.43 hurdle | vs `H₀=0` (variance-corrected) |
+|---|---|---|---|
+| 1.0 | 6.2 y | **≈ 20 y** | 9.3 y |
+| 1.5 | 2.8 y | **≈ 5.9 y** | 5.8 y |
+| 2.0 | 1.5 y | **≈ 3.1 y** | 4.6 y |
+
+**So the ETF-trend verdict is not "9 years away" — against the hurdle that actually matters it is closer to 20.**
+This does not change the decision (the test was already forward-only with no capital), but it changes what we are
+allowed to *say* about when a verdict is possible, and every agent report quoting "6–9 years" is quoting the wrong
+null hypothesis.
+
+### Its defect
+
+`κ = 1 − γ₃·SR + ((γ₄−1)/4)·SR²` is presented as a non-normality inflation factor for the power calculation, then
+**not applied to its own table**: the table's 6.2 y at SR 1.0 is the bare formula, and applying κ in annualised units
+would give ~17.6 y. So the formula and the table disagree in the same document — the 1F/1D defect class again, though
+here at least the concept is named.
+
+### Ranking
+
+**1G is the best of the nine on content and joint-best on arithmetic (with 1E).** Order: **1G ≈ 1E > 1F > 1D > GLM 5.3
+(round 3) > GPT-6 Astra > Qwen3.8 > Luna > Claude > 1A > 1B > 1C > the routed-panel batch.** Cost is the only reason
+not to use it routinely: 1.18M credits per answer against 21.8K for the Haiku model on the same platform.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a
