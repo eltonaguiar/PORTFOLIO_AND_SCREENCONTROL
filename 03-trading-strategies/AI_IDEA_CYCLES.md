@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
-| 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 72 |  |
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
 | 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 88 |  |
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 100 |  |
@@ -32,16 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 137 |  |
 | 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 110 |  |
 | 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
+| 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 120 |  |
+| 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 90 |  |
 
 ## Latest answers
-
-### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
-
-### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_OPENROUTER
-
-URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
 
 ### round 34 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
@@ -67,3 +59,19 @@ Claim (a) is most likely wrong for equity index options. Its "gross edge ≈ rou
 **(b) is most likely wrong for prediction markets.**
 
 PEAD is a *price* anomaly requiring continuous re-pricing of a share. Polymarket/Kalshi contracts are discrete, bounded (0–100¢), and resolved by a dated event — the drift mechanism doesn't map. But the deeper issue: if post-earnings drift is truly dead in the underlying, the *prediction market* version should be even weaker, since the event itself (earnings release) is the resolution trigger, leaving no post-event drift window. Falsify by finding a family of contracts where the market-implied probability *conditional on the earnings outcome* systematically diverges from the subsequent resolution frequency, with the gap exceeding ~15bps after cost, surviving trial-deflated Sharpe across ≥200 resolved contracts.
+
+### round 36 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Long the single stock with the highest 20-day return, short the lowest, equal dollar, rebalanced every 20 trading days. Hold for 20 days.
+
+**Kill measurement:** Deflated Sharpe ratio (accounting for the number of trials in the parameter grid: lookback ∈ {5,10,20,60}, holding ∈ {5,10,20,60}) net of 16 bps round-trip cost, tested against a 4.3% T-bill hurdle. If the deflated Sharpe < 1.0 over the full out-of-sample window, the test is dead.
+
+**Data:** Daily split-adjusted OHLCV for the Russell 1000 constituents. Free, point-in-time: CRSP (subscription) or free proxies (Yahoo Finance) — but Yahoo is not strictly point-in-time (survivorship bias); use a survivorship-bias-free free source like Compustat/CRSP via an academic subscription, or Kaggle's free historical NYSE/NASDAQ dataset with delisting returns included.
+
+### round 36 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Long S&P 500 constituents with 12-month momentum in top quintile, short bottom quintile, monthly rebalance, 25-year backtest.
+
+**Data:** CRSP daily/monthly returns, delisting returns, share prices, shares outstanding. Free via WRDS (not point-in-time; survivorship bias inflates results). Point-in-time Compustat for market cap. CRSP delisting returns critical—ignoring them overstates short-leg returns.
+
+**Kill measurement:** Deflated Sharpe ratio (accounting for ~1 trial) falls below 0 after 12-20 bps round-trip cost applied per rebalance, and net CAGR underperforms 4.3% T-bill over the full period. If gross Sharpe < ~0.6, costs consume the edge entirely.
