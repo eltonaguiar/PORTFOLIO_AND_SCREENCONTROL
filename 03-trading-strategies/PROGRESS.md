@@ -15,6 +15,13 @@ Question: which numbers in VALUE_VS_PEAD_EVIDENCE.md came from a model (duck.ai 
 |---|---|---|---|
 | cron | DOC | H2 — Re-verified every model-sourced claim in VALUE_VS_PEAD_EVIDENCE.md claim by claim. Killed the model-fabricated cost sensitivity (11.92% → 3.36%, 6.59% revenue-surprise drift) and router SUE1 2.0–3.5%/yr figures (no primary source found). Reconciled the 25–42 vs 50–70 bp/month band via B7/JFQA. Verified Bernard & Thomas 41/48, Martineau decay direction, Arena-round JFQA HML +5.20%/yr vs −0.86%/yr and Meursault et al. 2023. Corrected H3 violations: removed the false Martineau −32/0/−64 bp/month attribution, killed the +0.11%/yr price-only artifact (COMS e8dc5ca), marked +24.21 bp dead per A9. D3 remains blocked (D2 ledger 0 records, D4 panel claims not generated — nothing to score). | `03-trading-strategies/results/h2_model_claims_audit.json` · `03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md` |
 
+## Session 25 — 2026-11-23 (13:42 UTC) — `hermes` (Session B, cron queue axis)
+Question: can D3 (Brier/log-loss vs market calibration scoring) run now that the D2 ledger exists?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | BLOCKED | D3 — D2 ledger has 0 resolved records and D4 panel claims (AI-owned) are not generated, so nothing to score; ΔBrier vs market uncomputable, no number produced. Added `score` subcommand to prediction_calibration.py: Brier + log-loss vs market, bootstrap 95 pct CI on ΔBrier, min 5 resolved records, exits 3 with INSUFFICIENT_DATA when data is absent. Run returned INSUFFICIENT_DATA (0 records). | `04-investment-strategy/results/d3_score_latest.json` |
+
 ## Session 23 — 2026-11-23 (11:10 UTC) — `hermes` (Session B, cron queue axis)
 Question: does INVESTMENT_HUB_REVIEW.md's copy/refuse list still hold against work landed since 8c94074, including the A9-killed +24.21 bp figure it still quotes as live?
 

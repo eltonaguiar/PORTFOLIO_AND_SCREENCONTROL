@@ -1,0 +1,13 @@
+{
+  "item": "D3 H — score with Brier and log-loss vs market; require ΔBrier > 0 with CI",
+  "status": "INSUFFICIENT_DATA",
+  "run_at": "2026-11-23T13:37:09.447101+00:00",
+  "git_hash": "373e96f9bb0f967e814cf575098804051c43bb8e",
+  "log": "C:\\Users\\zerou\\pasc\\results\\prediction_calibration.jsonl",
+  "records": 0,
+  "resolved": 0,
+  "pending": 0,
+  "min_resolved": 5,
+  "bootstrap_resamples": 2000,
+  "message": "D3 cannot score: 0 resolved records (need 5). The D2 ledger is empty and D4 panel claims (AI-owned) are not generated, so there is nothing to score. No Brier/log-loss number produced — not UNVERIFIED, not fabricated."
+}

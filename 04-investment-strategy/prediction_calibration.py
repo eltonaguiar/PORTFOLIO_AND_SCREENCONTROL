@@ -29,6 +29,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
+import random
+import subprocess
 import sys
 import uuid
 from datetime import datetime, timezone
@@ -166,6 +169,103 @@ def cmd_view(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_score(args: argparse.Namespace) -> int:
+    """D3: Brier + log-loss vs market for resolved records.
+
+    Refuses to produce a number when there are too few resolved records
+    (default < 5) — an empty ledger is INSUFFICIENT_DATA, not a score.
+    """
+    log = Path(args.log)
+    records = read_records(log)
+    resolved = [r for r in records if r.get("resolution") is not None]
+    pending = [r for r in records if r.get("resolution") is None]
+
+    try:
+        git_hash = subprocess.check_output(
+            ["git", "-C", str(REPO), "rev-parse", "HEAD"], stderr=subprocess.DEVNULL
+        ).decode().strip()
+    except Exception:
+        git_hash = "UNKNOWN"
+
+    result = {
+        "item": "D3 H — score with Brier and log-loss vs market; require ΔBrier > 0 with CI",
+        "status": None,
+        "run_at": utc_now(),
+        "git_hash": git_hash,
+        "log": str(log),
+        "records": len(records),
+        "resolved": len(resolved),
+        "pending": len(pending),
+        "min_resolved": args.min_resolved,
+        "bootstrap_resamples": args.bootstrap,
+    }
+
+    def brier(ps: list[float], ys: list[float]) -> float:
+        return sum((p - y) ** 2 for p, y in zip(ps, ys)) / len(ps)
+
+    def logloss(ps: list[float], ys: list[float], eps: float = 1e-12) -> float:
+        total = 0.0
+        for p, y in zip(ps, ys):
+            q = min(max(p, eps), 1.0 - eps)
+            total += math.log(q) if y else math.log(1.0 - q)
+        return -total / len(ys)
+
+    if len(resolved) < args.min_resolved:
+        result["status"] = "INSUFFICIENT_DATA"
+        result["message"] = (
+            f"D3 cannot score: {len(resolved)} resolved records (need {args.min_resolved}). "
+            "The D2 ledger is empty and D4 panel claims (AI-owned) are not generated, so there is "
+            "nothing to score. No Brier/log-loss number produced — not UNVERIFIED, not fabricated."
+        )
+    else:
+        ours = [float(r["our_prob"]) for r in resolved]
+        market = [float(r["market_prob"]) for r in resolved]
+        ys = [float(r["resolution"]) for r in resolved]
+
+        brier_ours = brier(ours, ys)
+        brier_market = brier(market, ys)
+        delta = brier_market - brier_ours  # > 0 means we beat the market
+        ll_ours = logloss(ours, ys)
+        ll_market = logloss(market, ys)
+
+        # Bootstrap 95% CI on ΔBrier, fixed seed for reproducibility.
+        rng = random.Random(20261123)
+        n = len(resolved)
+        boots = []
+        for _ in range(args.bootstrap):
+            idx = [rng.randrange(n) for _ in range(n)]
+            boots.append(brier([market[i] for i in idx], [ys[i] for i in idx])
+                         - brier([ours[i] for i in idx], [ys[i] for i in idx]))
+        boots.sort()
+        lo = boots[int(0.025 * len(boots))]
+        hi = boots[int(0.975 * len(boots))]
+
+        if delta > 0 and lo > 0:
+            verdict = "PASS: our probabilities beat the market (ΔBrier > 0, 95% CI excludes 0)"
+        elif delta > 0:
+            verdict = "INCONCLUSIVE: ΔBrier > 0 but 95% CI includes 0"
+        else:
+            verdict = "FAIL: ΔBrier <= 0"
+
+        result.update({
+            "status": "COMPUTED",
+            "brier_ours": brier_ours,
+            "brier_market": brier_market,
+            "delta_brier": delta,
+            "delta_brier_ci95": [lo, hi],
+            "logloss_ours": ll_ours,
+            "logloss_market": ll_market,
+            "verdict": verdict,
+        })
+
+    artifact = Path(__file__).resolve().parent / "results" / "d3_score_latest.json"
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    out = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
+    artifact.write_text(out, encoding="utf-8")
+    print(out)
+    return 0 if result["status"] == "COMPUTED" else 3
+
+
 def cmd_pending(args: argparse.Namespace) -> int:
     records = read_records(Path(args.log))
     pending = [r for r in records if r["resolution"] is None]
@@ -194,6 +294,12 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("list", help="show every record").set_defaults(func=cmd_list)
     sub.add_parser("view", help="emit the full ledger as JSON").set_defaults(func=cmd_view)
+    p_score = sub.add_parser("score", help="Brier and log-loss vs market for resolved records")
+    p_score.add_argument("--log", default=str(DEFAULT_LOG), help="path to the JSONL log (default: results/prediction_calibration.jsonl)")
+    p_score.add_argument("--min-resolved", type=int, default=5, help="minimum resolved records required to score (default 5)")
+    p_score.add_argument("--bootstrap", type=int, default=2000, help="bootstrap resamples for the delta-Brier 95 pct CI (default 2000)")
+    p_score.set_defaults(func=cmd_score)
+
     sub.add_parser("pending", help="show unresolved predictions only").set_defaults(func=cmd_pending)
 
     args = parser.parse_args(argv)
