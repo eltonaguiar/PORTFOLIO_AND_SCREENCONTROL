@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 18 — 2026-11-23 (05:46 UTC) — `hermes` (Session B, cron queue axis)
+Question: does the PEAD null (expected 60-day drift = 0 for large-cap post-2006 per the C3-verified Martineau decay claim) change the programme tally in VERDICT_200.md?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 05:46 | DOC | C4 — TALLY UNCHANGED: VERDICT_200.md has no PEAD row (PROVEN none, CANDIDATE none), so a null changes nothing; C2 (owner CP) has not run, so no measured n exists yet. Null in (expected zero, source-verified decay), null out. If C2 reports zero: tally stays as-is. If C2 finds significant large-cap post-2006 drift: contradicts C3 — re-examine before any tally change. | `03-trading-strategies/results/c4_pead_null_tally.json` |
+
 ## Session 16 — 2026-11-23 (04:39 UTC) — `hermes` (Session B, cron queue axis)
 Question: do the four PEAD decay citations in VALUE_VS_PEAD_EVIDENCE.md hold against the primary papers, claim by claim?
 

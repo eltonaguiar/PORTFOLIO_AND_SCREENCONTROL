@@ -1,0 +1,25 @@
+{
+  "item": "C4 `H` — Record whether the null changes the programme tally, and why not",
+  "owner": "H",
+  "status": "DONE",
+  "date_utc": "2026-11-23T05:46:00Z",
+  "question": "Does the PEAD null (expected 60-day drift = 0 for large-cap post-2006) change the programme tally in VERDICT_200.md?",
+  "tally_snapshot": {
+    "source": "03-trading-strategies/VERDICT_200.md (generated 2026-11-22, Session B)",
+    "proven": "none",
+    "candidate": "none",
+    "dead": ["crypto spot 1d walk-forward", "crypto census (edge)", "equity factors VLUE/QUAL/USMV/MTUM", "R191/R192 trend overlay", "FX majors census"],
+    "unmeasurable": "none",
+    "pead_class": "absent — PEAD is not a tracked class in the tally"
+  },
+  "null_basis": [
+    "C3 (source-verified): Martineau 2022 full text read — \"For large stocks, PEAD have been non-existent since 2006 but has only disappeared recently for microcap stocks\"; post-2005/06 decay claim confirmed verbatim. | 03-trading-strategies/results/c3_pead_citation_verification.json",
+    "Bernard & Thomas 1989: ~4.2% over 60 trading days, positive 41/48 quarters 1974-86, but size-dependent (large caps ~98 bp vs 147 bp/month decile rescaling); primary behind JSTOR paywall — two independent secondary sources only, medium confidence",
+    "Ball & Brown 1968: original PEAD documentation; prints NO magnitude or decay numbers",
+    "Ball & Bartov 1996: NO PEAD magnitude/decay claim — citing it for PEAD decay is misattribution risk",
+    "VALUE_VS_PEAD_EVIDENCE.md lines 71-72: \"If the repo's PEAD infrastructure is large-cap and post-2006, the expected result is zero\""
+  ],
+  "blocking_dependency": "C1 (confirm repo PEAD artifacts are large-cap and post-2006) and C2 (run the 60-day drift with measured cost, report the null with its n) are both owner `CP` and remain unchecked — no measured PEAD null exists yet, so C4 records state, not a fresh measurement",
+  "result": "TALLY UNCHANGED. PEAD has no tally row to change: null going in (expected zero, C3-verified decay claim), null coming out. A confirmed null is not evidence FOR anything, so nothing is added to or removed from PROVEN/CANDIDATE/DEAD. If C2 (CP) reports zero: tally stays as-is. If C2 reports significant large-cap post-2006 drift: that contradicts the C3-verified Martineau decay claim — re-examine the citations and the repo PEAD universe before any tally change.",
+  "coms": "not posted — C4 produces no new measured number and corrects no published number (the Martineau -32/0/-64 bp/month correction was already made in C3 and committed to main)"
+}
