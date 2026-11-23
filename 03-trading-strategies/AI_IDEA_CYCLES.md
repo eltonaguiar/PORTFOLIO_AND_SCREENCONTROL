@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T02:28 | 7 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
-| 2026-11-23T02:28 | 7 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 60 |  |
 | 2026-11-23T02:29 | 8 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 170 |  |
 | 2026-11-23T02:29 | 8 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 92 |  |
 | 2026-11-23T02:50 | 9 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
@@ -32,16 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T04:56 | 17 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 133 |  |
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 68 |  |
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 84 |  |
+| 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 70 |  |
+| 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 81 |  |
 
 ## Latest answers
-
-### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-Claim (c) is most likely wrong. "Value is the last untested family" for equity index options ignores that value in options means variance risk premium / skew — extensively tested (Carr-Wu, Bollerslev-Tauchen, Bakshi-Kapadia). Falsification: compute a deflated Sharpe on a simple short-VIX or short-SKEW carry strategy net of 12-20 bps round-trip; if DSR > 0 after trial accounting against ~50 published trials, the claim survives. Observation would show value already harvested, not untested.
-
-### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"litellm.RateLimitError: Deployment has all max_parallel_requests slots in use. Deployment model_group=free-mode-large, id=4b3fc2d5d3bbd6066aa4f983c0339b491dab2a1744e093be03b71b2660c8aa02 already has max_parallel_requests=1 requests in flight. Raise max_parallel_requests (or the
 
 ### round 17 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -72,3 +64,19 @@ On Polymarket/Kalshi, "value" isn't a residual factor you harvest from a panel; 
 **Kill measurement:** Deflated Sharpe (Bailey–López de Prado) with trial count = 1. If DS < 1.64 (95% one-sided), the edge is indistinguishable from luck.
 
 **Data:** CRSP daily returns + dollar volume, 1990–2024. Free via WRDS. Point-in-time: dispersion and Amihud use only data available at signal date; delisting returns included.
+
+### round 19 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** On BTC perpetual futures (Binance, free, point-in-time public trades + funding data), go long the perp when the 8-hour funding rate is below its 30-day rolling 10th percentile; exit to spot BTC when funding crosses above zero. Hold otherwise. Rebalance on 8h closes.
+
+**Kill measurement:** After 12–20 bps round-trip cost, the deflated Sharpe (accounting for this as one trial) falls below 1.0 at 95% confidence over the full sample.
+
+### round 19 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
+
+**Test: BTC perp 50-day/10-day MA cross, long-only, Binance BTCUSDT perp.**
+
+Signal: close > 50D SMA AND 10D SMA > 50D SMA → long 1x notional. Flat otherwise. Daily close execution, UTC.
+
+**Kill measurement:** Deflated Sharpe (DSR) with trial count = number of distinct (fast, slow) pairs tested in the family (e.g., 10×10 grid = 100 trials). Kill if DSR < 0.90 after round-trip 16 bps and 4.3% T-bill hurdle net.
+
+**Data:** Binance public daily klines + funding. Free, point-in-time, no look-ahead.
