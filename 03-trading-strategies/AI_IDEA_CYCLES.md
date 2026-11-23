@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
-| 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 | 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 34 |  |
 | 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 93 |  |
 | 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 84 | **YES** |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 87 |  |
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 82 |  |
+| 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
+| 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 72 |  |
 
 ## Latest answers
-
-### round 21 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Monthly-rebalanced long/short sector momentum: long top-2, short bottom-2 of 11 GICS sector ETFs ranked on trailing 12-1 month return.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado, trial-adjusted) below 0.5 net of 15 bps round-trip, with p-value > 0.05 against the 4.3% T-bill alternative.
-
-**Data:** Daily adjusted closes and sector ETF constituents (SPY, XLB, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, XLRE). Free via Stooq or Yahoo Finance. Point-in-time: prices yes; constituent history requires CRSP (paid) — use fixed launch-date universe as paper proxy.
-
-### round 21 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Long-only S&P 500 equal-weight sector rotation: monthly, hold only the sector with highest 63-day trailing return. Rebalance monthly.
-
-**Kill measurement:** Deflated Sharpe (Harvey-Liu) with all trials in the class (sector, factor, cross-asset ETFS) < 1.0, net of 12–20 bps round-trip, after subtracting the 4.3% T-bill hurdle. If DS ≤ 1.0, the edge is indistinguishable from selection noise.
-
-**Data:** Daily total-return prices for 11 GICS sector ETFs (XLY, XLP, XLE, XLF, XLV, XLI, XLB, XLRE, XLK, XLU, XLC). Free: Yahoo Finance (adjusted close, survivorship-free since all survive). Point-in-time: yes, but verify inception dates — XLRE starts 2015, limiting pre-2015 history.
 
 ### round 22 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -84,3 +68,19 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Data:** G10 1-month OIS fixings (FRB H.15, ECB SDW) — free, point-in-time with publication lags. WM/Reuters 16:00 fix — free daily close, point-in-time.
 
 **Kill measurement:** Deflated Sharpe (Bailey–López de Prado, 2 trials) < 1.0 net of 16 bps round-trip, or annualized net return < 4.3% T-bill. Either outcome kills it.
+
+### round 24 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Time WTI crude oil by the sign of the weekly change in EIA commercial crude inventory, holding for one week.
+
+**Kill measurement:** Net-of-cost weekly return skew. If the strategy's net weekly returns show skew ≤ 0 (or a skew-to-mean ratio indistinguishable from zero at 95% bootstrap CI), the directional edge is dead — inventory signals would be providing no asymmetry beyond noise.
+
+**Data:** EIA weekly commercial crude inventory (free, point-in-time via archive/API with release-date timestamps), CME WTI front-month futures (free delayed, or paid real-time).
+
+### round 24 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Long WTI front-month futures, exit when 20-day rolling realized vol exceeds 60-day realized vol by ≥15%.
+
+**Kill measurement:** Deflated Sharpe (Harvey–Liu) with trial accounting < 0.5 net of 15 bps round-trip. That threshold is what kills it.
+
+**Data:** CME WTI front-month continuous settlement prices, daily, 2000–present. Free: Nasdaq Data Link (limited), Stooq. Point-in-time: settlement prices are, but rolling methodology (Gorton–Rouwenhorst vs constant-maturity) is not—survivorship in roll-date conventions is the silent killer.
