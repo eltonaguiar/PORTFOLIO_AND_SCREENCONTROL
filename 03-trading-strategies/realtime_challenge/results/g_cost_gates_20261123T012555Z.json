@@ -1,0 +1,107 @@
+{
+ "generated_utc": "2026-11-23T01:25:55+00:00",
+ "venue": "Binance spot",
+ "venue_id": "binance",
+ "fee_source": "published schedule assumed (https://www.binance.com/en/fee/schedule)",
+ "fee_fetch_date": "2026-11-23",
+ "gates": [
+  {
+   "gate": "G-COST-1",
+   "instrument": "BTC/USDT",
+   "venue": "Binance spot",
+   "horizon_basis": "15m assumed fill cadence; cost per round trip",
+   "n": 36,
+   "threshold": {
+    "kill_if_median_bps_ge": 8.0
+   },
+   "measured": {
+    "median_bps": 20.002,
+    "p90_bps": 20.002,
+    "min_bps": 20.002,
+    "max_bps": 20.002
+   },
+   "verdict": "KILL",
+   "evidence": "median realised fill cost 20.002 bp over 36 live snapshots at Binance spot BTC/USDT; KILLS the 8.0 bp cost assumption",
+   "fee": {
+    "per_side_bps": 10.0,
+    "source": "https://www.binance.com/en/fee/schedule",
+    "fetch_date": "2026-11-23"
+   }
+  },
+  {
+   "gate": "G-COST-2",
+   "instrument": "BTC/USDT/ETH/USDT",
+   "venue": "Binance spot",
+   "horizon_basis": "15m; round-trip slippage of a $5,000 notional market order vs mid",
+   "n": 32,
+   "threshold": {
+    "kill_if_p50_bps_gt": 8.0,
+    "kill_if_p90_bps_gt": 20.0
+   },
+   "measured": {
+    "p50_bps": 0.03,
+    "p90_bps": 0.564
+   },
+   "verdict": "PASS",
+   "evidence": "round-trip slippage P50=0.030 bp P90=0.564 bp over 32 walks on ['BTC/USDT', 'ETH/USDT'] at Binance spot; within the 8 bp / 20 bp thresholds",
+   "pairs": [
+    "BTC/USDT",
+    "ETH/USDT"
+   ]
+  },
+  {
+   "gate": "G-COST-3",
+   "instrument": "BTC/USDT",
+   "venue": "Binance spot",
+   "horizon_basis": "1 day, one round trip (named instrument, venue, basis)",
+   "n": 1,
+   "threshold": {
+    "kill_if_cost_bps_gt": 24.21,
+    "kill_if_cost_bps_lt": 19.0
+   },
+   "measured": {
+    "one_day_cost_bps": 20.002
+   },
+   "verdict": "PASS",
+   "evidence": "measured 1D round-trip cost 20.002 bp at Binance spot BTC/USDT (1 day basis); kill range [19.0, 24.21] bp \u2014 cost test does not fire. The +24.21 bp figure is independently dead on A9 grounds (unit unstated, gross/net unstated, no implementation); this gate now guards its resurrection at the named venue/basis. Figure still quoted in tracked files: ASSET_CLASS_IDEA_HARVEST.md, HORIZON_LADDER_A9.md, PROGRESS.md, VALUE_VS_PEAD_EVIDENCE.md (coordinated edit pending, not made here).",
+   "kill_range_bps": [
+    19.0,
+    24.21
+   ],
+   "a9_kill_grounds": "unit unstated (per trade vs per day, 365x), gross/net unstated, no implementation in either repo",
+   "fee": {
+    "per_side_bps": 10.0,
+    "source": "https://www.binance.com/en/fee/schedule",
+    "fetch_date": "2026-11-23"
+   }
+  },
+  {
+   "gate": "G-COST-4",
+   "instrument": "BTC/USDT",
+   "venue": "Binance spot",
+   "horizon_basis": "1 day sessions, 1h bars, BTC/USDT; vol target 10% annualised, cap 1.0",
+   "n": 24,
+   "threshold": {
+    "kill_if_gap_bps_per_day_gt": 5.0,
+    "min_sessions": 20
+   },
+   "measured": {
+    "buy_and_hold_bps_per_day": 246.253,
+    "vol_target_bps_per_day": 5.367,
+    "gap_bps_per_day": 240.886
+   },
+   "verdict": "KILL",
+   "evidence": "over 24 sessions: buy-and-hold 246.253 bp/day vs vol-targeted 5.367 bp/day, gap 240.886 bp/day; KILLS the 5 bp/day overlay limit"
+  }
+ ],
+ "kills": [
+  "G-COST-1",
+  "G-COST-4"
+ ],
+ "passes": [
+  "G-COST-2",
+  "G-COST-3"
+ ],
+ "unmeasurable": [],
+ "overall": "KILL"
+}

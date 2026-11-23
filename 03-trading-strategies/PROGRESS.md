@@ -8,6 +8,15 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 15 — 2026-11-23 (01:21 UTC) — `hermes` (Session B, cron queue axis)
+Question: with origin/main advanced past Session 14 harness re-certification, can the G-COST-1..4 cost gates (TODO A10, owner H) be added to CI with G-COST-3 regime-flakiness fixed, and does the first live run hold or kill the 8 bp cost assumption?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 01:21 | PASS | A10 — G-COST-1..4 gates wired into CI (`g-cost-gates` job, schedule 15 5 * * * + dispatch); G-COST-3 fixed to name instrument (BTC/USDT spot), venue (Binance), horizon basis (1 day) per the A9 defect. Live measurements at Binance spot: G-COST-1 KILL median realised fill cost 20.002 bp >= 8.0 bp — the 8 bp cost assumption does not hold (20 bp taker round turn dominates; book depth is not the problem); G-COST-2 PASS slippage P50 0.03 bp / P90 0.56 bp on BTC/USDT + ETH/USDT; G-COST-3 PASS — +24.21 bp figure remains killed on A9 grounds (unit unstated, no implementation), 1D cost 20.002 bp inside [19, 24.21] so the cost test does not fire, and the gate now guards resurrection at the named venue/basis; G-COST-4 KILL vol-target gap 240.9 bp/day > 5 bp/day over 24 sessions (buy-and-hold +246.3 bp/day vs vol-targeted 5.4 bp/day in this rally window). CI fails on any KILL by design; no gate lowered. | .github/workflows/realtime-challenge.yml · realtime_challenge/proof/g_cost_gates.py · results/g_cost_gates_latest.json |
+
+---
+
 ## Session 14 — 2026-11-23 (01:15 UTC) — `hermes` (cron pasc-progress axis)
 Question: after the peer push advanced origin/main past Session 13's verified state, does the harness still certify clean (backlog item B4)?
 
