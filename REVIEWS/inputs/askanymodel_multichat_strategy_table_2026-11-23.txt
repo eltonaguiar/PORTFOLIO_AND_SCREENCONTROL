@@ -1,0 +1,98 @@
+AskAnyModel
+Home
+Chat
+Multi-Chat
+Images
+Library
+Models
+Apps
+Status
+Team
+Settings
+Power
+
+Power
+upgrade
+Research
+Workflows
+Workspaces
+Founders rate: $14/mo
+Install app
+
+Back to Home
+Elton
+498 credits
+
+20 unread
+Toggle theme
+
+E
+Ask several at once
+Pick a few, ask one question, and see how the answers differ. Up to 6 at a time. Teams compare up to 10.
+
+Gemma 4 26B A4B
+
+DeepSeek V4 Flash
+
+Llama 3.3 70B
+
+Grok 4.20
+5
+
+Qwen3.7 Max
+3
+
+Claude Sonnet 5.5
+5
+
+Add
+6 picked ú 13 credits to ask
+
+List the trading strategies with the strongest documented out-of-sample evidence across asset classes: risk premia, time-series momentum, cross-sectional momentum, trend following, mean reversion, carry, volatility risk premium. For each give the canonical academic source, the asset classes where it replicated, the sample period, and the specific way it fails. Be concise, use a table, and be explicit about what proven can and cannot mean for a retail trader.
+Everyone answers the same question
+Clear
+Compare
+Gemma 4 26B A4B IT
+Google
+Something went wrong. Please try again.
+DeepSeek V4 Flash
+DeepSeek
+Something went wrong. Please try again.
+Llama 3.3 70B
+Meta
+The model took too long to respond. Please try again.
+Grok 4.20
+xAI
+Strongest Documented Out-of-Sample Evidence (Academic Literature)
+
+Strategy	Canonical Source	Replicated Assets	Sample Period	Specific Failure Mode
+Carry	Koijen, Moskowitz, Pedersen & Vrugt (2018)	FX, commodities, gov bonds, equities, credit	1970s-2014 (OOS to ~2022)	Sharp unwind/crash in global risk-off crises (e.g., 2008 carry-trade collapse)
+Time-Series Momentum / Trend Following	Moskowitz, Ooi & Pedersen (2012); Hurst, Ooi & Pedersen (2017)	Futures: equities, fixed income, FX, commodities	1880s-2016 (strong OOS post-2012)	Long drawdowns & whipsaw in sideways/choppy regimes (e.g., 2014-2019, parts of 2022)
+Cross-Sectional Momentum	Jegadeesh & Titman (1993); Asness, Moskowitz & Pedersen (2013)	Global equities, country indices, some sectors	1927-2011 (global OOS replications)	Severe "momentum crashes" during rapid bear-to-bull reversals (e.g., 2009: -81% for WML factor)
+Risk Premia (Value, Term, Credit, etc.)	Fama-French (1992/93); Asness et al. (2013) "Value and Momentum Everywhere"	Global equities, bonds, currencies, commodities	1926-present (international from 1970s)	Multi-year underperformance in specific regimes (value drawdown 2012-2020; term premium near zero post-2000 in some markets)
+Volatility Risk Premium	Carr & Wu (2009); Bollerslev et al. variance risk premium literature	Equity index options / VIX futures	1986-present	Catastrophic left-tail losses during vol spikes (1987, 2008, Feb 2018 Volmageddon, Mar 2020)
+Mean Reversion	De Bondt & Thaler (1985); Balvers, Wu & Gilliland (2000)	Individual stocks (short-term), national indices	1926-1990s (weaker OOS)	Inconsistent across horizons/assets; momentum dominates intermediate term; high costs destroy short-horizon versions
+Notes on "proven" for a retail trader
+
+"Proven" means the strategies show statistically significant positive risk-adjusted returns in peer-reviewed academic papers, survive out-of-sample tests by independent researchers, different geographies, longer histories, and alternative specifications - typically before or with modest institutional transaction costs.
+
+It does not mean any of the following for retail traders:
+
+You can reliably extract those returns net of your actual costs (retail spreads, commissions, slippage, and overnight financing are far worse than in the papers).
+The edge survives publication, crowding, and changing market microstructure (many premia have attenuated post-publication).
+You can tolerate the documented drawdowns (30-60%+ losses lasting years) without abandoning the strategy at the worst moment.
+Easy implementation: most require futures, listed options, leverage, margin, 20-60 liquid instruments, low-cost execution, and tax-aware rebalancing that retail accounts rarely achieve.
+Guaranteed positive expectancy - these are risk premia with crash risk, not arbitrage. The vast majority of self-directed retail traders lose money attempting systematic strategies.
+Implementation at retail scale usually turns positive academic Sharpe ratios into flat or negative results after realistic frictions and behavior.
+
+(If you want deeper references or updates through 2024, provide a specific strategy.)
+
+
+
+Qwen3.7 Max
+Alibaba
+Something went wrong. Please try again.
+Claude Sonnet 5.5
+Anthropic
+Something went wrong. Please try again.
+
