@@ -429,6 +429,18 @@ worked example that survives re-derivation.
    saw 0.75 and then decides 0.75 is fine has learned nothing."* That is the cheapest anti-self-deception device in
    any of the nine answers, and it costs one paragraph of writing.
 
+### Three details from the full text (the first paste was truncated at Part 4.3)
+
+- **The variance illustration that makes the point undeniable:** *"Six months of a true SR=1.0 strategy yields an
+  observed SR with standard error ≈ 1/√0.5 ≈ 1.4; you will see anything from −1.8 to +3.8."* Correct — `SE(SR) ≈
+  1/√Y` in years — and it is the clearest single sentence anyone wrote about why a short paper test is worthless.
+- **Other people's trials count toward your N.** *"Trials run by other people that led you to this idea count too
+  (this is why published anomalies deserve a discount — the field has run tens of thousands)."* This is the honest
+  extension of N_eff beyond your own ledger, and it is why a published factor starts at `t ≥ 3.0` rather than 2.0.
+- **A second, valid `N_eff` estimator:** *"the number of eigenvalues needed to explain 95% of variance"* across trial
+  return streams. Our adopted toolkit uses the participation ratio `(Σλ)²/Σλ²`; this is a different rule with the same
+  purpose, and where the two disagree the **larger** N_eff is the conservative choice for deflation.
+
 Also correct and worth keeping: *"the Sharpe standard error scales with √(years), not √(observations)"* — so more
 high-frequency data does not shorten a forward test; and its "testable in months" table (realised-vs-modelled cost,
 signal replication to 1e-6, turnover within ±20%, borrow locatable ≥90%, live-vs-sim PnL correlation ≥0.9) is the
