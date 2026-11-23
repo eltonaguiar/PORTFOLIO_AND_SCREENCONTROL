@@ -31,6 +31,16 @@ sets a pass mark of 1.5, which cannot occur.**
 
 ## 2. Errors worth naming
 
+*(Model attributions confirmed 2026-11-23: **1A = 1min.ai answer 1**, **1B = GPT-4 mini**, **1C = Mistral**, **1D,
+1E, 1F, 1G = the four later 1min.ai answers**, the AskAnyModel round-3 panel = **GLM 5.3 / GPT-6 Astra / Qwen3.8
+Max**, and the routed-panel batch = **four panes all answered by GPT-OSS 20B via Pollinations**.)*
+
+**A pattern across the two weakest 1min.ai models:** both misattribute the same literature in different ways. Mistral
+credits CSCV/PBO to **Bergomi (2016)**; GPT-4 mini credits the Deflated Sharpe to **"Bailey, Ledoit (2012)"**. The real
+authors are Bailey, Borwein, López de Prado and Zhu for CSCV, and Bailey & López de Prado for DSR — Ledoit and Bergomi
+are both real and well-known, in different fields (shrinkage estimation; rough volatility). Near-miss surnames are the
+hardest kind of error to catch, because they look like expertise.
+
 | Answer | Error | Why it matters |
 |---|---|---|
 | **1B** | "Require minimum sample length (e.g., **3 years** or 36 months out-of-sample)" alongside "80% power for SR=0.5" | Internally inconsistent. SR 0.5 needs **24.7 years** at 80% power; even SR 1.0 needs **6.2 years**. A 3-year OOS test cannot distinguish an SR of 1.0 from zero |
