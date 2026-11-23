@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T02:29 | 8 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 170 |  |
-| 2026-11-23T02:29 | 8 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 92 |  |
 | 2026-11-23T02:50 | 9 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
 | 2026-11-23T02:50 | 9 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 104 |  |
@@ -32,22 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 84 |  |
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 70 |  |
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 81 |  |
+| 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
+| 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 
 ## Latest answers
-
-### round 17 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**Claim (c) — "value is the last untested family" — is most likely wrong.**
-
-On Polymarket/Kalshi, "value" isn't a residual factor you harvest from a panel; it's embedded in how markets price correlated outcomes (e.g., "Will X win the nomination?" vs. "Will X win the presidency?" vs. conditional markets). The deflated Sharpe gate with trial accounting almost certainly kills any naive value tilt tested across multiple event types, because the effective number of independent trials is large and the per-trade edge is thin relative to 12–20 bps round-trip.
-
-**Falsifier:** A pre-registered value screen (e.g., systematically buying contracts priced below a calibrated conditional-probability model across recurring event categories) producing a deflated Sharpe above threshold after trial accounting and net of 16 bps round-trip, versus the 4.3% T-bill.
-
-### round 17 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**(b) is most likely wrong.** Post-earnings-announcement drift maps onto prediction markets more directly than the other claims: the market *is* the forecast, and event-resolution windows (earnings, Fed decisions, data prints) create exactly the setup where prices can underreact to announced information. The "dead since 2006" result comes from equities with heavy arbitrage capital; prediction markets have structurally thin arbitrage (position limits, capital constraints, retail-dominated flow), so underreaction can persist.
-
-**Falsifying observation:** A systematic scan of resolved Polymarket/Kalshi markets tied to scheduled announcements showing that conditional on the surprise sign, the market price 24–72 hours post-announcement still moves in the surprise direction net of the 12–20 bps round trip, with a deflated Sharpe (trial-accounted) above the T-bill hurdle. If no such drift appears across a broad event sample, (b) holds for this class too.
 
 ### round 18 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -80,3 +66,27 @@ Signal: close > 50D SMA AND 10D SMA > 50D SMA → long 1x notional. Flat otherwi
 **Kill measurement:** Deflated Sharpe (DSR) with trial count = number of distinct (fast, slow) pairs tested in the family (e.g., 10×10 grid = 100 trials). Kill if DSR < 0.90 after round-trip 16 bps and 4.3% T-bill hurdle net.
 
 **Data:** Binance public daily klines + funding. Free, point-in-time, no look-ahead.
+
+### round 20 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
+> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
+
+
+
+### round 20 - BONDS (govt and credit) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Compare the Sharpe Ratio of a Bond Portfolio to a 4.3% T-Bill.
+
+**Falsifiable Measurement:** If the Sharpe Ratio of the Bond Portfolio is not significantly higher than 4.3% (net of costs), the test fails.
+
+**Data Required:**
+
+* Historical daily returns of the bond portfolio (govt and credit)
+* Historical daily returns of the 4.3% T-Bill
+* Transaction costs (12-20 bps)
+
+**Data Availability:**
+
+* Historical returns: Free, but may be point-in-time (requires historical data).
+* Transaction costs: Free, point-in-time.
+
+**Kill Measurement:** A Sharpe Ratio of the bond portfolio not significantly exceeding 4.3% (net of costs) would indicate that the portfolio doesn't offer a compelling risk-adjusted return advantage over the T-Bill.
