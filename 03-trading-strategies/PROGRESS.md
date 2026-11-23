@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 19 — 2026-11-23 (06:49 UTC) — `hermes` (Session B, cron queue axis)
+Question: can one prediction-market venue be selected for the D2/D3 calibration harness, with fee/spread/resolution-risk documented from primary sources rather than memory?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 06:49 | DOC | D1 — Polymarket selected for the calibration sleeve: taker fee C × feeRate × p × (1−p), category rates 0.05/0.01/0 (fee per 100 shares peaks at $1.25/$0.25 at 50¢), makers free, no USDC deposit/withdrawal fee; spread UNMEASURABLE (no live order-book read from this box); UMA resolution ~2h undisputed, 24–48h debate + ~48h UMA vote if disputed, rare 50/50; Kalshi (CFTC fiat) declined — SSN/KYC gated, wire withdrawals blocked below $500,000. | `04-investment-strategy/results/d1_venue_selection.md` |
+
 ## Session 18 — 2026-11-23 (05:46 UTC) — `hermes` (Session B, cron queue axis)
 Question: does the PEAD null (expected 60-day drift = 0 for large-cap post-2006 per the C3-verified Martineau decay claim) change the programme tally in VERDICT_200.md?
 
@@ -372,6 +379,7 @@ Question: does the peer's ETF rotation + trend overlay table reproduce on one sh
 | 14:29 | PASS | SPY B&H and max DD reconcile: 10.28% vs peer 10.27% CAGR (2004-start matches H-E1's independent script), -55.19% vs -55.2% DD exact. Trend overlay does NOT reproduce under one convention: peer 8.37% vs mine 5.83% on the same 2006-2026 window; start date explains only ~16% of the gap (5.34% vs 5.83%), so the remainder is convention/cost difference (likely daily close-to-close signaling vs month-end->next-open). R191/R192 closed on numbers: SPY row reconciled, overlay row flagged as convention-dependent, not re-runnable to the peer's figure. | results/r191_r192_reconciliation.json |
 
 ---
+
 ## Session 9 — 2026-11-22 (14:40–14:45 UTC) — `hermes` (Session B, cron queue axis)
 Question: does the daily-timeframe walk-forward gate (10 folds over the 1d panel) leave any surviving cell, and does fitted-bracket collapse hold at the daily horizon?
 
