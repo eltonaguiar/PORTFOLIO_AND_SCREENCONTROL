@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 68 |  |
-| 2026-11-23T05:31 | 18 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 84 |  |
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 70 |  |
 | 2026-11-23T06:32 | 19 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 81 |  |
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
@@ -32,20 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 101 |  |
 | 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 131 |  |
 | 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 105 |  |
+| 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 |  |
+| 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
 
 ## Latest answers
-
-### round 27 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**Claim (b) is most likely wrong.**
-
-PEAD's disappearance post-2006 is frequently asserted but rests on pooled, equal-weight long/short deciles with no cost overlay. Falsifier: a single-name long/short portfolio sorting on SUE (or standardized earnings surprise), implemented with realistic execution (VWAP, 12–20 bps round trip), restricted to top-1000 liquid names, holding 60–120 days, with proper trial accounting (deflated Sharpe across sort variants), still showing net IR > 0.5 after 2006. Several practitioner implementations report exactly this: the effect compressed in magnitude but survived in large caps when traded patiently and cost-aware. The "dead" claim typically reflects publication bias and implementation sloppiness, not genuine disappearance.
-
-### round 27 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**(b)** is most likely wrong. The "death since ~2006" is largely a post-2010 artifact of the mega-cap growth regime, and PEAD in single-name equities has shown intermittent revival tied to rate regimes and retail flow (e.g., 2020–21). The claim conflates a specific decade's drawdown with structural disappearance.
-
-**Falsifying observation:** A net-of-18bps long/short PEAD portfolio (SUE deciles, skip-one-day entry, 63-day holding) on Russell 1000 names delivers a deflated Sharpe (trial-adjusted, multiple-testing accounted) above the 4.3% T-bill over a post-2015 sample, robust across 2016–2019 and 2022–2024 subperiods. That would show the premium persists once mega-cap crowding and zero-commission noise are controlled.
 
 ### round 28 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -70,3 +58,19 @@ It is an equity microstructure claim about *equity* price drift. In govt/credit 
 Post-earnings drift is an equity phenomenon with no direct analogue in govt/credit. Credit spreads and rates do exhibit post-FOMC and post-CPI announcement drift, and post-supply auction effects—documented in primary-dealer positioning data. So the claim misidentifies the relevant event.
 
 **Falsifying observation:** Estimate cumulative average abnormal returns (CAAR) on IG/HY CDS indices and 10y futures in event windows [0,+5] days after scheduled FOMC/CPI prints, 2006–2024, using a deflated Sharpe with trial accounting across event types and subsamples. If CAAR exceeds 12–20 bps round trip with a deflated Sharpe > 1, claim (b) fails for bonds—drift survives, just not post-earnings.
+
+### round 30 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+**Most likely wrong: (c) — "value is the last untested family."**
+
+Value has been extensively tested on the exact terms the programme uses. Fama-French's own post-2010 updates, AQR's published net-of-cost simulations, and numerous academic replications already show the HML factor collapsing after transaction costs and deflated-Sharpe trial adjustment. It isn't "untested" — it's tested and failed in the literature.
+
+**Specific falsifying observation:** A sector/factor value screen (e.g., low P/B or high earnings yield within liquid ETFs) showing a deflated Sharpe above the programme's gate *and* a net-of-cost edge exceeding 12–20 bps round-trip on a paper portfolio with realistic trial accounting would overturn (c). Absent that, (c) is simply a false premise.
+
+### round 30 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**Claim (b) is most likely wrong.**
+
+The "death" of PEAD is usually documented on equal-weighted universes with stale definitions and no cost accounting. Sector-ETF implementations can harvest drift via post-earnings-announcement momentum *conditioned on surprise persistence*: earnings revisions in sector leaders (XLK, XLF) show multi-quarter autocorrelation that single-name PEAD tests miss because idiosyncratic noise dominates. 
+
+**Falsification:** A long-short sector-ETF portfolio, long top-decile surprise sectors, short bottom-decile, held 60 days, with 12-20 bps round-trip applied and deflated-Sharpe trial accounting, fails to beat the 4.3% T-bill net. If DSR stays below 1.0 across rolling 5-year windows post-2006, the claim survives.
