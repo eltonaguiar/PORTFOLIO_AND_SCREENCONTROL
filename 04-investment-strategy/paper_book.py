@@ -36,7 +36,9 @@ Usage:
   python paper_book.py mtm --tier stable --id 1 --price 445.00   # weekly MTM
   python paper_book.py close --tier stable --id 1 --outcome 1 --exit-price 445.00
   python paper_book.py kill --tier stable --id 1 --price 437.68
-  python paper_book.py supersede --tier stable --original 1
+  python paper_book.py supersede --tier stable --original 1   # id 1 -> status superseded; no field is edited
+  python paper_book.py add --tier stable --agent Hermes --instrument SPY --side long \
+      --claim "thesis v2" --entry-price 101.00 --size 1000 --kill-type none --supersedes 1
   python paper_book.py list [--tier stable] [--status open]
   python paper_book.py view [--tier stable]
   python paper_book.py pending [--tier stable]
@@ -236,8 +238,12 @@ def validate_append_only(records: list[dict]) -> list[str]:
         sup = rec.get("supersedes")
         if sup is not None and sup not in all_ids:
             problems.append(f"id {rec.get('id')} supersedes unknown id {sup}")
-        if rec.get("status") == "superseded" and sup is None:
-            problems.append(f"id {rec.get('id')} is superseded but names no target")
+        if sup is not None:
+            target = find_record(records, sup)
+            if target is not None and target.get("status") != "superseded":
+                problems.append(
+                    f"id {rec.get('id')} supersedes id {sup} which is {target.get('status')}, not superseded"
+                )
         if rec.get("supersedes") == rec.get("id"):
             problems.append(f"id {rec.get('id')} supersedes itself")
     return problems
@@ -291,13 +297,25 @@ def cmd_add(args: argparse.Namespace) -> int:
         "kill_rule": kill_rule,
         "git_hash": git_hash,
         "status": "open",
-        "supersedes": None,
+        "supersedes": args.supersedes,
         "resolution": None,
         "resolved_at": None,
         "realized_bp": None,
         "mark_to_market_price": None,
         "mark_to_market_ts": None,
     }
+    if args.supersedes is not None:
+        target = find_record(records, args.supersedes)
+        if target is None:
+            print(f"error: no pick with id {args.supersedes} to supersede", file=sys.stderr)
+            return 2
+        if target["status"] != "superseded":
+            print(
+                f"error: id {args.supersedes} is {target['status']}, not superseded; "
+                "run `supersede --original <id>` first",
+                file=sys.stderr,
+            )
+            return 2
     problems = validate_record(rec)
     if problems:
         print("error: record failed validation:", file=sys.stderr)
@@ -638,6 +656,12 @@ def main(argv: list[str] | None = None) -> int:
     p_add.add_argument("--trigger-level", type=float, default=None)
     p_add.add_argument("--max-hold-days", type=int, default=None)
     p_add.add_argument("--git-hash", default=None)
+    p_add.add_argument(
+        "--supersedes",
+        type=int,
+        default=None,
+        help="id of an already-superseded pick this row revises (E7 no-edit rule)",
+    )
     p_add.set_defaults(func=cmd_add)
 
     p_mtm = sub.add_parser("mtm", help="weekly mark-to-market price for an open pick")

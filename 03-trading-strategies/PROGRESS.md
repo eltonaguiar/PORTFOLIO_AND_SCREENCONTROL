@@ -3,6 +3,13 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 33 — 2026-11-23 (18:35 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: E7 — is the no-edit rule real: revisions are new rows with `supersedes`, never edits, and can a revision row actually be created and linked?
+||
+| time (UTC) | status | item | artifact ||
+|---|---|---|---||
+|| cron | DONE | E7 — `add --supersedes N` wired to paper_book.py: `supersede --original N` flips the original row to status=superseded with zero field edits (verified field_drift=[] across id/ts/agent/instrument/side/claim/entry_price/size/kill_rule/git_hash), then `add --supersedes N` appends a new open row carrying the link; validate rejects unknown targets, open (not-yet-superseded) targets, and double-supersede; close/mtm/enforce-kills refuse superseded rows and score excludes them (n=0). End-to-end on a scratch ledger (deleted afterward; real tier books untouched and empty pending E4). | `04-investment-strategy/paper_book.py` · `04-investment-strategy/results/e7_no_edit_revision.json` |
+
 ## Session 32 — 2026-11-23 (17:25 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: E6 — are kill rules enforced so a pick that hits its kill closes as a loss even if it later recovers, with no real picks yet (E4 not landed)?
 
@@ -18,7 +25,7 @@ Question: E5 — does the weekly scorecard (n, mean bp, hit rate, max drawdown, 
 | cron | DONE | E5 — `score` subcommand added to paper_book.py: per-tier n, mean bp, hit rate, max drawdown on the realized-bp path, bootstrap 95% CI of the mean (fixed seed 42), declared trial count; never aggregates tiers into a cross-tier ranking (E3). Verified on a scratch book with known outcomes (realized bp +1000/-1000/+1000/-500 → n=4, mean +125 bp, hit rate 0.5, max drawdown 1000 bp, CI [-750,+1000] bp; scratch deleted afterward). Real books: all three tiers n=0, INSUFFICIENT_DATA — no picks recorded yet (E4 agent picks not landed), so nothing fabricated; the harness reports the empty state honestly and is ready for E4. | `04-investment-strategy/paper_book.py` · `03-trading-strategies/results/e5_weekly_scorecard_latest.json` |
 
 Legend for **status**: `RUN` executed · `PASS`/`FAIL` gate result · `FIX` defect found and
-fixed · `DOC` written · `PEER` reconciliation with another agent's work.
+`DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 

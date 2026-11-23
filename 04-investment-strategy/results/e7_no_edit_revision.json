@@ -1,0 +1,90 @@
+{
+  "item": "E7 — no-edit rule: revisions are new rows with `supersedes`, never edits",
+  "gate": "G5",
+  "owner": "H",
+  "checks": [
+    {
+      "name": "add open pick id 1",
+      "exit_code": 0,
+      "stdout": "{\"id\": 1, \"ts\": \"2026-11-23T23:35:21.025398+00:00\", \"tier\": \"stable\", \"agent\": \"Hermes\", \"instrument\": \"SPY\", \"side\": \"long\", \"claim\": \"Q1 thesis: value bias\", \"entry_price\": 100.0, \"size\": 1000.0, \"kill_rule\": {\"type\": \"none\"}, \"git_hash\": \"bf25dd5277375c9dc0a79ab9bb53f9be15f9b3bb\", \"status\": \"open\", \"supersedes\": null, \"resolution\": null, \"resolved_at\": null, \"realized_bp\": null, \"mark_to_market_price\": null, \"mark_to_market_ts\": null}",
+      "stderr": "",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "supersede original id 1",
+      "exit_code": 0,
+      "stdout": "{\"superseded\": 1}",
+      "stderr": "revision row must be added with `add --supersedes 1`",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "original row fields untouched (no edit)",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "add revision row id 2 with supersedes=1",
+      "exit_code": 0,
+      "stdout": "{\"id\": 2, \"ts\": \"2026-11-23T23:35:21.229832+00:00\", \"tier\": \"stable\", \"agent\": \"Hermes\", \"instrument\": \"SPY\", \"side\": \"long\", \"claim\": \"Q1 thesis revised\", \"entry_price\": 101.0, \"size\": 1000.0, \"kill_rule\": {\"type\": \"none\"}, \"git_hash\": \"bf25dd5277375c9dc0a79ab9bb53f9be15f9b3bb\", \"status\": \"open\", \"supersedes\": 1, \"resolution\": null, \"resolved_at\": null, \"realized_bp\": null, \"mark_to_market_price\": null, \"mark_to_market_ts\": null}",
+      "stderr": "",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "validate green on book with supersede+revision",
+      "exit_code": 0,
+      "stdout": "aggressive: absent (no picks yet)\nmoderate: absent (no picks yet)\nstable: absent (no picks yet)\nno tier books exist yet (created on first add per tier)\nVALID: 0 record(s)",
+      "stderr": "",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "close superseded id refused (exit 2)",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "error: id 1 is superseded, cannot close",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "revision to unknown id refused (exit 2)",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "error: no pick with id 999 to supersede",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "revision to open (not superseded) id refused (exit 2)",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "error: id 2 is open, not superseded; run `supersede --original <id>` first",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "double supersede refused (exit 2)",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "error: id 1 is superseded, cannot supersede",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "name": "score on scratch book reports n=0 INSUFFICIENT_DATA",
+      "exit_code": 0,
+      "stdout": "scratch_e7.jsonl n=0 mean_bp=None hit_rate=None max_dd_bp=None ci95=None declared_trials=0 status=INSUFFICIENT_DATA\ntotal resolved picks: 0\nartifact written: C:\\Users\\zerou\\pasc\\03-trading-strategies\\results\\e5_weekly_scorecard_latest.json",
+      "stderr": "",
+      "ok": true,
+      "reasons": []
+    }
+  ],
+  "field_drift": [],
+  "original_status_after_supersede": "superseded",
+  "all_checks_passed": true
+}
