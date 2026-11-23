@@ -397,3 +397,12 @@ Question: can B6 (owner H) be closed using the committed Session 7 value test (V
 | 02:29 | PASS | B6 — value/HML test run once against the frozen rule (committed Session 7 measurement, real code): VLUE timed CAGR 3.07%/yr net (≈25 bp/month) vs 4.32%/yr T-bill hurdle, Sharpe 0.372 vs SPY 0.619, permutation p=0.61 (n=100 shuffles), 262 rebalances / 5759 daily bars, 2004–2026. Kill verdict: KILLED — value underperforms SPY (7.06%/yr vs 10.28%/yr buy-and-hold) and cash. INVESTMENT_DECISION_FRAMEWORK.md §2a +0.11%/yr value figure flagged NOT evidence (no committed implementation anywhere in repo; not recomputable). | `03-trading-strategies/results/b6_value_test_latest.json` |
 
 Standing state: B6 closed. Value/HML research line is dead (measured) — nothing to allocate. Next unchecked H items in order: B7, C3, C4, H2, H3, D2/D3, E1/E2, F1–F5, H1. B7 (reconcile 25–42 vs 50–70 bp/month against the ≈25 bp/month measured number) is next.
+
+## Session 17 — 2026-11-23 (03:36 UTC) — `hermes` (cron queue axis)
+Question: B7 — reconcile the 2x literature disagreement (25–42 vs 50–70 bp/month gross) against the committed VLUE measurement and record which construction reproduces it. No fresh market data this run (yfinance HTTP 429); all inputs are committed, verified artifacts.
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 03:36 | PASS | B7 — literature 2x reconciled: verified JFQA primary source explains both bands — HML +5.20%/yr Jul 1926–Dec 2007 vs −0.86%/yr Jan 2008–Mar 2025 (≈ +43 vs −7 bp/month; value beat growth 55% → 43% of months), so 25–42 is the long-run gross average incl. post-2007 decay and 50–70 is a gross top-vs-bottom-quintile phrasing of the pre-2007 era that the router's own arithmetic takes to 30–40 bp/month after 15–20 bp/month turnover costs. Our VLUE measurement: net 25.23 bp/month (3.07%/yr), ≈25.6 bp/month gross after 0.4 bp/month cost drag (105 bp total over window), 262 rebalances / 5759 daily bars, 2004–2026, costs charged on position changes. It reproduces the low end of 25–42, not 50–70, and stays below the 36 bp/month cash hurdle either way. INVESTMENT_DECISION_FRAMEWORK.md §2a +0.11%/yr not used (flagged NOT evidence in B6 — no committed implementation). B6 kill verdict stands: established=false. | `03-trading-strategies/results/b7_literature_reconciliation.json` |
+
+Standing state: B7 closed. Value/HML research line stays dead (measured, reconciled to literature) — nothing to allocate. Next unchecked H items in order: C3, C4, H2, H3, D2/D3, E1/E2, F1–F5, H1.

@@ -1,0 +1,67 @@
+{
+  "item": "B7",
+  "owner": "H",
+  "gate": "G1,G3,G4,G5",
+  "session": "17 — 2026-11-22 22:36 EST (cron run)",
+  "question": "Reconcile the 2x literature disagreement (25-42 vs 50-70 bp/month gross) against our own measured number and record which construction reproduces it.",
+  "measured_number": {
+    "source": "03-trading-strategies/results/b6_value_test_latest.json (committed Session 7 measurement, control ran 2026-11-22T13:51 UTC)",
+    "test": "VLUE value/HML style factor — momentum-filtered value, monthly rebalance, signal at month-end close, fill at next day's open, 0/1 weight, 10 bp round trip, costs charged on position changes",
+    "window": "2004-01-02 -> 2026-11-20 (22.88 yr)",
+    "n_rebalances": 262,
+    "n_daily_bars": 5759,
+    "net_bp_per_month": 25.23,
+    "net_cagr_pct_yr": 3.07,
+    "cost_drag_total_bp_over_window": 105,
+    "implied_cost_drag_bp_per_month": 0.38,
+    "implied_gross_bp_per_month": 25.61,
+    "cash_hurdle_bp_per_month": 36.00,
+    "net_vs_cash_bp_per_month": -10.42,
+    "buy_and_hold_cagr_pct_yr": 7.06,
+    "spy_buy_and_hold_cagr_pct_yr": 10.28,
+    "sharpe": 0.372,
+    "spy_sharpe": 0.619,
+    "permutation_p_value": 0.61,
+    "established": false,
+    "kill_verdict": "KILLED"
+  },
+  "literature_bands": {
+    "band_a_25_42_bp_month_gross": {
+      "claim": "3-5%/yr = 25-42 bp/month gross, HML series 1927-2024, highly sample-dependent, not a stable monthly payoff; HML lost about half its cumulative value after 2007",
+      "source_in_repo": "VALUE_VS_PEAD_EVIDENCE.md line 15-17, duck.ai / GPT-6 Luna answer harvested 2026-11-22 (external claim, model-harvested, primary-source verification is C3 scope)",
+      "status": "not primary-source verified in repo; consistent with the verified JFQA source below"
+    },
+    "band_b_50_70_bp_month_gross": {
+      "claim": "0.5-0.7%/month = 50-70 bp/month gross, top vs bottom quintile, FF 1963-2019+, Asness 1975-2011 international",
+      "source_in_repo": "VALUE_VS_PEAD_EVIDENCE.md line 54, Router / ULTRA_FREE_OPENROUTER answer (external claim, model-harvested, not primary-source verified)",
+      "own_arithmetic_in_repo": "net of 15-20 bp/month turnover costs the alpha shrinks to 30-40 bp/month (VALUE_VS_PEAD_EVIDENCE.md line 54, 63)"
+    },
+    "band_c_20_30_bp_month": {
+      "claim": "2.0-3.5%/yr = 20-30 bp/month SUE1 decile spread, sample 1971-2005 US, post-2005 SUE spread compressed",
+      "source_in_repo": "VALUE_VS_PEAD_EVIDENCE.md line 55, Router / ULTRA_FREE_CLOUD_LARGE answer (PEAD-adjacent; model-harvested, not primary-source verified)"
+    }
+  },
+  "verified_primary_source": {
+    "paper": "Is the Value Premium Dead? Forecasting Value-Growth Cycles with the Implied Value Premium (JFQA) — verified against primary source in a prior run; citation and magnitude match the abstract",
+    "location_in_repo": "VALUE_VS_PEAD_EVIDENCE.md lines 99-104, 121-123",
+    "hml_split": "+5.20%/yr Jul 1926-Dec 2007 vs -0.86%/yr Jan 2008-Mar 2025; value beat growth 55% -> 43% of months",
+    "bp_month": "pre-2007 ≈ +43 bp/month gross; post-2007 ≈ -7 bp/month gross",
+    "modern_subsamples_in_repo": "all-cap 49 -> 10 bp/month from 1963-91 to 1991-2019; big-stock 42 -> 4 bp/month; HML alpha after profitability and investment controls -4 bp/month (t = -0.47)"
+  },
+  "reconciliation": [
+    "The 2x disagreement collapses once the sample split is applied: both bands are gross slices of different eras of the same series, not two different factors.",
+    "Pre-2007 HML ≈ +43 bp/month gross lies between the two bands; post-2007 HML ≈ -7 bp/month is negative. The long-run 1926-2024 average (band A, 25-42) already embeds post-2007 decay; band B (50-70) is a gross top-vs-bottom-quintile phrasing anchored in the pre-2007 era.",
+    "Router's own arithmetic takes 50-70 down to 30-40 bp/month after 15-20 bp/month turnover costs — still a pre-2007/gross-era number, not a number our costed construction can earn.",
+    "Our VLUE construction measures net 25.23 bp/month; implied gross ≈ 25.61 bp/month after only 0.38 bp/month cost drag (105 bp total over the window because the 0/1 signal changes position rarely). That reproduces the LOW END of band A (25-42) — i.e. the long-run average that already includes post-2007 decay — and matches the decayed-modern consensus (post-2007 HML -7 bp/month; big-stock 42 -> 4 bp/month). It reproduces band B (50-70) under no costing, and no post-cost number here clears the 36 bp/month cash hurdle."
+  ],
+  "which_construction_reproduces_our_number": "None as a tradable edge. Our construction (VLUE: momentum-filtered value, monthly rebalance, next-day-open fill, 0/1 weight, costs charged on position changes, 2004-2026 window) sits at the low end of 25-42 bp/month gross and below the 36 bp/month cash hurdle net. It does not reproduce 50-70 bp/month gross.",
+  "verdict": "B6 kill verdict stands unchanged: established=false. Value underperforms SPY buy-and-hold (7.06 vs 10.28%/yr) and cash (3.07 vs 4.32%/yr). Best-case gross (~25.6 bp/month) is below the 36 bp/month hurdle before financing or short borrow. The literature gap does not resurrect the value line.",
+  "not_used": "INVESTMENT_DECISION_FRAMEWORK.md section 2a +0.11%/yr gross value figure — flagged NOT evidence in B6 (no committed implementation anywhere in the repo, not recomputable); not used in this reconciliation.",
+  "recomputable_from": [
+    "03-trading-strategies/results/b6_value_test_latest.json",
+    "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md (verified primary source, lines 99-124)",
+    "03-trading-strategies/prototype/transcripts/duckai_pead_raw.txt"
+  ],
+  "fresh_data_blocked": "yfinance fetch blocked (HTTP 429) this run; B7 requires no fresh market data — every input is a committed artifact.",
+  "coms_post": "none — no new measured number (all inputs recomputable from committed artifacts) and no correction of a published number; the B6 kill verdict stands."
+}
