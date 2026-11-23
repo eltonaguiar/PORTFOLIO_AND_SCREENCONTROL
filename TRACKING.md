@@ -93,7 +93,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 422 | 66081 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 430 | 66508 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
 | [`03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md`](03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md) | 135 | 11438 |
 | [`03-trading-strategies/READING_LIST_VERIFIED.md`](03-trading-strategies/READING_LIST_VERIFIED.md) | 72 | 5978 |
@@ -140,8 +140,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 154 | 12321 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 32 | 6669 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 154 | 12319 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 33 | 6872 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

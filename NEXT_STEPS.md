@@ -54,7 +54,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
       guarded loop and this kernel. Decide the merge — kernel as perception/actuation layer, or adopt the peer's
       policy module wholesale. **DoD:** one documented owner per concern in `01-*/README.md`; no duplicated capture
       or click path.
-- [x] **A8 — measure the crop-vs-full-frame claim** · S · `capture.py`'s docstring asserts a panel crop beats the
+- [x] **A8 — measure the crop-vs-full-frame claim** · S · capture.py's docstring asserts a panel crop beats the
       measured 18.99 s full-frame OCR. Measure a 400×800 crop with RapidOCR. **DoD:** `01-*/MEASUREMENTS.md` gains a
       row with real elapsed time.
 - [ ] **A9 — Linux/RustDesk path** · M · verify SSH + AT-SPI from this host to the Linux box, or document exactly
