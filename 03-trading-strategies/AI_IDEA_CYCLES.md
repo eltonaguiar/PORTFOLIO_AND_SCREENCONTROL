@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 34 |  |
-| 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 93 |  |
 | 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 84 | **YES** |
 | 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 90 | **YES** |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 82 |  |
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
 | 2026-11-23T11:37 | 24 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 200 | 72 |  |
+| 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
+| 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 88 |  |
 
 ## Latest answers
-
-### round 22 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Monthly-rebalanced equal-weight portfolio of S&P 500 constituents vs. SPY (net of 15 bps round-trip on the EW sleeve).
-
-**Kill condition:** Deflated Sharpe (López de Prado, 5 trial factors, 252-day block bootstrap) of the EW-minus-SPY spread < 1.0 after costs. Deflation accounts for the 5 prior failed asset-class trials.
-
-**Data:** CRSP daily returns + shares outstanding (point-in-time survivorship-free), 1993–2024. CRSP is paid; free proxy: Compustat daily via WRDS (academic). Point-in-time constituent history required — using current membership induces look-ahead.
-
-### round 22 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Long-only equal-weight S&P 500 index fund (e.g., Fidelity ZERO Large Cap Index, FZROX, 0 bps expense ratio) versus cash. Rebalance annually. Monthly returns, 2014–2024.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado with trial accounting) of net excess return over the 4.3% T-bill must exceed the critical value at α = 0.05. Kill if deflated Sharpe ≤ 0 (or fails to reject zero at 5%).
-
-**Data:** FZROX (or Vanguard SPLG, 3 bps) daily NAV, 13-week T-bill secondary market yield. Free, point-in-time: FRED (DGS3MO), fund provider historical NAVs.
 
 ### round 23 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -84,3 +68,19 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Kill measurement:** Deflated Sharpe (Harvey–Liu) with trial accounting < 0.5 net of 15 bps round-trip. That threshold is what kills it.
 
 **Data:** CME WTI front-month continuous settlement prices, daily, 2000–present. Free: Nasdaq Data Link (limited), Stooq. Point-in-time: settlement prices are, but rolling methodology (Gorton–Rouwenhorst vs constant-maturity) is not—survivorship in roll-date conventions is the silent killer.
+
+### round 25 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Sell 1-month 2% OTM SPX put spreads (long put, short 1% OTM put) on liquid CBOE-listed SPX options, delta-hedged daily at close. Compare net-of-cost annualized return against 4.3% T-bill.
+
+**Kill measurement:** Deflated Sharpe (trial-adjusted) < 1.0 after subtracting 16 bps round-trip per rebalance and bid-ask slippage estimated from intraday quotes.
+
+**Data:** Daily SPX option chain (strike, bid, ask, open interest, expiry), SPX spot, realized intraday range. Free sources: CBOE (delayed, end-of-day only, not point-in-time intraday); historical option data is not freely available point-in-time.
+
+### round 25 - OPTIONS (equity index) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Short 30-day 2% OTM SPX put spreads (sell 2% OTM put, buy 4% OTM put), rolled at expiry, equal weight across all expiries.
+
+**Kill measurement:** Deflated Sharpe (accounting for the number of distinct configurations tried across this programme) below 1.0 net of 15 bps assumed round-trip cost, evaluated against the 4.3% T-bill hurdle.
+
+**Data:** Daily SPX index closes and Cboe SPX end-of-day option prices (strike, bid, ask, expiry, delta). Free at Cboe Datashop, but point-in-time reconstruction requires the historical snapshot files; delayed public data is not point-in-time.
