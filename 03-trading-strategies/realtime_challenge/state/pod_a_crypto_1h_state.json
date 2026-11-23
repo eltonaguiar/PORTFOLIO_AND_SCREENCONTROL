@@ -17,18 +17,18 @@
  "rolling_sharpe_20": null,
  "decay_alarm": null,
  "pass": {
-  "ts_utc": "2026-11-23T04:19:35+00:00",
+  "ts_utc": "2026-11-23T05:17:33+00:00",
   "venue": "kraken",
   "closed_this_pass": [],
   "opened_this_pass": [],
   "marks": {
-   "BTC": 61258.4,
-   "ETH": 1730.11,
-   "SOL": 71.23,
-   "XRP": 0.93259,
-   "DOGE": 0.0552971,
-   "ADA": 0.144216,
-   "LINK": 8.88956
+   "BTC": 61201.8,
+   "ETH": 1725.34,
+   "SOL": 71.39,
+   "XRP": 0.93289,
+   "DOGE": 0.0554051,
+   "ADA": 0.144765,
+   "LINK": 8.90952
   },
   "equity": 10000.0
  }
