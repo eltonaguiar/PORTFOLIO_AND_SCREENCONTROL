@@ -67,7 +67,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [ ] **B1 — score auto-expired rows as their own class** · M · **blocked upstream** — lives in
       `findtorontoevents.ca`, fleet-owned (asked on COMS). Locally: spec the schema change and the failure mode it
       fixes. **DoD:** written spec in `03-*/` even if the upstream fix lands elsewhere.
-- [ ] **B2 — forward-gate dashboard** · S · read the audit3 ledger JSON; print pods by status, rows per pod, and the
+- [x] **B2 — forward-gate dashboard** · S · read the audit3 ledger JSON; print pods by status, rows per pod, and the
       binding gate clause per pod. **DoD:** runs against the live URL; output committed as
       `03-*/results/forward_gate_<UTC>.json`.
 - [ ] **B3 — cost-basis versioning** · S · capture `payload.slippage_validation` per class into a committed file with

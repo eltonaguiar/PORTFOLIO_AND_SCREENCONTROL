@@ -1,0 +1,200 @@
+{
+  "generated_at": "2026-11-23T22:45:36.248337Z",
+  "source_url": "https://findtorontoevents.ca/audit3/audit3_ledger.json",
+  "source_generated_at": "2026-11-23T15:57:34.507255+00:00",
+  "ledger_generated_at": "2026-11-23T18:31:33.087120+00:00",
+  "fingerprint": "c3580fd592ab044f",
+  "enforced": true,
+  "n_forward_rows_in_ledger": 451,
+  "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+  "n_pods": 9,
+  "n_eligible": 0,
+  "pods_by_status": {
+    "observe": 8,
+    "pre_registered": 1
+  },
+  "pods": [
+    {
+      "pod": "POD-COMMODITY-ROLL-YIELD",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-05",
+      "n_forward": 0,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "pf_ci_lb": null,
+        "ir": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-CRYPTO-BOLLINGER-MR",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-02",
+      "n_forward": 3,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "net_mean_pct": 2.6976,
+        "net_pf": 18.748157787212403,
+        "pf_ci_lb": null,
+        "ir": 0.9459,
+        "intrabar_first_touch_all": true,
+        "benchmark_coverage": 0.0,
+        "excess_vs_benchmark_pct": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-CRYPTO-BTC4H-RSIMACD",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-07",
+      "n_forward": 2,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "net_mean_pct": 0.0094,
+        "net_pf": 1.2763849780632792,
+        "pf_ci_lb": null,
+        "ir": 0.0859,
+        "intrabar_first_touch_all": true,
+        "benchmark_coverage": 0.0,
+        "excess_vs_benchmark_pct": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-CRYPTO-POSITION",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-144",
+      "n_forward": 0,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "pf_ci_lb": null,
+        "ir": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-CRYPTO-VWAP-REVERSION",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-01",
+      "n_forward": 2,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "net_mean_pct": -1.4139,
+        "net_pf": 0.0,
+        "pf_ci_lb": null,
+        "ir": -4.0133,
+        "intrabar_first_touch_all": true,
+        "benchmark_coverage": 0.0,
+        "excess_vs_benchmark_pct": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-EQUITY-BREAKOUT",
+      "status": "pre_registered",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-BABY-EQUITY-VT-PATTERN-SWEEP-001",
+      "n_forward": 0,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "no forward rows — nothing can promote"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "pf_ci_lb": null,
+        "ir": null
+      },
+      "promotion_blocked_by_status": null
+    },
+    {
+      "pod": "POD-ETF-DUAL-MOMENTUM",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-06",
+      "n_forward": 0,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "pf_ci_lb": null,
+        "ir": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-FABER-TAA",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-03",
+      "n_forward": 2,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "net_mean_pct": -2.5836,
+        "net_pf": 0.003163826184534552,
+        "pf_ci_lb": null,
+        "ir": -0.7026,
+        "intrabar_first_touch_all": true,
+        "benchmark_coverage": 0.0,
+        "excess_vs_benchmark_pct": null
+      },
+      "promotion_blocked_by_status": "observe"
+    },
+    {
+      "pod": "POD-FOREX-USDJPY-MOMENTUM",
+      "status": "observe",
+      "since": "2026-11-19",
+      "hypothesis_id": "H-2026-11-19-04",
+      "n_forward": 0,
+      "min_n": 100,
+      "eligible": false,
+      "blocked_reasons": [
+        "pod is observe - registered for observation only"
+      ],
+      "binding_gate_clause": "a pod's cell reaches PROVEN_T2 only when its own forward rows (closed on/after registered_at) clear: n>=100, net PF CI-LB > 1.0 or IR >= 0.5, honest intrabar first-touch on 100%, benchmark coverage >= 90%",
+      "gate": {
+        "pf_ci_lb": null,
+        "ir": null
+      },
+      "promotion_blocked_by_status": "observe"
+    }
+  ]
+}
