@@ -67,6 +67,65 @@ family* for each bias control. Keep those two paragraphs; discard every threshol
 robustness pass. When an answer contains one impossible quantity, the rest of its numbers deserve re-derivation, not
 spot-checking — and no gate from that answer should be adopted, even the ones that happen to be right.
 
+## 2c. 1D — the strongest of the six, and the only one whose worked example reproduces
+
+The fourth 1min.ai answer is materially better than the others: it states formulas rather than names them, and its
+arithmetic holds. Verified here:
+
+> *"with 100 trials whose Sharpes have a standard deviation of 0.5, SR\* ≈ 1.27"*
+> `SR* = √0.25 · [(1−0.5772)·Φ⁻¹(0.99) + 0.5772·Φ⁻¹(1−1/271.8)]`
+> `= 0.5 · [0.4228·2.3263 + 0.5772·2.6808] = 0.5 · 2.5306 = **1.2653**` → **1.27 ✓** to three decimals.
+
+Its conclusion from that example is correct and is the single most useful sentence any of the six wrote:
+*"A backtest Sharpe of 1.2 is then worse than expected from luck."*
+
+### Where 1D is still looser than v1.0 (do not adopt these three)
+
+| Gate | 1D | v1.0 | Note |
+|---|---|---|---|
+| Walk-forward | > 50% | **≥ 0.60** | 1D's grey zone 30–50% is also wider |
+| Break-even cost | ≥ 3× | **≥ 4×** | 1D moves the right direction from 1B/1C but stops short |
+| Factor alpha t | > 2 (3 if mined) | **3.0 / 3.5 / 4.0 by N_eff** | 1D is right that "if mined" needs more; v1.0 scales it automatically |
+
+### Six items from 1D worth adopting outright
+
+1. **Paper-vs-replay correlation ≥ 0.95** as the implementation-fidelity gate — replay the backtest over the exact
+   paper window and correlate daily returns. This is a *computable* pass criterion where v1.0 has a prose contract,
+   and < 0.90 is a halt-and-find-the-bug trigger rather than a judgement call.
+2. **Count independent bets, not trades.** *"50 positions opened the same day are closer to one bet."* Cluster by
+   day or week before any power calculation. This is the operational version of N_eff and no other answer has it.
+3. **Vault Sharpe ≥ 50% of discovery Sharpe retained** as a first-class gate, separate from out-of-market replication.
+4. **MinBTL ≈ 2·ln(N)/SR²** as a cheap pre-test lower bound (≈ 7.6 y at N=45, SR=1) — a five-second sanity check
+   before a single backtest is run.
+5. **O'Brien-Fleming boundaries spelled out for 4 scheduled looks: z > 4.05, 2.86, 2.34, 2.02.** Concrete enough to
+   code; v1.0 specifies the method but not the numbers.
+6. **"A net Sharpe above 3 on daily bars almost always indicates a bug."** A tripwire, not a gate — and correct.
+
+### Also correct and worth quoting
+
+`McLean & Pontiff 2016`: **−26% out-of-sample, −58% post-publication** · `Harvey, Liu & Zhu 2016` t > 3.0 for
+published anomalies · the Harvey & Liu **50% haircut** for live sizing · *"if you then modify the strategy, the vault
+is burned and you need new data."*
+
+**Verdict: 1D is the closest of the six to v1.0 and the only one whose quantitative example survives re-derivation.
+Use it for operational prose and the six items above; gate with v1.0.**
+
+## 2d. Scoreboard across all six answers
+
+| Answer | Closest to v1.0 | Governing error | Safe to gate with? |
+|---|---|---|---|
+| **1D** (1min) | **yes** | three gates looser (WFE, break-even, alpha t) | no — adopt prose + 6 items |
+| **Luna** | yes | none found; under-specifies operations | no — use v1.0 |
+| **Claude** | close | PBO relaxed to 0.25 | no |
+| **GLM** | close | PBO relaxed to 0.25, alpha t tiered low | no |
+| **1A** (1min) | moderate | alpha t 2.0, absolute 2× cost gate, no break-even | no |
+| **1B** (1min) | poor | DSR 0.80, IR 0.30, 3-year OOS vs its own power claim | **no** |
+| **1C** (1min) | none | DSR gated at 1.5 — impossible | **no** |
+
+**Six answers, six different threshold sets, and not one of them matches another.** That variance is itself the
+finding: model consensus on a numeric gate is worth nothing, which is why a written protocol with a fixed gate sheet
+and a ledger is the only thing that can be audited after the fact.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a
