@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-23T17:31:57.744363+00:00",
+  "generated_at": "2026-11-23T18:32:37.174427+00:00",
   "source": "results/carry_roundtrip.jsonl",
   "reference": {
     "note": "Mercury3 snapshot: 42.64 bp median round trip, n = 5, ~94% pure fees. This repo's series is a separate live measurement; not forced to match.",
     "mercury3_median_roundtrip_bps": 42.64,
     "mercury3_n": 5
   },
-  "ticks_total": 210,
-  "ticks_ok": 210,
+  "ticks_total": 217,
+  "ticks_ok": 217,
   "symbols": [
     "ADA/USDT:USDT",
     "BTC/USDT:USDT",
@@ -18,20 +18,20 @@
     "XRP/USDT:USDT"
   ],
   "roundtrip_cost_bps": {
-    "n": 210,
-    "median": 11.1348,
+    "n": 217,
+    "median": 11.1346,
     "min": 10.0157,
     "max": 18.8942
   },
   "carry_net_bps": {
-    "n": 210,
-    "median": -10.9578,
+    "n": 217,
+    "median": -10.9527,
     "min": -18.7821,
     "max": -9.5248
   },
   "funding_bps": {
-    "n": 210,
-    "median": 0.1431,
+    "n": 217,
+    "median": 0.1549,
     "min": -1.9398,
     "max": 1.0
   },
@@ -39,145 +39,145 @@
   "per_symbol": {
     "ADA/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
-        "median": 16.8965,
+        "n": 31,
+        "median": 16.8894,
         "min": 16.4412,
         "max": 18.8942
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -16.8607,
+        "n": 31,
+        "median": -16.8028,
         "min": -18.7821,
         "max": -15.4412
       },
       "funding_bps": {
-        "n": 30,
-        "median": 0.157,
+        "n": 31,
+        "median": 0.17,
         "min": -1.9398,
         "max": 1.0
       }
     },
     "BTC/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
+        "n": 31,
         "median": 10.0163,
         "min": 10.0157,
         "max": 12.0164
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -9.8199,
+        "n": 31,
+        "median": -9.8165,
         "min": -11.8921,
         "max": -9.5248
       },
       "funding_bps": {
-        "n": 30,
-        "median": 0.1966,
+        "n": 31,
+        "median": 0.2,
         "min": -0.1226,
         "max": 0.4916
       }
     },
     "DOGE/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
-        "median": 11.8031,
+        "n": 31,
+        "median": 11.8013,
         "min": 11.6746,
         "max": 13.8164
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -11.6428,
+        "n": 31,
+        "median": -11.5889,
         "min": -13.4709,
         "max": -10.7936
       },
       "funding_bps": {
-        "n": 30,
-        "median": 0.2682,
+        "n": 31,
+        "median": 0.3269,
         "min": -0.3937,
         "max": 1.0
       }
     },
     "ETH/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
+        "n": 31,
         "median": 10.0581,
         "min": 10.0548,
         "max": 12.0586
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -10.4608,
+        "n": 31,
+        "median": -10.459,
         "min": -11.7658,
         "max": -9.8327
       },
       "funding_bps": {
-        "n": 30,
-        "median": -0.3865,
+        "n": 31,
+        "median": -0.3721,
         "min": -0.6757,
         "max": 0.2928
       }
     },
     "LINK/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
-        "median": 11.1286,
+        "n": 31,
+        "median": 11.125,
         "min": 11.0551,
         "max": 13.1402
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -10.8741,
+        "n": 31,
+        "median": -10.8731,
         "min": -13.062,
-        "max": -10.4654
+        "max": -10.2658
       },
       "funding_bps": {
-        "n": 30,
-        "median": 0.2445,
+        "n": 31,
+        "median": 0.2456,
         "min": -0.6138,
-        "max": 0.6284
+        "max": 0.835
       }
     },
     "SOL/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
-        "median": 11.4091,
+        "n": 31,
+        "median": 11.4046,
         "min": 11.2906,
         "max": 13.425
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -11.6852,
+        "n": 31,
+        "median": -11.5663,
         "min": -12.425,
         "max": -10.7835
       },
       "funding_bps": {
-        "n": 30,
-        "median": -0.0926,
+        "n": 31,
+        "median": -0.0386,
         "min": -0.9986,
         "max": 1.0
       }
     },
     "XRP/USDT:USDT": {
       "roundtrip_cost_bps": {
-        "n": 30,
-        "median": 11.0742,
+        "n": 31,
+        "median": 11.0734,
         "min": 10.9892,
         "max": 13.082
       },
       "carry_net_bps": {
-        "n": 30,
-        "median": -10.8186,
+        "n": 31,
+        "median": -10.8097,
         "min": -12.525,
         "max": -10.5552
       },
       "funding_bps": {
-        "n": 30,
-        "median": 0.2626,
+        "n": 31,
+        "median": 0.2564,
         "min": -0.0526,
         "max": 0.557
       }
     }
   },
   "first_ts": "2026-11-22T11:35:21.184373+00:00",
-  "last_ts": "2026-11-23T17:31:56.944946+00:00"
+  "last_ts": "2026-11-23T18:32:36.514103+00:00"
 }
