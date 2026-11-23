@@ -1,8 +1,8 @@
 {
   "item": "D3 H — score with Brier and log-loss vs market; require ΔBrier > 0 with CI",
   "status": "INSUFFICIENT_DATA",
-  "run_at": "2026-11-23T13:37:09.447101+00:00",
-  "git_hash": "373e96f9bb0f967e814cf575098804051c43bb8e",
+  "run_at": "2026-11-23T16:56:30.076349+00:00",
+  "git_hash": "c44e84f6e13101830a3053a5d1d2bf1284760acb",
   "log": "C:\\Users\\zerou\\pasc\\results\\prediction_calibration.jsonl",
   "records": 0,
   "resolved": 0,

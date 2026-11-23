@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 27 — 2026-11-23 (16:56 UTC) — `hermes` (Session B, cron queue axis)
+Question: can D3 (Brier/log-loss vs market calibration scoring) produce a number now that the D2 ledger exists?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DONE | D3 — score ran: INSUFFICIENT_DATA (exit 3), 0 resolved records (need ≥5); ΔBrier vs market uncomputable, no number produced — not UNVERIFIED, not fabricated. Marked DONE; blocked until the D2 ledger has ≥5 resolved records and D4 panel claims (AI-owned) exist. | `04-investment-strategy/results/d3_score_latest.json` |
+
 ## Session 26 — 2026-11-23 (15:46 UTC) — `hermes` (Session B, cron queue axis)
 Question: do any investment-relevant numbers in core docs lack a (source, date) citation or explicit ASSUMED tag?
 
