@@ -156,18 +156,27 @@ def is_silent(md: str) -> bool:
     return False
 
 
-def commits_in_window(since: datetime, workdir: str | None) -> int:
-    """G4: did anything measurable appear? Commits, not words."""
+def commits_in_window(since: datetime, workdir: str | None) -> int | None:
+    """G4: did anything measurable appear? Commits, not words.
+
+    Returns None when the measurement could not be taken, and 0 only when it was taken and found
+    nothing. Two runs of this script disagreed (0 vs 218 on the same repo) because a slow `git log`
+    on a 47k-commit tree tripped the subprocess timeout and the exception path returned 0 — turning
+    "could not measure" into "measured zero", which is the exact error class this project keeps
+    finding. A monitor must never present an unmeasured value as a measured one.
+    """
     if not workdir or not Path(workdir).exists():
-        return 0
+        return None
     try:
         r = subprocess.run(
-            ["git", "-C", workdir, "log", "--since", since.isoformat(),
+            ["git", "-C", workdir, "log", "--since", since.strftime("%Y-%m-%dT%H:%M:%S"),
              "--oneline", "--no-merges"],
-            capture_output=True, text=True, timeout=20)
+            capture_output=True, text=True, timeout=90)
+        if r.returncode != 0:
+            return None
         return len([l for l in r.stdout.splitlines() if l.strip()])
     except Exception:
-        return 0
+        return None
 
 
 def analyse(job: dict, now: datetime) -> dict:
@@ -208,15 +217,50 @@ def analyse(job: dict, now: datetime) -> dict:
     if interval and last_run:
         overdue_min = round((now - last_run).total_seconds() / 60.0, 1)
 
+    # A declared interval is an intention; the observed gap is the behaviour. vscode-agent-watch
+    # declares 5m but actually fires every ~11m, so a 2x-declared overdue test (10m) fired
+    # continuously on a healthy job. Judge lateness against what the job ACTUALLY does.
+    observed_gap = None
+    stamps = []
+    for e in execs:
+        raw = e.get("started_at") or e.get("finished_at")
+        if not raw:
+            continue
+        try:
+            stamps.append(datetime.fromisoformat(str(raw).replace("Z", "+00:00")))
+        except Exception:
+            continue
+    if len(stamps) >= 3:
+        gaps = [(stamps[i] - stamps[i + 1]).total_seconds() / 60.0 for i in range(len(stamps) - 1)]
+        gaps = [g for g in gaps if g > 0]
+        if gaps:
+            gaps.sort()
+            observed_gap = round(gaps[len(gaps) // 2], 1)
+
     state = (job.get("state") or "").lower()
     retired = (not enabled) or state in ("completed", "paused", "cancelled")
 
     alerts = []
     # NEVER_RAN and OVERDUE only mean something for a job that is supposed to be firing
-    if not retired and last_run is None and interval:
+    created = None
+    try:
+        if job.get("created_at"):
+            created = datetime.fromisoformat(str(job["created_at"]).replace("Z", "+00:00"))
+    except Exception:
+        created = None
+    # a job created moments ago has not "never run" - it simply has not had its first tick yet
+    young = bool(created and interval and (now - created).total_seconds() / 60.0 < interval * 2)
+
+    if not retired and not young and last_run is None and interval:
         alerts.append("NEVER_RAN")
-    if not retired and interval and overdue_min is not None and overdue_min > interval * OVERDUE_FACTOR:
+    # lateness is measured against the cadence the job actually achieves
+    ref = observed_gap if (observed_gap and observed_gap > 0) else interval
+    if not retired and ref and overdue_min is not None and overdue_min > ref * OVERDUE_FACTOR:
         alerts.append("OVERDUE")
+    # and flag the separate, real problem: the scheduler is not honouring the declared interval
+    if (not retired and interval and observed_gap
+            and observed_gap > interval * 1.5):
+        alerts.append("SCHEDULER_LAG")
     if silent >= SILENT_STREAK_ALERT:
         alerts.append("SILENT_STREAK")
     if failing >= FAILING_STREAK_ALERT:
@@ -227,16 +271,19 @@ def analyse(job: dict, now: datetime) -> dict:
     return {
         "job_id": jid, "name": name,
         "schedule": (sched.get("display") if isinstance(sched, dict) else str(sched)),
-        "interval_minutes": interval, "enabled": enabled,
+        "interval_minutes": interval, "observed_gap_minutes": observed_gap, "enabled": enabled,
         "last_run_at": last_run_raw, "minutes_since_last_run": overdue_min,
         "ticks_recorded": len(outs), "consecutive_silent": silent,
         "consecutive_failing": failing,
-        "commits_24h": produced,
-        "produced_something": produced > 0,
+        "commits_window": produced,
+        "commits_measured": produced is not None,
+        "produced_something": bool(produced and produced > 0),
         "alerts": alerts,
         "status": ("ALERT" if alerts else
                    "RETIRED" if retired else
-                   "ACTIVE" if produced else "SILENT_BUT_FIRING"),
+                   "ACTIVE" if (produced or 0) > 0 else
+                   "UNMEASURED" if produced is None else
+                   "SILENT_BUT_FIRING"),
     }
 
 
@@ -275,7 +322,7 @@ def main() -> int:
 
     if a.json:
         print(json.dumps(report, indent=1, default=str))
-        return 1 if alerts else 0
+        return 0
 
     if a.alert_only:
         # watchdog: stay silent unless something is actually wrong
@@ -292,20 +339,26 @@ def main() -> int:
             lines.append("  firing but producing nothing: " + ", ".join(
                 f"{r['name']} ({r['consecutive_silent']} silent ticks)" for r in quiet))
         print("\n".join(lines))
-        return 1
+        # EXIT 0 on a delivered alert. The scheduler treats a non-zero exit as "the JOB failed",
+        # which is wrong here: the job succeeded at finding a problem, and marking it failed
+        # buries the alert in failure noise and trains the reader to ignore it. Non-zero is
+        # reserved for "this monitor could not read the scheduler state at all".
+        return 0
 
     print("=" * 92)
     print(f"AGENT LIVENESS — {len(rows)} watchers, {len(alerts)} alert(s) — {now:%Y-%m-%d %H:%M}Z")
     print("=" * 92)
-    print(f"{'watcher':34s} {'sched':>10s} {'last run':>11s} {'silent':>7s} "
-          f"{'failing':>8s} {'commits':>8s}  status")
+    print(f"{'watcher':30s} {'declared':>9s} {'observed':>9s} {'last run':>10s} "
+          f"{'silent':>7s} {'commits':>8s}  status")
     for r in rows:
         last = "never" if r["last_run_at"] is None else (
             f"{r['minutes_since_last_run']:.0f}m ago" if r["minutes_since_last_run"] is not None
             else "?")
-        print(f"{r['name'][:34]:34s} {str(r['schedule'])[:10]:>10s} {last:>11s} "
-              f"{r['consecutive_silent']:>7d} {r['consecutive_failing']:>8d} "
-              f"{r['commits_24h']:>8d}  {r['status']}")
+        obs = (f"{r['observed_gap_minutes']:.0f}m" if r.get("observed_gap_minutes")
+               else "-")
+        cw = ("?" if r.get("commits_window") is None else str(r["commits_window"]))
+        print(f"{r['name'][:30]:30s} {str(r['schedule'])[:9]:>9s} {obs:>9s} {last:>10s} "
+              f"{r['consecutive_silent']:>7d} {cw:>8s}  {r['status']}")
 
     if alerts:
         print("\nALERTS")
@@ -320,6 +373,12 @@ def main() -> int:
             if "SILENT_STREAK" in r["alerts"]:
                 print(f"     {r['consecutive_silent']} consecutive runs reported nothing "
                       f"(threshold {SILENT_STREAK_ALERT})")
+            if "SCHEDULER_LAG" in r["alerts"]:
+                print(f"     declared {r['interval_minutes']:.0f}m but actually fires every "
+                      f"{r['observed_gap_minutes']:.0f}m - the scheduler is not honouring the "
+                      f"interval, so the job runs at "
+                      f"{r['interval_minutes']/r['observed_gap_minutes']*100:.0f}% of intended "
+                      f"frequency")
             if "FAILING_STREAK" in r["alerts"]:
                 print(f"     {r['consecutive_failing']} consecutive non-ok runs")
 
@@ -329,8 +388,8 @@ def main() -> int:
               f"{', '.join(r['name'] for r in quiet)}")
         print("  These look identical to a busy agent. That is the whole reason this script exists.")
 
-    print(f"\nexit {'1 (alerts)' if alerts else '0 (clean)'}")
-    return 1 if alerts else 0
+    print(f"\nalerts: {len(alerts)} (exit 0 either way — a reported alert is not a job failure)")
+    return 0
 
 
 if __name__ == "__main__":
