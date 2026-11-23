@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
-| 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 200 | 100 |  |
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
@@ -32,22 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
 | 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
 | 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 111 |  |
+| 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 105 |  |
+| 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 116 |  |
 
 ## Latest answers
-
-### round 29 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**Claim (b) — “large-cap post-earnings drift has been dead since ~2006” — is most likely wrong for BONDS.**
-
-It is an equity microstructure claim about *equity* price drift. In govt/credit there is no “earnings” event in that sense; the closest analogue is the scheduled auction/settlement cycle and the post-auction/settlement price move. For govt futures and liquid IG/HY credit indices, a systematic post-event drift can be tested directly. Falsifier: measure the forward excess return of on-the-run 10y UST futures (and CDX IG/HY) from auction/settlement close to +1, +5, +20 sessions, net of the 12–20 bp round trip, with trial accounting. If the deflated Sharpe across the event family stays below the 4.3% T-bill hurdle, the claim survives; if a net-of-cost, trial-adjusted edge persists, the “dead since 2006” claim is wrong for bonds.
-
-### round 29 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**Claim (b) is most likely wrong for bonds.**
-
-Post-earnings drift is an equity phenomenon with no direct analogue in govt/credit. Credit spreads and rates do exhibit post-FOMC and post-CPI announcement drift, and post-supply auction effects—documented in primary-dealer positioning data. So the claim misidentifies the relevant event.
-
-**Falsifying observation:** Estimate cumulative average abnormal returns (CAAR) on IG/HY CDS indices and 10y futures in event windows [0,+5] days after scheduled FOMC/CPI prints, 2006–2024, using a deflated Sharpe with trial accounting across event types and subsamples. If CAAR exceeds 12–20 bps round trip with a deflated Sharpe > 1, claim (b) fails for bonds—drift survives, just not post-earnings.
 
 ### round 30 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -84,3 +70,15 @@ It's not untested; it's been tested and failed. The AQR/Vanguard evidence: Fama-
 - A published, cost-adjusted long-short value factor with deflated Sharpe ≤ 0 after trial accounting.
 
 Value has been tested net of cost; it failed like the others.
+
+### round 32 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+Claim (a) is most likely wrong. If the gross edge in liquid FX majors is truly ~the size of the round trip (12–20 bps), then systematic strategies should still show gross Sharpe ratios of 0.5–1.5 across liquid crosses, which would survive deflated Sharpe accounting once trial costs are accounted. Falsifier: a broad, out-of-sample screen of standard FX momentum and carry signals across G10 and liquid crosses, computed gross of cost, fails to produce a single signal with deflated Sharpe > 0 after trial accounting. If even the best gross signals have deflated Sharpe indistinguishable from zero, the "edge ≈ round trip" claim is empirically unsupported.
+
+### round 32 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_OPENROUTER
+
+**Claim (a) is most likely wrong for FOREX.**
+
+The round-trip cost applies per trade, but FX majors trade on deep books with persistent, slow-moving macro flows (carry, terms-of-trade shifts, rate-differential drift). A position sized on 12–20 bps cost can be held for weeks; the cost is amortized, not repeated. The claim conflates "edge ≈ cost" with "edge < cost net" — if the gross edge accrues over a holding period while cost is one-off, the ratio is favorable.
+
+**Falsifying observation:** A carry/momentum composite on G10 majors, traded at monthly frequency, fails to clear a deflated Sharpe ≥ 1.0 (trial-accounted) net of 15 bps round trip versus the 4.3% T-bill over 2004–2024. That would confirm cost dominates.
