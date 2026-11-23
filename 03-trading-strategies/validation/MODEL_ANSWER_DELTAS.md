@@ -31,15 +31,21 @@ sets a pass mark of 1.5, which cannot occur.**
 
 ## 2. Errors worth naming
 
-*(Model attributions confirmed 2026-11-23: **1A = 1min.ai answer 1**, **1B = GPT-4 mini**, **1C = Mistral**, **1D,
-1E, 1F, 1G = the four later 1min.ai answers**, the AskAnyModel round-3 panel = **GLM 5.3 / GPT-6 Astra / Qwen3.8
-Max**, and the routed-panel batch = **four panes all answered by GPT-OSS 20B via Pollinations**.)*
+*(Model attributions confirmed 2026-11-23. All nine answers are now named: **1A = Gemini 4 Neon**, **1B = GPT-4 mini**,
+**1C = Mistral**, **1D / 1E / 1F / 1G = the four later 1min.ai answers** (1E is the Alibaba-family model, 1F Claude 5.5
+Haiku, 1G Claude 5.2 Fable), **AskAnyModel round 3 = GLM 5.3 / GPT-6 Astra / Qwen3.8 Max**, and the **routed-panel batch
+= four panes all answered by GPT-OSS 20B via Pollinations**.)*
 
 **A pattern across the two weakest 1min.ai models:** both misattribute the same literature in different ways. Mistral
 credits CSCV/PBO to **Bergomi (2016)**; GPT-4 mini credits the Deflated Sharpe to **"Bailey, Ledoit (2012)"**. The real
 authors are Bailey, Borwein, López de Prado and Zhu for CSCV, and Bailey & López de Prado for DSR — Ledoit and Bergomi
 are both real and well-known, in different fields (shrinkage estimation; rough volatility). Near-miss surnames are the
 hardest kind of error to catch, because they look like expertise.
+
+**And the two strongest answers come from the same vendor:** 1F (Claude 5.5 Haiku) and 1G (Claude 5.2 Fable) are both
+Anthropic models on 1min.ai, and both got the DSR machinery right — 1G's worked example reproduces to four decimals.
+That is not a coincidence of quality; it is evidence that the deflation maths is genuinely *learned* by some models
+and pattern-matched by others. Cheapest way to tell them apart: ask for one worked numerical example and re-derive it.
 
 | Answer | Error | Why it matters |
 |---|---|---|
