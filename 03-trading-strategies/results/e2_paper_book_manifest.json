@@ -1,0 +1,17 @@
+{
+  "item": "E2 H — Implement paper_book.py: append picks with git-hash provenance, mark to market weekly, flat day = 0.0%.",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 55",
+  "session": "Session 22 — 2026-11-23 (05:03 EST / 10:03 UTC) — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "script": "04-investment-strategy/paper_book.py",
+  "schema": "03-trading-strategies/picks_schema.json (E1, JSON Schema draft-07, enum gates)",
+  "log": "04-investment-strategy/results/paper_book.jsonl (created on first real pick by E4 agents; no synthetic picks written to it)",
+  "contract": "append-only JSONL; rows inserted once and never edited or deleted; revisions are new rows with `supersedes`; git_hash = `git rev-parse HEAD` auto-captured at insert (overridable via --git-hash); statuses open/closed/killed/superseded; resolution 0/1 filled once post-resolution and never overwritten; realized_bp populated on close/kill, flat day = 0.0 bp; weekly mark_to_market_price/mark_to_market_ts; kill books a loss at the kill price even if it later recovers (E6); one ledger, `tier` column separates the stable/moderate/aggressive books (E3), scorecards (E5) group by tier",
+  "validation": "schema-conformance check (required fields, types, enus, git_hash 40-char hex sha, no unknown fields) plus append-only invariant check (no duplicate ids, supersedes targets exist, no self-supersedes); end-to-end tested on a scratch log — add / mtm / close / kill / validate all green; realized_bp sign verified for a long win (+65.6 bp) and a short kill (-300 bp); auto git_hash equals repo HEAD 557edee",
+  "done_condition": "paper_book.py committed; add/mtm/close/kill/supersede/validate all work end to end; first real picks arrive via E4 (>=5 pre-registered picks per tier within 48h)",
+  "not_done": "E3-E8 remain open: tier-column supports one book per tier but no real picks recorded yet; E4 agents have not submitted picks; E5 weekly scorecard not yet published; E8 first honest read at n>=30 per tier pending",
+  "artifacts_produced": [
+    "04-investment-strategy/paper_book.py",
+    "03-trading-strategies/results/e2_paper_book_manifest.json (this file)"
+  ],
+  "coms": "none — E2 is infrastructure; no new measured number and no corrected published one (rule 6 not triggered)"
+}

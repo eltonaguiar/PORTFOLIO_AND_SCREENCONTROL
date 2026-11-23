@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 22 — 2026-11-23 (10:03 UTC) — `hermes` (Session B, cron queue axis)
+Question: can the pretend-money paper book (E2) be implemented end to end so picks carry git-hash provenance, weekly mark-to-market, and flat-day = 0.0 bp before any agent submits a real pick?
+
+|| time (UTC) | status | item | artifact ||
+||---|---|---|---||
+|| 10:03 | RUN | E2 — paper_book.py implemented: append-only JSONL ledger conforming to the E1 picks_schema.json; git_hash auto-captured from `git rev-parse HEAD` at insert; weekly mark_to_market_price/ts; flat day = 0.0 bp; close (1/0) books realized_bp with resolved_at; kill books a loss at the kill price (E6) even if it later recovers; revisions are new rows with `supersedes` (E7); schema + append-only invariant validation; verified end to end on a scratch log (long win +65.6 bp, short kill -300 bp; git_hash equals HEAD 557edee). No synthetic picks written to the real book — first real picks arrive via E4. | `04-investment-strategy/paper_book.py` · `03-trading-strategies/results/e2_paper_book_manifest.json` |
+
 ## Session 21 — 2026-11-23 (cron run) — `hermes` (Session B, cron queue axis)
 Question: can the E1 pick schema be defined and committed so the pretend-money book (gate G5) has a provenance-enforced append-only contract before any pick is recorded?
 
