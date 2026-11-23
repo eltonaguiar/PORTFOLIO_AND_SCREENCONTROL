@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 104 |  |
-| 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 71 |  |
 | 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T07:33 | 20 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
 | 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 200 | 100 |  |
+| 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
+| 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 
 ## Latest answers
-
-### round 19 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** On BTC perpetual futures (Binance, free, point-in-time public trades + funding data), go long the perp when the 8-hour funding rate is below its 30-day rolling 10th percentile; exit to spot BTC when funding crosses above zero. Hold otherwise. Rebalance on 8h closes.
-
-**Kill measurement:** After 12–20 bps round-trip cost, the deflated Sharpe (accounting for this as one trial) falls below 1.0 at 95% confidence over the full sample.
-
-### round 19 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
-
-**Test: BTC perp 50-day/10-day MA cross, long-only, Binance BTCUSDT perp.**
-
-Signal: close > 50D SMA AND 10D SMA > 50D SMA → long 1x notional. Flat otherwise. Daily close execution, UTC.
-
-**Kill measurement:** Deflated Sharpe (DSR) with trial count = number of distinct (fast, slow) pairs tested in the family (e.g., 10×10 grid = 100 trials). Kill if DSR < 0.90 after round-trip 16 bps and 4.3% T-bill hurdle net.
-
-**Data:** Binance public daily klines + funding. Free, point-in-time, no look-ahead.
 
 ### round 20 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
@@ -90,3 +74,19 @@ Signal: close > 50D SMA AND 10D SMA > 50D SMA → long 1x notional. Flat otherwi
 **Kill measurement:** Deflated Sharpe (Harvey-Liu) with all trials in the class (sector, factor, cross-asset ETFS) < 1.0, net of 12–20 bps round-trip, after subtracting the 4.3% T-bill hurdle. If DS ≤ 1.0, the edge is indistinguishable from selection noise.
 
 **Data:** Daily total-return prices for 11 GICS sector ETFs (XLY, XLP, XLE, XLF, XLV, XLI, XLB, XLRE, XLK, XLU, XLC). Free: Yahoo Finance (adjusted close, survivorship-free since all survive). Point-in-time: yes, but verify inception dates — XLRE starts 2015, limiting pre-2015 history.
+
+### round 22 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** Monthly-rebalanced equal-weight portfolio of S&P 500 constituents vs. SPY (net of 15 bps round-trip on the EW sleeve).
+
+**Kill condition:** Deflated Sharpe (López de Prado, 5 trial factors, 252-day block bootstrap) of the EW-minus-SPY spread < 1.0 after costs. Deflation accounts for the 5 prior failed asset-class trials.
+
+**Data:** CRSP daily returns + shares outstanding (point-in-time survivorship-free), 1993–2024. CRSP is paid; free proxy: Compustat daily via WRDS (academic). Point-in-time constituent history required — using current membership induces look-ahead.
+
+### round 22 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Long-only equal-weight S&P 500 index fund (e.g., Fidelity ZERO Large Cap Index, FZROX, 0 bps expense ratio) versus cash. Rebalance annually. Monthly returns, 2014–2024.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado with trial accounting) of net excess return over the 4.3% T-bill must exceed the critical value at α = 0.05. Kill if deflated Sharpe ≤ 0 (or fails to reject zero at 5%).
+
+**Data:** FZROX (or Vanguard SPLG, 3 bps) daily NAV, 13-week T-bill secondary market yield. Free, point-in-time: FRED (DGS3MO), fund provider historical NAVs.
