@@ -74,6 +74,9 @@ python probes/probe_ocr_crop.py   # renders frame + 400x800 crop, times RapidOCR
 | Wall clock, full frame | **17.04 s** (105 boxes) |
 | Wall clock, 400×800 crop | **10.70 s** (42 boxes) |
 | Speedup | **1.6×** |
+| Wall clock, full frame — re-check 2026-11-23T04:19Z | 17.14 s (105 boxes) |
+| Wall clock, 400×800 crop — re-check 2026-11-23T04:19Z | 10.75 s (42 boxes) |
+| Speedup — re-check 2026-11-23T04:19Z | 1.6× |
 
 Interpretation: the crop *is* faster, but only 1.6× — OCR time is dominated by fixed backend
 cost, not pixel count. The docstring's "a fraction of" claim is **not supported** at this
