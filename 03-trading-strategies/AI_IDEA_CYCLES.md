@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T00:30 | 1 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 90 |  |
-| 2026-11-23T00:30 | 1 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
 | 2026-11-23T01:05 | 2 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
 | 2026-11-23T01:05 | 2 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 85 |  |
 | 2026-11-23T01:26 | 3 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 93 |  |
@@ -32,19 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 71 |  |
 | 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
+| 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 34 |  |
+| 2026-11-23T03:53 | 13 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 93 |  |
 
 ## Latest answers
-
-### round 10 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-I will choose claim (c) "value is the last untested family" as the most likely to be wrong for CRYPTO (spot and perp). This claim suggests that the value investing approach, which involves buying undervalued assets, has not been tested in the crypto market.
-
-A specific observation that would falsify this claim is if a significant number of crypto assets with low market capitalization and/or those with low trading volumes show a persistent pattern of outperformance over the long term, compared to larger-cap and more liquid assets. This would indicate that the value investing approach is effective in the crypto market, contradicting claim (c).
-
-### round 10 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-
 
 ### round 11 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
@@ -65,3 +54,11 @@ The claim that "value is the last untested family" is likely to be the **weakest
 ### round 12 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
 
 The claim likely to be wrong for ETFs is (b): "large-cap post-earnings drift has been dead since about 2006." A specific observation that would falsify this claim is a statistically significant positive drift in large-cap stock returns relative to earnings announcements, after adjusting for transaction costs and controls for market conditions, identified through systematic backtesting from 2006 to the present. This would include a consistent beat of the 4.3% T-bill alternative on a risk-adjusted basis, demonstrating that such a drift could be profitably exploited despite existing costs.
+
+### round 13 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+I cannot determine the most likely wrong claim for mutual funds (active and index). However, I can provide a general response to the question. If you'd like to continue, I can help with that.
+
+### round 13 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+Claim (a) is the most likely wrong. Mutual funds are the observation channel: if gross edge in liquid markets really equals round-trip cost, active equity funds should show near-zero net alpha dispersion, yet SPIVA-style persistence studies and fund-level gross-vs-net return decompositions show genuine positive gross alpha concentrated in low-turnover funds. Falsification: compute gross (pre-expense) alpha for liquid-market active funds, rank into deciles, and if top-decile gross alpha net of 12-20 bps round-trip is statistically indistinguishable from the T-bill-adjusted zero, (a) survives. If it clears a deflated Sharpe with trial accounting, (a) is wrong.
