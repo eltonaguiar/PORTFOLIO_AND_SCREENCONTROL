@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 23 — 2026-11-23 (11:10 UTC) — `hermes` (Session B, cron queue axis)
+Question: does INVESTMENT_HUB_REVIEW.md's copy/refuse list still hold against work landed since 8c94074, including the A9-killed +24.21 bp figure it still quotes as live?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DOC | H1 — copy/refuse re-run vs landings since 8c94074. Landed since: E1 (picks_schema git_hash provenance = the SHA-256 pre-commitment analog), E2 (paper_book.py with kill/supersedes rules), D1 (Polymarket venue doc), D2 (calibration ledger, 0 records pending D4 claims), A10 (G-COST CI gates), A9 (+24.21 bp killed, ladder arithmetic annual cost drag = (365 / holding_days) x round_trip_bps published). Copy-2 Questrade/CDR fee model NOT landed: no Questrade commission schedule published, A3 still open and CP-owned. Copy-3 turnover_per_year exists only inside proof scripts, not in any cell registry or audit ledger. Copy-4 horizon cell-key move NOT done; the doc's own item-4 citation is dead and corrected below. Copies 5-7 unchanged. All five refuse items still valid, none superseded by landings. | `03-trading-strategies/results/h1_copy_refuse_rerun.json` · `02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md` (item 4 citation corrected to reference HORIZON_LADDER_A9.md)
+
 ## Session 22 — 2026-11-23 (10:03 UTC) — `hermes` (Session B, cron queue axis)
 Question: can the pretend-money paper book (E2) be implemented end to end so picks carry git-hash provenance, weekly mark-to-market, and flat-day = 0.0 bp before any agent submits a real pick?
 

@@ -1,0 +1,91 @@
+{
+  "item": "H1 H — copy/refuse re-run of INVESTMENT_HUB_REVIEW.md against landings since commit 8c94074",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 81",
+  "session": "Session 23 — 2026-11-23 (11:10 UTC) — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "review": {
+    "path": "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md",
+    "commit": "8c94074",
+    "read_date": "2026-11-22",
+    "hub_url": "https://findtorontoevents.ca/investments/"
+  },
+  "head_commit": "3092eb8",
+  "landings_since_8c94074": [
+    "5b584e2 E1: picks_schema.json committed — append-only pick contract with git_hash provenance",
+    "7b0c0b8 E2: paper_book.py committed — weekly mark-to-market, kill-at-kill-price, supersedes revisions",
+    "6374672 D1: Polymarket venue documented (fees, spread UNMEASURABLE, UMA resolution risk)",
+    "84534ed D2: prediction_calibration.py committed — append-only claim ledger, 0 records, awaiting D4 panel claims",
+    "11cca3a A10: G-COST-1..4 CI gates wired and verified at Binance spot (20.002 bp median 1D round trip)",
+    "A9: +24.21 bp at 1D vs -0.57 bp at 15m killed — unit unstated, gross/net unstated, no implementation; replaced by annual cost drag = (365 / holding_days) x round_trip_bps (HORIZON_LADDER_A9.md)",
+    "B6/B7: value/HML killed (VLUE net 25 bp/month vs 36 bp/month T-bill hurdle, Sharpe 0.372 vs SPY 0.619, permutation p=0.61); literature reconciled",
+    "C3/C4: PEAD citations verified at source (Ball & Brown 1968, Bernard & Thomas 1989, Ball & Bartov 1996, Martineau 2022); large-cap post-2006 decay confirmed; tally unchanged (no PEAD row)"
+  ],
+  "copy_items": [
+    {
+      "n": 1,
+      "name": "SHA-256 pre-commitment of picks",
+      "review_verdict": "Copy — HIGH value, lowest risk",
+      "status": "PARTIAL — analog landed",
+      "evidence": "E1/E2 implement the equivalent mechanism: commit SHA (git_hash) captured at insert via git rev-parse HEAD, append-only JSONL ledger, revisions as new rows with supersedes. The review asked for hypothesis_sha256 over canonical JSON of entry/exit/sizing/costs/universe/horizon plus committed_at — that exact hash is not computed, so pre-commitment is at commit level, not pick-payload level."
+    },
+    {
+      "n": 2,
+      "name": "Broker-realistic fee model (Questrade Canada + CDR detection)",
+      "review_verdict": "Copy — HIGH",
+      "status": "NOT LANDED",
+      "evidence": "No Questrade commission schedule published anywhere in the estate (A3, owner CP, still unchecked). A10 measured real costs only for Binance spot BTC/USDT: 20.002 bp median 1D round trip, G-COST-1 KILL vs 8 bp assumption. The per-class slippage figures quoted by the review (CRYPTO 0.0996%, COMMODITY 0.15%, EQUITY/ETF/BOND 0.05%, FOREX 0.02%, FUTURES 0.10%, MUTUAL_FUND 0.08%) remain unverified assumptions, not landed measurements. CDR detection and Questrade $9.95 MF fee not implemented."
+    },
+    {
+      "n": 3,
+      "name": "Turnover budget as a first-class column",
+      "review_verdict": "Copy — HIGH",
+      "status": "PARTIAL — scripts only",
+      "evidence": "turnover_per_year is computed inside proof scripts (equity_factors.py, etf_rotation.py, cost_portability.py, r191_r192_overlay.py) and written to result JSONs, but no cell registry, audit ledger, or tribunal row carries turnover_per_year plus cost_at_realistic_turnover. No audit3_ledger.json exists in the repo; the review's action 2 (recompute the 67 cells under the Questrade schedule) cannot run without A3."
+    },
+    {
+      "n": 4,
+      "name": "Horizon as a first-class dimension",
+      "review_verdict": "Copy — MEDIUM-HIGH",
+      "status": "LANDED MECHANISM, DOC CITATION DEAD",
+      "evidence": "cost-horizon ladder exists (horizon_ladder.py + results/horizon_ladder_latest.json): annual cost drag = (365 / holding_days) x round_trip_bps, 96x between 15m and 1D. BUT the review's own item 4 still quotes '+24.21 bp at 1D vs -0.57 bp at 15m (Copilot seat, 2026-11-22)' as live fact — that figure is KILLED by A9 and has been flagged dead in this document (H1 correction, 2026-11-23). Horizon has not been moved into any cell key."
+    },
+    {
+      "n": 5,
+      "name": "VIX filter + regime engine",
+      "review_verdict": "Copy — MEDIUM, hard condition (regimes pre-registered, counted as trials)",
+      "status": "NOT LANDED",
+      "evidence": "No regime pre-registration or regime-as-trial counting exists anywhere in the estate."
+    },
+    {
+      "n": 6,
+      "name": "Seven alt-data families with as_of_date discipline",
+      "review_verdict": "Copy — MEDIUM, point-in-time or nothing",
+      "status": "NOT LANDED",
+      "evidence": "No alt-data family ingested; no as_of_date vs event_date discipline anywhere."
+    },
+    {
+      "n": 7,
+      "name": "NAV-based fund backtesting",
+      "review_verdict": "Copy — MEDIUM",
+      "status": "NOT LANDED",
+      "evidence": "No fund/NAV backtest exists; mutual fund class still has ~zero evidence."
+    }
+  ],
+  "refuse_items": [
+    "Optimal condition finding — still refused (automated data mining; no trial counter).",
+    "115+ algorithms as candidates — still refused (imports multiplicity; N approx 115).",
+    "Any hub metric without its trial count — still refused (non-negotiable).",
+    "Smart Learning / stock intel prose — still refused (narrative, not testable).",
+    "Goldmine-style curated lists — still refused (survivorship by construction)."
+  ],
+  "corrections_made": [
+    "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md item 4: '+24.21 bp at 1D vs -0.57 bp at 15m' citation flagged DEAD per A9; replaced with reference to HORIZON_LADDER_A9.md and the ladder arithmetic; cell-key move noted as still NOT landed."
+  ],
+  "next_actions_blocked": [
+    "Review action 2 (turnover_per_year + commission_model columns, recompute 67 cells under Questrade schedule) is blocked on A3 (Questrade commission schedule with source URL and fetch date, owner CP, unchecked).",
+    "Review action 4 (ingest one alt-data family end-to-end) not started; no reachable PIT fundamentals store (B1 open)."
+  ],
+  "artifacts_produced": [
+    "03-trading-strategies/results/h1_copy_refuse_rerun.json",
+    "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md (item 4 citation corrected)"
+  ]
+}

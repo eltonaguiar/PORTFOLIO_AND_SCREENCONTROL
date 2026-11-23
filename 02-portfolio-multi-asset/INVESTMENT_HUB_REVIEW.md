@@ -50,8 +50,7 @@ only exists at 40×/yr turnover is a cost artefact, not an edge.
 
 ### 4. Horizon as a first-class dimension (from Horizon Picks) — MEDIUM-HIGH
 The hub ships 1D / 1W / 1M picks. Our own cost-horizon ladder says the same thing from the other side:
-**+24.21 bp at 1D vs −0.57 bp at 15m** (Copilot seat, 2026-11-22). Any real edge must live at daily or
-longer horizons, so horizon belongs in the cell key, not in the notes.
+**+24.21 bp at 1D vs −0.57 bp at 15m** (Copilot seat, 2026-11-22) is **DEAD as a quoted claim** — killed by A9 (HORIZON_LADDER_A9.md): unit unstated (per-trade vs per-year differs 365x), gross/net unstated, no implementation in either repo. Surviving claim: annual cost drag = (365 / holding_days) x round_trip_bps; drag is inversely proportional to holding period (96x between 15m and 1D). Any real edge must live at daily or longer horizons, so horizon belongs in the cell key, not in the notes. H1 re-run 2026-11-23: citation corrected; horizon cell-key move itself still NOT landed.
 
 ### 5. VIX filter + regime engine — MEDIUM, with a hard condition
 Regime conditioning is legitimate *if regimes are pre-registered*. It is data mining if regimes are
