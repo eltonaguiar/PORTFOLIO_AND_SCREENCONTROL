@@ -34,8 +34,45 @@ it is why the honest allocation today is **floor first, risk premia second, stra
 
 **The uncomfortable summary:** the things that reliably make money for a retail-sized account are
 *floor + beta + behaviour* (not selling in a drawdown, low fees, long horizon). Every "strategy" this
-programme has measured has failed net of costs. Value (HML) is the one family still untested and
-plausibly alive at a monthly horizon — that is the only live research line.
+programme has measured has failed net of costs.
+
+## 2a. UPDATE 2026-11-23 — value (HML) is now DEAD too, measured
+
+The one family that was "untested and plausibly alive" has since been measured and refuted:
+
+| | Result |
+|---|---|
+| Universe | 186 names, **44 monthly rebalances** |
+| Gross | **+0.11%/yr** |
+| Net of measured cost | **+0.02%/yr** |
+| Hurdle | 4.32% T-bill |
+
+It did not die of cost — it died because **the gross premium is absent**. That closes the last open
+research line, and it means the framework's earlier "run the value test as the single research bet" is
+superseded by the entry below.
+
+Also measured the same day: **EQUITY round-trip cost is 1–5 bp** (191 names, 238,810 daily + 356,271
+minute bars, participation 0.008% of ADV). The repo had been carrying two constants 5× apart (5.0 vs
+25.0 bp) and the 25 bp one overstated cost by ~5×; the old Questrade model's 175 bp per trade is simply
+wrong (buy/sell $0 commission, ECN $0 on smart-routed orders, FX 1.5% and only on conversion).
+
+## 2b. THE ONE BET LEFT, AND HOW TO PROVE IT
+
+The binding constraint is not signal discovery but **multiple-testing debt**: 146 pre-registered
+hypotheses, 0 PROVEN, and **0/55 strategies survive deflation at SR\* 1.014 / σ_SR 0.439**. Every extra
+backtest raises the bar for the next one. So the only rational move is to stop mining history and prove
+**one** rule forward, where the trial count stays at 1.
+
+**ETF trend / tactical allocation**
+- Universe: the 24 liquid ETFs already held (SPY QQQ IWM EFA EEM TLT IEF LQD HYG GLD XLE XLF XLK XLV …)
+- Signal: 12-month absolute momentum per ETF, monthly rebalance, hold top-k else cash
+- Costs: **measured 1–2 bp + $0 commission**, not assumed
+- No short leg → zero borrow (the blocker that killed HML); no FX if CAD-listed equivalents are used
+- **Frozen kill rule**: annualised net ≤ 4.32% **or** the one-sided 95% upper bound ≤ 4.32%
+- **Proof = forward clock only.** Start it, publish monthly, do not backtest it again
+
+If trend on a diversified ETF basket cannot beat 4.32% net of 1–2 bp, then nothing runnable at this size
+can — and holding cash is itself a real, provable answer.
 
 ## 3. Three risk-profile portfolios (concrete, cheap, no exotic access)
 
