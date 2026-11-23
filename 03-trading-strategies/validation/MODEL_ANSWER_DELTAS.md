@@ -26,7 +26,8 @@ Rule applied: a model answer may add a *test*, but it may never move a gate down
 
 **Net:** Luna is the closest to v1.0 and adds nothing conflicting. Claude and GLM relax PBO to 0.25. **1A is broadly
 sound but softens alpha t and omits break-even.** **1B relaxes DSR, IR, 2× cost and capacity, and should not be
-used for gating in any form.**
+used for gating in any form.** **1C is unusable — see §2b: it treats DSR as a ratio rather than a probability and
+sets a pass mark of 1.5, which cannot occur.**
 
 ## 2. Errors worth naming
 
@@ -39,6 +40,32 @@ used for gating in any form.**
 
 *Arithmetic check on 1A's power formula `T ≈ 6.18/SR²`:* (1.645 + 0.842)² = **6.185**, giving SR 1.0 → 6.2 y and
 SR 3.0 → 0.69 y (8.2 months). **The arithmetic is correct** — it is 1B's *conclusion* that ignores it.
+
+## 2b. 1C — unusable for gating, and instructive for why
+
+The third 1min.ai answer is the clearest example in this programme of *fluent, confident, structurally impossible*.
+It is not "a bit loose"; four of its gates cannot be computed as stated.
+
+| 1C claim | Why it fails |
+|---|---|
+| **"Deflated Sharpe (DSR): > 1.5 (minimum)"**, and later **"falsified if DSR < 1.5"** | **Impossible.** DSR is a probability in [0,1] — it is PSR evaluated at SR0. A DSR of 1.5 has no meaning, and every real strategy would be rejected by this gate. A process that cannot pass is not conservative; it is broken |
+| **"PBO < 0.5 (50% chance of overfitting)"** as a pass | 0.5 is the point where selection is **no better than a coin flip** — v1.0 rejects anything > 0.25 and passes ≤ 0.10. 1C makes the coin flip the pass mark |
+| **"CSCV (Bergomi, 2016)"** | **Misattributed.** CSCV/PBO is Bailey, Borwein, López de Prado & Zhu (2014/2017). Bergomi is a stochastic-volatility author |
+| **"Independent R² (IR)" = Strategy Alpha / Residual Volatility** | Conflates R² with Information Ratio, and the formula is neither. IR is mean active return / tracking error |
+| **"Tail ratio > 1.5 (fat tails)"** | P95/\|P5\| > 1.5 means **right-skew**, not fat tails. Fat tails show up as kurtosis and expected shortfall |
+| **"Trial accounting: run a pilot backtest on a small subset to estimate effect size"** | This is *peeking*, and it contradicts its own pre-registration rule. A pilot on data you later reuse is a trial, not a free sample |
+| **"Minimum 50 trades (for statistical power)"** alongside **"12 months minimum"** and **"10 years OOS"** | Three mutually inconsistent sample-size rules in one answer. 50 trades cannot power any Sharpe claim |
+| **"Capacity > $100M (for retail)"** | Not a retail number, and the definition ("max AUM where slippage > 50bps/yr") is garbled — capacity is where net alpha falls to the hurdle, not where slippage crosses an arbitrary level |
+| **"50 bps round-trip for US equities"** | ~7× our measured ETF cost (6.71 bp) and ~4× direct equity (12.07 bp). Conservative direction, but as a *hard-coded* cost it kills everything and prevents the cost comparison that decides the answer |
+| **"Exclude only those dead *before* the backtest"** (survivorship row) | Inverted. The rule is to **include** names that died *during* the window with their delisting returns |
+
+**What 1C is still good for:** its ERP framing (Dimson, Marsh & Staunton 2023, ~5–6% real, survives survivorship
+and cross-market replication) is the best-argued of the five, and it is the only answer that names a *data source
+family* for each bias control. Keep those two paragraphs; discard every threshold.
+
+**The generalisable lesson:** a model that mislabels a probability as a ratio will also mislabel a crash as a
+robustness pass. When an answer contains one impossible quantity, the rest of its numbers deserve re-derivation, not
+spot-checking — and no gate from that answer should be adopted, even the ones that happen to be right.
 
 ## 3. Genuinely additive items (adopt these)
 
