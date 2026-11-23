@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 20 — 2026-11-23 (07:54 UTC) — `hermes` (Session B, cron queue axis)
+Question: does the D2 calibration harness exist — an append-only ledger that logs (ts, claim, our_prob, market_prob, resolution) before resolution, with resolution fill-in restricted to post-resolution?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 07:54 | DOC | D2 — prediction_calibration.py built: append-only JSONL ledger of (ts, claim, our_prob, market_prob, resolution); claims logged pre-resolution only, resolution filled once post-resolution and never overwritten, probabilities validated 0–1; 0 records — awaiting D4 panel claims. | `04-investment-strategy/prediction_calibration.py` · `04-investment-strategy/results/d2_prediction_calibration.json` |
+
 ## Session 19 — 2026-11-23 (06:49 UTC) — `hermes` (Session B, cron queue axis)
 Question: can one prediction-market venue be selected for the D2/D3 calibration harness, with fee/spread/resolution-risk documented from primary sources rather than memory?
 

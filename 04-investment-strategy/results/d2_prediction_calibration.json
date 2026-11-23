@@ -1,0 +1,27 @@
+{
+  "item": "D2 H — Build prediction_calibration.py: log (ts, claim, our_prob, market_prob, resolution) before resolution, append-only.",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 46",
+  "session": "Session 20 — 2026-11-23 (07:54 UTC) — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "script": "04-investment-strategy/prediction_calibration.py",
+  "log": "04-investment-strategy/results/prediction_calibration.jsonl (created on first add; no predictions logged yet)",
+  "schema": {
+    "id": "int, sequential",
+    "ts": "UTC ISO8601, recorded at log time (before resolution)",
+    "claim": "string, the claim being predicted",
+    "our_prob": "float in [0,1], our probability",
+    "market_prob": "float in [0,1], market probability at log time",
+    "market_venue": "string, venue (default Polymarket per D1)",
+    "resolution": "null while pending, 0/1 once the claim resolves",
+    "resolved_at": "UTC ISO8601 of resolution, null while pending"
+  },
+  "append_only_contract": "predictions are inserted once and never edited or deleted; resolution is filled in later and stamped with resolved_at — the only permitted mutation on an existing record, allowed exactly once; a claim whose resolution is already known must not be logged here (that is D3 scoring input, not D2 input)",
+  "validation": "probabilities must be numbers in [0,1]; double resolve refused; unknown id refused",
+  "self_test": "ran add x2, resolve x1, invalid-prob rejected (exit 2), double-resolve refused (exit 2), pending filter correct; scratch log deleted, no synthetic predictions retained",
+  "records": 0,
+  "done_condition": "prediction_calibration.py committed; append-only ledger of (ts, claim, our_prob, market_prob, resolution) works; first real entries come from the D4 panel claims",
+  "artifacts_produced": [
+    "04-investment-strategy/prediction_calibration.py",
+    "04-investment-strategy/results/d2_prediction_calibration.json (this file)"
+  ],
+  "next": "D3 — score with Brier and log-loss vs market; require ΔBrier > 0 with CI, out of sample, before any capital. D4 supplies the claims; this harness consumes them."
+}
