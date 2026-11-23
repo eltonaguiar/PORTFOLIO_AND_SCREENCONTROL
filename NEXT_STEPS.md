@@ -59,7 +59,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
       row with real elapsed time.
 - [ ] **A9 — Linux/RustDesk path** · M · verify SSH + AT-SPI from this host to the Linux box, or document exactly
       which step blocks it. **DoD:** one scripted read of a remote window's tree, or a written blocker.
-- [ ] **A10 — wire approval classes into the docs** · S · link `TOOL_INTERFACE.md` §6 from `02-*`'s evidence rules
+- [x] **A10 — wire approval classes into the docs** · S · link `TOOL_INTERFACE.md` §6 from `02-*`'s evidence rules
       and from `act.py`; add the class table to `01-*/README.md`. **DoD:** no broken links; index regenerated.
 
 ## Track B — trading (`03-trading-strategies/`)

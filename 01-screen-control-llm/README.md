@@ -122,5 +122,6 @@ The folder carries two implementations that share the research but not the runti
 | Observe→decide→guard→act→verify loop | `screen_control/loop.py` | Transcript + `MockTransport` for certification, CDP transport live. |
 | Supervision | `kernel/overseer.py` | Stop classifier, signature hashing, brief injection, budgets, `STOP` file. |
 | Mechanics certification | `tests/` | `test_capture.py`, `test_resolve.py`, `test_overseer.py` (kernel) and `test_loop.py` (loop); CI-enforced via `.github/workflows/screen-control-tests.yml`. |
+| Approval classes (0–3) | [`TOOL_INTERFACE.md` §6 — Gate](TOOL_INTERFACE.md#6---gate) | 0=free, 1=reversible, 2=side-effecting, 3=irreversible; enforced by the tool layer, not the model's judgement. `kernel/act.py` does not exist (A2, blocked on a desktop session) — linkage deferred to A2. |
 
 No duplicated capture path: the loop observes through its transport, never through `kernel/capture.py`. No duplicated click path: `screen_control/transports.py.execute()` is the only execution path; `kernel/act.py` does not exist and is not called anywhere.

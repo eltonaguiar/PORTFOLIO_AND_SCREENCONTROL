@@ -128,3 +128,7 @@ Rules:
 This repository is research and paper-trading infrastructure. **No agent places live orders, changes broker
 logins, moves money, or handles credentials.** Those actions require an explicit, scoped, human approval step
 outside the agent loop — and a person accountable for the outcome.
+The approval classes (0 = free, 1 = reversible, 2 = side-effecting,
+3 = irreversible) that gate them are defined in
+[`../01-screen-control-llm/TOOL_INTERFACE.md#6---gate`](../01-screen-control-llm/TOOL_INTERFACE.md#6---gate)
+and enforced by the tool layer, not by the model's judgement.

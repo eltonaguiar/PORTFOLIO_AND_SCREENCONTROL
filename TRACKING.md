@@ -38,7 +38,7 @@ reflects new peer artifacts without a human in the loop.
 |---|---:|---:|---|
 | `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 66 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 8 (8 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 181 (34 md) | 127 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 182 (34 md) | 128 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 25 (24 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -66,11 +66,11 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md`](01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md) | 42 | 2297 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
-| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 126 | 10308 |
+| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 127 | 10609 |
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
 | [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
 | [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 122 | 8357 |
-| [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 130 | 6795 |
+| [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 134 | 7082 |
 | [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
 | [`02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md`](02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md) | 102 | 6949 |
 | [`02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md`](02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md) | 291 | 16353 |
@@ -93,7 +93,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 444 | 68606 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 451 | 69231 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
 | [`03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md`](03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md) | 135 | 11438 |
 | [`03-trading-strategies/READING_LIST_VERIFIED.md`](03-trading-strategies/READING_LIST_VERIFIED.md) | 72 | 5978 |
