@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 21 — 2026-11-23 (cron run) — `hermes` (Session B, cron queue axis)
+Question: can the E1 pick schema be defined and committed so the pretend-money book (gate G5) has a provenance-enforced append-only contract before any pick is recorded?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DOC | E1 — picks_schema.json committed: append-only pick row (UTC pre-resolution ts, tier stable/moderate/aggressive, agent, instrument, side, claim, entry_price, size, kill_rule stop_loss/time_based/none, git_hash provenance sha, status open/closed/killed/supersedes, supersedes id for revisions, resolution 1/0 filled once post-resolution, resolved_at, realized_bp flat day = 0.0 bp, weekly mark_to_market_price/ts). JSON Schema draft-07 with enum gates + example record. No picks recorded yet (awaiting E2). | `03-trading-strategies/picks_schema.json` |
+
 ## Session 20 — 2026-11-23 (07:54 UTC) — `hermes` (Session B, cron queue axis)
 Question: does the D2 calibration harness exist — an append-only ledger that logs (ts, claim, our_prob, market_prob, resolution) before resolution, with resolution fill-in restricted to post-resolution?
 
