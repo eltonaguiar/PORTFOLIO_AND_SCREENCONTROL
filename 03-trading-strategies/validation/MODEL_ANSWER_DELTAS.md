@@ -339,6 +339,62 @@ worth keeping:
 **Ranking impact: none.** This batch scores below 1C on usability, because 1C at least stated one impossible gate
 while this states seven, four of them under invented names.
 
+## 2h. AskAnyModel round 3 — the first genuine panel, and it raises a trial-count question
+
+**The diff test passes.** GLM 5.3, GPT-6 Astra and Qwen3.8 Max returned *different* answers (GLM most detailed, GPT-6
+most concise, Qwen most specific about failure dates); only Kimi K2.7 Code timed out. Cost: **25 credits for 4 panes**
+(GPT-6 Astra alone was 14). This is what a panel is supposed to look like, and it is the first batch from this
+platform worth the money.
+
+### Citation check — every major source is real
+
+Across all three answers: Moskowitz/Ooi/Pedersen (2012, JFE, 58 futures), Jegadeesh & Titman (1993),
+Asness/Moskowitz/Pedersen (2013), Hurst/Ooi/Pedersen (2017, JPM), Koijen/Moskowitz/Pedersen/Vrugt (2018, *Carry*),
+Carr & Wu (2009, RFS), De Bondt & Thaler (1985), Poterba & Summers (1988), Fama & French (1992), Dimson/Marsh/Staunton
+(2002), Mehra & Prescott (1985), Lustig/Roussanov/Verdelhan (2011), Lehmann (1990), Jegadeesh (1990), Nagel (2012),
+Bakshi & Kapadia (2003), Bondarenko (2014). **No fabricated titles, no Bergomi-style substitutions.** Three real
+panes, three credible reading lists.
+
+### Three concrete defects
+
+| Defect | Detail |
+|---|---|
+| **All three cite McLean & Pontiff as "~32% decay post-publication"** | The paper's own figures are **26% out-of-sample lower and 58% post-publication lower**. Three independent models converging on the same wrong number is evidence of a *shared secondary source*, not shared truth — and it is the reason we quote the paper's numbers, not the internet's |
+| **Moskowitz/Ooi/Pedersen sample** | GLM says 1965–2009 (correct for the paper's main tests); GPT-6 says **1985–2009**. One of them has to be wrong, and it is GPT-6 |
+| **Qwen cites "Lustig, Roussanov & Tsyvinski, 2014" for FX value** | Wrong third author. It is **Verdelhan** (Lustig/Roussanov/Verdelhan 2011, and the 2014 countercyclical-currency paper). Tsyvinski is a real economist who writes on crypto and energy — the kind of near-miss that reads as expertise |
+
+### The one argument that changes something for us
+
+**GPT-6 Astra:** *"The categories also overlap: time-series momentum is a standard implementation of trend following;
+carry and volatility selling are risk-premium strategies."*
+
+That is correct, and it is not a quibble — it bears directly on our deflation. Our correction went from `N=15` to
+**`N = 6 classes × 15 configs = 90`**. But if TSMOM and trend-following are **one phenomenon**, and carry and
+vol-selling belong to the risk-premia bucket rather than standing alone, the independent-family count is 4–5, not 6:
+
+| Independent families | Trials at 15 configs |
+|---|---|
+| 6 (what we used) | 90 |
+| 5 | 75 |
+| 4 | 60 |
+
+The direction is favourable — fewer trials means a *lower* SR₀ and a *higher* DSR — but the point is that **N must be
+the number of independent bets, which is exactly what `N_eff` computes and exactly what nobody has run on our own
+sweep.** Copilot's correction from 15 to 90 was honest but it assumed the six families were independent. It should be
+`N_eff` from the trial-return correlation matrix, per the adopted toolkit.
+
+### Convergent operational finding worth recording
+
+All three say the same thing our own measurement found independently: **only monthly/quarterly rebalancing survives
+retail costs.** GLM: *"for short-horizon mean reversion, essentially all of it [is consumed]"*; Qwen: *"short-horizon
+mean reversion is mostly bid-ask bounce"*; and our own ladder measured **+24.21 bp at 1D vs −0.57 bp at 15m**. Four
+independent sources, one conclusion.
+
+### Ranking
+
+**Best AskAnyModel round by a distance, and the second-best set of answers overall** (behind 1E on arithmetic
+integrity, ahead of it on breadth of real citations). Use it as a reading list; gate with v1.0.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a
