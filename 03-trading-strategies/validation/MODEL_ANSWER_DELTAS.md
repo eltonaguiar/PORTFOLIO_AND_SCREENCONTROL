@@ -126,6 +126,93 @@ Use it for operational prose and the six items above; gate with v1.0.**
 finding: model consensus on a numeric gate is worth nothing, which is why a written protocol with a fixed gate sheet
 and a ledger is the only thing that can be audited after the fact.
 
+## 2e. 1E — the best of the seven, and it corrects our own adopted number
+
+The fifth 1min.ai answer is the only one that behaves like a working document rather than a summary: 18 gates, 8
+leakage tests, 18 falsifiers, a documented execution ladder, and **arithmetic that survives re-computation**.
+
+### Its DSR worked example reproduces
+
+Inputs: `T=5040`, annualised SR 1.2 → `ŜR = 1.2/√252 = 0.0756`; skew −0.5; kurtosis 8; cross-trial SD 0.3
+annualised → `√V = 0.3/√252 = 0.01890`; `N = 200`.
+
+| Quantity | 1E claims | Recomputed here |
+|---|---|---|
+| `Z⁻¹(0.995)`, `Z⁻¹(1−1/(200e))` | 2.576, 2.905 | **2.5758, 2.9045** |
+| `SR₀` | 0.0523 | **0.05226** |
+| Denominator | 1.0236 | **1.02362** |
+| DSR | **0.947** | **0.9472** |
+
+Its interpretation is right and is the reason to trust the rest: *"a 1.2 Sharpe over 20 years, after 200 trials, is
+borderline (0.947 < 0.95) … The trial count is worth more than the Sharpe."*
+**One sub-case is slightly off:** for `N=20` it uses a z-sum of 2.20, but `0.4228·1.6449 + 0.5772·2.0881 = 1.901`
+→ `SR₀ = 0.0359`, `DSR = 0.997` (it says 0.995). Both pass, so the conclusion is unaffected; the constant is simply
+mis-multiplied.
+
+### It corrects OUR figure: 9.3 years, not 6.2
+
+1E applies the variance of the Sharpe estimator, `Var(ŜR) ≈ (1 + SR²/2)/Y`, giving
+`Y = 6.185·(1 + SR²/2)/SR²`. Recomputed:
+
+| True net Sharpe | Crude `6.18/SR²` (what we had adopted) | Variance-corrected (1E) |
+|---|---|---|
+| 0.5 | 24.74 y | **27.83 y** |
+| 0.75 | 11.00 y | **14.09 y** |
+| **1.0** | **6.18 y** | **9.28 y** |
+| 1.5 | 2.75 y | **5.84 y** |
+| 2.0 | 1.55 y | **4.64 y** |
+| 3.0 | 0.69 y | **3.78 y** |
+
+**This supersedes the 6.2-year figure** quoted in `VALIDATION_METHODOLOGY_PANEL.md`, in the protocol's own toolkit
+output, and in every agent report that repeated it. The crude formula ignores the `SR²/2` term in the variance of
+a Sharpe estimate, which is not negligible at the Sharpes we care about. Corrected consequence: **a Sharpe-1.0
+strategy needs ~9.3 years of forward evidence, and a Sharpe-0.5 strategy needs ~28 years** — the ETF trend test's
+verdict is further out than we said, not closer.
+
+`MinBTL = 2·ln(N)/SR²` also reproduces exactly (N=10 → 4.6 y, N=100 → 9.2 y, N=1 000 → 13.8 y, N=10 000 → 18.4 y at
+SR 1.0; and 18.4 / 36.8 / 55.3 / 73.7 y at SR 0.5).
+
+### Five items from 1E worth adopting outright
+
+1. **The canary test.** Deliberately inject *tomorrow's* return as a feature; Sharpe must explode (> 5). *"If it
+   doesn't, your pipeline isn't reading features correctly and your 'good' result is also meaningless."* No other
+   answer proposes a positive control — every other leakage test checks for a signal that shouldn't exist, this one
+   checks the harness can see a signal that must.
+2. **Per-trade power: `t = SR_per_trade·√N_trades`.** With per-trade Sharpe 0.05 you need **3,600 trades** for t = 3;
+   at 0.10, 900; at 0.20, 225. This reframes the forward test as a *trade count* problem, which is measurable
+   weekly, instead of a calendar-time problem, which is not.
+3. **After-tax Sharpe as a secondary gate.** *"A strategy with 200% annual turnover in a taxable account can lose
+   30–50% of its net compounding to tax."* v1.0 has no tax line at all; for a Canadian retail account this is not
+   optional.
+4. **Size on 1.5× the backtest max drawdown**, because realised drawdowns exceed backtest drawdowns by roughly that
+   factor.
+5. **Stationary bootstrap (Politis–Romano, mean block 10–20 days)** for Sharpe confidence intervals rather than the
+   iid bootstrap — the toolkit's default block bootstrap is close, but the stationary version is the right one for
+   autocorrelated daily returns.
+
+### Its two strongest falsifiers (new to us)
+
+- **"Deliberately shuffled signals still produce positive P&L → your P&L engine is broken; all results are void."**
+  That distinguishes *no edge* from *no accounting*, which is the difference between a null result and a bug.
+- **"Short leg contributes > 70% of alpha but those names were hard-to-borrow → the trade was never available."**
+
+### Where it is still looser than v1.0
+
+`PBO ≤ 0.25` hard (v1.0 ≤ 0.10) · `WFE ≥ 0.5` (v1.0 ≥ 0.60) · break-even `≥ 2.0` soft (v1.0 ≥ 4×) · tail ratio
+`≥ 0.8` soft (v1.0 ≥ 1.0) · raw net Sharpe `≥ 0.7` as a hard gate (v1.0 gates the statistics, not the raw Sharpe).
+Capacity `≥ 10×` is *stricter* than v1.0's 5×.
+
+### The one argument in any answer that is strategically useful to us
+
+> *"Retail advantage: your capacity constraint is usually irrelevant ($50k–$500k), which means micro-cap and
+> low-liquidity edges are genuinely available to you and unavailable to funds. **That is your only structural
+> edge** — but it comes with the widest spreads and worst data. Price it honestly."*
+
+That is the first time any of the seven named where a retail account's edge actually comes from, and it is testable
+against our own numbers: our measured micro-cap-adjacent costs (MEME 13.59 bp, small-cap 60 bp round trip in v1.0's
+table) mean the "only structural edge" is also the one our gate sheet rejects first. Worth holding as a hypothesis,
+not a conclusion.
+
 ## 3. Genuinely additive items (adopt these)
 
 1. **Parameter-cliff falsifier (1A):** perturbing any key parameter by **±15%** that drops Sharpe by **> 35%** is a

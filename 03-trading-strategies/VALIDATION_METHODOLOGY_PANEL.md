@@ -52,6 +52,12 @@ directions — treat it as settled: **a four-hour window, or a four-month paper 
 **Consequence for us:** the only honest forward test we can start is one whose verdict is years away. Anything we
 "prove" inside a session is a construction check, not a validation.
 
+> **CORRECTION (added after the sixth answer was audited).** The `6.2 years` figure above uses the crude
+> `Y = 6.185/SR²`. The variance of a Sharpe estimate is `Var(ŜR) ≈ (1 + SR²/2)/Y`, so the correct requirement is
+> `Y = 6.185·(1 + SR²/2)/SR²`, verified by direct computation: **SR 1.0 → 9.28 y** (not 6.18), **SR 0.5 → 27.83 y**
+> (not 24.74), SR 1.5 → 5.84 y, SR 2.0 → 4.64 y. Every downstream statement that says "6.2 years" — including the
+> adopted toolkit's printed output and three agent reports — is the optimistic version. Use the corrected column.
+
 ## 3. Our programme measured against the gates
 
 | Gate | Required | Our measured value | Status |
