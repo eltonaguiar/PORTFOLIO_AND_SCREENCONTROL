@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T01:27 | 4 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 76 |  |
-| 2026-11-23T01:27 | 4 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T01:48 | 5 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 72 |  |
 | 2026-11-23T01:48 | 5 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 200 | 151 |  |
 | 2026-11-23T02:08 | 6 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
@@ -32,16 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T04:14 | 14 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 90 | **YES** |
 | 2026-11-23T04:30 | 15 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 90 | **YES** |
+| 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 73 |  |
+| 2026-11-23T04:35 | 16 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 429 | 21 |  |
 
 ## Latest answers
-
-### round 13 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-I cannot determine the most likely wrong claim for mutual funds (active and index). However, I can provide a general response to the question. If you'd like to continue, I can help with that.
-
-### round 13 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_OPENROUTER
-
-Claim (a) is the most likely wrong. Mutual funds are the observation channel: if gross edge in liquid markets really equals round-trip cost, active equity funds should show near-zero net alpha dispersion, yet SPIVA-style persistence studies and fund-level gross-vs-net return decompositions show genuine positive gross alpha concentrated in low-turnover funds. Falsification: compute gross (pre-expense) alpha for liquid-market active funds, rank into deciles, and if top-decile gross alpha net of 12-20 bps round-trip is statistically indistinguishable from the T-bill-adjusted zero, (a) survives. If it clears a deflated Sharpe with trial accounting, (a) is wrong.
 
 ### round 14 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
@@ -64,3 +56,11 @@ The claim most likely to be wrong is (a): "gross edge in liquid markets is about
 > WARNING: echo-suspect (mostly repeats the prompt). Do not use.
 
 The claim most likely to be wrong is (a) that gross edge in liquid markets is about the size of the round trip, making published premia unharvestable. A specific observation that would falsify this claim would be an extended period where systematic trading strategies in commodities (energy, metals, ags) consistently generate alpha exceeding the sum of transaction costs (12-20 bps) after accounting for slippage and market impact. Demonstrating that these strategies can reliably produce net positive returns net of costs would challenge the assertion of unharvestable premia in liquid markets.
+
+### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+Claim (c) is most likely wrong. "Value is the last untested family" for equity index options ignores that value in options means variance risk premium / skew — extensively tested (Carr-Wu, Bollerslev-Tauchen, Bakshi-Kapadia). Falsification: compute a deflated Sharpe on a simple short-VIX or short-SKEW carry strategy net of 12-20 bps round-trip; if DSR > 0 after trial accounting against ~50 published trials, the claim survives. Observation would show value already harvested, not untested.
+
+### round 16 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"litellm.RateLimitError: Deployment has all max_parallel_requests slots in use. Deployment model_group=free-mode-large, id=4b3fc2d5d3bbd6066aa4f983c0339b491dab2a1744e093be03b71b2660c8aa02 already has max_parallel_requests=1 requests in flight. Raise max_parallel_requests (or the
