@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 85 |  |
-| 2026-11-23T08:34 | 21 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 200 | 100 |  |
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 79 |  |
 | 2026-11-23T09:35 | 22 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 | 2026-11-23T10:36 | 23 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 87 |  |
@@ -32,24 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 111 |  |
 | 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 105 |  |
 | 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 116 |  |
+| 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
+| 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
 
 ## Latest answers
-
-### round 30 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**Most likely wrong: (c) — "value is the last untested family."**
-
-Value has been extensively tested on the exact terms the programme uses. Fama-French's own post-2010 updates, AQR's published net-of-cost simulations, and numerous academic replications already show the HML factor collapsing after transaction costs and deflated-Sharpe trial adjustment. It isn't "untested" — it's tested and failed in the literature.
-
-**Specific falsifying observation:** A sector/factor value screen (e.g., low P/B or high earnings yield within liquid ETFs) showing a deflated Sharpe above the programme's gate *and* a net-of-cost edge exceeding 12–20 bps round-trip on a paper portfolio with realistic trial accounting would overturn (c). Absent that, (c) is simply a false premise.
-
-### round 30 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**Claim (b) is most likely wrong.**
-
-The "death" of PEAD is usually documented on equal-weighted universes with stale definitions and no cost accounting. Sector-ETF implementations can harvest drift via post-earnings-announcement momentum *conditioned on surprise persistence*: earnings revisions in sector leaders (XLK, XLF) show multi-quarter autocorrelation that single-name PEAD tests miss because idiosyncratic noise dominates. 
-
-**Falsification:** A long-short sector-ETF portfolio, long top-decile surprise sectors, short bottom-decile, held 60 days, with 12-20 bps round-trip applied and deflated-Sharpe trial accounting, fails to beat the 4.3% T-bill net. If DSR stays below 1.0 across rolling 5-year windows post-2006, the claim survives.
 
 ### round 31 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -82,3 +66,11 @@ Claim (a) is most likely wrong. If the gross edge in liquid FX majors is truly ~
 The round-trip cost applies per trade, but FX majors trade on deep books with persistent, slow-moving macro flows (carry, terms-of-trade shifts, rate-differential drift). A position sized on 12–20 bps cost can be held for weeks; the cost is amortized, not repeated. The claim conflates "edge ≈ cost" with "edge < cost net" — if the gross edge accrues over a holding period while cost is one-off, the ratio is favorable.
 
 **Falsifying observation:** A carry/momentum composite on G10 majors, traded at monthly frequency, fails to clear a deflated Sharpe ≥ 1.0 (trial-accounted) net of 15 bps round trip versus the 4.3% T-bill over 2004–2024. That would confirm cost dominates.
+
+### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 33 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_OPENROUTER
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
