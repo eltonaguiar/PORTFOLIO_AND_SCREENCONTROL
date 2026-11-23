@@ -121,6 +121,7 @@ Apply a book-level overlay to the same 6 pre-registered hypotheses x 7 crypto ma
   (0.243) by more than the 95% cluster-bootstrap lower bound of the difference. If it does not,
   Mercury3's condition (ii) — "overlay must sit at book level" — is falsified for this book.
 - Report overlay turnover cost too: at 26 bp a monthly book flip can consume the entire improvement.
+- **Blocked (this run):** the overlay backtest plus 95% cluster-bootstrap is not implemented; building it is a multi-cell job too large for one unattended cron run, and its output would land in the sibling-owned `03-trading-strategies/results/`.
 
 ### Q2 — Mutual-fund NAV staleness (data availability first)
 NAV is struck once daily, so the price is mechanically stale. Test whether close vs next-day NAV diverges
