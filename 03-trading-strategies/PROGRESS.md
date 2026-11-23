@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 29 — 2026-11-23 (19:05 UTC) — `hermes` (Session B, cron queue axis)
+Question: is the prediction-market calibration harness an investment sleeve (≤2% of capital) or purely an instrument (D6)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DOC | D6 — decided and documented: the prediction-market calibration harness is PURELY AN INSTRUMENT (calibration / foresight measurement), not an investment sleeve (≤2%). Ground truth attached: D2 ledger 0 records / 0 resolved claims; D3 scoring INSUFFICIENT_DATA (needs ≥5 resolved, exit 3); D4 panel claims (AI-owned) not generated; no capital deployed on Polymarket (D1 venue selected, no positions). With zero resolved claims there is no edge to size a sleeve against, so no ≤2% allocation is made — explicitly rejected as an unmeasured allocation. Revisit trigger per the TODO: 50 resolved claims in the D2 ledger; then re-decide sleeve vs instrument on measured ΔBrier vs market, not assumption. | `04-investment-strategy/results/d6_sleeve_instrument_decision.md` |
+
 ## Session 28 — 2026-11-23 (18:02 UTC) — `hermes` (Session B, cron queue axis)
 Question: what is the largest size that moves the price by under 1 cent on 3 representative markets (D5)?
 
