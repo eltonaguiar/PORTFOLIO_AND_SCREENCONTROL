@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T00:26 | 0 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 107 |  |
-| 2026-11-23T00:26 | 0 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 57 |  |
 | 2026-11-23T00:30 | 1 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 90 |  |
 | 2026-11-23T00:30 | 1 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
 | 2026-11-23T01:05 | 2 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
@@ -32,17 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T03:11 | 10 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 0 | **YES** |
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
 | 2026-11-23T03:29 | 11 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 71 |  |
+| 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 0 | **YES** |
+| 2026-11-23T03:32 | 12 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 87 |  |
 
 ## Latest answers
-
-### round 9 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-Claim (c) — "value is the last untested family" — is most likely wrong. Single-name value has been extensively tested: Fama-French HML, Asness-Moskowitz-Pedersen, and decades of long/short decile sorts, all net-of-cost in the literature. Falsifier: a pre-registered deflated-Sharpe run of a standard book-to-market long/short on your liquid universe, with your 12–20 bp round-trip and trial count declared, showing the family was never actually run. If prior trials exist, (c) collapses. Alternatively, (b): PEAD in small/mid caps post-2010 would falsify.
-
-### round 9 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-
 
 ### round 10 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -65,3 +56,12 @@ A specific observation that would falsify this claim is if a significant number 
 The claim that "value is the last untested family" is likely to be the **weakest** for BONDS (govt and credit).
 
 **Falsifying observation:** A consistent underperformance of value strategies in government and credit bonds could challenge this claim. If value-focused funds consistently underperform the broader market or even the alternative asset (4.3% T-bill), it would suggest that value is not the last untested frontier and that other strategies might offer better opportunities.
+
+### round 12 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
+
+
+
+### round 12 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
+
+The claim likely to be wrong for ETFs is (b): "large-cap post-earnings drift has been dead since about 2006." A specific observation that would falsify this claim is a statistically significant positive drift in large-cap stock returns relative to earnings announcements, after adjusting for transaction costs and controls for market conditions, identified through systematic backtesting from 2006 to the present. This would include a consistent beat of the 4.3% T-bill alternative on a risk-adjusted basis, demonstrating that such a drift could be profitably exploited despite existing costs.
