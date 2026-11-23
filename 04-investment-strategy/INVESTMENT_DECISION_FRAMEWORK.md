@@ -74,6 +74,35 @@ backtest raises the bar for the next one. So the only rational move is to stop m
 If trend on a diversified ETF basket cannot beat 4.32% net of 1–2 bp, then nothing runnable at this size
 can — and holding cash is itself a real, provable answer.
 
+## 2c. Cross-check of this framework by the model panel (2026-11-23)
+
+Three models were asked, with no shared numbers, to name the claim most likely to be **wrong**, what is
+missing, and the one addition that would most improve the framework.
+
+| Model | Most-likely-wrong claim | Proposed addition | Verdict |
+|---|---|---|---|
+| `qwen3:8b` (local) | (2) "every class fails net of cost" — too absolute | "integrate a risk-adjusted framework (Sharpe)" | **Noise.** Sharpe/Sortino/MDD/DSR are already the reporting set; the model didn't read them |
+| `ULTRA_FREE_CLOUD_LARGE` | (2) same claim | stress testing + behavioural analysis | **Fair but vague** — stress testing is legitimate, "market sentiment" is not a measurable gate |
+| `ULTRA_FREE_OPENROUTER` | **(4) ETF 12-month momentum** | vol-scaled sizing that cuts to zero once trailing 21-day realised vol > 1.5%/mo | **Specific and worth recording** — but see the trap below |
+
+The third critique has a real mechanism behind it: the 4.32% kill rule is **unconditional**, and it does
+not distinguish "trend failed" from "trend had nothing to work with" (2017–2020 style low-vol drift where
+absolute momentum repeatedly whipsaws).
+
+**The trap:** implementing that suggestion adds a parameter — a vol threshold — which is **+1 trial**,
+and multiple-testing debt is precisely the binding constraint (0/55 survive deflation). A filter chosen
+because a model suggested it is still a filter chosen by looking at the data.
+
+**Resolution adopted here:** keep the frozen rule as ONE trial, and treat volatility regimes as a
+**reported diagnostic**, not a sizing input. That means the ETF test publishes a table of
+`vol_regime → net return` so a regime dependence is *visible*, without letting the regime become a knob
+we tuned. If the diagnostic shows the rule only works in one regime, that is a finding to report — not a
+licence to add a filter and quietly reset the trial count.
+
+**Meta-lesson worth keeping:** a model's advice to "add a filter" is advice to increase multiplicity. When
+the constraint is trial count, the correct response to almost every suggestion is *report it, don't wire
+it*.
+
 ## 3. Three risk-profile portfolios (concrete, cheap, no exotic access)
 
 These are **templates, not advice**. All instruments should be the cheapest available in the account's
