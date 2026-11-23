@@ -41,7 +41,13 @@ sets a pass mark of 1.5, which cannot occur.**
 *Arithmetic check on 1A's power formula `T ≈ 6.18/SR²`:* (1.645 + 0.842)² = **6.185**, giving SR 1.0 → 6.2 y and
 SR 3.0 → 0.69 y (8.2 months). **The arithmetic is correct** — it is 1B's *conclusion* that ignores it.
 
-## 2b. 1C — unusable for gating, and instructive for why
+## 2b. 1C — Mistral (1min.ai): unusable for gating, and instructive for why
+
+*(Model attribution confirmed 2026-11-23: this answer came from Mistral on 1min.ai. It was previously logged
+unattributed, and a second paste of the identical text arrived later — the same answer twice is **reproduction of one
+model's error, not corroboration by two models**. That distinction matters more than it looks: three separate models
+converging on a *wrong* number (the McLean & Pontiff "32%" case in §2h) is at least a shared secondary source; one
+model pasted twice is just one model.)*
 
 The third 1min.ai answer is the clearest example in this programme of *fluent, confident, structurally impossible*.
 It is not "a bit loose"; four of its gates cannot be computed as stated.
