@@ -108,3 +108,39 @@ remains ETF 12-month absolute momentum — with the explicit acceptance that its
 
 **Status of this document:** model answers quoted as `MODEL CLAIM`; every number in §3 is `observed` in our repos or
 agent reports, with the source named. No claim in §3 was recomputed here.
+
+---
+
+## 7. SUPERSEDED IN PART — cross-check against the adopted v1.0 protocol
+
+After this document was written, the operator supplied a full **strategy validation protocol v1.0** (49,890 bytes,
+now at `03-trading-strategies/validation/`) with a runnable toolkit and a 17-gate master sheet (§3.11). **v1.0 is the
+operational standard; this panel document is corroboration only.** On every gate the models and v1.0 both specify,
+v1.0 is equal or stricter:
+
+| Gate | Panel (model consensus) | v1.0 §3.11 | Which binds |
+|---|---|---|---|
+| PBO | ≤ 0.10 (Luna) / < 0.25 (Claude, GLM) | **≤ 0.10 pass**, 0.10–0.25 marginal, > 0.25 fail | **v1.0 = Luna's strict end** |
+| Walk-forward | ≥ 0.5 | **≥ 0.60**, < 0.40 fail | v1.0 stricter |
+| Alpha t | ≥ 3.0 discovered / ≥ 2.0 pre-registered | **≥ 3.0 at N_eff ≤ 10, 3.5 at ≤ 100, 4.0 above** — scaled by trial count | v1.0 stricter |
+| Break-even cost | ≥ 2.5× | **≥ 4×**, < 2× fail | v1.0 stricter |
+| Capacity | ≥ 2× / ≥ 3× planned AUM | **≥ 5×**, < 2× fail | v1.0 stricter |
+| Tails | tail ratio ≥ 1.0 | tail ratio ≥ 1.0 **and skew > −0.5 and best-month share ≤ 25%** | v1.0 adds two conditions |
+| DSR | ≥ 0.95 | ≥ 0.95 (marginal 0.90–0.95) | equal |
+| IR vs matched benchmark | ≥ 0.5 | ≥ 0.50 | equal |
+
+**Gates v1.0 has that the panel never proposed:** data integrity (≥99% PIT-valid universe-months *with* delisting
+returns), survivorship sensitivity (SR(full) − SR(naive) < 0.10), parameter stability (SR CV over ±20% ≤ 0.30),
+regime count (zero negative-SR sub-periods), out-of-market replication (≥50% of headline on a cross-market or
+post-publication sample), and MinTRL ≤ available sample length.
+
+**What this does to our programme.** v1.0's gates are ordered with data integrity first, and it says explicitly:
+*"if you cannot certify ≥99% of universe-months as PIT-valid with delisting returns present, stop. You are not
+measuring a strategy; you are measuring data."* Our universe is **survivor-conditioned** and EDGAR `filed` was never
+polled — so we fail **Gate 1**, which is mandatory. Under v1.0's scoring (*"17/17 = green, any mandatory fail = red
+(kill, log, move on)"*) the programme is **red before any statistic is consulted**, and the empty ranked list is not
+a shortfall of the strategies but a correct refusal to rank strategies measured on a broken universe.
+
+That is a stronger conclusion than this document reached on its own, and it is the reason the protocol supersedes
+it: the panel told us our strategies fail; v1.0 tells us we cannot yet *measure* them.
+
