@@ -1,0 +1,155 @@
+{
+  "item": "H3 H — Audit: no number enters a doc without (source, date) or an explicit ASSUMED tag",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 83",
+  "session": "Session B cron, 2026-11-23, workdir C:/Users/zerou/pasc",
+  "method": "Programmatic scan of all 98 repo .md files for number+unit patterns (773 lines), followed by manual review of core investment docs. False positives excluded: methodology-stat percentages (5% significance, 80% power), UI/DPI scaling (100%/150%), table cells that are computed results, dead figures already marked KILLED in-line.",
+  "docs_audited": [
+    "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+    "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+    "03-trading-strategies/HORIZON_LADDER_A9.md",
+    "03-trading-strategies/VERDICT_200.md",
+    "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md",
+    "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md"
+  ],
+  "critical_violations": [
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 12,
+      "number": "+24.21 bp at 1D vs -0.57 bp at 15m",
+      "issue": "G2 Horizon gate quotes a figure killed by A9 (HORIZON_LADDER_A9.md): no implementation in either repo, unit unstated (per-trade vs per-year differs 365x), gross/net unstated. Still embedded in a live gate definition.",
+      "status": "KILLED figure presented as live gate basis",
+      "fix": "Replace with the 96x ratio between 15m and 1D hold, or cite HORIZON_LADDER_A9.md; mark the old figure as DEAD/not evidence."
+    },
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 46,
+      "number": "+0.11%/yr gross, +0.02%/yr net (value, 186 names)",
+      "issue": "Section 2a presents these as measured results. H2 audit killed +0.11%/yr as a price-only/raw-close artifact (COMS e8dc5ca total-return check: dividend-adjusted total return is +2.89%/yr). No committed implementation produces either figure. Presented without ASSUMED tag or dead marking.",
+      "status": "KILLED figure presented as measured result",
+      "fix": "Remove or clearly mark DEAD/not evidence; replace with total-return figure or remove the value subsection pending a committed implementation."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 26,
+      "number": "11.92% -> 3.36%; 6.59% revenue-surprise drift",
+      "issue": "Cost-sensitivity figures killed by H2 (KILLED — model-fabricated, no primary source found; JSTOR PEAD-cost paper reports different results). Still appear in the Reported column at L26 without being marked dead.",
+      "status": "KILLED figure still in evidence table",
+      "fix": "Remove from Reported column or mark KILLED/not evidence."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 55,
+      "number": "2.0-3.5%/yr approx 20-30 bp/mo (router SUE1)",
+      "issue": "Router model figure killed by H2 (KILLED — no matching primary source; Latane & Jones 1977 reports 9.74%/quarter 1971-75, different magnitude). Still in cross-model comparison table at L55.",
+      "status": "KILLED figure still in comparison table",
+      "fix": "Remove or mark KILLED/not evidence."
+    },
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 203,
+      "number": "doc-wide claim",
+      "issue": "Closing line asserts every number in it came from a measurement or is labelled as an assumption. Contradicted by violations at L12, L46-47, L71, L166 above.",
+      "status": "Internal contradiction",
+      "fix": "Correct the closing line to reflect that some numbers are killed, unverified, or assumed."
+    }
+  ],
+  "moderate_violations": [
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 71,
+      "number": "4.32% (annualised net kill threshold)",
+      "issue": "Kill rule threshold presented as fact. It is a policy/modeling choice (T-bill hurdle), not a measurement. No ASSUMED tag.",
+      "status": "Policy number without ASSUMED tag",
+      "fix": "Add explicit ASSUMED tag: e.g. ASSUMED: 4.32% T-bill hurdle (policy choice, not measured)."
+    },
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 166,
+      "number": "1-2% (of aggressive sleeve, prediction-market allocation)",
+      "issue": "Suggested experimental allocation with no source, date, or ASSUMED tag.",
+      "status": "Unsourced allocation figure",
+      "fix": "Add ASSUMED tag or source/date."
+    },
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 54,
+      "number": "1-5 bp (equity round-trip cost, 191 names, 238810 daily + 356271 minute bars)",
+      "issue": "Described as measured with sample details but no fetch date and no source URL/artifact reference for the measurements. Adjacent claim Questrade model's 175 bp per trade is simply wrong has no source.",
+      "status": "Measured claim without date/source",
+      "fix": "Add fetch date and source artifact reference."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 15,
+      "number": "3-5%/yr approx 25-42 bp/month gross (value premium)",
+      "issue": "From duck.ai / GPT-6 Luna. H2 audit: PARTIAL — band usable as long-run context, base claim not primary-verified. In-line at L15 there is no qualification marking it UNVERIFIED/PARTIAL.",
+      "status": "Model-sourced number without in-line qualification",
+      "fix": "Add (UNVERIFIED at primary level — duck.ai GPT-6 Luna, 2026-11-22) or ASSUMED tag."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 16,
+      "number": "1927-2024; 1977-2023 (HML sample periods)",
+      "issue": "H2 audit: UNVERIFIED at primary level (1977-2023 study not identified). Presented without qualification.",
+      "status": "Unverified sample claim",
+      "fix": "Mark UNVERIFIED or remove."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 24,
+      "number": "~6% abnormal over 60 days (PEAD)",
+      "issue": "H2 audit: UNVERIFIED (~6% / later summary not identified). Presented without qualification.",
+      "status": "Unverified effect-size claim",
+      "fix": "Mark UNVERIFIED or remove."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "line": 54,
+      "number": "0.5-0.7%/month = 50-70 bp/month (router value premium)",
+      "issue": "H2 audit: PARTIAL — reconciled band, router specifics not primary-verified. In-line at L54 no qualification.",
+      "status": "Model-sourced number without in-line qualification",
+      "fix": "Add (PARTIAL — reconciled band, not primary-verified) or ASSUMED tag."
+    },
+    {
+      "file": "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md",
+      "line": 42,
+      "number": "CRYPTO 0.0996%, EQUITY/ETF/BOND 0.05%, COMMODITY 0.15%, FOREX 0.02%, FUTURES 0.10%, MUTUAL_FUND 0.08%",
+      "issue": "Described as Costs used (measured, per class, payload.slippage_validation) but no source URL, fetch date, or artifact reference for the measurements.",
+      "status": "Measured cost figures without date/source",
+      "fix": "Add fetch date and source artifact reference."
+    },
+    {
+      "file": "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md",
+      "line": 112,
+      "number": "5% or less",
+      "issue": "Already flagged in-doc (5% or less is a number without a derivation). Still unresolved.",
+      "status": "Previously flagged, still open",
+      "fix": "Add derivation or ASSUMED tag."
+    },
+    {
+      "file": "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md",
+      "line": 113,
+      "number": "90%+ (indexing beats active selection)",
+      "issue": "asserts indexing beats active selection 90%+ of the time without a citation — flagged in-doc, still unresolved.",
+      "status": "Uncited model claim",
+      "fix": "Add citation (e.g. SPIVA-style studies) or mark ASSUMED."
+    }
+  ],
+  "clean_docs": [
+    {
+      "file": "03-trading-strategies/VERDICT_200.md",
+      "note": "All central-bank rates carry source URLs and fetch dates (RBA 3 Nov 2026, RBNZ 28 Oct 2026, BOJ 30 Oct 2026, SNB since 20 Jun 2025, FRED). Carry figures computed from measured data. Passes H3."
+    },
+    {
+      "file": "03-trading-strategies/HORIZON_LADDER_A9.md",
+      "note": "All numbers derived from the stated formula annual cost drag = (365 / holding_days) x round_trip_bps with units explicit throughout (bp per round trip, round trips per year, annual drag %). The +24.21 bp figure is explicitly marked KILLED. Passes H3."
+    },
+    {
+      "file": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "note": "H2 audit table (L67-86) already documents claim status for all model-sourced numbers. The remaining violations above are the in-line body occurrences that lack qualification. JFQA-cited figures at L124-125 (Meursault 2.87%-1.54%; HML +5.20%/yr vs -0.86%/yr) are primary-verified. Passes H3 with the caveat above."
+    }
+  ],
+  "summary": "773 number+unit lines scanned across 98 markdown files. 5 critical violations (killed/dead figures still presented as live evidence, including an internal contradiction in the framework's own closing claim) and 10 moderate violations (policy thresholds, unsourced allocations, unverified model figures without in-line qualification). Two docs pass H3 outright (VERDICT_200.md, HORIZON_LADDER_A9.md). VALUE_VS_PEAD_EVIDENCE.md passes with caveats (H2 audit table exists but body occurrences unqualified). INVESTMENT_DECISION_FRAMEWORK.md and CAPITAL_ALLOCATION.md require fixes.",
+  "done_condition": "Audit complete: all investment-relevant numbers in core docs classified as cited, assumed, killed-unmarked, or unverified. Artifact written. No numbers were changed — this is an audit, not a correction pass (corrections require coordinated edits across sessions per HORIZON_LADDER_A9.md:110-111).",
+  "artifact": "04-investment-strategy/results/h3_number_audit.json"
+}

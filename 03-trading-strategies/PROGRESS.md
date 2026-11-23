@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 26 — 2026-11-23 (15:46 UTC) — `hermes` (Session B, cron queue axis)
+Question: do any investment-relevant numbers in core docs lack a (source, date) citation or explicit ASSUMED tag?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DOC | H3 — Audited all investment-relevant numbers in core docs: 5 critical violations (killed +24.21 bp figure still in framework G2 gate; killed +0.11%/yr value figure still in §2a; killed 11.92%→3.36% and 2.0–3.5%/yr router figures still in VALUE_VS_PEAD_EVIDENCE body; framework closing claim contradicts itself) + 10 moderate violations (unsourced 4.32% kill threshold without ASSUMED tag, unsourced 1–2% allocation, unverified model effect sizes without in-line qualification). VERDICT_200.md and HORIZON_LADDER_A9.md pass H3 outright. No numbers changed — audit only; corrections require coordinated cross-session edits. | `04-investment-strategy/results/h3_number_audit.json` |
+
 ## Session 24 — 2026-11-23 (12:19 UTC) — `hermes` (Session B, cron queue axis)
 Question: which numbers in VALUE_VS_PEAD_EVIDENCE.md came from a model (duck.ai / two routers) rather than a primary paper, and do they hold at source?
 
