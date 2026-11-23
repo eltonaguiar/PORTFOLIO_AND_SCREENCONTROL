@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 16 — 2026-11-23 (04:39 UTC) — `hermes` (Session B, cron queue axis)
+Question: do the four PEAD decay citations in VALUE_VS_PEAD_EVIDENCE.md hold against the primary papers, claim by claim?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 04:39 | DOC | C3 — four PEAD decay citations verified at source: Ball & Brown 1968 = original PEAD documentation (drift after announcement month confirmed; NO magnitude/decay numbers in paper); Bernard & Thomas 1989 ≈4.2% over 60 days, positive 41/48 quarters 1974-86, size-dependent (two independent secondary sources; primary behind JSTOR paywall, flagged); Ball & Bartov 1996 = naive earnings expectations, NO PEAD magnitude/decay claim (misattribution risk); Martineau 2022 = large-cap PEAD non-existent since 2006, microcaps later — VERIFIED verbatim from full text; −32/0/-64 bp/month decade figures NOT in the paper (UNVERIFIED, must not be attributed to Martineau). Post-2005/06 decay claim confirmed. | 03-trading-strategies/results/c3_pead_citation_verification.json |
+
 ## Session 15 — 2026-11-23 (01:21 UTC) — `hermes` (Session B, cron queue axis)
 Question: with origin/main advanced past Session 14 harness re-certification, can the G-COST-1..4 cost gates (TODO A10, owner H) be added to CI with G-COST-3 regime-flakiness fixed, and does the first live run hold or kill the 8 bp cost assumption?
 

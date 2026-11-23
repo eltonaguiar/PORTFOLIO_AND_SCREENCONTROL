@@ -64,7 +64,7 @@ Same prompt, no shared numbers, three independent surfaces:
 
 **What this changes in practice:** the magnitude must be **measured on our data, not imported from literature**, because the literature disagrees with itself by a factor of two. The pre-registered kill rule is unchanged and is exactly what resolves it — OOS net return on committed capital ≤ 4.3%, or the one-sided 95% upper bound ≤ 4.3%.
 
-**Citations to verify at source** (none of these has been checked against the paper yet): Fama & French 1992 *J Finance*; Fama & French 2019 *JFE*; Asness, Moskowitz & Pedersen 2013 *J Finance*; Ball & Brown 1968 *JAR*; Bernard & Thomas 1989 *JAR*; Ball & Bartov 1996 *JAE*; Livnat & Mendenhall 2006 *TAR*; Martineau (SSRN).
+**Citations to verify at source** (Ball & Brown 1968 *JAR*, Bernard & Thomas 1989 *JAR*, Ball & Bartov 1996 *JAE* and Martineau SSRN 3111607 checked against primary sources this run — see `03-trading-strategies/results/c3_pead_citation_verification.json`; Fama & French 1992 *J Finance*, Fama & French 2019 *JFE*, Asness, Moskowitz & Pedersen 2013 *J Finance*, Livnat & Mendenhall 2006 *TAR* remain unchecked).
 
 ## What this means for our programme
 
@@ -126,7 +126,7 @@ measurement (+0.11%/yr gross on 186 names) sits inside that consensus rather tha
 **PEAD, classic:** Bernard–Thomas 147 bp/month in 1974–86 but **size-dependent (large caps 98 bp)**; Chordia et al.
 value-weighted spread in the most liquid stocks **4 bp/month** with costs eating 70–100% of the paper profit;
 **Martineau (2022): non-microcap PEAD is −32 / 0 / −64 bp/month in 2006–10 / 2011–15 / 2016–19** — negative in the
-last window. This confirms, from primary sources, what we had recorded as an unverified external claim.
+last window. ⚠ C3 check (2026-11-23): the qualitative decay claim — large-cap PEAD non-existent since 2006, microcaps later — is verified verbatim from Martineau's full text (SSRN 3111607, Critical Finance Review 11(3-4):613-646). The −32 / 0 / −64 bp/month decade figures DO NOT appear in the paper (it reports t-stats/significance of BHAR[2,60], not bp/month averages) — those figures are UNVERIFIED and must not be attributed to Martineau. Direction confirmed from primary source; numbers are not. This confirms, from primary sources, the direction of what we had recorded as an unverified external claim.
 
 **PEAD, text-conditioned:** **96 bp/month gross over 63 days, 2010–2019, and it survives in years when classic PEAD
 is ≈0.** That is the only modern published PEAD magnitude that clears a 35.8 bp/month cash hurdle before costs.

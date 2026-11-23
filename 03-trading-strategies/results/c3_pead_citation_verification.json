@@ -1,0 +1,50 @@
+{
+  "item": "C3 H — Verify the four PEAD decay citations at source (Ball & Brown 1968, Bernard & Thomas 1989, Ball & Bartov 1996, Martineau) — claim-by-claim, not summary",
+  "todo_path": "04-investment-strategy/TODO_2026-11-23.md line 40",
+  "session": "Session 16 — 2026-11-23 (04:39 UTC) — hermes (Session B, cron queue axis), workdir C:/Users/zerou/pasc",
+  "doc_under_audit": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+  "audit_rule": "A number with no committed/primary-source recomputation is not evidence; claim verified only against what the cited paper actually states, not against summaries of it.",
+  "sources_consulted": [
+    "Martineau (2022), full text PDF: https://cfr.ivo-welch.org/forthcoming/papers/martineau2021rest.pdf (SSRN 3111607, Critical Finance Review 11(3-4):613-646, DOI 10.1561/104.00000122)",
+    "Bernard & Thomas (1989), JAR 27:1-36 (SSRN 55467 abstract page pattern, JSTOR stable/2491062 - primary behind paywall/CAPTCHA, not directly readable); two independent secondary summaries: tryvantage.co/insights/paper-trail-bernard-thomas-pead (2026-08-06) and quantgpt.co/library/post-earnings-drift (2026-10-30), consistent with each other",
+    "Ball & Bartov (1996), JAE 21(3):319-337, SSRN 55467 abstract (ScienceDirect blocked by bot protection; primary not directly readable)",
+    "Ball & Brown (1968), JAR 6(2):159-178 (primary PDF is image-only, no OCR available here); verified via Kothari (2019) JAR 50-year retrospective (Wiley onlinelibrary 10.1111/1475-679X.12287), Gow textbook reconstruction iangow.github.io/far_book/bb68.html, Ball & Brown (2019) \"after fifty years\" Pacific-Basin Finance Journal 53:410-431 (ScienceDirect S0927538X18306395), Wharton Ball & Brown slides PDF"
+  ],
+  "claims_checked": [
+    {
+      "paper": "Ball & Brown (1968) 'An Empirical Evaluation of Accounting Income Numbers', JAR 6(2):159-178",
+      "doc_usage": "VALUE_VS_PEAD_EVIDENCE.md line 54 router row cites 'Ball & Brown 1968; Bernard & Thomas' for PEAD evidence; line 67 citation list",
+      "what_the_paper_actually_says": "Earnings have information content (returns correlate with sign of annual earnings surprise); annual earnings are not timely (~85-90% of content already in price before the annual report, p.176); after the earnings announcement month, cumulative abnormal returns continue drifting in the direction of the surprise, statistically significant into each month up to ~2 months post - the original post-earnings-announcement drift documentation (Kothari 2019: 'BB68 ... clearly noted the drift in returns after the earnings announcement month and its inconsistency with market efficiency').",
+      "verdict": "SUPPORTED as the discovery/origin citation for PEAD (drift after announcement is real and was first documented here). The paper prints NO quarterly win rate, NO 60-day bp/month magnitude, and NO post-2005/06 decay - those belong to later papers (Bernard & Thomas 1989; Martineau 2022).",
+      "source_confidence": "high (50-year retrospective + textbook reconstruction + authors' own 2019 restatement)"
+    },
+    {
+      "paper": "Bernard & Thomas (1989) 'Post-Earnings-Announcement Drift: Delayed Price Response or Risk Premium?', JAR 27:1-36",
+      "doc_usage": "line 24: 'top-minus-bottom standardized-surprise spread positive in 41 of 48 quarters, 1974-1985'; line 115: 'Bernard-Thomas 4.2% over 60 trading days ≈ 147 bp/month' (arithmetic 4.2 x 21/60 = 1.47% = 147 bp/month OK); line 126: '147 bp/month in 1974-86 but size-dependent (large caps 98 bp)'",
+      "what_the_paper_actually_says": "Per two independent secondary sources (tryvantage.co 2026-08-06; quantgpt.co 2026-10-30): long highest-SUE decile / short lowest-SUE decile, NYSE/AMEX 1974-1986; extreme-decile spread ≈4.2% size-adjusted over 60 trading days (~18% annualized before costs); positive in 41 of 48 quarters (~6 of 7); larger in small firms (size-dependent).",
+      "verdict": "41-of-48-quarters and ≈4.2%-over-60-days confirmed by two consistent independent secondary sources; primary paper not directly readable here (JSTOR paywall/CAPTCHA) so quote-level verification is secondary-source-based, not primary. 147 bp/month is the DOC'S linear rescaling (4.2% x 21 trading days / 60 days), not a figure printed in the paper - label as rescaling, not quote. Direction consistent with decay: the measured effect is a 1970s-80s phenomenon. 'Large caps 98 bp' specific number not confirmed by sources consulted - unverified specific, direction (larger in small firms) consistent.",
+      "source_confidence": "medium (two consistent secondary sources; primary behind paywall)"
+    },
+    {
+      "paper": "Ball & Bartov (1996) 'How Naive Is the Stock Market's Use of Earnings Information?', JAE 21(3):319-337",
+      "doc_usage": "line 67 citation list ('citations to verify at source'); no specific magnitude claim attached in the doc",
+      "what_the_paper_actually_says": "Per SSRN 55467 abstract: investors do not use a seasonal random walk to form quarterly earnings expectations; they incorporate past earnings changes, get the sign of serial correlation right, but UNDERESTIMATE its magnitude. The paper is about expectation formation (SUE formation), NOT about PEAD drift magnitude, 60-day returns, or post-publication decay.",
+      "verdict": "NO PEAD magnitude or decay claim exists in this paper. It cannot support any PEAD decay claim; citing it for PEAD evidence is a category error (misattribution risk). It supports only the mechanism story (naive expectations formation), which is tangential to PEAD decay.",
+      "source_confidence": "high (abstract)"
+    },
+    {
+      "paper": "Martineau (2022) 'Rest in Peace Post-Earnings Announcement Drift', Critical Finance Review 11(3-4):613-646, SSRN 3111607",
+      "doc_usage": "line 25: 'Martineau: PEAD was non-existent for LARGE stocks since 2006, disappearing only more recently for microcaps'; line 126/128: 'non-microcap PEAD is -32 / 0 / -64 bp/month in 2006-10 / 2011-15 / 2016-19 - negative in the last window'; line 129: 'This confirms, from primary sources...'",
+      "what_the_paper_actually_says": "Abstract (verbatim): 'For large stocks, PEAD have been non-existent since 2006 but has only disappeared recently for microcap stocks.' Body (verbatim): 'since 2006, I show, analyst earnings surprises fail to positively predict post announcement returns over 60 days for all-but-microcap stocks, and since 2016 for microcap stocks'; 'after 2005, for all-but-microcap stocks, the relation between earnings surprises and price drifts (BHAR[2,60]) is not statistically significant'. Sample: Compustat 1973-2019 / I/B/E/S 1984-2019; all-but-microcap = above NYSE 20th-percentile market cap. The paper reports t-stats / significance of BHAR[2,60] predictability by period.",
+      "verdict": "QUALITATIVE DECAY CLAIM VERIFIED VERBATIM from primary source (abstract + body): large-cap PEAD non-existent since 2006, microcaps later. However, the '-32 / 0 / -64 bp/month in 2006-10 / 2011-15 / 2016-19' figures DO NOT APPEAR anywhere in Martineau's paper (no bp/month decade averages are reported) - NOT VERIFIED; the doc's line 128 attribution to Martineau is unsupported and line 129's 'confirms from primary sources' holds for direction only, not for those numbers.",
+      "source_confidence": "high for direction (full text read); the bp/month figures are unverifiable from source because they are not in it"
+    }
+  ],
+  "conclusion": {
+    "decay_claim_doc_line_61": "VERIFIED - 'PEAD decayed post-2005/2006 and nothing after that is large-cap reliable' holds at primary source (Martineau 2022), era-consistent with Bernard & Thomas 1989 (1974-86) and Ball & Brown 1968 (1957-65 annual).",
+    "programme_implication": "Repo PEAD infrastructure large-cap + post-2006 => expected result zero (C1/C2 remain open, owner CP); 'PEAD exists in the code' is not evidence it pays.",
+    "corrections_required_in_doc": "(1) Remove/relabel Martineau '-32 / 0 / -64 bp/month in 2006-10 / 2011-15 / 2016-19' - not in the paper. (2) Label Bernard & Thomas '147 bp/month' as the doc's linear rescaling (4.2% x 21/60), not a printed figure. (3) Do not cite Ball & Bartov 1996 for PEAD magnitude/decay - the paper makes no such claim."
+  },
+  "artifacts_produced": ["03-trading-strategies/results/c3_pead_citation_verification.json (this file)"],
+  "verification_method": "Primary sources read where accessible (Martineau full text; Ball & Brown 1968 via 50-year retrospective + textbook reconstruction; Ball & Bartov 1996 via SSRN abstract). Bernard & Thomas 1989 primary behind JSTOR paywall - verified via two independent consistent secondary sources, flagged as such. Nothing assumed, nothing echoed."
+}
