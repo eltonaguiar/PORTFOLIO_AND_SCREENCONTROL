@@ -1,0 +1,106 @@
+{
+  "item": "D5",
+  "owner": "H",
+  "done_condition": "largest size that moves the price by <1 cent on 3 representative markets",
+  "gate": "G3 (selection) / G5 (provenance)",
+  "method": "Binance public spot order-book depth (REST /api/v3/depth, limit=5000, no API key). mid = (best bid + best ask)/2. Walk each side of the book accumulating quantity; the price moved is the volume-weighted average fill price vs mid. Report the largest size whose average fill stays strictly within $0.01 of mid (fractional level solved exactly). Zero depth reported when the best quote is already >=1c from mid. All numbers recomputable from the published API at the fetch timestamp.",
+  "source_api": "https://api.binance.com/api/v3/depth?symbol=<SYMBOL>&limit=5000",
+  "fetched_at_utc": "2026-11-23T18:02:27.068036Z",
+  "git_hash": "1810538c4742af406f8eca06e94ebfb212f0290d",
+  "cent_threshold_usd": 0.01,
+  "markets": [
+    {
+      "symbol": "BTCUSDT",
+      "reference_price_usd": 61744.97,
+      "mid_usd": 61744.965,
+      "best_bid_usd": 61744.96,
+      "best_ask_usd": 61744.97,
+      "spread_usd": 0.010000000002037268,
+      "spread_bps": 0.0016195652555697892,
+      "depth_levels": {
+        "bids": 5000,
+        "asks": 5000
+      },
+      "buy_max_size_1c": {
+        "qty": 0.2799456852812669,
+        "notional_usd": 17285.23653959284,
+        "avg_fill_usd": 61744.975000000006,
+        "impact_usd": 0.010000000009313226,
+        "note": "1c boundary solved inside level"
+      },
+      "sell_max_size_1c": {
+        "qty": 4.756819708096843,
+        "notional_usd": 293709.6663877497,
+        "avg_fill_usd": 61744.954999999994,
+        "impact_usd": 0.010000000002037268,
+        "note": "1c boundary solved inside level"
+      },
+      "conservative_min_side": {
+        "qty": 0.2799456852812669,
+        "notional_usd": 17285.23653959284
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "reference_price_usd": 1747.25,
+      "mid_usd": 1747.245,
+      "best_bid_usd": 1747.24,
+      "best_ask_usd": 1747.25,
+      "spread_usd": 0.009999999999990905,
+      "spread_bps": 0.057232958171240474,
+      "depth_levels": {
+        "bids": 5000,
+        "asks": 5000
+      },
+      "buy_max_size_1c": {
+        "qty": 50.67205185166089,
+        "notional_usd": 88536.48923755523,
+        "avg_fill_usd": 1747.2549999999997,
+        "impact_usd": 0.009999999999763531,
+        "note": "1c boundary solved inside level"
+      },
+      "sell_max_size_1c": {
+        "qty": 19.36895555565299,
+        "notional_usd": 33842.310749836906,
+        "avg_fill_usd": 1747.2349999999997,
+        "impact_usd": 0.010000000000218279,
+        "note": "1c boundary solved inside level"
+      },
+      "conservative_min_side": {
+        "qty": 19.36895555565299,
+        "notional_usd": 33842.310749836906
+      }
+    },
+    {
+      "symbol": "ADAUSDT",
+      "reference_price_usd": 0.1511,
+      "mid_usd": 0.15115,
+      "best_bid_usd": 0.1511,
+      "best_ask_usd": 0.1512,
+      "spread_usd": 9.999999999998899e-05,
+      "spread_bps": 6.615944426066092,
+      "depth_levels": {
+        "bids": 675,
+        "asks": 5000
+      },
+      "buy_max_size_1c": {
+        "qty": 5381419.429246672,
+        "notional_usd": 813401.5467306345,
+        "avg_fill_usd": 0.16115000000000002,
+        "impact_usd": 0.010000000000000009,
+        "note": "1c boundary solved inside level"
+      },
+      "sell_max_size_1c": {
+        "qty": 10484386.18537862,
+        "notional_usd": 1584714.9719199785,
+        "avg_fill_usd": 0.14115,
+        "impact_usd": 0.010000000000000009,
+        "note": "1c boundary solved inside level"
+      },
+      "conservative_min_side": {
+        "qty": 5381419.429246672,
+        "notional_usd": 813401.5467306345
+      }
+    }
+  ]
+}

@@ -8,6 +8,13 @@ fixed · `DOC` written · `PEER` reconciliation with another agent's work.
 
 ---
 
+## Session 28 — 2026-11-23 (18:02 UTC) — `hermes` (Session B, cron queue axis)
+Question: what is the largest size that moves the price by under 1 cent on 3 representative markets (D5)?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| cron | DONE | D5 — measured spot order-book depth at under 1 cent VWAP price impact on Binance public REST depth endpoint (no API key), fetched 2026-11-23T18:02Z at git 1810538. mid = (best bid + best ask)/2; size walked per side until volume-weighted average fill hits the 1 cent boundary, solved exactly inside the crossing level. BTCUSDT mid $61,744.97 spread $0.01: 0.27995 BTC (~$17,285) buy, 4.7568 BTC (~$293,710) sell. ETHUSDT mid $1,747.25 spread $0.01: 50.6721 ETH (~$88,536) buy, 19.3690 ETH (~$33,842) sell. ADAUSDT mid $0.15115 spread $0.0001: 5,381,419 ADA (~$813,402) buy, 10,484,386 ADA (~$1,584,715) sell. Conservative min-side depth: BTC $17,285, ETH $33,842, ADA $813,402. | `03-trading-strategies/results/d5_liquidity_1cent_depth.json` |
+
 ## Session 27 — 2026-11-23 (16:56 UTC) — `hermes` (Session B, cron queue axis)
 Question: can D3 (Brier/log-loss vs market calibration scoring) produce a number now that the D2 ledger exists?
 
