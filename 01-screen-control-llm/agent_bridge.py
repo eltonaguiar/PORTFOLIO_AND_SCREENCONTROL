@@ -157,7 +157,7 @@ def build(agent: str, roots, reader, outdir: str, note: str, files_mode: bool = 
         "",
         f"_{note}_",
         f"_Generated {__import__('datetime').datetime.now().astimezone().isoformat(timespec='seconds')}; "
-        f"{len(tasks)} newest conversations, last {MAX_TURNS} turns each, secrets scrubbed._",
+        f"{len(tasks)} newest conversations attempted, {MAX_TURNS} turns each, secrets scrubbed._",
         "",
     ]
     written = 0
@@ -181,12 +181,58 @@ def build(agent: str, roots, reader, outdir: str, note: str, files_mode: bool = 
     return {"agent": agent, "path": path, "tasks": written, "bytes": len(body.encode("utf-8"))}
 
 
+def build_hermes(outdir: str, limit_sessions: int = 12) -> dict:
+    """Hermes has no VS Code log. Its transcript is sqlite: state.db -> sessions + messages."""
+    import sqlite3
+    db = r"C:/Users/zerou/AppData/Local/hermes/state.db"
+    lines = [
+        "# HERMES — recent conversation digest",
+        "",
+        "_Hermes runs outside VS Code. Its transcript is a SQLite database, not a task folder:_",
+        "_`%LOCALAPPDATA%/hermes/state.db` tables `sessions` and `messages` (996 sessions, 78k messages at build time)._",
+        f"_Generated {__import__('datetime').datetime.now().astimezone().isoformat(timespec='seconds')}; "
+        f"newest {limit_sessions} sessions, last {MAX_TURNS} turns each, secrets scrubbed._",
+        "",
+    ]
+    con = sqlite3.connect(f"file:{db}?mode=ro", uri=True, timeout=15)
+    cur = con.cursor()
+    cur.execute("""SELECT id, COALESCE(title,'(untitled)'), COALESCE(last_activity_at,'')
+                   FROM sessions ORDER BY last_activity_at DESC LIMIT ?""", (limit_sessions,))
+    rows = cur.fetchall()
+    written = 0
+    for sid, title, when in rows:
+        try:
+            stamp = __import__("datetime").datetime.fromtimestamp(float(when)).strftime("%Y-%m-%d %H:%M")
+        except (TypeError, ValueError):
+            stamp = str(when)[:19]
+        cur.execute("""SELECT role, COALESCE(content,'') FROM messages
+                       WHERE session_id=? AND role IN ('user','assistant') AND COALESCE(content,'')<>''
+                       ORDER BY id DESC LIMIT ?""", (sid, MAX_TURNS))
+        msgs = list(reversed(cur.fetchall()))
+        if not msgs:
+            continue
+        lines.append(f"## {stamp} — {clip(scrub(title), HEAD)}")
+        lines.append("")
+        for role, content in msgs:
+            who = "USER" if role == "user" else "AGENT"
+            lines.append(f"- **{who}:** {clip(scrub(content))}")
+        lines.append("")
+        written += 1
+    con.close()
+    path = os.path.join(outdir, "hermes.md")
+    body = "\n".join(lines)
+    open(path, "w", encoding="utf-8", newline="").write(body)
+    return {"agent": "HERMES", "path": path, "tasks": written, "bytes": len(body.encode("utf-8"))}
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "local"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "."
     os.makedirs(outdir, exist_ok=True)
     results = []
-    if mode == "local":
+    if mode == "hermes":
+        results.append(build_hermes(outdir))
+    elif mode == "local":
         results.append(build(
             "KILO", [r"C:/Users/zerou/AppData/Roaming/Code/User/globalStorage/kilocode.kilo-code/tasks"],
             read_history, outdir,
