@@ -102,7 +102,34 @@ trial count and therefore understates the multiple-testing penalty** — which i
 flatters a backtest. Until a canonical family name is agreed, `v_trial_census` is descriptive, not a valid
 denominator. Pick one naming rule and record it in `agent_trial` going forward; do not rename history.
 
-## 7. Limits, stated plainly
+## 7. Size: what belongs in here and what does not
+
+Measured 2026-11-24 on the live database.
+
+**The coordination store is not a size risk.** Total `ejaguiar1_stocks` size is **57,890 MB**. My 400
+concurrency-test rows occupied **128 KB** — about **320 bytes per row** including indexes. One million
+findings would therefore be ≈ **305 MB**, or **0.5%** of what already exists. The whole `agent_*` set is
+**368 KB**.
+
+**Storing artifacts would be the mistake.** One 5 MB report per seat per day is 20 MB/day ≈ **7 GB/year**,
+added to a database that is already large. A row here holds a path, a sha256 and an optional number — never
+the report, the CSV or a database file.
+
+**The database is already large, and that is the real finding.** Two tables are 97% of it:
+
+| Table | Rows | Size |
+|---|---|---|
+| `bt_backtest_trades` | 27,212,129 | **31,486 MB** |
+| `at_local_picks` | 76,180,125 | **24,854 MB** |
+| `agent_*` (all coordination tables) | 427 | 0.37 MB |
+
+Any table anyone adds is irrelevant next to those two. If quota becomes a problem, the conversation is
+about `bt_backtest_trades` and `at_local_picks`, not about the coordination store.
+
+**Path rule:** write repository-relative paths, never absolute local paths — a Windows path means nothing
+to the Linux seat.
+
+## 8. Limits, stated plainly
 
 - **Single point of failure.** `mysql.50webs.com` is shared hosting. If it is down, the fleet cannot claim
   or post. It is still better than three forked files that are always readable and always disagreeing.
