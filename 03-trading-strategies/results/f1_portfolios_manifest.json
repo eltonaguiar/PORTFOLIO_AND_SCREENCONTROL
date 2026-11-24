@@ -1,0 +1,65 @@
+{
+  "item": "F1 — turn the three framework portfolio templates into a single portfolios.json with weights and instruments",
+  "gate": "G4",
+  "owner": "H",
+  "artifact": "04-investment-strategy/portfolios.json",
+  "source": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md section 3 (lines 106-145)",
+  "source_lines": {
+    "stable": "framework.md lines 112-116",
+    "moderate": "framework.md lines 122-127",
+    "aggressive": "framework.md lines 134-139"
+  },
+  "checks": [
+    {
+      "name": "portfolios.json parses as valid JSON",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "loaded 3 portfolios: Stable / low-risk, Moderate, Aggressive",
+      "stderr": ""
+    },
+    {
+      "name": "exactly three portfolios present (stable, moderate, aggressive)",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "Stable / low-risk, Moderate, Aggressive",
+      "stderr": ""
+    },
+    {
+      "name": "every sleeve carries a weight_pct and an instrument",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "11 sleeves total: stable 3, moderate 4, aggressive 4",
+      "stderr": ""
+    },
+    {
+      "name": "each portfolio's sleeve weights sum to 100%",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "stable 55+25+20=100; moderate 20+25+50+5=100; aggressive 75+15+5+5=100",
+      "stderr": ""
+    },
+    {
+      "name": "rebalance rule captured (bands +/-5% absolute, not calendar, not signal)",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "rebalance_rule field present; source framework.md line 144",
+      "stderr": ""
+    },
+    {
+      "name": "CAD currency note captured (CDR/ETF equivalents to avoid 1.75% FX spread)",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "stdout": "account_currency_note field present; source framework.md line 109",
+      "stderr": ""
+    }
+  ],
+  "all_checks_passed": true,
+  "weights_sum_100": true,
+  "note": "F1 is structural (config render), not a measured number — no COMS post per rule 6. E8 (next H item) remains blocked pending E4 agent picks; real tier books are empty at n=0 so no honest n>=30 read exists yet."
+}

@@ -3,6 +3,13 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 34 — 2026-11-23 (19:37 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: F1 — are the three framework portfolio templates faithfully rendered as a single runnable portfolios.json with weights and instruments, and do the weights sum to 100% per portfolio?
+||
+|| time (UTC) | status | item | artifact ||
+||---|---|---|---||
+||| cron | DONE | F1 — `04-investment-strategy/portfolios.json` created from INVESTMENT_DECISION_FRAMEWORK.md section 3: stable (cash/HISA 55%, short-duration govt bonds 25%, broad equity 20%, target ≈4–5%, DD <10%), moderate (cash/bills 20%, bonds 25%, global equity 50%, diversifier 5%, target ≈6–7%, DD 15–25%), aggressive (broad equity 75%, small-cap value 15%, crypto 5%, cash buffer 5%, target ≈8–10%, DD >35%). All weights sum to 100%; 11 sleeves, each with weight + instrument; rebalance bands ±5% absolute, not calendar/signal; CAD: cheapest instrument in account currency (CDR/ETF where FX spread is otherwise 1.75%). Templates, not advice. | `04-investment-strategy/portfolios.json` · `03-trading-strategies/results/f1_portfolios_manifest.json` |
+
 ## Session 33 — 2026-11-23 (18:35 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: E7 — is the no-edit rule real: revisions are new rows with `supersedes`, never edits, and can a revision row actually be created and linked?
 ||

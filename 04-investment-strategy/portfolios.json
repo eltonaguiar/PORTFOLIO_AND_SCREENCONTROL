@@ -1,0 +1,49 @@
+{
+  "schema": "portfolios.v1",
+  "title": "Three risk-profile portfolio templates",
+  "source": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md, section 3 'Three risk-profile portfolios (concrete, cheap, no exotic access)', lines 106-145",
+  "status": "templates, not advice",
+  "account_currency_note": "All instruments should be the cheapest available in the account's currency; for a Canadian account that means CDR/ETF equivalents where the FX spread is otherwise 1.75%.",
+  "rebalance_rule": "Rebalance on bands (+/-5% absolute), not on a calendar, and never on a signal from this programme until something passes G1-G5.",
+  "gate": "G4",
+  "portfolios": [
+    {
+      "name": "Stable / low-risk",
+      "target_nominal_pct": "4-5",
+      "max_drawdown_pct": "<10",
+      "total_weight_pct": 100,
+      "rationale": "At 4.3% risk-free, a stable portfolio's job is not to lose, and 20% equity is the smallest allocation that still beats inflation over a decade.",
+      "sleeves": [
+        {"sleeve": "Cash & T-bills / HISA", "weight_pct": 55, "instrument": "1-12 month bills, or HISA at the best posted rate"},
+        {"sleeve": "Short-duration govt bonds", "weight_pct": 25, "instrument": "1-5y aggregate, MER <0.15%", "mer_limit_bp": 15},
+        {"sleeve": "Broad equity", "weight_pct": 20, "instrument": "Global index ETF, MER <0.10%", "mer_limit_bp": 10}
+      ]
+    },
+    {
+      "name": "Moderate",
+      "target_nominal_pct": "6-7",
+      "max_drawdown_pct": "15-25",
+      "total_weight_pct": 100,
+      "rationale": "Close to the 60/40 shape. The P03-style book-level trend overlay is the only combination in this programme that improved risk-adjusted return and cut drawdown 77%, and it only worked because both legs had positive standalone expectancy.",
+      "sleeves": [
+        {"sleeve": "Cash & bills", "weight_pct": 20, "instrument": ""},
+        {"sleeve": "Bonds (1-5y)", "weight_pct": 25, "instrument": ""},
+        {"sleeve": "Broad equity (global index)", "weight_pct": 50, "instrument": ""},
+        {"sleeve": "Diversifier (commodity/gold or trend)", "weight_pct": 5, "instrument": ""}
+      ]
+    },
+    {
+      "name": "Aggressive",
+      "target_nominal_pct": "8-10",
+      "max_drawdown_pct": ">35",
+      "total_weight_pct": 100,
+      "rationale": "Aggression is achieved with more beta, not with more trading. Every measured cost-bearing strategy in this estate destroyed value; leverage or option overlays would compound that.",
+      "sleeves": [
+        {"sleeve": "Broad equity (global, incl. EM)", "weight_pct": 75, "instrument": ""},
+        {"sleeve": "Small-cap value tilt", "weight_pct": 15, "instrument": ""},
+        {"sleeve": "Crypto", "weight_pct": 5, "instrument": "sized to be lost, not traded"},
+        {"sleeve": "Cash buffer", "weight_pct": 5, "instrument": ""}
+      ]
+    }
+  ]
+}
