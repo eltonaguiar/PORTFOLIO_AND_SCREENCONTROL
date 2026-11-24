@@ -1,4 +1,4 @@
-# PORTFOLIO_AND_SCREENCONTROL & WEB SCRAPER INVESTIGATION
+# PORTFOLIO_AND_SCREENCONTROL/AUTONOMOUS CONTROL OF VS CODE AI AGENT SESSIONS VIA HERMES & WEB SCRAPER INVESTIGATION
 
 **A multi-AI research project with two running implementations.** Ten models were given the same two questions;
 their answers were audited claim-by-claim against real repositories, real prices and real source code, then
