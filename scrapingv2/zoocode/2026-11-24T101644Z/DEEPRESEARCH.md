@@ -74,3 +74,25 @@ Two further points from that source worth noting:
 
 - G2's `robots.txt` disallows most scraping, and G2 offers an official API. For anything beyond personal research the API is the route that is both reliable and permitted.
 - Their stack still needed JavaScript rendering plus pacing on top of the proxies, so the proxy is necessary but not sufficient by itself.
+
+## Follow-up: truly headful, corrected
+
+An earlier row in this document said "patchright headed, persistent profile", but that run was **actually headless**: `DISPLAY` was unset and the code fell back to `headless=True`. That is corrected here.
+
+Re-run properly under `Xvfb :99` with `headless=False` and a fresh persistent profile:
+
+```
+RESULT headful status: 403 15.2s
+RESULT title: 'g2.com'
+RESULT text : ''
+RESULT cookies: ['datadome', 'cf_clearance', '__cf_bm']
+```
+
+Result: **403 again**, with Cloudflare clearance still issued and the DataDome cookie still a block token. Running headful, with a real display, a persistent profile and no automation flags, did **not** change the outcome on this target.
+
+So of the recommended local constraints:
+- **headful instead of headless**: tested, no change here.
+- **existing Chrome profile / real cookies**: partially tested (persistent profile, but a fresh one, not an existing logged-in profile).
+- **throttling to 1 page per 15-30s**: not tested, because the very first request is already denied. Pacing cannot help when the block is on request one.
+
+That last point is the important one: rate limiting and pacing assume you are being throttled. Here the first request was refused, so there is nothing to pace.
