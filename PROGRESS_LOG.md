@@ -43,3 +43,4 @@ One line per scheduled run: `YYYY-MM-DDTHH:MMZ | item N | verdict | commit`.
 2026-11-24T11:05Z | C3 | BLOCKED | coms.ps1 / COMS MQTT access absent on this machine; roster, asks, seat broadcast unreachable, not faked
 2026-11-24T11:05Z | Q3 | BLOCKED | quarter-end redemption needs live market + broker access; live trading and credentials off-limits, not faked
 2026-11-24T11:05Z | Q4 | BLOCKED | Session B verdict documents into sibling-owned 03-trading-strategies/ results/ledger — off-limits, not faked
+2026-11-24T20:26Z | item C5 | PASS | reviewed all unchecked items — A1/A2/A4/A5 blocked by no-desktop in unattended cron, B1 blocked upstream on findtorontoevents.ca, C2 needs a new tool claim to appear, C3 needs COMS access via coms.ps1, Q1/Q3/Q4 need external resources; zero cancellations, all still relevant, unchecked count stable at 8
