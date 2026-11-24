@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | pollinations | 200 | 51 |  |
 | 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | pollinations | 200 | 86 |  |
@@ -32,22 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | pollinations | 200 | 134 |  |
+| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | pollinations | 200 | 125 |  |
 
 ## Latest answers
-
-### round 53 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 53 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 53 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - pollinations
-
-**Claim most likely wrong:** (b) *“Large‑cap post‑earnings drift has been dead since about 2006.”*
-
-**Falsifying observation:** A statistically significant, risk‑adjusted excess return (at least +25 bps net of the 12‑20 bps round‑trip on Polymarket/Kalshi) from a systematic, high‑frequency post‑earnings trade on large‑cap stocks that persists for a full calendar year without obvious arbitrage exploitation or regime change. The strategy would need to survive detailed back‑testing, live paper‑trail execution, and stress testing against major earnings calendar shocks, thereby proving that the drift still exists and can be captured through prediction markets.
 
 ### round 54 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -66,3 +52,24 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Kill‑Measure**: The test is invalidated if the *mean* ratio on the LSE falls below the Nikkei ratio by ≥1% on >20% of days, indicating either wider spreads or weaker momentum.
 
 **Data**: Daily LSE closing prices, bid‑ask midpoints (free from Yahoo Finance “FinViz” API), daily Nikkei 225 closing prices (free via Yahoo Finance). All data are point‑in‑time, free, and publicly available.
+
+### round 55 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 55 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 55 - CRYPTO (spot and perp) - idea - pollinations
+
+Create a **“persistent skew‑break” test**:  
+**Procedure** – For every coin on at least two major spot/1‑month perp exchanges (e.g., BTC, ETH, SOL), compute the daily rolling correlation over the past 90 days between:  
+1. the overnight *implied* directional bias (difference between BTC‑USD call/put implied vol at 500‑strike vs 1‑strike) and  
+2. the next‑day realized return of the spot/contract pair.  
+
+**Allowance** – The test survives only if the *average* absolute correlation across all samples remains ≥ 0.30 after deducting a flat 15 bps round‑trip fee.  
+
+**Kill metric** – If the average falls below 0.20, the strategy is considered unviable.  
+
+**Data** – Historical option implied volaries, spot/clipprice, and contract settle prices; freely available from public APIs (e.g., VXV, CoinGecko, and exchange REST endpoints). No real‑time feeds required.
