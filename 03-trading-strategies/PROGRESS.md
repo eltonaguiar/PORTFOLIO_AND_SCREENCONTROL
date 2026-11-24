@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 36 — 2026-11-23 (21:47 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: F3 — does the Stable sleeve's realised income yield clear the 4.3% kill hurdle, and how does it compare with a top posted Canadian HISA?
+
+||||
+|||| time (UTC) | status | item | artifact ||
+||||---|---|---|---||
+||||| cron | DONE | F3 — Modelled Stable sleeve realised yield: 2.61% gross / 2.55% net of MER (equity dividend 1.50% ASSUMED; cash-only 2.31% / 2.25% net) vs the 4.3% hurdle -> BELOW by 1.75 pp, so the 4-5% target comes from equity appreciation not yield; vs top HISA 3.00% -> BELOW by 0.45 pp. Rates: HISA 3.00% (retiresmarter.ca stamped 2026-11-24), Canada 3m T-bill 2.62% (BoC as of 2026-11-18, fetched 2026-11-23), US 3m T-bill 4.13% (Fed DTB3 as of 2026-11-20, USD context only). Self-checks pass; modelled from live rates, not a measured return - F4 supplies history. | `04-investment-strategy/f3_stable_sleeve_yield.py` · `04-investment-strategy/results/f3_stable_sleeve_yield.json` |
+
 ## Session 35 — 2026-11-23 (20:41 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: F2 — does the band-rebalancing logic implement the ±5% absolute rule (calendar/signal-agnostic), and what is the rebalance cost at 5 bp/side?
 

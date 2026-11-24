@@ -1,0 +1,56 @@
+{
+  "run_date": "2026-11-23T21:47:00-05:00",
+  "question": "Stable sleeve realised yield vs the 4.3% kill hurdle and vs a top posted Canadian HISA",
+  "sleeve": "Stable / low-risk (portfolios.json F1): Cash & T-bills / HISA 55%, Short-duration govt bonds 25%, Broad equity 20%",
+  "inputs": {
+    "Cash & T-bills / HISA": {
+      "weight_pct": 55.0,
+      "rate_pct": 3.0,
+      "source": "retiresmarter.ca/banking/best-hisa-rates/ - Best high-interest savings rates in Canada; top everyday rate (Saven Financial, FirstOntario Credit Union, Oaken Financial, Home Bank / Home Trust, EQ Bank at 3.00%); page stamped November 24 2026",
+      "as_of": "2026-11-24",
+      "fetched": "2026-11-23T21:47:00-05:00"
+    },
+    "Short-duration govt bonds": {
+      "weight_pct": 25.0,
+      "rate_pct": 2.62,
+      "source": "bankofcanada.ca/rates/interest-rates/t-bill-yields/ - Selected treasury bill yields; Treasury bills 3 month secondary-market average yield",
+      "as_of": "2026-11-18",
+      "fetched": "2026-11-23T21:47:00-05:00"
+    },
+    "Broad equity dividend yield": {
+      "weight_pct": 20.0,
+      "rate_pct": 1.5,
+      "source": "ASSUMED - broad-market dividend yield; no committed source in repo. Tagged ASSUMED per the H3 rule; headline also reported with equity set to zero.",
+      "as_of": null,
+      "fetched": null
+    }
+  },
+  "context_us_3m_tbill_pct": {
+    "rate_pct": 4.13,
+    "source": "fred.stlouisfed.org/series/DTB3 - Fed H.15 3-Month Treasury Bill Secondary Market Rate, Discount Basis",
+    "as_of": "2026-11-20",
+    "fetched": "2026-11-23T21:47:00-05:00",
+    "note": "USD context only; a CAD account converting into USD pays FX (1.75% flagged in the portfolios.json account-currency note; F5 open) which erases the 1.13pp pickup on a one-time conversion basis."
+  },
+  "results_pct": {
+    "sleeve_gross_yield": 2.605,
+    "mer_drag": 0.0575,
+    "sleeve_net_yield": 2.5475,
+    "cash_only_gross_yield": 2.305,
+    "cash_only_net_yield": 2.2475,
+    "top_hisa_everyday": 3.0,
+    "kill_hurdle": 4.3
+  },
+  "comparisons": {
+    "vs_kill_hurdle_pp": 1.7525,
+    "vs_kill_hurdle_verdict": "BELOW",
+    "vs_top_hisa_pp": 0.4525,
+    "vs_top_hisa_verdict": "BELOW"
+  },
+  "verdict": "The stable sleeve's realised income yield (2.61% gross / 2.55% net of MER with the ASSUMED 1.50% equity dividend; 2.31% gross / 2.25% net cash-only) does not clear the 4.3% kill hurdle (below by about 1.7-2.0 pp) and undercuts a top posted HISA at 3.00%. The sleeve's 4-5% nominal target must therefore come from equity price appreciation, not yield - unguaranteed. A pure top HISA beats the sleeve on realised income. Modelled from live rates, not a measured return; F4 supplies historical total return. Equity dividend input is ASSUMED and isolated.",
+  "self_checks": {
+    "weights_sum_to_100": true,
+    "gross_recomputed": true,
+    "net_equals_gross_minus_drag": true
+  }
+}
