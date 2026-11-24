@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio &amp; Screen Control — project guide</title>
+<meta name="description" content="Organized guide to the Portfolio, Screen Control, Web Scraping and Trading Strategy work in PORTFOLIO_AND_SCREENCONTROL.">
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a31; --panel2:#0f1629; --ink:#e8edf7; --muted:#9aa8c3;
+    --line:#25314f; --accent:#6ea8fe; --accent2:#7ee0c0; --warn:#ffcc66; --bad:#ff8f8f;
+    --radius:14px; --max:1180px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f6f8fc;--panel:#ffffff;--panel2:#eef2fa;--ink:#15203a;--muted:#5b6b8c;--line:#d8e0f0;}
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:.08em .35em;font-size:.9em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  header.hero{padding:38px 0 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(110,168,254,.12),transparent)}
+  .eyebrow{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:700}
+  h1{font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.15;margin:.35rem 0 .4rem}
+  .sub{color:var(--muted);max-width:70ch}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .badge{font-size:.78rem;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--muted)}
+  .layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:26px;padding:24px 0 60px}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}}
+  nav.toc{position:sticky;top:14px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 10px;max-height:calc(100vh - 28px);overflow:auto}
+  @media (max-width:900px){nav.toc{position:static;max-height:none}}
+  nav.toc h2{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:.2rem 0 .6rem}
+  nav.toc ol{list-style:none;margin:0;padding:0}
+  nav.toc li{margin:.18rem 0}
+  nav.toc a{display:block;color:var(--ink);opacity:.82;padding:.22rem .4rem;border-radius:8px;font-size:.93rem}
+  nav.toc a:hover{background:var(--panel2);opacity:1;text-decoration:none}
+  nav.toc a.sub{padding-left:1.2rem;font-size:.86rem;color:var(--muted)}
+  .search{width:100%;margin:.2rem 0 .8rem;padding:.5rem .6rem;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+  main{min-width:0}
+  section{margin:0 0 26px;scroll-margin-top:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 14px}
+  h2.sec{font-size:1.35rem;margin:.1rem 0 .2rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  h2.sec .pill{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+  .eli5{display:grid;grid-template-columns:34px 1fr;gap:10px;background:rgba(126,224,192,.10);border:1px solid rgba(126,224,192,.35);border-radius:12px;padding:12px 14px;margin:12px 0 14px}
+  .eli5 .tag{font-weight:800;color:var(--accent2)}
+  details{border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin:10px 0;overflow:hidden}
+  details[open]{background:var(--panel)}
+  summary{cursor:pointer;padding:12px 14px;font-weight:650;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"+";color:var(--muted);font-weight:800}
+  details[open] summary:after{content:"–"}
+  .body{padding:0 14px 14px}
+  ul.clean{margin:.4rem 0;padding-left:1.1rem}
+  ul.clean li{margin:.25rem 0}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.94rem}
+  th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+  th{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:700px){.grid2{grid-template-columns:1fr}}
+  .mini{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .mini h4{margin:.1rem 0 .35rem;font-size:.98rem}
+  .ok{color:var(--accent2);font-weight:700}
+  .no{color:var(--bad);font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .muted{color:var(--muted)}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .kpi div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:130px}
+  .kpi b{display:block;font-size:1.05rem}
+  .kpi span{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+  footer{border-top:1px solid var(--line);color:var(--muted);padding:18px 0 40px;font-size:.9rem}
+  .hidden{display:none!important}
+  .toplink{font-size:.82rem;color:var(--muted)}
+  @media print{nav.toc{display:none}.layout{display:block}details{break-inside:avoid}details:not([open]) .body{display:block}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Project guide · updated 2026-11-24</div>
+  <h1>Portfolio &amp; Screen Control</h1>
+  <p class="sub">An organized map of the repo's research and code: AI-driven screen/agent control, multi-asset portfolio tracking, trading-strategy evidence, and web-harvesting trials — with the measured results, not the marketing.</p>
+  <div class="badges">
+    <span class="badge">4 topic areas</span>
+    <span class="badge">runnable code + artifacts</span>
+    <span class="badge">claim-by-claim audits</span>
+    <span class="badge">no benchmark against commercial products</span>
+  </div>
+</div></header>
+
+<div class="wrap"><div class="layout">
+
+<nav class="toc" aria-label="Table of contents">
+  <h2>Contents</h2>
+  <input id="q" class="search" type="search" placeholder="Filter sections…" aria-label="Filter sections">
+  <ol id="toc">
+    <li><a href="#start">Start here</a></li>
+    <li><a href="#portfolio">Portfolio &amp; multi-asset</a></li>
+    <li><a href="#screen">Screen / agent control</a></li>
+    <li><a href="#scraping">Web scraping</a></li>
+    <li><a href="#scraping-results" class="sub">Measured results</a></li>
+    <li><a href="#scraping-tools" class="sub">Tool evaluation</a></li>
+    <li><a href="#g2" class="sub">G2 case study</a></li>
+    <li><a href="#trading">Trading strategies</a></li>
+    <li><a href="#reviews">Reviews &amp; audits</a></li>
+    <li><a href="#ops">Tracking &amp; observability</a></li>
+    <li><a href="#map">Repo map</a></li>
+    <li><a href="#limits">Limits &amp; honesty</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="start" class="card">
+  <h2 class="sec">Start here <span class="pill">orientation</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>This repo asks two practical questions: <b>“Can a free AI stack drive my computer and keep going without me babysitting it?”</b> and <b>“What do I actually own, what is it worth, and would a trading rule have made money after real costs?”</b> It keeps the raw evidence, the audits, and the code that ran.</div></div>
+  <div class="kpi">
+    <div><b>2</b><span>core questions</span></div>
+    <div><b>2</b><span>running implementations</span></div>
+    <div><b>10</b><span>AI answers audited</span></div>
+    <div><b>0</b><span>commercial head-to-head claims</span></div>
+  </div>
+  <details open><summary>The one-paragraph version</summary><div class="body">
+    Two multi-model research questions were answered by ten models, then every claim was checked against real repositories, prices and source code. The useful parts became specifications and then code: a local screen-control/supervisor stack, and a portfolio tracker plus paper-trading/validation harness. Everything here is inspectable; where something is unproven, it says so.
+  </div></details>
+  <details><summary>How to read this site</summary><div class="body">
+    <ul class="clean">
+      <li><b>Blue links</b> open the actual file in the GitHub repo; this page is a guide, not a copy.</li>
+      <li><b>ELI5 boxes</b> explain the point without jargon.</li>
+      <li><b>Collapsible panels</b> hide detail until you need it; the sidebar is the table of contents.</li>
+      <li><b>“Measured”</b> means a command was run and the output kept. “Claimed” is labelled as such.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section id="portfolio" class="card">
+  <h2 class="sec">Portfolio &amp; multi-asset <span class="pill">02 · 04</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>A single place that answers: what do I hold across stocks, ETFs, bonds, funds, commodities, futures, FX and crypto — what is it worth in my currency — and how did it do? It separates <i>tracking</i> (facts about holdings) from <i>strategy</i> (would a rule have made money).</div></div>
+  <details open><summary>What is here</summary><div class="body">
+    <div class="grid2">
+      <div class="mini"><h4>Portfolio tracking</h4><p class="muted">Holdings, valuation, base-currency conversion, data-evidence rules.</p>
+        <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/02-portfolio-multi-asset/README.md">Read the section README →</a></div>
+      <div class="mini"><h4>Investment decision framework</h4><p class="muted">Sleeves, allocation, rebalancing and decision records.</p>
+        <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md">Framework →</a></div>
+    </div>
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/02-portfolio-multi-asset/FRAMEWORK_MATRIX.md">Framework matrix</a> — tools compared with verified licences.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md">Data-evidence rules</a> — what counts as proof for a price.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/02-portfolio-multi-asset/NAUTILUS_ARCHITECTURE.md">NautilusTrader architecture read from source</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/04-investment-strategy/portfolios.json">portfolios.json</a> and <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/04-investment-strategy/results/">results/</a>.</li>
+    </ul>
+  </div></details>
+  <details><summary>Caveats worth knowing</summary><div class="body">
+    <ul class="clean">
+      <li>Valuation is only as good as the price source; the repo records which source was used.</li>
+      <li>Paper results are not live results. Costs, slippage and fills are modelled, not experienced.</li>
+      <li>Tax/withholding and account-type rules are jurisdiction-specific and not automated here.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section id="screen" class="card">
+  <h2 class="sec">Screen control &amp; autonomous agent control <span class="pill">01</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>Instead of a fixed macro that replays clicks, an AI looks at the screen, decides what to do, and keeps working across many steps — the “stop stopping” problem. The goal is a free, local, agent-agnostic stack.</div></div>
+  <details open><summary>Research and implementation</summary><div class="body">
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/IMPLEMENTATION.md">Implementation</a> and the running <code>screen_control/</code> stack.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/DRIVING_BROWSER_AND_VSCODE.md">Driving a browser and VS Code</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/FACTCHECK.md">Fact-check of popular LLM answers</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/harvest/FREE_ENDPOINTS.md">Free endpoints and licences</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/PROGRESS.md">Progress log</a>.</li>
+    </ul>
+  </div></details>
+  <details><summary>What is verified vs designed</summary><div class="body">
+    <table><tr><th>Item</th><th>Status</th></tr>
+      <tr><td>Free-tool catalogue with licences</td><td class="ok">verified</td></tr>
+      <tr><td>Local benchmarks of the control loop</td><td class="ok">measured on this host</td></tr>
+      <tr><td>Supervisor design for long tasks</td><td class="warn">design + partial implementation</td></tr>
+      <tr><td>Head-to-head vs Comet / BrowserOS / Jitbit</td><td class="no">not done, not claimed</td></tr>
+    </table>
+  </div></details>
+</section>
+
+<section id="scraping" class="card">
+  <h2 class="sec">Web scraping &amp; harvesting <span class="pill">SCRAPING · scrapingv2</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>Some pages hand you the data politely. Some put a bouncer at the door. This section records which is which — with HTTP codes and real payloads — and separates “the tool ran” from “the site let us through”.</div></div>
+  <details open><summary>Two bodies of work</summary><div class="body">
+    <div class="grid2">
+      <div class="mini"><h4><code>SCRAPING/</code></h4><p class="muted">Production-oriented probes: GTA console availability and Canadian job sources, with failure modes and a scored shortlist.</p>
+        <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/SCRAPING">Open folder →</a></div>
+      <div class="mini"><h4><code>scrapingv2/</code></h4><p class="muted">Independent evaluations of modern anti-detect tooling (ghcopilot, kilocode, zoocode), with reproducible scripts.</p>
+        <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2">Open folder →</a></div>
+    </div>
+  </div></details>
+
+  <h2 class="sec" id="scraping-results" style="font-size:1.1rem;margin-top:16px">Measured results <span class="pill">what actually worked</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>The winning move was not defeating a bouncer — it was finding the side door the site leaves open for its own app: its JSON.</div></div>
+  <table>
+    <tr><th>Target</th><th>Method</th><th>Result</th></tr>
+    <tr><td>Best Buy Canada</td><td>Public per-SKU availability JSON + TLS impersonation</td><td class="ok">200 — Xbox S <code>InStock</code>; PS5 <code>SoldOutOnline</code></td></tr>
+    <tr><td>Walmart Canada</td><td>Search page, embedded <code>__NEXT_DATA__</code></td><td class="ok">200 — 48 items with name/price/url</td></tr>
+    <tr><td>Canada Computers</td><td>Ordinary product page</td><td class="ok">200 — real content</td></tr>
+    <tr><td>Best Buy HTML page</td><td>Same TLS client</td><td class="no">403 Access Denied</td></tr>
+    <tr><td>Staples / Memory Express</td><td>TLS client</td><td class="no">200 but Cloudflare challenge shell</td></tr>
+    <tr><td>G2.com</td><td>TLS client; headless and headful browser</td><td class="no">403 in every mode</td></tr>
+  </table>
+  <p class="muted">Plain <code>requests</code> timed out where TLS impersonation returned 200 — but impersonation alone did not open the HTML pages.</p>
+
+  <h2 class="sec" id="scraping-tools" style="font-size:1.1rem;margin-top:16px">Tool evaluation <span class="pill">runtime, not README claims</span></h2>
+  <details><summary>What was installed and what actually ran</summary><div class="body">
+    <table>
+      <tr><th>Tool</th><th>Version</th><th>Measured</th></tr>
+      <tr><td>curl_cffi</td><td>0.16.3</td><td class="ok">8 browser profiles, HTTP/2, JSON fetch 200</td></tr>
+      <tr><td>Scrapling</td><td>0.4.15</td><td class="ok">basic parse + adaptive relocate after class rewrite</td></tr>
+      <tr><td>patchright</td><td>1.63.0</td><td class="ok">renders; <code>webdriver=false</code>; UA leaks <code>HeadlessChrome</code> unless overridden</td></tr>
+      <tr><td>nodriver</td><td>0.50.99</td><td class="ok">renders; <code>webdriver=false</code>; same UA leak</td></tr>
+      <tr><td>SeleniumBase (UC)</td><td>4.58.4</td><td class="ok">headless render works</td></tr>
+      <tr><td>botasaurus</td><td>4.0.97</td><td class="ok">headless render works</td></tr>
+      <tr><td>camoufox</td><td>0.5.9</td><td class="warn">installed; patched browser not fetched</td></tr>
+      <tr><td>CloakBrowser / skyvern</td><td>PyPI</td><td class="warn">available; not run</td></tr>
+      <tr><td>browser-use</td><td>0.12.7</td><td class="warn">installed; needs an LLM key</td></tr>
+    </table>
+    <p><b>Key correction:</b> Chrome JA3 is <b>not stable</b> run-to-run (3/3 unique in 3 probes); Safari/Firefox/Edge were stable. JA4 is steadier but not guaranteed (chrome120 produced two values). Treat a JA3 table as a sample, not a fixture.</p>
+  </div></details>
+
+  <h2 class="sec" id="g2" style="font-size:1.1rem;margin-top:16px">G2 case study <span class="pill">why the “headful fixes it” advice failed</span></h2>
+  <details><summary>The test and the result</summary><div class="body">
+    <table>
+      <tr><th>Mode</th><th>HTTP</th><th>User-Agent</th><th>webdriver</th></tr>
+      <tr><td>headless</td><td class="no">403</td><td>HeadlessChrome/153…</td><td>false</td></tr>
+      <tr><td>headful (Xvfb)</td><td class="no">403</td><td>Chrome/153…</td><td>false</td></tr>
+    </table>
+    <p>Removing the “Headless” token changed nothing — the block is IP/reputation-side. <code>robots.txt</code> does <b>not</b> disallow <code>/</code>; it restricts query-string variants and sets <code>Crawl-delay: 1</code>. The real constraint is the site's Terms of Service.</p>
+    <p class="muted">We did not build CAPTCHA solving or proxy rotation. For G2 at scale, use their official API/partnership or a licensed data vendor.</p>
+  </div></details>
+
+  <details><summary>Practices that survived contact</summary><div class="body">
+    <ul class="clean">
+      <li><b>Prefer JSON.</b> Availability APIs and embedded Next.js data outlive HTML changes and often bypass the bouncer.</li>
+      <li><b>Cache and throttle.</b> One page every several seconds; never re-fetch what you already stored.</li>
+      <li><b>Record provenance.</b> Keep status code, timestamp and byte count with every row.</li>
+      <li><b>Respect robots and ToS.</b> A tool working is not permission.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section id="trading" class="card">
+  <h2 class="sec">Trading strategies &amp; paper trading <span class="pill">03</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>A backtest is a time machine that is easy to cheat. This section asks not just “did the rule make money?” but “is that number real, or did we try a thousand rules and keep the luckiest?”</div></div>
+  <details open><summary>The harness and the hypotheses</summary><div class="body">
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/03-trading-strategies">Section index</a> and <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/03-trading-strategies/PROGRESS.md">progress</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/03-trading-strategies/HARNESS_CERTIFICATION.md">Harness certification</a> — tests before trusting a result.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/03-trading-strategies/FABRICATION_CHECKLIST.md">Fabrication checklist</a> — how a backtest lies.</li>
+      <li>Pre-registered hypotheses and fold-sensitivity studies (see the folder).</li>
+    </ul>
+  </div></details>
+  <details><summary>Anti-overfitting rules used</summary><div class="body">
+    <ul class="clean">
+      <li>Multiple-testing corrections (deflated Sharpe) and permutation/positive controls.</li>
+      <li>Walk-forward and fold stability; a single good window is not evidence.</li>
+      <li>Costs, slippage and funding charged before any verdict.</li>
+      <li>Paper/forward rows timestamped before outcomes; reconstructed rows are labelled.</li>
+    </ul>
+    <p class="muted">A “pass” here is research-grade. It is not a promise of live profit.</p>
+  </div></details>
+</section>
+
+<section id="reviews" class="card">
+  <h2 class="sec">Reviews &amp; audits <span class="pill">REVIEWS</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>Ten models gave answers; these documents check the answers line by line against reality, with the originals kept beside the review so nothing is taken out of context.</div></div>
+  <details><summary>Browse the audits</summary><div class="body">
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/REVIEWS">All reviews</a> and <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/REVIEWS/inputs">source inputs</a>.</li>
+      <li>Examples: GPT-5 stack &amp; ETF hypothesis, Claude Opus/Haiku challenges, Gemini trade audit, agent-market playbook.</li>
+      <li>Each review states what was verified, what was wrong, and what remains unknown.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section id="ops" class="card">
+  <h2 class="sec">Tracking &amp; observability <span class="pill">ops</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>If a job silently stops, the dashboard should notice. This part indexes every folder and watches agents.</div></div>
+  <details><summary>Indexes and liveness</summary><div class="body">
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/TRACKING.md">TRACKING.md</a> — generated index of folders and documents.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/PROGRESS_LOG.md">PROGRESS_LOG.md</a> · <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/WORKSTREAMS.md">WORKSTREAMS.md</a> · <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/NEXT_STEPS.md">NEXT_STEPS.md</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/observability/agent_liveness.py">agent_liveness.py</a> — liveness checks.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section id="map" class="card">
+  <h2 class="sec">Repo map <span class="pill">folders</span></h2>
+  <table>
+    <tr><th>Folder</th><th>What it is</th><th>Start with</th></tr>
+    <tr><td><code>01-screen-control-llm/</code></td><td>Screen control, supervisor, free-tool catalogue</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/01-screen-control-llm/IMPLEMENTATION.md">IMPLEMENTATION.md</a></td></tr>
+    <tr><td><code>02-portfolio-multi-asset/</code></td><td>Tracking, valuation, framework matrix</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/02-portfolio-multi-asset/README.md">README.md</a></td></tr>
+    <tr><td><code>03-trading-strategies/</code></td><td>Harness, hypotheses, validation</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/03-trading-strategies/PROGRESS.md">PROGRESS.md</a></td></tr>
+    <tr><td><code>04-investment-strategy/</code></td><td>Allocation, sleeves, decision records</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md">Framework</a></td></tr>
+    <tr><td><code>SCRAPING/</code></td><td>Production harvesting probes + lessons</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/SCRAPING/README.md">README.md</a></td></tr>
+    <tr><td><code>scrapingv2/</code></td><td>Independent tool evaluations (3 agents)</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2/kilocode/2026-11-24T1019Z-success">Measured successes</a></td></tr>
+    <tr><td><code>REVIEWS/</code></td><td>Claim-by-claim audits</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/REVIEWS">REVIEWS/</a></td></tr>
+    <tr><td><code>observability/</code></td><td>Liveness and monitoring</td><td><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/blob/main/observability/agent_liveness.py">agent_liveness.py</a></td></tr>
+  </table>
+</section>
+
+<section id="limits" class="card">
+  <h2 class="sec">Limits &amp; honesty <span class="pill">read me</span></h2>
+  <div class="eli5"><div class="tag">ELI5</div><div>If a number here cannot be reproduced, it does not count. These are the known ways this project can fool itself.</div></div>
+  <details open><summary>What to distrust</summary><div class="body">
+    <ul class="clean">
+      <li><b>Headline backtests.</b> A high Sharpe is cheap when many rules were tried; demand the trial count.</li>
+      <li><b>Cash-heavy “wins”.</b> Sitting in cash can look safe while losing to the benchmark. Compare on active return.</li>
+      <li><b>Single-path forecasts.</b> Stochastic models vary run to run; seed them and report medians.</li>
+      <li><b>“Forward” data recorded after the fact.</b> A row created after its entry is a reconstruction, not a forecast.</li>
+      <li><b>Tool capability ≠ site access.</b> A browser passing one check can fail the next; a 200 can still be a challenge page.</li>
+      <li><b>ToS compliance.</b> Working code is not permission to scrape.</li>
+    </ul>
+  </div></details>
+  <details><summary>Where the raw evidence lives</summary><div class="body">
+    <ul class="clean">
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2/kilocode/2026-11-24T1019Z-success">Best Buy / Walmart success artifacts</a> (JSON + scripts).</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2/kilocode/2026-11-24T1016Z-crosscheck">JA3 stability + UA cross-check</a>.</li>
+      <li><a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2/ghcopilot">ghcopilot evaluation</a> · <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL/tree/main/scrapingv2/zoocode">zoocode evaluation</a>.</li>
+    </ul>
+  </div></details>
+</section>
+
+</main>
+</div></div>
+
+<footer><div class="wrap">
+  <p><b>PORTFOLIO_AND_SCREENCONTROL</b> · guide generated 2026-11-24 · <a href="https://github.com/eltonaguiar/PORTFOLIO_AND_SCREENCONTROL">repository</a></p>
+  <p class="muted">Links point to files on <code>main</code>. Nothing here is investment advice or a claim of commercial parity.</p>
+</div></footer>
+
+<script>
+(function(){
+  const q = document.getElementById('q');
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const tocLinks = Array.from(document.querySelectorAll('#toc a'));
+  const map = new Map();
+  tocLinks.forEach(a => map.set(a.getAttribute('href').slice(1), a.parentElement));
+  q.addEventListener('input', () => {
+    const term = q.value.trim().toLowerCase();
+    sections.forEach(s => {
+      const hit = !term || s.textContent.toLowerCase().includes(term);
+      s.classList.toggle('hidden', !hit);
+      const li = map.get(s.id); if (li) li.classList.toggle('hidden', !hit);
+    });
+  });
+  // highlight current section
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const li = map.get(e.target.id); if (!li) return;
+      const a = li.querySelector('a');
+      if (e.isIntersecting) { tocLinks.forEach(x=>x.style.fontWeight=''); a.style.fontWeight='700'; }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections.forEach(s => obs.observe(s));
+})();
+</script>
+</body>
+</html>
