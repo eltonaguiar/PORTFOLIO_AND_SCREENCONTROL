@@ -1,0 +1,22 @@
+{
+  "item": "F5 — FX trap for a Canadian account",
+  "owner": "H",
+  "gate": "G1 (cost)",
+  "run_at": "2026-11-24T06:18:00-05:00",
+  "run_at_utc": "2026-11-24T11:18:00Z",
+  "git_hash": "3e986ac",
+  "status": "DONE",
+  "finding": "Questrade published CAD<->USD conversion = 1.5% per way (embedded in rate), so round trip per US name ~= 3.0% of capital. The TODO's 1.75% per-conversion figure is an unchecked ASSUMED figure carried from earlier docs; it is replaced by verified 1.5% and tagged ASSUMED/stale.",
+  "verdict": "Trap real for short holding periods; alternatives cut effective FX cost roughly 5-10x.",
+  "figures": [
+    { "name": "questrade_fx_conversion_pct_per_way", "value": 1.5, "unit": "%", "source": "https://invest.questrade.com/pricing/self-directed-commissions-plans-fees/transaction", "source_note": "footnote 10: fee last updated 2023-11-18", "fetched": "2026-11-24", "status": "verified" },
+    { "name": "round_trip_pct_per_us_name", "value": 3.0, "unit": "%", "derived_from": "questrade_fx_conversion_pct_per_way x 2", "status": "derived" },
+    { "name": "assumed_175_pct_figure", "value": 1.75, "unit": "%", "status": "ASSUMED/stale, replaced by verified 1.5%" },
+    { "name": "norberts_gambit_effective_pct", "value": "0.1-0.4", "unit": "%", "source": "third-party broker guides (thelongmath.com, hahninvest.com, canadianmoneysaver.ca)", "fetched": "2026-11-24", "status": "third_party" },
+    { "name": "questrade_journal_fee_cad", "value": 9.95, "unit": "CAD per journal request", "source_note": "free with Questrade Plus; third-party summary of Questrade schedule", "fetched": "2026-11-24", "status": "third_party" },
+    { "name": "cdr_cad_hedged", "mechanism": "Cboe Canada/TSX Canadian Depositary Receipts trade in CAD with embedded notional FX hedge; ratio adjusts daily vs FX forward; TFSA/RRSP qualified", "source": "https://cdn.cboe.com/resources/listings/cdr/cboe-cdr-brochure-20240910-en.pdf ; https://cdr.cibc.com/en/cdr-directory/", "fetched": "2026-11-24", "status": "mechanism verified, cost figures ASSUMED/unverified" },
+    { "name": "hedged_cad_etf_mer_class_pct", "value": "~0.1", "unit": "%", "status": "ASSUMED, not fetched from a fund fact sheet this run" }
+  ],
+  "alternatives": ["dual-currency USD holding (avoids repeat conversion)", "Norbert's gambit DLR.TO/DLR.U.TO", "CDRs in CAD with embedded notional hedge", "hedged CAD ETFs (XSP/VSP class)"],
+  "correction_note": "TODO_2026-11-23.md F5 line and portfolios.json F1 note carried 1.75%; replaced with verified 1.5% + ASSUMED tag. A3 (publish commission schedule with source URL + fetch date) remains open, CP-owned."
+}
