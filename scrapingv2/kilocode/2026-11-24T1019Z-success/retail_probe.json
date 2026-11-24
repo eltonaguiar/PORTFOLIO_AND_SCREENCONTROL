@@ -1,0 +1,62 @@
+{
+  "canada_computers": {
+    "status": 200,
+    "final_url": "https://www.canadacomputers.com/en/xbox/184244/microsoft-xbox-series-x-1tb-black-rrt-00001.html",
+    "bytes": 545680,
+    "title": "\n    \n      Microsoft Xbox Series X - 1TB - Black - Canada Computers &amp; Electronics\n   ",
+    "markers": [
+      "bot"
+    ],
+    "secs": 1.54
+  },
+  "bestbuy_product": {
+    "status": 403,
+    "final_url": "https://www.bestbuy.ca/en-ca/product/xbox-series-s-512gb-console/19422130",
+    "bytes": 600,
+    "title": null,
+    "markers": [
+      "access denied"
+    ],
+    "secs": 0.14
+  },
+  "walmart_search": {
+    "status": 200,
+    "final_url": "https://www.walmart.ca/en/search?q=playstation+5",
+    "bytes": 613227,
+    "title": "playstation 5 - playstation 5 | Walmart Canada",
+    "markers": [
+      "captcha",
+      "bot"
+    ],
+    "secs": 0.04
+  },
+  "staples_search": {
+    "status": 200,
+    "final_url": "https://www.staples.ca/search?query=playstation+5",
+    "bytes": 397144,
+    "title": "\n      \n    Search | staples.ca\n\n",
+    "markers": [
+      "cloudflare",
+      "captcha",
+      "bot"
+    ],
+    "secs": 0.14
+  },
+  "memoryexpress": {
+    "status": 200,
+    "final_url": "https://www.memoryexpress.com/",
+    "bytes": 290908,
+    "title": "Memory Express, Inc. - Computer Parts, Laptop Computers &amp;  Electronics in Canada  - Me",
+    "markers": [
+      "cloudflare",
+      "just a moment",
+      "bot"
+    ],
+    "secs": 0.11
+  },
+  "bestbuy_availability_api": {
+    "status": 200,
+    "bytes": 576,
+    "head": "{\"availabilities\":[{\"isGiftCard\":false,\"isService\":false,\"pickup\":{\"locations\":[],\"purchasable\":false,\"status\":\"NotAvailable\"},\"saleChannelExclusivity\":\"InStoreAndOnline\",\"scheduledDelivery\":false,\"sellerId\":\"bbyca\",\"shipping\":{\"backorderable\":false,\"countdownIsZone\":false,\"freeShippingEligible\":fal"
+  }
+}

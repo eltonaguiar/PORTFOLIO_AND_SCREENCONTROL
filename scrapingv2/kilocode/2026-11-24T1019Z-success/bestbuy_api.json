@@ -1,0 +1,22 @@
+{
+  "xbox_s_512/curl_cffi_chrome": {
+    "status": "InStock",
+    "bytes": 576,
+    "purchasable": null,
+    "pickup": "NotAvailable",
+    "shipping": "InStock"
+  },
+  "xbox_s_512/plain_requests": {
+    "error": "ReadTimeout: HTTPSConnectionPool(host='www.bestbuy.ca', port=443): Read timed out. (read timeout=30)"
+  },
+  "ps5_slim_1tb/curl_cffi_chrome": {
+    "status": "SoldOutOnline",
+    "bytes": 581,
+    "purchasable": null,
+    "pickup": "NotAvailable",
+    "shipping": "SoldOutOnline"
+  },
+  "ps5_slim_1tb/plain_requests": {
+    "error": "ReadTimeout: HTTPSConnectionPool(host='www.bestbuy.ca', port=443): Read timed out. (read timeout=30)"
+  }
+}
