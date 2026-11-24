@@ -3,6 +3,15 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 40 — 2026-11-24 (09:34 UTC / 04:34 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: E8 — can the first honest read be published at n>=30 per tier now?
+
+||| time (UTC) | status | item | artifact ||
+
+|||---|---|---|---|---
+
+||| cron | BLOCKED | E8 — first honest read at n>=30 per tier: paper_book.py score on real tier books ran (exit 0); stable/moderate/aggressive all n=0, 0 resolved, INSUFFICIENT_DATA; E4 agent picks (CP/ZOO/KILO/AG) still not landed; nothing fabricated, item left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` ||
+
 ## Session 39 — 2026-11-24 (07:26 UTC / 02:26 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: H4 — does the echo_suspect exclusion rule actually work on the committed idea-cycle ledger?
 
