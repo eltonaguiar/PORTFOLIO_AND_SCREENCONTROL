@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T11:18 | 48 | ETFS (sector, factor,  | crosscheck | pollinations | 200 | 86 |  |
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | pollinations | 200 | 57 |  |
@@ -32,26 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | pollinations | 200 | 125 |  |
+| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
 
 ## Latest answers
-
-### round 54 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 54 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 54 - STOCKS (single-name equity, long/short) - idea - pollinations
-
-**Test**: *London Stock Exchange vs. Nikkei 225 – “Momentum‑Book‑Spread”*:  
-- For each overnight session, compute the ratio of the daily closing price change to the overnight bid‑ask midpoint spread *on the LSE* and compare it with the same ratio on the Nikkei 225.  
-- The anomaly survives if the LSE ratio exceeds the Nikkei ratio by more than **+3%** on ≥60% of trading days over a 12‑month period after deducting a 15‑bps round‑trip cost.
-
-**Kill‑Measure**: The test is invalidated if the *mean* ratio on the LSE falls below the Nikkei ratio by ≥1% on >20% of days, indicating either wider spreads or weaker momentum.
-
-**Data**: Daily LSE closing prices, bid‑ask midpoints (free from Yahoo Finance “FinViz” API), daily Nikkei 225 closing prices (free via Yahoo Finance). All data are point‑in‑time, free, and publicly available.
 
 ### round 55 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -73,3 +55,25 @@ Create a **“persistent skew‑break” test**:
 **Kill metric** – If the average falls below 0.20, the strategy is considered unviable.  
 
 **Data** – Historical option implied volaries, spot/clipprice, and contract settle prices; freely available from public APIs (e.g., VXV, CoinGecko, and exchange REST endpoints). No real‑time feeds required.
+
+### round 56 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 56 - BONDS (govt and credit) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 56 - BONDS (govt and credit) - idea - pollinations
+
+**Test**: “Benchmark‑adjusted yield curve up‑re‑versal.”  
+- **Procedure**: At 10‑am on a business day, run all two‑to‑five‑year U.S. Treasury‑bond ETFs and their contemporaneous 3‑, 5‑, and 10‑year Treasuries. Compute the 3‑year‑to‑5‑year yield spread and the 5‑year‑to‑10‑year yield spread.  
+- **Kill Criterion**: If the ratio  
+\[
+\frac{\text{3‑yr‑5‑yr spread}}{\text{5‑yr‑10‑yr spread}}
+\]
+falls below 0.25 **exactly** on the day the portfolio’s deflated Sharpe turns zero, the test fails.  
+- **Data Needed**: Daily mid‑price yields (T‑Bill: 4.3 %); Treasury futures/ETFs; free from Bloomberg Free/​Yahoo Finance.  
+- **Cost Level**: 12–20 bps round‑trip on liquid 3‑ to 10‑yr Treasuries.  
+
+If the spread‑ratio ever dips below 0.25 on a Sharpe‑zero day, the bond gamble is statistically invalidated.
