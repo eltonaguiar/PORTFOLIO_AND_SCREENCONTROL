@@ -45,10 +45,16 @@ def test_identity_uses_extension_globals_not_model_name():
     assert "subq" not in vp._JS_WHOAMI.lower()
 
 
-def test_copilot_input_targets_right_hand_textarea():
-    # Several ime-text-areas exist; one belongs to the Output panel.
-    assert "ime-text-area" in vp._JS_COPILOT_INPUT
-    assert "r.x > 1000" in vp._JS_COPILOT_INPUT
+def test_copilot_input_uses_native_edit_context_not_the_readonly_textarea():
+    # VS Code 1.144: textarea.ime-text-area is readOnly, so Input.insertText against it is a
+    # silent no-op (cost four failed sends). The real editable is DIV.native-edit-context.
+    assert "native-edit-context" in vp._JS_COPILOT_INPUT
+    assert "scrollIntoView" in vp._JS_COPILOT_INPUT
+
+
+def test_copilot_input_never_targets_the_readonly_textarea():
+    # Guard against regressing to the selector that silently does nothing.
+    assert "s.querySelector('textarea.ime-text-area')" not in vp._JS_COPILOT_INPUT
 
 
 # ---------- behaviour with a fake session ----------

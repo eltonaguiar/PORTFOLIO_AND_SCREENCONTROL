@@ -102,12 +102,13 @@ _JS_COPILOT_INPUT = """
   const surfaces = [...document.querySelectorAll('[class*="chat-input-surface"]')]
       .filter(e => e.clientHeight > 40);
   if (!surfaces.length) return JSON.stringify({err: 'no chat-input-surface'});
-  // NOTE: other ime-text-areas exist (the Output panel). The chat one is on the right.
-  const cands = [...document.querySelectorAll('textarea.ime-text-area')].map(t => {
-    const r = t.getBoundingClientRect();
-    return {x: Math.round(r.x + r.width / 2), y: Math.round(r.y + r.height / 2), right: r.x > 1000};
-  }).filter(o => o.right);
-  if (!cands.length) return JSON.stringify({err: 'no chat ime-text-area'});
+  // IMPORTANT: textarea.ime-text-area is readOnly in VS Code 1.144, so Input.insertText against
+  // it is a silent no-op. The real editable is DIV.native-edit-context inside the composer.
+  const ed = s.querySelector('.native-edit-context');
+  if (!ed) return JSON.stringify({err: 'no native-edit-context in composer'});
+  ed.scrollIntoView({block: 'center'});   // it can sit at negative y, and an off-screen click misses
+  const er = ed.getBoundingClientRect();
+  const cands = [{x: Math.round(er.x + er.width / 2), y: Math.round(er.y + er.height / 2), right: true}];
   const send = [...document.querySelectorAll('button, [role="button"]')]
       .find(b => /^Send/.test(b.getAttribute('aria-label') || ''));
   let srect = null;

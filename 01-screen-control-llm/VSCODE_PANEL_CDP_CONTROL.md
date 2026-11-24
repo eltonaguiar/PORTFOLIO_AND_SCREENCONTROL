@@ -113,15 +113,21 @@ Input.dispatchKeyEvent(type="keyUp",   windowsVirtualKeyCode=13, nativeVirtualKe
 
 ### 3.2 Copilot (native DOM / Monaco)
 
-**The click must land on the `textarea.ime-text-area` rect.** `Input.insertText` does nothing
-unless Monaco genuinely holds text focus, and clicking the visual centre of the chat surface is
-not enough:
+**Click the composer's `DIV.native-edit-context`, not the textarea.** In VS Code 1.144
+`textarea.ime-text-area` is **`readOnly: true`**, so `Input.insertText` against it is a silent
+no-op — it returns no error, the composer stays empty, and every send looks like it worked. This
+cost four consecutive failed sends before it was caught. The real editable is
+`DIV.native-edit-context` inside `[class*="chat-input-surface"]`, and it must be centred with
+`scrollIntoView({block:'center'})` first because it can sit at a negative `y`.
+
+Clicking the visual centre of the chat surface is also not enough:
 
 | Attempt | Result |
 |---|---|
 | `insertText`, no click | not landed, Send stays `disabled` |
 | click surface centre (1575, 890) → insert | not landed, `disabled` |
-| **click `.ime-text-area` rect (1330, 906) → insert** | **landed, `disabled → false`** |
+| click `textarea.ime-text-area` rect → insert | **landed once**, but textarea is `readOnly` — unreliable |
+| **click `DIV.native-edit-context` rect → insert** | **landed every time; `activeElement` is in the composer** |
 
 **Pick the right textarea.** Several `ime-text-area`s exist — one belongs to the Output panel.
 Select the one on the right of the window (`rect.x > 1000`), or you type into a log view.
@@ -253,7 +259,7 @@ A panel parked on `Run`/`Deny` stays parked until a human or an auto-approve rul
 | `Could not establish connection … spawn EPERM` | WindowsApps-packaged `ssh.exe` shadows System32 | `"remote.SSH.path"` setting |
 | `Windows cannot find '\\'` | inline `cmd /c` quoting mangles the folder-uri | launch from a script file |
 | `/json/version` answers as Chrome, not VS Code | port 9222 already bound by Chrome | use 9333 |
-| insert does nothing in Copilot | clicked surface centre, not the textarea rect | click `ime-text-area` rect |
+| insert does nothing in Copilot | `ime-text-area` is readOnly (1.144) | click `DIV.native-edit-context` |
 | composer clears, message never appears | submit target wrong; click didn't submit | verify text appears in transcript |
 | agent looks busy but is idle | hidden zero-width `Cancel` | require visible + non-zero box |
 | text landed in a log view | typed into the Output panel's textarea | pick the textarea with `rect.x > 1000` |
