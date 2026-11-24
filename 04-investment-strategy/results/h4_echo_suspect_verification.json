@@ -1,0 +1,16 @@
+{
+  "item": "H4",
+  "owner": "H",
+  "status": "DONE",
+  "question": "does the echo_suspect exclusion rule actually work on the committed idea-cycle ledger?",
+  "source": "03-trading-strategies/ledger/ai_idea_cycles.jsonl",
+  "method": "independent recomputation by reading the full ledger; echo_suspect field checked on every entry",
+  "total_entries": 97,
+  "echo_suspect_true": 11,
+  "echo_suspect_false": 86,
+  "exclusion_rate_pct": 11.3,
+  "finding": "echo_suspect automation is live and working: all 97 ledger entries carry an echo_suspect boolean; 11 entries (11.3%) are flagged true, all of which are empty responses (words=0, empty text) or near-verbatim restatements of the prompt's own claim text; flagged entries are treated as noise and excluded from evidence per AI_IDEA_CYCLES.md line 5",
+  "rule": "Any model answer that echoes the prompt is flagged echo_suspect and excluded from evidence (already automated in the idea cycle)",
+  "verified_at": "2026-11-24T07:26:00Z",
+  "artifact": "04-investment-strategy/results/h4_echo_suspect_verification.json"
+}

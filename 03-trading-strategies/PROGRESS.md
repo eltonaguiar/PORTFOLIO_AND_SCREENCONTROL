@@ -3,6 +3,13 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 39 — 2026-11-24 (07:26 UTC / 02:26 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: H4 — does the echo_suspect exclusion rule actually work on the committed idea-cycle ledger?
+
+|| time (UTC) | status | item | artifact ||
+||---|---|---|---|---
+|| cron | DONE | H4 — echo_suspect automation independently verified on `03-trading-strategies/ledger/ai_idea_cycles.jsonl`: 97 entries total, 11 flagged echo_suspect (11.3%), all flagged entries are empty or repetitive model responses (words=0 or restating the claim), excluded from evidence per AI_IDEA_CYCLES.md ("treat those as noise"). Item marked done — the rule is automated and verified; no numbers changed, no picks recorded. | `04-investment-strategy/results/h4_echo_suspect_verification.json` ||
+
 ## Session 38 — 2026-11-24 (06:18 UTC / 01:18 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: E8 — can the first honest read be published at n>=30 per tier? F5 — what is the verified CAD/USD conversion cost for a Canadian account buying US names, versus CDR/hedged alternatives?
 
