@@ -83,9 +83,9 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
      `REVIEWS/inputs/`, add a row to `REVIEWS/README.md`, cite a verifiable artefact per claim. **DoD:** review
      merged; index regenerated.
 - [ ] **C2 — refresh `FACTCHECK.md` when a new tool claim appears** · S · recurring: any newly named MCP server,
-      driver or model gets repo-existence + licence + last-push checks. **DoD:** table row added with ✅/🟡/❌.
+      driver or model gets repo-existence + licence + last-push checks. **DoD:** table row added with ✅/🟡/❌. · blocked: no new tool claim (MCP server, driver or model) has appeared since the last FACTCHECK.md update, so there is no row to add — not faked
 - [ ] **C3 — weekly COMS reconcile** · S · weekly: read `roster` + `check`, answer asks, re-register the seat with an
-      updated `done`, flag any seat duplicating this repo's work. **DoD:** one broadcast per week; seat row current.
+      updated `done`, flag any seat duplicating this repo's work. **DoD:** one broadcast per week; seat row current. · blocked: coms.ps1 / COMS MQTT access (broker plus seat registration) is not present on this machine, so the roster cannot be read, asks answered, or a seat broadcast sent — not faked
 - [x] **C4 — keep `TRACKING.md` current** · S · automated (`pasc-index-sync`, every 3 h). **DoD:** `python
       scripts/update_index.py --check` exits 0 on `main`.
 - [x] **C5 — prune the backlog honestly** · S · monthly: cancel items that no longer matter, with a reason, instead
@@ -132,6 +132,7 @@ Check data availability before any build; if NAV history is not free and point-i
 Submit redemption at quarter-end; measure acceptance rate and queue length.
 **Kill:** acceptance < 50% or queue > 4 quarters. This is the one candidate idea that is not
 dead-on-arrival against the cost wall, because it competes on liquidity rather than on spread.
+· blocked: submitting a quarter-end redemption and measuring acceptance and queue length needs live market and broker access; live trading and credentials are off-limits in this repo — not faked
 
 ### Standing rule for this loop
 Before reporting "queue complete", check this file and `03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`
@@ -142,6 +143,7 @@ for unstarted items. "Nothing to do" is only true when both are exhausted.
 The usable half of that answer proposed **measurement** tests rather than new alpha, which is the right
 instinct for a programme whose binding constraint is cost honesty. Pre-registered thresholds, to be
 applied to our own measured series before any new strategy work:
+· blocked: these are Session B verdict documents; their artifacts would commit into sibling-owned `03-trading-strategies/` results/ledger, which this session must not touch — not faked
 
 | Gate | Test | Kill |
 |---|---|---|
