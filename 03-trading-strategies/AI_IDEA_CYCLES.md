@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 110 |  |
-| 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
-| 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 120 |  |
 | 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 90 |  |
 | 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 91 |  |
 | 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 75 |  |
@@ -32,30 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | pollinations | 200 | 113 |  |
+| 2026-11-24T07:13 | 44 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
+| 2026-11-24T07:13 | 44 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
+| 2026-11-24T07:13 | 44 | PREDICTION MARKETS (Po | idea | pollinations | 200 | 111 |  |
 
 ## Latest answers
-
-### round 42 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
-
-URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
-
-### round 42 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_OPENROUTER
-
-URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
-
-### round 42 - COMMODITIES (energy, metals, ags) - idea - pollinations
-
-**Test:**  
-On any liquid commodity futures contract (e.g., Crude WTI August 24), calculate the overnight risk‑free‑rate‑adjusted return as  
-
-\[
-R = \frac{P_{\text{1‑day avg. close}}-P_{\text{open}}}{P_{\text{open}}}-0.043\text{\%}
-\]
-
-*Measure:* the average daily return must stay **above 0.03 bps** after subtracting the 4.3 % T‑bill annualized rate divided by 360 days (~0.0119 bps). If the average return ever falls **≤ 0.03 bps** (even once in the back‑test period), the commodity strategy is killed.
-
-**Data required:** daily open and close prices of the futures contract.  
-**Source:** Yahoo! Finance or Quandl (free, point‑in‑time). If the dataset contains a single day where the condition fails, the test rejects the commodity class.
 
 ### round 43 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -77,3 +55,20 @@ R = \frac{P_{\text{1‑day avg. close}}-P_{\text{open}}}{P_{\text{open}}}-0.043\
 - Daily Treasury bill yield (4‑week T‑bill) – free.  
 
 All data are point‑in‑time and freely accessible; the test can be run with a back‑test platform.
+
+### round 44 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 44 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_OPENROUTER
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 44 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - pollinations
+
+**Test**: In the 10‑yr period from 2022‑01‑01 to 2023‑07‑01, compute the net excess return of Polymarket’s “Israel’s win” market versus 4.3 % T‑bill, after deducting 80 bps round‑trip cost.  
+**Kill‑switch**: If the adjusted excess return is **≤ 0 %** on any one 28‑day block (i.e., a month of trading), the hypothesis collapses.  
+
+**Data**: Daily closing price of the “Israel’s win” contract (free API), daily 4.3 % T‑bill yield (FRED, free, point‑in‑time), transaction cost assumption 12‑20 bps per round‑trip (used wholesale).  
+
+**Why it survives cost**: Only a single, real‑time test, so no multiple testing penalty; 28‑day blocks yield enough data points (≈6) for a meaningful average while staying within the 110‑word limit.
