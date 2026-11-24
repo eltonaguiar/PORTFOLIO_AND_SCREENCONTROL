@@ -120,8 +120,33 @@ The folder carries two implementations that share the research but not the runti
 | Policy gate | `screen_control/guard.py` | Host allowlist, irreversibility gate (`confirm=True`), step/time/repeat budget. |
 | Actuation / click path | `screen_control/transports.py` | The single execution path for click/type/key/scroll/navigate/read; box-model coordinates resolved at act time. |
 | Observe→decide→guard→act→verify loop | `screen_control/loop.py` | Transcript + `MockTransport` for certification, CDP transport live. |
+| **VS Code AI panels (Kilo / Zoo / Copilot)** | `screen_control/vscode_panels.py` | DOM/CDP rung for the IDE: reads and writes the three chat panels with no coordinates and no keyboard. Verified live; 15 offline tests in `tests/test_vscode_panels.py`. See [`VSCODE_PANEL_CDP_CONTROL.md`](VSCODE_PANEL_CDP_CONTROL.md). |
 | Supervision | `kernel/overseer.py` | Stop classifier, signature hashing, brief injection, budgets, `STOP` file. |
 | Mechanics certification | `tests/` | `test_capture.py`, `test_resolve.py`, `test_overseer.py` (kernel) and `test_loop.py` (loop); CI-enforced via `.github/workflows/screen-control-tests.yml`. |
 | Approval classes (0–3) | [`TOOL_INTERFACE.md` §6 — Gate](TOOL_INTERFACE.md#6---gate) | 0=free, 1=reversible, 2=side-effecting, 3=irreversible; enforced by the tool layer, not the model's judgement. `kernel/act.py` does not exist (A2, blocked on a desktop session) — linkage deferred to A2. |
 
 No duplicated capture path: the loop observes through its transport, never through `kernel/capture.py`. No duplicated click path: `screen_control/transports.py.execute()` is the only execution path; `kernel/act.py` does not exist and is not called anywhere.
+
+
+## VS Code panel control — the DOM/CDP rung, working
+
+Three AI chat panels in one VS Code window were **read and written** from code with no keyboard,
+no mouse and no accessibility layer: Kilo Code, Zoo Code (both Cline forks) and GitHub Copilot Chat.
+Code: `screen_control/vscode_panels.py`. Full write-up: [`VSCODE_PANEL_CDP_CONTROL.md`](VSCODE_PANEL_CDP_CONTROL.md).
+
+| Finding | Measured |
+|---|---|
+| Copilot Chat is **native workbench DOM**, not a webview | 0 iframe targets for it in `/json/list`; text found in `document.body.innerText` on the page target |
+| `Input.insertText` needs a click on `textarea.ime-text-area`'s own rect | surface-centre click (1575,890): no effect; rect click (1330,906): lands, Send goes `disabled → false` |
+| A hidden zero-width control fakes "running" | `{"label":"Cancel restoring this checkpoint","vis":false,"w":0}` on an idle panel |
+| Transcript length is not a progress signal | fell `9956 → 7668` while the agent was actively working (virtualised DOM) |
+| Monaco renders spaces as U+00A0 | `'git log --oneline -3' in composer` is `False` against visibly-correct text |
+| Kilo's Plan mode is read-only | `plan-mode is read-only — cannot run pytest or write non-plan files` |
+| Chromium 403s any Origin on CDP | `Handshake status 403 Forbidden`; fixed with `suppress_origin=True` |
+
+Round-trip proof: a unique token sent into Copilot returned `CDP-RECV-OK` twice, and the same
+channel delivered a task to Kilo and a rebase instruction to Zoo that both executed.
+
+Operating rule that made the difference: **one bounded step per turn with a mandatory artifact**
+(`STEP <id> DONE: <path|sha|PR>` / `BLOCKED: <cmd> :: <err>`), never a question. An open-ended
+request produces a ten-second paragraph; a bounded step produces a commit.
