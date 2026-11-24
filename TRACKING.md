@@ -36,10 +36,10 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 68 (24 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 71 (25 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 9 (8 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
 | `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 190 (34 md) | 136 | see `git log -1 -- 03-trading-strategies` |
-| `REVIEWS/` — Audits of model answers and challenge documents | 25 (24 md) | 0 | see `git log -1 -- REVIEWS` |
+| `REVIEWS/` — Audits of model answers and challenge documents | 26 (25 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
 
@@ -66,9 +66,10 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md`](01-screen-control-llm/prototype/transcripts/chatplayground_methodology.md) | 42 | 2297 |
 | [`01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md`](01-screen-control-llm/prototype/transcripts/chatplayground_pasteall_20261122.md) | 13 | 153 |
 | [`01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md`](01-screen-control-llm/prototype/transcripts/live_20261122_chatplayground.md) | 43 | 2730 |
-| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 127 | 10609 |
+| [`01-screen-control-llm/README.md`](01-screen-control-llm/README.md) | 152 | 12716 |
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
 | [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
+| [`01-screen-control-llm/VSCODE_PANEL_CDP_CONTROL.md`](01-screen-control-llm/VSCODE_PANEL_CDP_CONTROL.md) | 275 | 12298 |
 | [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 123 | 8695 |
 | [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 134 | 7082 |
 | [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
@@ -77,7 +78,7 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
-| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 78 | 5870 |
+| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 74 | 5837 |
 | [`03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`](03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md) | 59 | 4359 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
 | [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 125 | 6582 |
@@ -112,6 +113,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/VOL_SCALING_H-VS1.md`](03-trading-strategies/VOL_SCALING_H-VS1.md) | 94 | 4754 |
 | [`03-trading-strategies/WALKFORWARD_P6.md`](03-trading-strategies/WALKFORWARD_P6.md) | 115 | 6127 |
 | [`REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md`](REVIEWS/AGENT_MARKET_AUTOMATION_PLAYBOOK_REVIEW.md) | 53 | 6177 |
+| [`REVIEWS/ASKANYMODEL_MULTICHAT_STRATEGY_TABLE_REVIEW.md`](REVIEWS/ASKANYMODEL_MULTICHAT_STRATEGY_TABLE_REVIEW.md) | 34 | 6919 |
 | [`REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md`](REVIEWS/CHALLENGE_PROTOTYPES_GLM_GEMINI_REVIEW.md) | 171 | 12575 |
 | [`REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md`](REVIEWS/CHATGPT_GPT6_ARCHITECTURE_AND_NOTRADE_REVIEW.md) | 156 | 8628 |
 | [`REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md`](REVIEWS/CLAUDE_HAIKU_CHALLENGE_REVIEW.md) | 96 | 6975 |
@@ -132,7 +134,7 @@ reflects new peer artifacts without a human in the loop.
 | [`REVIEWS/PERPLEXITY_NOTE_REVIEW.md`](REVIEWS/PERPLEXITY_NOTE_REVIEW.md) | 158 | 12937 |
 | [`REVIEWS/PI_CHALLENGE_REVIEW.md`](REVIEWS/PI_CHALLENGE_REVIEW.md) | 61 | 4338 |
 | [`REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md`](REVIEWS/QWEN_PLUS_CHALLENGE_REVIEW.md) | 84 | 5640 |
-| [`REVIEWS/README.md`](REVIEWS/README.md) | 125 | 11136 |
+| [`REVIEWS/README.md`](REVIEWS/README.md) | 126 | 11515 |
 | [`REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md`](REVIEWS/SUBQ_FURTHER_NOTE_REVIEW.md) | 52 | 7095 |
 | [`REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md`](REVIEWS/SUBQ_STACK_RECOMMENDATION_REVIEW.md) | 116 | 8590 |
 
@@ -140,8 +142,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 155 | 12565 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 39 | 8490 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 155 | 12563 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 40 | 8907 |
 | [`README.md`](README.md) | 196 | 16360 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

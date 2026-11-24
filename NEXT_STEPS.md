@@ -79,9 +79,9 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 
 ## Track C — repo, fleet, and process
 
-- [ ] **C1 — one claim-by-claim audit per new model answer** · S · recurring: review it, preserve the input under
-      `REVIEWS/inputs/`, add a row to `REVIEWS/README.md`, cite a verifiable artefact per claim. **DoD:** review
-      merged; index regenerated.
+- [x] **C1 — one claim-by-claim audit per new model answer** · S · recurring: review it, preserve the input under
+     `REVIEWS/inputs/`, add a row to `REVIEWS/README.md`, cite a verifiable artefact per claim. **DoD:** review
+     merged; index regenerated.
 - [ ] **C2 — refresh `FACTCHECK.md` when a new tool claim appears** · S · recurring: any newly named MCP server,
       driver or model gets repo-existence + licence + last-push checks. **DoD:** table row added with ✅/🟡/❌.
 - [ ] **C3 — weekly COMS reconcile** · S · weekly: read `roster` + `check`, answer asks, re-register the seat with an

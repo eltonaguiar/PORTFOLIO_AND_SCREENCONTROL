@@ -1,0 +1,34 @@
+# AskAnyModel multi-chat strategy-table review
+
+**Input:** `REVIEWS/inputs/askanymodel_multichat_strategy_table_2026-11-23.txt` (preserved verbatim).
+**Question:** "List the trading strategies with the strongest documented out-of-sample evidence across asset classes: risk premia, time-series momentum, cross-sectional momentum, trend following, mean reversion, carry, volatility risk premium. For each give the canonical academic source, the asset classes where it replicated, the sample period, and the specific way it fails. Be concise, use a table, and be explicit about what proven can and cannot mean for a retail trader."
+**Review verdict:** 🟡 Sound in substance, sample-period attribution blurs; the "proven for a retail trader" notes are the strongest part and match this repo's evidence rules.
+
+## 1. Multi-chat reliability (the headline finding)
+
+Six models were picked: Gemma 4 26B A4B, DeepSeek V4 Flash, Llama 3.3 70B, Grok 4.20, Qwen3.7 Max, Claude Sonnet 5.5. Only **Grok 4.20 returned a table**. Gemma and DeepSeek errored ("Something went wrong. Please try again."), Llama timed out ("The model took too long to respond."), Qwen and Claude errored.
+
+**Finding:** a multi-chat table here is a single model's answer, not a consensus. Do not cite an AskAnyModel multi-chat result as "several models agree" unless every panel returns content. This is the most reproducible defect in the input.
+
+## 2. Grok 4.20 table — claim-by-claim audit
+
+Legend: ✅ verified against the named artefact · 🟡 partly verified (source real, detail stretched or merged) · ❌ unsupported.
+
+| # | Claim in Grok's table | Verdict | Artefact checked |
+|---|---|---|---|
+| 1 | **Carry** — Koijen, Moskowitz, Pedersen & Vrugt (2018); assets FX, commodities, gov bonds, equities, credit; sample 1970s–2014 (OOS to ~2022); fails via sharp unwind in risk-off crises (2008 carry collapse). | ✅ source; 🟡 sample range | J. Financ. Econ. 127(2), 197–225, DOI 10.1016/j.jfineco.2017.11.002. Carry is cross-asset and crashes in risk-off are the documented failure mode; the paper's published sample is not "1970s–2014" — authors publish factor updates to July 2021 (koijen.net), so "OOS to ~2022" is plausible but not the paper's stated sample. |
+| 2 | **Time-series momentum / trend following** — Moskowitz, Ooi & Pedersen (2012); Hurst, Ooi & Pedersen (2017); futures (equities, fixed income, FX, commodities); sample 1880s–2016 (strong OOS post-2012); fails via long drawdowns & whipsaw in sideways regimes. | ✅ sources; 🟡 sample attribution | MOP 2012: J. Financ. Econ. 104(2), 228–250, DOI 10.1016/j.jfineco.2011.11.003 (sample Jan 1965–Dec 2009, 58 futures). Hurst/Ooi/Pedersen 2017: J. Portfolio Management Fall 2017, "A Century of Evidence on Trend-Following Investing" (simulated 1880–2016, 67 markets, 4 asset classes). Grok merged both papers into one row; "1880s–2016" belongs to Hurst et al., not MOP 2012. Drawdown/whipsaw failure mode is documented in both. |
+| 3 | **Cross-sectional momentum** — Jegadeesh & Titman (1993); Asness, Moskowitz & Pedersen (2013); global equities, country indices; sample 1927–2011 (global OOS replications); fails via momentum crashes in bear-to-bull reversals (2009: −81% for WML). | ✅ sources; 🟡 sample stretch | J&T 1993: J. Finance 48(1), 65–91, DOI 10.1111/j.1540-6261.1993.tb04702.x (main US sample 1965–1989; paper shows 1927 sub-panels). Asness/Moskowitz/Pedersen 2013 "Value and Momentum Everywhere": J. Finance (global, equities/bonds/currencies/commodities). Momentum crashes are a documented class (Daniel & Moskowitz); the exact −81% depends on WML construction, so treat it as illustrative. |
+| 4 | **Risk premia (value, term, credit, …)** — Fama-French (1992/93); Asness et al. (2013); global equities, bonds, currencies, commodities; sample 1926–present (international from 1970s); fails via multi-year underperformance (value 2012–2020; term premium near zero post-2000 in some markets). | ✅ sources; 🟡 "present" is not a fixed sample | Fama & French 1992/93 are canonical (US equities); Asness et al. 2013 extends premia across asset classes. Value's 2012–2020 drawdown and low term premium post-2000 are documented regime risks. "1926–present" conflates several series; no single sample. |
+| 5 | **Volatility risk premium** — Carr & Wu (2009); Bollerslev et al.; equity index options / VIX futures; sample 1986–present; fails via catastrophic left-tail losses in vol spikes (1987, 2008, Feb 2018 Volmageddon, Mar 2020). | ✅ sources/events; 🟡 sample blend | Carr & Wu 2009: Rev. Financ. Stud. 22(3), 1311–1341, DOI 10.1093/rfs/hhn038 (five stock indexes + 35 individual stocks, options data; index options back to ~1986). VIX futures did not exist until 2004, so "1986–present / VIX futures" blends sources. All five loss events are real and VRP strategies did suffer in them. |
+| 6 | **Mean reversion** — De Bondt & Thaler (1985); Balvers, Wu & Gilliland (2000); individual stocks (short-term), national indices; sample 1926–1990s (weaker OOS); fails via inconsistency across horizons, momentum dominating intermediate term, high costs destroying short-horizon versions. | ✅ sources; 🟡 "weaker OOS" is a fair caveat | De Bondt & Thaler 1985: J. Finance (3–5 year winner/loser reversal, NYSE/AMEX 1926–1982). Balvers/Wu/Gilliland 2000: mean reversion in national equity indices. The failure modes are sound; short-horizon mean reversion is indeed cost-destroyed. |
+
+## 3. "Notes on proven for a retail trader"
+
+✅ Adopt. The section correctly separates "statistically significant in peer-reviewed papers, surviving out-of-sample tests across geographies/histories/specifications, before or with modest institutional costs" from retail reality: actual retail costs (spreads, commissions, slippage, financing), post-publication attenuation/crowding, multi-year drawdowns (30–60%+ lasting years), futures/options/leverage/margin requirements, and no guaranteed positive expectancy (risk premia with crash risk, not arbitrage; most self-directed retail traders lose money). This matches this repo's evidence rules (costs first, trial accounting, no fabricated edge).
+
+## 4. Verdict
+
+The canonical sources Grok cites are all real, peer-reviewed, and the failure modes are genuine — the table is not fabricated. Defects are attribution/sampling: merging two papers' samples into one row, presenting date ranges as single fixed samples, and quoting construction-dependent figures (−81% WML 2009) as facts. The biggest reproducible issue is the multi-chat service itself: 5 of 6 models returned nothing, so the table is one model's answer, not six.
+
+**Recommendation:** use the table as a pointer to the canonical literature (check each DOI before citing), never as a retail implementation guide, and always re-read the "proven" notes — they are the part worth keeping.
