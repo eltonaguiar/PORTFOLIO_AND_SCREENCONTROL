@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 131 |  |
-| 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 105 |  |
-| 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 |  |
 | 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 97 |  |
 | 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
 | 2026-11-23T18:44 | 31 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 111 |  |
@@ -32,38 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 3 |  |
 | 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
 | 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | pollinations | 200 | 124 |  |
+| 2026-11-24T03:09 | 40 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T03:09 | 40 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T03:09 | 40 | MUTUAL FUNDS (active a | idea | pollinations | 200 | 113 |  |
 
 ## Latest answers
-
-### round 38 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** US Treasury 10-year cash-futures basis trade — long cash note, short cheapest-to-deliver futures, held to delivery.
-
-**Measurement that kills it:** If the net annualized roll (gross basis minus 15 bps round-trip cost, divided by days to delivery) fails to exceed 4.3% T-bill on a point-in-time basis across at least 20 non-overlapping delivery cycles, the edge is dead. If the deflated Sharpe (accounting for all trials run across asset classes) falls below 1.0, it's noise.
-
-**Data required:** CTD conversion factors, cash note prices, futures settlement prices, delivery dates. All free via TreasuryDirect and CME; fully point-in-time reconstructable.
-
-### round 38 - BONDS (govt and credit) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Long-only 2–10yr US Treasury portfolio, monthly rebalanced to constant 5-year duration, versus 4.3% T-bill hurdle, net of 16 bps round-trip.
-
-**Kill measurement:** Deflated Sharpe ratio (DSR with trial accounting, e.g. 8 trials) of the excess-return series over T-bills falls below 0.5 after costs. If DSR < 0.5, the edge is indistinguishable from luck at this cost level.
-
-**Data:** FRED daily Treasury par yield curve (free, point-in-time). Monthly bond total returns from constant-maturity yields; no look-ahead.
-
-### round 38 - BONDS (govt and credit) - idea - pollinations
-
-**Test**: “Benchmark‑adjusted yield curve up‑re‑versal.”  
-- **Procedure**: At 10‑am on a business day, run all two‑to‑five‑year U.S. Treasury‑bond ETFs and their contemporaneous 3‑, 5‑, and 10‑year Treasuries. Compute the 3‑year‑to‑5‑year yield spread and the 5‑year‑to‑10‑year yield spread.  
-- **Kill Criterion**: If the ratio  
-\[
-\frac{\text{3‑yr‑5‑yr spread}}{\text{5‑yr‑10‑yr spread}}
-\]
-falls below 0.25 **exactly** on the day the portfolio’s deflated Sharpe turns zero, the test fails.  
-- **Data Needed**: Daily mid‑price yields (T‑Bill: 4.3 %); Treasury futures/ETFs; free from Bloomberg Free/​Yahoo Finance.  
-- **Cost Level**: 12–20 bps round‑trip on liquid 3‑ to 10‑yr Treasuries.  
-
-If the spread‑ratio ever dips below 0.25 on a Sharpe‑zero day, the bond gamble is statistically invalidated.
 
 ### round 39 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -84,3 +54,25 @@ URLError: <urlopen error [WinError 10061] No connection could be made because th
 Daily closing prices of the 200 sector ETFs, the same‑date sector index constituents, and U.S. Treasury 3‑month yields (for risk‑free reference). All are free and delivered at point‑in‑time (end‑of‑day).  
 
 This test satisfies the 12‑20 bps cost ceiling, uses a deflated‑Sharpe‑style gate (moving‑window alpha minus cost), and compares to the 4.3 % T‑bill benchmark.
+
+### round 40 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 40 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 40 - MUTUAL FUNDS (active and index) - idea - pollinations
+
+**Test:**  
+“Calculate the *net HPR‑time‑weighted* for the 12‑month historical return series of each active/ index fund and compare it to the *25‑year chart‑year risk‑free return* (current 4.3% T‑bill). If any fund’s net HPR drops below the benchmark’s 4.3% after subtracting the 12‑20 bps round‑trip cost, flag failure.”  
+
+**Kill‑measurement:**  
+Show that the fund’s *average monthly excess return* (over the same benchmark) is ≤ 0.05% for at least 10 consecutive months.  
+
+**Data needed:**  
+- Daily NAVs for each fund (free, via Morningstar or ETF.com).  
+- Quarterly T‑bill yields (free, Treasury.gov).  
+Both are point‑in‑time, readily downloadable.  
+This single, falsifiable test ensures any fund that cannot beat the risk‑free rate after realistic transaction costs fails the militia.
