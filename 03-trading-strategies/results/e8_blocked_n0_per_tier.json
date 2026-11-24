@@ -2,9 +2,9 @@
   "item": "E8 — publish the first honest read at n>=30 per tier",
   "owner": "H",
   "gate": "G5 (provenance/tracking)",
-  "run_at": "2026-11-24T04:34:00-05:00",
-  "run_at_utc": "2026-11-24T09:34:00Z",
-  "git_hash": "9d0ea02",
+  "run_at": "2026-11-24T05:39:00-05:00",
+  "run_at_utc": "2026-11-24T10:39:00Z",
+  "git_hash": "86f0873",
   "status": "BLOCKED — not done; left unchecked in TODO",
   "precondition": "E4 agent picks >= 5 per tier landed in the real per-tier books (results/paper_book_{stable,moderate,aggressive}.jsonl)",
   "observed": {
