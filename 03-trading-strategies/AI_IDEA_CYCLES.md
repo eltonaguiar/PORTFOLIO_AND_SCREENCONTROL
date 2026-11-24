@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T14:21 | 51 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T14:21 | 51 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T14:21 | 51 | COMMODITIES (energy, m | crosscheck | pollinations | 200 | 91 |  |
 | 2026-11-24T15:22 | 52 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T15:22 | 52 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T15:22 | 52 | OPTIONS (equity index) | crosscheck | pollinations | 200 | 84 |  |
@@ -32,28 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | pollinations | 200 | 113 |  |
+| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | pollinations | 200 | 67 |  |
 
 ## Latest answers
-
-### round 57 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 57 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 57 - ETFS (sector, factor, cross-asset) - idea - pollinations
-
-**Concrete test**  
-“Across the 200 largest U.S. sector ETFs, the brief‑term (10‑day) rolling alpha relative to a benchmark of equal‑weighted S&P 500 sectors exceeds 0.20 % per month for at least 80 % of the daily windows in 2023.”
-
-*Kill‑measurement* – If the rolling alpha (after deducting a 15 bps round‑trip cost) falls below 0.10 % monthly in more than 20 % of the windows, the strategy is rejected.
-
-**Data needed**  
-Daily closing prices of the 200 sector ETFs, the same‑date sector index constituents, and U.S. Treasury 3‑month yields (for risk‑free reference). All are free and delivered at point‑in‑time (end‑of‑day).  
-
-This test satisfies the 12‑20 bps cost ceiling, uses a deflated‑Sharpe‑style gate (moving‑window alpha minus cost), and compares to the 4.3 % T‑bill benchmark.
 
 ### round 58 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -76,3 +56,19 @@ Show that the fund’s *average monthly excess return* (over the same benchmark)
 - Quarterly T‑bill yields (free, Treasury.gov).  
 Both are point‑in‑time, readily downloadable.  
 This single, falsifiable test ensures any fund that cannot beat the risk‑free rate after realistic transaction costs fails the militia.
+
+### round 59 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 59 - FOREX (majors and crosses) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 59 - FOREX (majors and crosses) - idea - pollinations
+
+**Test:** Back‑test a 30‑day moving‑average (MA30) “trend‑follow” system on the EUR/USD pair: long when price crosses above its MA30, short when below.  
+
+**Kill metric:** If the annualized deflated Sharpe (discounting 12‑20 bps of round‑trip cost) drops below 0.20 over 5 years, the strategy fails the cost‑level test.  
+
+**Data required:** Historical daily close prices for EUR/USD (free from FRED or Oanda). Point‑in‑time, no lag beyond the daily close.
