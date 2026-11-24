@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 105 |  |
-| 2026-11-23T19:45 | 32 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 116 |  |
-| 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
 | 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
 | 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 | **YES** |
 | 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 137 |  |
@@ -32,30 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T04:10 | 41 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T04:10 | 41 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T04:10 | 41 | FOREX (majors and cros | idea | pollinations | 200 | 67 |  |
+| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
+| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
+| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | pollinations | 200 | 104 |  |
 
 ## Latest answers
-
-### round 40 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 40 - MUTUAL FUNDS (active and index) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 40 - MUTUAL FUNDS (active and index) - idea - pollinations
-
-**Test:**  
-“Calculate the *net HPR‑time‑weighted* for the 12‑month historical return series of each active/ index fund and compare it to the *25‑year chart‑year risk‑free return* (current 4.3% T‑bill). If any fund’s net HPR drops below the benchmark’s 4.3% after subtracting the 12‑20 bps round‑trip cost, flag failure.”  
-
-**Kill‑measurement:**  
-Show that the fund’s *average monthly excess return* (over the same benchmark) is ≤ 0.05% for at least 10 consecutive months.  
-
-**Data needed:**  
-- Daily NAVs for each fund (free, via Morningstar or ETF.com).  
-- Quarterly T‑bill yields (free, Treasury.gov).  
-Both are point‑in‑time, readily downloadable.  
-This single, falsifiable test ensures any fund that cannot beat the risk‑free rate after realistic transaction costs fails the militia.
 
 ### round 41 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -72,3 +50,25 @@ This single, falsifiable test ensures any fund that cannot beat the risk‑free 
 **Kill metric:** If the annualized deflated Sharpe (discounting 12‑20 bps of round‑trip cost) drops below 0.20 over 5 years, the strategy fails the cost‑level test.  
 
 **Data required:** Historical daily close prices for EUR/USD (free from FRED or Oanda). Point‑in‑time, no lag beyond the daily close.
+
+### round 42 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 42 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_OPENROUTER
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 42 - COMMODITIES (energy, metals, ags) - idea - pollinations
+
+**Test:**  
+On any liquid commodity futures contract (e.g., Crude WTI August 24), calculate the overnight risk‑free‑rate‑adjusted return as  
+
+\[
+R = \frac{P_{\text{1‑day avg. close}}-P_{\text{open}}}{P_{\text{open}}}-0.043\text{\%}
+\]
+
+*Measure:* the average daily return must stay **above 0.03 bps** after subtracting the 4.3 % T‑bill annualized rate divided by 360 days (~0.0119 bps). If the average return ever falls **≤ 0.03 bps** (even once in the back‑test period), the commodity strategy is killed.
+
+**Data required:** daily open and close prices of the futures contract.  
+**Source:** Yahoo! Finance or Quandl (free, point‑in‑time). If the dataset contains a single day where the condition fails, the test rejects the commodity class.
