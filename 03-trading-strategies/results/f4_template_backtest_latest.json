@@ -1,0 +1,157 @@
+{
+  "question": "F4 \u2014 what would each template have returned 2010-2026 net of MER and rebalancing, using free data?",
+  "status": "DONE",
+  "as_of": "2026-11-24",
+  "requested_window": "2010-01-01 .. 2026-11-24",
+  "band_pp": 5.0,
+  "cost_bp_per_side": 5.0,
+  "data_source": "Yahoo Finance via yfinance; monthly adjusted close (total return incl. distributions)",
+  "assumptions": "All MER values ASSUMED pending verification against issuer ETF Facts; bounded by portfolios.json mer_limit_bp where stated. Proxy tickers documented per sleeve. Templates, not advice.",
+  "portfolios": [
+    {
+      "name": "Stable / low-risk",
+      "target_nominal_pct": "4-5",
+      "max_drawdown_pct": "<10",
+      "start": "2013-12-01",
+      "end": "2026-11-01",
+      "n_months": 155,
+      "sleeves": [
+        {
+          "sleeve": "Cash & T-bills / HISA",
+          "weight_pct": 55.0,
+          "ticker": "PSA.TO",
+          "mer_bp_assumed": 14,
+          "first_date": "2013-12-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Short-duration govt bonds",
+          "weight_pct": 25.0,
+          "ticker": "XSB.TO",
+          "mer_bp_assumed": 11,
+          "first_date": "2013-12-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Broad equity",
+          "weight_pct": 20.0,
+          "ticker": "XIC.TO",
+          "mer_bp_assumed": 6,
+          "first_date": "2013-12-01",
+          "last_date": "2026-11-01"
+        }
+      ],
+      "cagr_net": 0.03799135954203381,
+      "cagr_gross": 0.03802071683785835,
+      "mdd_net": 0.045628738055130666,
+      "rebalance_events": 4,
+      "total_cost_bp_sum": 1.0704877955723446,
+      "cagr_net_at_mer_limit": 0.03779858510756706,
+      "cagr_delta_bp_at_limit": -1.9277443446674702,
+      "target_met": false,
+      "mdd_met": true
+    },
+    {
+      "name": "Moderate",
+      "target_nominal_pct": "6-7",
+      "max_drawdown_pct": "15-25",
+      "start": "2014-08-01",
+      "end": "2026-11-01",
+      "n_months": 147,
+      "sleeves": [
+        {
+          "sleeve": "Cash & bills",
+          "weight_pct": 20.0,
+          "ticker": "PSA.TO",
+          "mer_bp_assumed": 14,
+          "first_date": "2014-08-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Bonds (1-5y)",
+          "weight_pct": 25.0,
+          "ticker": "XSB.TO",
+          "mer_bp_assumed": 11,
+          "first_date": "2014-08-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Broad equity (global index)",
+          "weight_pct": 50.0,
+          "ticker": "VXC.TO",
+          "mer_bp_assumed": 23,
+          "first_date": "2014-08-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Diversifier (commodity/gold or trend)",
+          "weight_pct": 5.0,
+          "ticker": "CGL.TO",
+          "mer_bp_assumed": 17,
+          "first_date": "2014-08-01",
+          "last_date": "2026-11-01"
+        }
+      ],
+      "cagr_net": 0.0739282822264149,
+      "cagr_gross": 0.07282362697691136,
+      "mdd_net": 0.11746026116177437,
+      "rebalance_events": 11,
+      "total_cost_bp_sum": 2.9359389638482343,
+      "cagr_net_at_mer_limit": 0.0739282822264149,
+      "cagr_delta_bp_at_limit": 0.0,
+      "target_met": false,
+      "mdd_met": true
+    },
+    {
+      "name": "Aggressive",
+      "target_nominal_pct": "8-10",
+      "max_drawdown_pct": ">35",
+      "start": "2014-10-01",
+      "end": "2026-11-01",
+      "n_months": 145,
+      "sleeves": [
+        {
+          "sleeve": "Broad equity (global, incl. EM)",
+          "weight_pct": 75.0,
+          "ticker": "VXC.TO",
+          "mer_bp_assumed": 23,
+          "first_date": "2014-10-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Small-cap value tilt",
+          "weight_pct": 15.0,
+          "ticker": "IWN",
+          "mer_bp_assumed": 24,
+          "first_date": "2014-10-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Crypto",
+          "weight_pct": 5.0,
+          "ticker": "BTC-USD",
+          "mer_bp_assumed": 0,
+          "first_date": "2014-10-01",
+          "last_date": "2026-11-01"
+        },
+        {
+          "sleeve": "Cash buffer",
+          "weight_pct": 5.0,
+          "ticker": "PSA.TO",
+          "mer_bp_assumed": 14,
+          "first_date": "2014-10-01",
+          "last_date": "2026-11-01"
+        }
+      ],
+      "cagr_net": 0.1376519099642699,
+      "cagr_gross": 0.13814304302589164,
+      "mdd_net": 0.21878208800987203,
+      "rebalance_events": 11,
+      "total_cost_bp_sum": 3.150737956745024,
+      "cagr_net_at_mer_limit": 0.1376519099642699,
+      "cagr_delta_bp_at_limit": 0.0,
+      "target_met": false,
+      "mdd_met": false
+    }
+  ]
+}

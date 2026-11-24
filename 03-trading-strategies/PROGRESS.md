@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 37 — 2026-11-24 (05:07 UTC / 00:07 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: F4 — what would each portfolio template have returned 2010-2026 net of MER and band rebalancing, using free data?
+
+|||||
+||||| time (UTC) | status | item | artifact ||
+|||||---|---|---|---|---||
+||||| cron | DONE | F4 — band-rebalanced template simulation net of assumed MER; data window is where proxy data actually starts (Stable 2013-12, Moderate 2014-08, Aggressive 2014-10; no 2010 data for PSA/XSB/VXC/IWN/BTC proxies): Stable CAGR net 3.80% (gross 3.80% MER-zeroed constant-mix variant), MDD 4.56%, 4 rebalances / 1.1 bp summed cost vs 4-5% target -> below target, DD cap <10% met; Moderate CAGR net 7.39% (gross 7.28%), MDD 11.75%, 11 rebalances / 2.9 bp vs 6-7% -> above band, DD ceiling 25% met; Aggressive CAGR net 13.77% (gross 13.81%), MDD 21.88% vs >35% cap -> literal cap not met. All MER ASSUMED; cost 5 bp/side per F2 convention; bands checked vs target with weight drift between checks. | `04-investment-strategy/f4_template_backtest.py` · `04-investment-strategy/results/f4_template_backtest_latest.json` · `03-trading-strategies/results/f4_template_backtest_latest.json` ||
+
 ## Session 36 — 2026-11-23 (21:47 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: F3 — does the Stable sleeve's realised income yield clear the 4.3% kill hurdle, and how does it compare with a top posted Canadian HISA?
 
