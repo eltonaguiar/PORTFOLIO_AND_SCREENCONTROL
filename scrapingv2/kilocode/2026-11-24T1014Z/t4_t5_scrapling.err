@@ -1,0 +1,2 @@
+[2026-11-24 10:14:25] WARNING: Argument `auto_save` will be ignored because `adaptive` wasn't enabled on initialization. Check docs for more info.
+[2026-11-24 10:14:25] WARNING: Argument `adaptive` will be ignored because `adaptive` wasn't enabled on initialization. Check docs for more info.
