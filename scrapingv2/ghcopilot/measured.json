@@ -1,0 +1,125 @@
+{
+  "captured_at_utc": "2026-11-24T09:25:00Z",
+  "agent": "ghcopilot",
+  "host": "linux x86_64, python 3.12.3, venv /tmp/scrapetest",
+  "scope_note": "Capability measurement only. No protected third-party site was targeted. 'works' means the advertised low-level function executed, not guaranteed bypass.",
+
+  "tools_exercised": [
+    { "name": "curl_cffi", "version": "0.17.0", "role": "TLS/HTTP2 impersonation, no browser" },
+    { "name": "patchright", "version": "no __version__", "role": "undetected Playwright fork" },
+    { "name": "nodriver", "version": "0.50.8", "role": "CDP automation, no WebDriver" },
+    { "name": "playwright", "version": "no __version__", "role": "control / baseline" }
+  ],
+  "tools_not_exercised": [
+    "camoufox (modified Firefox binary, large download)",
+    "CloakBrowser (modified Chromium binary)",
+    "SeleniumBase",
+    "botasaurus",
+    "browser-use (needs model key)",
+    "skyvern (vision stack, heavy)"
+  ],
+
+  "environment_gotcha": {
+    "symptom": "playwright.launch() and patchright.launch() request uncached headless-shell builds",
+    "paths_requested": [
+      "chromium_headless_shell-1255/chrome-headless-shell-linux-arm64/chrome-headless-shell",
+      "chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell"
+    ],
+    "fix": "launch(channel='chrome') uses /usr/bin/google-chrome",
+    "reading": "environment issue, not a tool verdict"
+  },
+
+  "finding_1_browser_flags": {
+    "probe_urls": ["about:blank", "data:text/html,<h1>probe</h1>"],
+    "runs": [
+      {
+        "tool": "playwright",
+        "headless": true,
+        "navigator_webdriver": true,
+        "ua_leaks_headless": true,
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+        "plugins": 5,
+        "languages": 2,
+        "typeof_window_chrome": "object",
+        "webgl_vendor": "Google Inc. (Google)"
+      },
+      {
+        "tool": "patchright",
+        "headless": true,
+        "navigator_webdriver": false,
+        "ua_leaks_headless": true,
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+        "plugins": 5,
+        "languages": 2,
+        "typeof_window_chrome": "object",
+        "webgl_vendor": "Google Inc. (Google)"
+      },
+      {
+        "tool": "patchright+explicit_user_agent",
+        "headless": true,
+        "navigator_webdriver": false,
+        "ua_leaks_headless": false,
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+        "note": "one line closes the secondary leak"
+      },
+      {
+        "tool": "nodriver",
+        "headless": true,
+        "navigator_webdriver": false,
+        "ua_leaks_headless": true,
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+        "plugins": 5,
+        "typeof_window_chrome": "object"
+      }
+    ],
+    "key_finding": "patchright and nodriver both clear navigator.webdriver, but NEITHER removes the 'HeadlessChrome' UA substring by default. Only an explicit user_agent does.",
+    "non_discriminating": "plugins=5, languages=2, window.chrome=object and the WebGL vendor are identical across all headless runs because all drive the same Chrome binary; they do not separate the tools."
+  },
+
+  "finding_2_tls_stability": {
+    "endpoint": "https://tls.browserleaks.com/json",
+    "method": "each impersonation profile probed 3 consecutive times; unique-value counts recorded",
+    "stability": {
+      "chrome":     { "ja3_unique_of_3": 3, "ja4_unique": 1, "http2_unique": 1,
+                      "stable_ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+                      "stable_http2_akamai": "52d84b11737d980aef856699f885ca86" },
+      "chrome124":  { "ja3_unique_of_3": 3, "ja4_unique": 1, "http2_unique": 1,
+                      "stable_ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+                      "stable_http2_akamai": "52d84b11737d980aef856699f885ca86" },
+      "chrome131":  { "ja3_unique_of_3": 3, "ja4_unique": 1, "http2_unique": 1,
+                      "stable_ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+                      "stable_http2_akamai": "52d84b11737d980aef856699f885ca86" },
+      "safari":     { "ja3_unique_of_3": 1, "ja4_unique": 1, "http2_unique": 1,
+                      "stable_ja4": "t13d2013h2_a09f3c656075_7f0f34a4126d",
+                      "stable_http2_akamai": "c52879e43202aeb92740be6e8c86ea96" },
+      "firefox133": { "ja3_unique_of_3": 1, "ja4_unique": 1, "http2_unique": 1,
+                      "stable_ja4": "t13d1716h2_5b57614c22b0_eeeea6562960",
+                      "stable_http2_akamai": "6ea73faa8fc5aac76bded7bd238f6433" }
+    },
+    "baseline_stdlib_urllib": {
+      "ja3": "46531b76d4d69e9c86d481cf71fa4933",
+      "ja4": "t13d3113h1_e8f1e7e78f70_d339722ba4af",
+      "http2_akamai": null,
+      "note": "HTTP/1.1, no HTTP/2 hash"
+    },
+    "sample_observed_chrome_ja3_values": [
+      "75cab8faf4a1599b28e8e77e9b18ef51",
+      "05a8cab5139cdd783ea1d9ef1b0b5b43",
+      "98a152e183ef17ebafc51f6879e5edcc",
+      "5d4d67ecf770b65e2ffd3a3aa8c3d327",
+      "6c94129c719c5435c37a21c10e0d3746"
+    ],
+    "correction": "An earlier draft of this report listed a single JA3 per Chrome profile as a fixture. It was one run's value. Four separate runs produced four different Chrome JA3 sets while Safari and Firefox returned byte-identical JA3 every time.",
+    "consequences": [
+      "a JA3 allowlist cannot reliably pin a Chrome impersonation - the value moves per connection; a JA4 allowlist can",
+      "JA4 does not separate adjacent Chrome versions: chrome124 and chrome131 share t13d1516h2_8daaf6152771_02713d6af862 while chrome differs",
+      "HTTP/2 separates browser families, not versions - all three Chrome profiles emit one hash; Safari and Firefox each emit their own"
+    ]
+  },
+
+  "caveats": [
+    "single machine, single egress IP; cross-IP fingerprint stability untested, only run-to-run",
+    "no real Cloudflare/Akamai challenge attempted, by design",
+    "nodriver leaves a closed event loop on teardown; probe.py tolerates it because measurements are collected before teardown"
+  ]
+}

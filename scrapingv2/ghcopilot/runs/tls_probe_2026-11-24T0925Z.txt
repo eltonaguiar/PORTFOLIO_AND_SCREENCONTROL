@@ -1,0 +1,8 @@
+  client                            JA3                                 JA4                                             HTTP2
+  stdlib urllib (baseline)          46531b76d4d69e9c86d481cf71fa4933    t13d3113h1_e8f1e7e78f70_d339722ba4af            None
+  curl_cffi impersonate=chrome      98a152e183ef17ebafc51f6879e5edcc    t13d1517h2_8daaf6152771_cb7bf5808d99            52d84b11737d980aef856699f885ca86
+  curl_cffi impersonate=chrome124   5263711c53808b505a53126bececb833    t13d1516h2_8daaf6152771_02713d6af862            52d84b11737d980aef856699f885ca86
+  curl_cffi impersonate=chrome131   d32b3282cae9570e61eec63a1ec455b5    t13d1516h2_8daaf6152771_02713d6af862            52d84b11737d980aef856699f885ca86
+  curl_cffi impersonate=safari      ecdf4f49dd59effc439639da29186671    t13d2013h2_a09f3c656075_7f0f34a4126d            c52879e43202aeb92740be6e8c86ea96
+  curl_cffi impersonate=safari17_0  773906b0efdefa24a7f2b8eb6985bf37    t13d2014h2_a09f3c656075_14788d8d241b            959a7e813b79b909a1a0b00a38e8bba3
+  curl_cffi impersonate=firefox133  2d692a4485ca2f5f2b10ecb2d2909ad3    t13d1716h2_5b57614c22b0_eeeea6562960            6ea73faa8fc5aac76bded7bd238f6433

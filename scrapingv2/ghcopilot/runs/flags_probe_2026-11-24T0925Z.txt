@@ -1,0 +1,8 @@
+  tool                              webdriver  UA leaks Headless  UA
+  playwright                        True       True               Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36
+  patchright                        False      True               Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36
+  patchright+explicit_user_agent    False      False              Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36
+  nodriver                          False      True               Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36
+
+  KEY: patchright and nodriver both clear navigator.webdriver, but only an
+  explicit user_agent removes the 'HeadlessChrome' substring.
