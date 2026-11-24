@@ -136,14 +136,56 @@ Response carries `jobPostings[].title`, `.locationsText`, `.postedOn`, `.externa
 
 **Lesson:** a 400/404 on a JSON endpoint can mean *wrong method*, not *wrong endpoint*. Always try POST.
 
-### RedFlagDeals — **BLOCKED (challenge)**
+### RedFlagDeals — **WORKS (Atom, not RSS)**
 
-`/feed/hot-deals/`, `/feed/`, `/rss/hot-deals/` → **404**. `/feeds/hot_deals/` and `/deals/feed/` → **HTTP 202
-with a 2,926 B body and 0 `<item>` elements** — a challenge page, not a feed. Effectively blocked.
+```
+https://forums.redflagdeals.com/feed/forum/9      <- forum 9 = Hot Deals
+```
 
-### Recruitee — **not located**
+HTTP **200**, `Content-Type: application/atom+xml; charset=UTF-8`, **24,200 B**, **15 `<entry>` elements**.
 
-`https://api.recruitee.com/c/{company}/careers/` → **404** on the token tried. Endpoint shape unverified.
+> **Correction.** An earlier version of this file eliminated RedFlagDeals after `/feeds/hot_deals/` and
+> `/deals/feed/` both returned HTTP 202 with a 2,926 B challenge body. Those are **the wrong paths**. The
+> canonical forum feed works, and returns **Atom** — so my `<item>` count also read 0 on a feed that was
+> actually full of entries. Two errors stacked: wrong path, then wrong element name.
+>
+> The correct path was supplied by **Qwen4 Max**, the most detailed of thirteen answers, which also correctly
+> specified the Workday POST body and the two-step detail fetch.
+
+### Personio — **WORKS (XML)**
+
+```
+https://{slug}.jobs.personio.com/xml
+```
+
+HTTP 200, `Content-Type: text/xml`, `<position>` elements with `<name>` titles. Verified on
+`personio.jobs.personio.com/xml` → 3 positions parsed. Popular with EU/DE employers.
+
+### Workday detail — **WORKS (GET with externalPath)**
+
+```
+GET https://{tenant}.wd{n}.myworkdayjobs.com/wday/cxs/{tenant}/{site}{externalPath}
+```
+
+HTTP 200, **22,515 B**, JSON with keys `jobPostingInfo`, `hiringOrganization`, `similarJobs`,
+`userAuthenticated`. This is the two-step recipe:
+
+1. **POST** `.../jobs` with `{"appliedFacets":{},"limit":20,"offset":0,"searchText":"..."}` → `jobPostings[]`
+2. **GET** `.../jobs` base + `externalPath` → full description
+
+Verified end to end on `salesforce/wd12`: list gave *Salesforce Technical Architect*
+(`/job/India---Hyderabad/Salesforce-Technical-Architect_JR3265`), and the detail GET returned that job's
+`jobPostingInfo`.
+
+### BambooHR — **endpoint shape wrong**
+
+`https://{slug}.bamboohr.com/careers/list` → HTTP 200 but `Content-Type: text/html` (45,950 B, the marketing
+page). Not a JSON API at that path.
+
+### Recruitee / Teamtailor — **unverified**
+
+`{slug}.recruitee.com/api/offers/` and `{slug}.teamtailor.com/jobs.rss` both **404** on a self-referential slug.
+That is a wrong-token result, not evidence the endpoints are dead.
 
 ### Reddit — **DOES NOT WORK AS JSON (corrected)**
 

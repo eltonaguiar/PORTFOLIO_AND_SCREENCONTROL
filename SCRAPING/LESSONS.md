@@ -159,3 +159,42 @@ The Kijiji search page contains `captcha` in its source **and** returned 45 real
 word and aborting would be a false negative.
 
 **Rule:** judge by whether the data is present in the payload, not by the presence of defensive keywords.
+
+---
+
+## 13. Atom is not RSS, and a `<item>` count will lie to you
+
+I eliminated RedFlagDeals as "blocked" after counting `<item>` and finding **0**. The feed was live the whole
+time:
+
+```
+https://forums.redflagdeals.com/feed/forum/9
+HTTP 200 · Content-Type: application/atom+xml · 24,200 B · 15 <entry> elements
+```
+
+Two stacked errors: I had tested **wrong paths** (`/feeds/hot_deals/`, `/deals/feed/` → 202 challenge), then
+when I finally hit the right one I grepped for **RSS `<item>`** on an **Atom** feed, which uses `<entry>`.
+
+**Rule:** before declaring a feed dead, check all four of:
+
+1. `Content-Type` — `application/rss+xml`, `application/atom+xml`, `text/xml`.
+2. Element name — **`<item>` (RSS) or `<entry>` (Atom)**. Never assume.
+3. Element count > 0.
+4. The URLs you tried are the canonical ones. A forum's feed is usually `/feed/forum/{id}`, not `/feed/hot-deals/`.
+
+That is three separate verdicts in this directory I got wrong from checking the wrong thing: `old.reddit.com`
+(status, not content type), Kijiji `?rss=1` (parameter, not payload), and now RedFlagDeals (element, not feed).
+**In every case the fix was to assert on parsed shape, not on a proxy for it.**
+
+---
+
+## 14. A detailed answer can be more correct than a careful-sounding one
+
+The two endpoints I had wrongly eliminated — RedFlagDeals' forum feed and the Workday detail GET — were both
+named correctly by **Qwen4 Max**, the longest and most code-heavy of thirteen answers. Meanwhile the answers
+that *sounded* most disciplined ("skip the arms race, use the obvious feeds") were the ones recommending
+Craigslist RSS, which is a hard 403.
+
+**Rule:** judge advice by whether its specific claims survive a probe, not by whether its tone matches your
+priors. Length and specificity are not quality signals on their own — but a named URL is falsifiable, and a
+principle is not.
