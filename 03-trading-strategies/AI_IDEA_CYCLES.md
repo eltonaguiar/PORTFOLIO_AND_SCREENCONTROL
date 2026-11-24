@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | pollinations | 200 | 57 |  |
 | 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | pollinations | 200 | 98 |  |
@@ -32,29 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
+| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | pollinations | 200 | 124 |  |
 
 ## Latest answers
-
-### round 55 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 55 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 55 - CRYPTO (spot and perp) - idea - pollinations
-
-Create a **“persistent skew‑break” test**:  
-**Procedure** – For every coin on at least two major spot/1‑month perp exchanges (e.g., BTC, ETH, SOL), compute the daily rolling correlation over the past 90 days between:  
-1. the overnight *implied* directional bias (difference between BTC‑USD call/put implied vol at 500‑strike vs 1‑strike) and  
-2. the next‑day realized return of the spot/contract pair.  
-
-**Allowance** – The test survives only if the *average* absolute correlation across all samples remains ≥ 0.30 after deducting a flat 15 bps round‑trip fee.  
-
-**Kill metric** – If the average falls below 0.20, the strategy is considered unviable.  
-
-**Data** – Historical option implied volaries, spot/clipprice, and contract settle prices; freely available from public APIs (e.g., VXV, CoinGecko, and exchange REST endpoints). No real‑time feeds required.
 
 ### round 56 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -77,3 +56,23 @@ falls below 0.25 **exactly** on the day the portfolio’s deflated Sharpe turns 
 - **Cost Level**: 12–20 bps round‑trip on liquid 3‑ to 10‑yr Treasuries.  
 
 If the spread‑ratio ever dips below 0.25 on a Sharpe‑zero day, the bond gamble is statistically invalidated.
+
+### round 57 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 57 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 57 - ETFS (sector, factor, cross-asset) - idea - pollinations
+
+**Concrete test**  
+“Across the 200 largest U.S. sector ETFs, the brief‑term (10‑day) rolling alpha relative to a benchmark of equal‑weighted S&P 500 sectors exceeds 0.20 % per month for at least 80 % of the daily windows in 2023.”
+
+*Kill‑measurement* – If the rolling alpha (after deducting a 15 bps round‑trip cost) falls below 0.10 % monthly in more than 20 % of the windows, the strategy is rejected.
+
+**Data needed**  
+Daily closing prices of the 200 sector ETFs, the same‑date sector index constituents, and U.S. Treasury 3‑month yields (for risk‑free reference). All are free and delivered at point‑in‑time (end‑of‑day).  
+
+This test satisfies the 12‑20 bps cost ceiling, uses a deflated‑Sharpe‑style gate (moving‑window alpha minus cost), and compares to the 4.3 % T‑bill benchmark.
