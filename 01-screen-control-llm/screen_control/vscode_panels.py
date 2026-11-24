@@ -104,6 +104,7 @@ _JS_COPILOT_INPUT = """
   if (!surfaces.length) return JSON.stringify({err: 'no chat-input-surface'});
   // IMPORTANT: textarea.ime-text-area is readOnly in VS Code 1.144, so Input.insertText against
   // it is a silent no-op. The real editable is DIV.native-edit-context inside the composer.
+  const s = surfaces[0];            // BUGFIX: `s` was never defined, so this threw and eval returned None
   const ed = s.querySelector('.native-edit-context');
   if (!ed) return JSON.stringify({err: 'no native-edit-context in composer'});
   ed.scrollIntoView({block: 'center'});   // it can sit at negative y, and an off-screen click misses
