@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T20:53 | 33 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
-| 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 | **YES** |
-| 2026-11-23T21:54 | 34 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 137 |  |
 | 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 110 |  |
 | 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 | 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 120 |  |
@@ -32,24 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
 | 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
 | 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | pollinations | 200 | 104 |  |
+| 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | pollinations | 200 | 113 |  |
 
 ## Latest answers
-
-### round 41 - FOREX (majors and crosses) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 41 - FOREX (majors and crosses) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 41 - FOREX (majors and crosses) - idea - pollinations
-
-**Test:** Back‑test a 30‑day moving‑average (MA30) “trend‑follow” system on the EUR/USD pair: long when price crosses above its MA30, short when below.  
-
-**Kill metric:** If the annualized deflated Sharpe (discounting 12‑20 bps of round‑trip cost) drops below 0.20 over 5 years, the strategy fails the cost‑level test.  
-
-**Data required:** Historical daily close prices for EUR/USD (free from FRED or Oanda). Point‑in‑time, no lag beyond the daily close.
 
 ### round 42 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -72,3 +56,24 @@ R = \frac{P_{\text{1‑day avg. close}}-P_{\text{open}}}{P_{\text{open}}}-0.043\
 
 **Data required:** daily open and close prices of the futures contract.  
 **Source:** Yahoo! Finance or Quandl (free, point‑in‑time). If the dataset contains a single day where the condition fails, the test rejects the commodity class.
+
+### round 43 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 43 - OPTIONS (equity index) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 43 - OPTIONS (equity index) - idea - pollinations
+
+**Test**: *Monthly “Moneyness‑Skew” exploit* – buy 30‑day at‑the‑money call options on the S&P 500, sell 30‑day out‑of‑the‑money puts, hold both positions overnight, and roll to the next month.  
+
+**Measurement that kills it**: Average annualised excess return on the strategy that exceeds 4.3 % after deducting round‑trip cost (12–20 bps) and applying a deflated Sharpe (≥ 1.0 under trial‑accounting).  
+
+**Data required**:  
+- Historical 1‑month implied vol‑surface for the S&P 500 (daily) – freely available from CBOE or Barchart.  
+- Daily closing prices of the S&P 500 index – free.  
+- Daily Treasury bill yield (4‑week T‑bill) – free.  
+
+All data are point‑in‑time and freely accessible; the test can be run with a back‑test platform.
