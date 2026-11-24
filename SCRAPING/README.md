@@ -15,6 +15,7 @@ Akamai wall are recorded as failures, not quietly dropped — the failures are t
 | `EXTERNAL_ADVICE_AUDIT.md` | **Thirteen AI answers scored against live tests** — which advice survived contact |
 | `SEMIFINALS/` | Compiled shortlist: candidates that passed a first probe, with trade-offs |
 | `FINALS/` | **Endorsed solutions** — the ones that returned real data, plus runnable scripts |
+| `ANTIGRAVITY_KIT_2026-11-24/` | **Anti-bot bake-off** — which technique defeats which block (plain curl vs `curl_cffi` TLS vs Playwright headful vs nodriver vs patchright), measured on six retail targets. See `LESSONS.md` §15 |
 
 ## The one-paragraph verdict
 
