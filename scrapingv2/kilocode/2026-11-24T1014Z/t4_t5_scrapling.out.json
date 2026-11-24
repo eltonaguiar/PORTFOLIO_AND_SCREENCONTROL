@@ -1,0 +1,15 @@
+{
+  "basic": {
+    "found": "In Stock",
+    "text": "Xbox Series X\nIn Stock"
+  },
+  "adaptive_after_class_change": {
+    "found": null,
+    "expected": "In Stock",
+    "match": false
+  },
+  "find_similar": {
+    "n": 0,
+    "text": null
+  }
+}

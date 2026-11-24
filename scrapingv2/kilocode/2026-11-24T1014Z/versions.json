@@ -1,0 +1,11 @@
+{
+  "curl_cffi": "0.16.3",
+  "scrapling": "0.4.15",
+  "patchright": "1.63.0",
+  "nodriver": "0.50.99",
+  "seleniumbase": "4.58.4",
+  "botasaurus": "4.0.97",
+  "camoufox": "0.5.9",
+  "browser_use": "0.12.7",
+  "playwright": "1.44.0"
+}

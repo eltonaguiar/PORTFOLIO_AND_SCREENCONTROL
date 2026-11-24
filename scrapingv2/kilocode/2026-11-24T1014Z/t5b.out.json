@@ -1,0 +1,9 @@
+{
+  "save": {
+    "got": "In Stock"
+  },
+  "adaptive": {
+    "got": "<span class=\"qq17\">In Stock</span>",
+    "match": true
+  }
+}

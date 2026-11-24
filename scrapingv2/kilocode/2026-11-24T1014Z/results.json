@@ -1,0 +1,158 @@
+{
+  "captured_utc": "2026-11-24T10:14Z",
+  "python": "3.12.3",
+  "versions": {
+    "curl_cffi": "0.16.3",
+    "scrapling": "0.4.15",
+    "patchright": "1.63.0",
+    "nodriver": "0.50.99",
+    "seleniumbase": "4.58.4",
+    "botasaurus": "4.0.97",
+    "camoufox": "0.5.9",
+    "browser_use": "0.12.7",
+    "playwright": "1.44.0"
+  },
+  "tls": {
+    "chrome": {
+      "status": 200,
+      "ja3": "c5cd3e5ef679c9842aec4c708db3bcd3",
+      "ja4": "t13d1516h2_8daaf6152771_806a8c22fdea",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/"
+    },
+    "chrome110": {
+      "status": 200,
+      "ja3": "637e72e70b4e35493c834625a848c54e",
+      "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    "chrome120": {
+      "status": 200,
+      "ja3": "5ca7558f4d5aac6dc0700a1e92410b7c",
+      "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/"
+    },
+    "chrome124": {
+      "status": 200,
+      "ja3": "bdcacdf5f60b157c59e8be1483d57ea4",
+      "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/"
+    },
+    "safari17_0": {
+      "status": 200,
+      "ja3": "773906b0efdefa24a7f2b8eb6985bf37",
+      "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/"
+    },
+    "safari17_2_ios": {
+      "status": 200,
+      "ja3": "773906b0efdefa24a7f2b8eb6985bf37",
+      "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+      "http": 3,
+      "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) Apple"
+    },
+    "firefox133": {
+      "status": 200,
+      "ja3": "2d692a4485ca2f5f2b10ecb2d2909ad3",
+      "ja4": "t13d1716h2_5b57614c22b0_eeeea6562960",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Geck"
+    },
+    "edge101": {
+      "status": 200,
+      "ja3": "cd08e31494f9531f560d64c695473da9",
+      "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+      "http": 3,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    "httpbin_json": {
+      "status": 200,
+      "http": 3,
+      "origin": "142.181.219.3",
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/"
+    }
+  },
+  "scrapling_basic": {
+    "basic": {
+      "found": "In Stock",
+      "text": "Xbox Series X\nIn Stock"
+    },
+    "adaptive_after_class_change": {
+      "found": null,
+      "expected": "In Stock",
+      "match": false
+    },
+    "find_similar": {
+      "n": 0,
+      "text": null
+    }
+  },
+  "scrapling_adaptive": {
+    "save": {
+      "got": "In Stock"
+    },
+    "adaptive": {
+      "got": "<span class=\"qq17\">In Stock</span>",
+      "match": true
+    }
+  },
+  "patchright": {
+    "render": {
+      "how": "bundled",
+      "text": "ok"
+    },
+    "fingerprint": {
+      "webdriver": false,
+      "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "langs": 1,
+      "plugins": 0
+    }
+  },
+  "nodriver": {
+    "runtime": {
+      "text": "ok",
+      "fingerprint": [
+        [
+          "webdriver",
+          {
+            "type": "boolean",
+            "value": false
+          }
+        ],
+        [
+          "ua",
+          {
+            "type": "string",
+            "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+          }
+        ],
+        [
+          "plugins",
+          {
+            "type": "number",
+            "value": 5
+          }
+        ]
+      ]
+    }
+  },
+  "seleniumbase": {
+    "runtime": {
+      "kwargs": [
+        "uc",
+        "headless"
+      ],
+      "text": "ok"
+    }
+  },
+  "botasaurus": {
+    "runtime": {
+      "text": "ok",
+      "url": "data:text/html,<html><body><h1 id='h'>ok</h1></body></html>"
+    }
+  }
+}
