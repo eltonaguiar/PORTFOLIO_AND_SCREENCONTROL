@@ -124,8 +124,14 @@ Not shipped as a script here (it lives in
 | source | how to use it | the caveat |
 |---|---|---|
 | **Best Buy availability API** | price/availability **floor for new units** | Postal-code invariant. Nine GTA codes gave identical `InStock qty=105` and `pickup: NotAvailable (0)`. It cannot prove local stock |
-| **old.reddit.com JSON** | companion marketplace signal | `www.reddit.com` returns **403**; the same request on `old.reddit.com` returns **200** |
 | **Amazon per-ASIN browser read** | the only real per-address delivery date | Needs a browser per ASIN; read `#sellerProfileTriggerId` or a reseller markup passes as a restock |
+
+## Corrected — previously endorsed, now eliminated
+
+**`old.reddit.com` was listed here as a working workaround. It is not.** It returns HTTP 200 with
+`Content-Type: text/html` — the Reddit SPA shell, containing **0** result cards and **0** listings. The status
+code was mistaken for a result. `api.reddit.com` and `www.reddit.com` both return **403**. See
+`../LESSONS.md` §9.
 
 ## Explicitly not endorsed
 

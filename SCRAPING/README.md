@@ -17,12 +17,16 @@ Akamai wall are recorded as failures, not quietly dropped — the failures are t
 
 ## The one-paragraph verdict
 
-The working path is **machine-readable endpoints, not browser evasion.** Five sources returned real data without
-a single challenge: **Greenhouse**, **Ashby**, **SmartRecruiters**, **Canada Computers static HTML**, and
-**Kijiji's `__NEXT_DATA__`**. Two more work only with a workaround: **old.reddit.com** (where `www.reddit.com`
-is blocked) and **Job Bank Canada** (works, but needs a classifier to be useful). Four popular
-"keyless" suggestions from external advice are **blocked**: Craigslist RSS (403), `www.reddit.com` JSON (403),
-eBay Browse API without a key (403), and every Best Buy product page (Akamai).
+The working path is **machine-readable endpoints, not browser evasion.** Six sources returned real data without
+a single challenge: **Greenhouse**, **Ashby**, **SmartRecruiters**, **Workday (via POST)**, **Canada Computers
+static HTML**, and **Kijiji's `__NEXT_DATA__`**. One more works but needs a classifier to be useful:
+**Job Bank Canada**. Six popular "keyless" suggestions from external advice are **blocked**: Craigslist RSS
+(403), `www.reddit.com` JSON (403), `old.reddit.com` (200 but HTML shell, no listings), RedFlagDeals RSS
+(202 challenge), eBay Browse API without a key (403), and every Best Buy product page (Akamai).
+
+> **Correction carried in this tree:** an earlier version of `SOURCES.md` listed `old.reddit.com` as a working
+> workaround. It returns **200 with `Content-Type: text/html`** and zero listings. The status code was mistaken
+> for the result. `LESSONS.md` §9 and `SOURCES.md` §B are both corrected.
 
 ## Three findings that change the design
 

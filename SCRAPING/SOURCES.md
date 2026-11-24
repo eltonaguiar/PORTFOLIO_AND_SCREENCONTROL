@@ -114,19 +114,51 @@ https://www.kijiji.ca/b-gta-greater-toronto-area/ps5/k0l1700272
 - ⚠️ **`price.amount` is in CENTS.** `60000` means **$600.00**. See `LESSONS.md` §3.
 - The string `captcha` appears in the page source but did **not** indicate a challenge — the data was present.
 
-### old.reddit.com — **WORKS only on the old domain**
+### Workday CXS — **WORKS, but only with POST**
 
 ```
-https://old.reddit.com/r/{sub}/search.json?q={q}&restrict_sr=1&sort=new&limit=25
+POST https://{tenant}.wd{n}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs
+body: {"appliedFacets":{},"limit":20,"offset":0,"searchText":"{q}"}
+headers: Content-Type: application/json
 ```
 
-| host | HTTP |
+A plain **GET returns HTTP 400** — which is why Workday looked dead on the first pass. As a POST:
+
+```
+salesforce.wd12.myworkdayjobs.com/.../External_Career_Site/jobs
+  "servicenow"            -> HTTP 200, total 13
+  "salesforce developer"  -> HTTP 200, total 301   ("Salesforce Technical Architect", 5 locations, Posted Today)
+  "apex"                  -> HTTP 200, total 199
+```
+
+This is the largest enterprise ATS in the world, and it answers politely once the verb is right.
+Response carries `jobPostings[].title`, `.locationsText`, `.postedOn`, `.externalPath`.
+
+**Lesson:** a 400/404 on a JSON endpoint can mean *wrong method*, not *wrong endpoint*. Always try POST.
+
+### RedFlagDeals — **BLOCKED (challenge)**
+
+`/feed/hot-deals/`, `/feed/`, `/rss/hot-deals/` → **404**. `/feeds/hot_deals/` and `/deals/feed/` → **HTTP 202
+with a 2,926 B body and 0 `<item>` elements** — a challenge page, not a feed. Effectively blocked.
+
+### Recruitee — **not located**
+
+`https://api.recruitee.com/c/{company}/careers/` → **404** on the token tried. Endpoint shape unverified.
+
+### Reddit — **DOES NOT WORK AS JSON (corrected)**
+
+| request | result |
 |---|---|
-| `www.reddit.com/r/CanadianHardwareSwap/search.json` | **403 Blocked** |
-| **`old.reddit.com/r/CanadianHardwareSwap/search.json`** | **200, 342,935 B** |
+| `www.reddit.com/r/{sub}/search.json` | **403 Blocked** |
+| `old.reddit.com/r/{sub}/search.json` | **200 — but `Content-Type: text/html`, 342,840 B** |
+| `api.reddit.com/r/{sub}/search` | **403 Blocked** |
 
-A descriptive User-Agent (`windows:gta-console-tracker:v1.0 (by /u/eltonaguiar)`) was used on both — the host,
-not the UA, is the difference. This is the cheapest live local-marketplace signal available.
+> **Correction.** An earlier version of this file called `old.reddit.com` a working workaround. It is not.
+> The 200 body is the Reddit SPA shell: `is JSON? False`, **0** `class="thing"` cards, **0** search-result
+> links. It returns a page with no listings in it. Same for `/search` without the `.json` suffix.
+>
+> The mistake was recording the **status code** as the verdict. A 200 with the wrong content type is a
+> failure — see `LESSONS.md` §8, which this file's author then violated.
 
 ### Best Buy Canada — **API works, product pages do not**
 

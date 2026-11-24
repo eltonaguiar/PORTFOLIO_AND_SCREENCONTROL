@@ -111,17 +111,26 @@ parser. `/rss-srp-...` returned a hard **403**; the plain search page returned 2
 
 ---
 
-## 9. The host can matter more than the User-Agent
+## 9. A 200 is not a success — check the content type
+
+This section previously claimed a host trick as the fix. It was wrong, and the correction is the better lesson.
 
 | request | result |
 |---|---|
-| `www.reddit.com/r/…/search.json` + descriptive UA | **403 Blocked** |
-| `old.reddit.com/r/…/search.json` + same UA | **200, 342 KB** |
+| `www.reddit.com/r/…/search.json` | **403 Blocked** |
+| `old.reddit.com/r/…/search.json` | **200 — but `Content-Type: text/html`, 342,840 B** |
+| `api.reddit.com/r/…/search` | **403 Blocked** |
 
-Same User-Agent, same query. Only the host changed.
+The old domain did return 200. It returned the **SPA shell**: `is JSON? False`, **0** `class="thing"` cards,
+**0** search-result links. No listings in it. Calling that "working" because the status code was 200 is the
+same class of error as calling an empty `content` field "the model got it wrong" — the status is not the result.
 
-**Rule:** before concluding a site blocks automation, try its legacy/old/mobile host. And try a *descriptive*
-UA with contact info — some operators block generic UAs specifically.
+**Rule:** after any fetch, assert on **shape**, not status — `content-type`, does it parse as the format you
+asked for, and does it contain N>0 expected records. `LESSONS.md` §8 says verify the payload; this section is
+what happens when you don't.
+
+**What actually solved it:** the useful ATS discovery in the same round was **Workday needing POST**, found by
+reacting to a 400 as "wrong verb?" rather than "dead endpoint".
 
 ---
 

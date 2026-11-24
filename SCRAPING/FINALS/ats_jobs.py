@@ -33,6 +33,9 @@ CTX.verify_mode = ssl.CERT_NONE
 GREENHOUSE = ["stripe", "datadog", "gitlab", "coinbase", "airbnb", "instacart"]
 ASHBY = ["openai", "ramp", "supabase", "linear"]
 SMARTRECRUITERS = ["ServiceNow"]
+# (tenant, shard, site). Workday needs a POST - a GET returns 400, which is why it looks dead at first.
+WORKDAY = [("salesforce", "wd12", "External_Career_Site")]
+WORKDAY_TERMS = ["servicenow", "salesforce developer", "apex"]
 
 KEYWORDS = ("servicenow", "service now", "salesforce", "apex", "lwc", "sfdc")
 
@@ -79,6 +82,30 @@ def from_smartrecruiters(company, pages=12):
             return
 
 
+def from_workday(tenant, shard, site, text, pages=5):
+    """Workday CXS. MUST be a POST - a GET returns HTTP 400."""
+    url = "https://%s.%s.myworkdayjobs.com/wday/cxs/%s/%s/jobs" % (tenant, shard, tenant, site)
+    for page in range(pages):
+        payload = json.dumps({"appliedFacets": {}, "limit": 20,
+                              "offset": page * 20, "searchText": text}).encode()
+        h = dict(UA)
+        h["Content-Type"] = "application/json"
+        req = urllib.request.Request(url, data=payload, headers=h, method="POST")
+        d = json.loads(urllib.request.urlopen(req, timeout=30, context=CTX)
+                       .read().decode("utf-8", "replace"))
+        batch = d.get("jobPostings") or []
+        for j in batch:
+            ext = j.get("externalPath") or ""
+            yield {"source": "workday/%s" % tenant,
+                   "title": j.get("title") or "",
+                   "company": tenant,
+                   "location": j.get("locationsText") or "",
+                   "posted": j.get("postedOn") or "",
+                   "url": "https://%s.%s.myworkdayjobs.com/%s" % (tenant, shard, ext)}
+        if len(batch) < 20:
+            return
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--all", action="store_true", help="skip the keyword filter")
@@ -90,6 +117,10 @@ def main():
     todo = [("greenhouse", b, from_greenhouse) for b in GREENHOUSE]
     todo += [("ashby", b, from_ashby) for b in ASHBY]
     todo += [("smartrecruiters", b, from_smartrecruiters) for b in SMARTRECRUITERS]
+    # Workday takes (tenant, shard, site, text); bind it so it matches fn(token)
+    todo += [("workday", "%s:%s" % (w[0], term),
+              (lambda _tok, _w=w, _t=term: from_workday(_w[0], _w[1], _w[2], _t)))
+             for w in WORKDAY for term in WORKDAY_TERMS]
     if args.boards:
         wanted = {b.strip() for b in args.boards.split(",")}
         todo = [t for t in todo if t[1] in wanted]

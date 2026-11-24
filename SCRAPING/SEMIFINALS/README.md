@@ -17,13 +17,15 @@ and no paid infra. **Precision** = does a match mean what it says. **Effort** = 
 | 3 | **SmartRecruiters JSON** | 5 | 5 | 5 | 5 | 5 | **25** | Job feed — **this is where ServiceNow lives** |
 | 4 | **Canada Computers HTML** | 4 | 5 | 5 | 4 | 5 | **23** | Console stock, per-store, GTA |
 | 5 | **Kijiji `__NEXT_DATA__`** | 4 | 5 | 3 | 3 | 5 | **20** | Used/local console listings |
-| 6 | **old.reddit.com JSON** | 4 | 5 | 3 | 5 | 5 | **22** | Local marketplace chatter |
+| 6 | **Workday CXS (POST)** | 5 | 5 | 5 | 3 | 5 | **23** | Job feed — largest enterprise ATS; **GET 400, POST works** |
 | 7 | **Job Bank Canada** | 3 | 4 | **2** | 3 | 5 | **17** | Canadian job coverage — needs a classifier |
 | 8 | **Best Buy availability API** | 5 | 5 | **2** | 5 | 5 | **22** ⚠ | National shipping flag only — see below |
 | 9 | **Amazon.ca (browser)** | 4 | 3 | 5 | 2 | 5 | **19** | Real per-product delivery dates |
 | 10 | **eBay Browse API** | — | 5 | 5 | 4 | 4 | contingent | Needs a free developer key |
 | 11 | **Lever** | — | 5 | 5 | 4 | 5 | contingent | Endpoint real; board tokens unknown |
-| 12 | **Best Buy product pages** | — | — | — | — | — | **eliminated** | Akamai `🐴 Access Denied` |
+| — | **old.reddit.com** | — | — | — | — | — | **eliminated** | **200 but `text/html`** — SPA shell, 0 listings (corrected) |
+| — | **RedFlagDeals RSS** | — | — | — | — | — | **eliminated** | 202 challenge, 2,926 B, 0 items |
+| — | **Best Buy product pages** | — | — | — | — | — | **eliminated** | Akamai `🐴 Access Denied` |
 
 ## Why #8 scores high and still loses
 
