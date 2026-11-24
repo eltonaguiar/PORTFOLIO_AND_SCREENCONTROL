@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 100 |  |
-| 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
-| 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 103 |  |
 | 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 | 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
 | 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 101 |  |
@@ -32,28 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 90 |  |
 | 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 91 |  |
 | 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 75 |  |
+| 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 97 |  |
+| 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 76 |  |
+| 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
 
 ## Latest answers
-
-### round 35 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-**(b) is most likely wrong for prediction markets.** PEAD's death reflects post-2006 market microstructure: faster diffusion, crowded arbitrage, and the mechanical disappearance of slow retail-sized drift. Prediction markets are structurally pre-2006: low liquidity, fragmented attention, no dedicated statistical-arbitrage capital, and event windows measured in hours/days rather than quarters. The "death" is an artifact of the venue, not the underlying behavioral bias.
-
-**Falsifying observation:** On Kalshi/Polymarket, systematically taking the side implied by the surprise direction (e.g., "Will [ticker] beat?") after high-profile earnings events shows a deflated Sharpe (with trial accounting) statistically indistinguishable from zero net of a 12–20 bps round trip across 200+ events with position sizing capped by book depth.
-
-### round 35 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_OPENROUTER
-
-**(b) is most likely wrong for prediction markets.**
-
-PEAD is a *price* anomaly requiring continuous re-pricing of a share. Polymarket/Kalshi contracts are discrete, bounded (0–100¢), and resolved by a dated event — the drift mechanism doesn't map. But the deeper issue: if post-earnings drift is truly dead in the underlying, the *prediction market* version should be even weaker, since the event itself (earnings release) is the resolution trigger, leaving no post-event drift window. Falsify by finding a family of contracts where the market-implied probability *conditional on the earnings outcome* systematically diverges from the subsequent resolution frequency, with the gap exceeding ~15bps after cost, surviving trial-deflated Sharpe across ≥200 resolved contracts.
-
-### round 36 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** Long the single stock with the highest 20-day return, short the lowest, equal dollar, rebalanced every 20 trading days. Hold for 20 days.
-
-**Kill measurement:** Deflated Sharpe ratio (accounting for the number of trials in the parameter grid: lookback ∈ {5,10,20,60}, holding ∈ {5,10,20,60}) net of 16 bps round-trip cost, tested against a 4.3% T-bill hurdle. If the deflated Sharpe < 1.0 over the full out-of-sample window, the test is dead.
-
-**Data:** Daily split-adjusted OHLCV for the Russell 1000 constituents. Free, point-in-time: CRSP (subscription) or free proxies (Yahoo Finance) — but Yahoo is not strictly point-in-time (survivorship bias); use a survivorship-bias-free free source like Compustat/CRSP via an academic subscription, or Kaggle's free historical NYSE/NASDAQ dataset with delisting returns included.
 
 ### round 36 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
 
@@ -78,3 +58,33 @@ PEAD is a *price* anomaly requiring continuous re-pricing of a share. Polymarket
 **Kill measurement:** Deflated Sharpe (Bailey & López de Prado) with trial count = number of parameter combinations tested (lookback windows × thresholds). If DSR < 0.95 after 15bps round-trip cost deduction, the edge is indistinguishable from selection bias given the 4.3% hurdle.
 
 **Data:** Binance 1m klines via API—free, point-in-time reconstructible.
+
+### round 38 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** US Treasury 10-year cash-futures basis trade — long cash note, short cheapest-to-deliver futures, held to delivery.
+
+**Measurement that kills it:** If the net annualized roll (gross basis minus 15 bps round-trip cost, divided by days to delivery) fails to exceed 4.3% T-bill on a point-in-time basis across at least 20 non-overlapping delivery cycles, the edge is dead. If the deflated Sharpe (accounting for all trials run across asset classes) falls below 1.0, it's noise.
+
+**Data required:** CTD conversion factors, cash note prices, futures settlement prices, delivery dates. All free via TreasuryDirect and CME; fully point-in-time reconstructable.
+
+### round 38 - BONDS (govt and credit) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** Long-only 2–10yr US Treasury portfolio, monthly rebalanced to constant 5-year duration, versus 4.3% T-bill hurdle, net of 16 bps round-trip.
+
+**Kill measurement:** Deflated Sharpe ratio (DSR with trial accounting, e.g. 8 trials) of the excess-return series over T-bills falls below 0.5 after costs. If DSR < 0.5, the edge is indistinguishable from luck at this cost level.
+
+**Data:** FRED daily Treasury par yield curve (free, point-in-time). Monthly bond total returns from constant-maturity yields; no look-ahead.
+
+### round 38 - BONDS (govt and credit) - idea - pollinations
+
+**Test**: “Benchmark‑adjusted yield curve up‑re‑versal.”  
+- **Procedure**: At 10‑am on a business day, run all two‑to‑five‑year U.S. Treasury‑bond ETFs and their contemporaneous 3‑, 5‑, and 10‑year Treasuries. Compute the 3‑year‑to‑5‑year yield spread and the 5‑year‑to‑10‑year yield spread.  
+- **Kill Criterion**: If the ratio  
+\[
+\frac{\text{3‑yr‑5‑yr spread}}{\text{5‑yr‑10‑yr spread}}
+\]
+falls below 0.25 **exactly** on the day the portfolio’s deflated Sharpe turns zero, the test fails.  
+- **Data Needed**: Daily mid‑price yields (T‑Bill: 4.3 %); Treasury futures/ETFs; free from Bloomberg Free/​Yahoo Finance.  
+- **Cost Level**: 12–20 bps round‑trip on liquid 3‑ to 10‑yr Treasuries.  
+
+If the spread‑ratio ever dips below 0.25 on a Sharpe‑zero day, the bond gamble is statistically invalidated.
