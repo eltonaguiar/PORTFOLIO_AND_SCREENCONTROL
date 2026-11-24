@@ -2,9 +2,9 @@
   "item": "E8 — publish the first honest read at n>=30 per tier",
   "owner": "H",
   "gate": "G5 (provenance/tracking)",
-  "run_at": "2026-11-24T07:47:00-05:00",
-  "run_at_utc": "2026-11-24T12:47:00Z",
-  "git_hash": "e0a5988",
+  "run_at": "2026-11-24T09:59:40-05:00",
+  "run_at_utc": "2026-11-24T14:59:40Z",
+  "git_hash": "16f70aeb7e9c3727783920eb81f654f7b93b236e",
   "status": "BLOCKED — not done; left unchecked in TODO",
   "precondition": "E4 agent picks >= 5 per tier landed in the real per-tier books (results/paper_book_{stable,moderate,aggressive}.jsonl)",
   "observed": {
@@ -13,7 +13,7 @@
     "aggressive": 0,
     "total_resolved": 0
   },
-  "source": "direct `python 04-investment-strategy/paper_book.py score` run (no --tier, all three real tier books) at 2026-11-24T12:47 UTC, exit 0; real tier books do not exist on disk under 04-investment-strategy/results/ or 03-trading-strategies/results/ -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json (run_at 2026-11-24T12:47:00Z, git_hash e0a5988); E4 agent picks (CP/ZOO/KILO/AG) still not landed per COMS check 12:45Z.",
+  "source": "direct `python 04-investment-strategy/paper_book.py score` run (no --tier, all three real tier books) at 2026-11-24T14:59:40Z, exit 0; stable/moderate/aggressive all n=0, INSUFFICIENT_DATA; real tier books do not exist on disk under 04-investment-strategy/results/ or 03-trading-strategies/results/ -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json (run_at 2026-11-24T14:59:40Z, git_hash 16f70ae); E4 agent picks (CP/ZOO/KILO/AG) still not landed per COMS check 14:45Z.",
   "verdict": "Cannot publish an honest n>=30 read per tier; books are empty pending E4 agent picks (CP/ZOO/KILO/AG). Will not fabricate. Re-evaluate E8 once E4 lands; E5 score run then becomes the E8 read if n>=30 per tier.",
   "artifact": "03-trading-strategies/results/e8_blocked_n0_per_tier.json"
 }
