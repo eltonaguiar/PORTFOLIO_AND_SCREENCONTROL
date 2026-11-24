@@ -1,0 +1,88 @@
+{
+  "chrome": {
+    "ja3_unique": [
+      "7652701827673c25707111b1912c9841",
+      "c2cdbcfa8068b3ed9ff627d38ee931fc",
+      "d5d85f0fb27b285b496b9780e30fc54d"
+    ],
+    "ja3_n": 3,
+    "ja4_unique": [
+      "t13d1516h2_8daaf6152771_806a8c22fdea"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  },
+  "chrome110": {
+    "ja3_unique": [
+      "5267884792469d144893a10824ee5a0d",
+      "8f0931677fa0e37f74730b2621327706",
+      "a2a898538079bca04e985c746e6399c7"
+    ],
+    "ja3_n": 3,
+    "ja4_unique": [
+      "t13d1516h2_8daaf6152771_e5627efa2ab1"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  },
+  "chrome120": {
+    "ja3_unique": [
+      "68f1f3b83414921eb1c4439e441528d5",
+      "b361824e79f827be816e0bd6163b6c69",
+      "d7ef7aee85ddc6402d9d942807ce9dab"
+    ],
+    "ja3_n": 3,
+    "ja4_unique": [
+      "t13d1516h2_8daaf6152771_02713d6af862",
+      "t13d1517h2_8daaf6152771_b1ff8ab2d16f"
+    ],
+    "ja4_n": 2,
+    "errors": []
+  },
+  "chrome124": {
+    "ja3_unique": [
+      "18ee2a7e5eb35f88738945fd924acfef",
+      "6b8fbd0b8430dce4a9a6d3df4193c33d",
+      "6bc8f018a0610f21ebdd3004618e4295"
+    ],
+    "ja3_n": 3,
+    "ja4_unique": [
+      "t13d1516h2_8daaf6152771_02713d6af862"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  },
+  "safari17_0": {
+    "ja3_unique": [
+      "773906b0efdefa24a7f2b8eb6985bf37"
+    ],
+    "ja3_n": 1,
+    "ja4_unique": [
+      "t13d2014h2_a09f3c656075_14788d8d241b"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  },
+  "firefox133": {
+    "ja3_unique": [
+      "2d692a4485ca2f5f2b10ecb2d2909ad3"
+    ],
+    "ja3_n": 1,
+    "ja4_unique": [
+      "t13d1716h2_5b57614c22b0_eeeea6562960"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  },
+  "edge101": {
+    "ja3_unique": [
+      "cd08e31494f9531f560d64c695473da9"
+    ],
+    "ja3_n": 1,
+    "ja4_unique": [
+      "t13d1516h2_8daaf6152771_e5627efa2ab1"
+    ],
+    "ja4_n": 1,
+    "errors": []
+  }
+}
