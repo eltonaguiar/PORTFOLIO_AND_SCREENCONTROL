@@ -1,0 +1,118 @@
+{
+ "cell": "BONDS/constant_duration_5y/1m",
+ "pre_registered": {
+  "series": [
+   "DGS5",
+   "TB3MS"
+  ],
+  "start": "1962-01",
+  "duration_years": 5.0,
+  "cost_round_trip_bps": 16.0,
+  "trials_declared": 528,
+  "kill_rules": [
+   "K1 mean excess <= 0",
+   "K2 Sharpe < 0.30",
+   "K3 Bonferroni p > 0.05 at 528 trials"
+  ]
+ },
+ "n_months": 777,
+ "window": [
+  "1962-02",
+  "2026-10"
+ ],
+ "ann_excess_bp": 84.42,
+ "ann_vol_pct": 6.551,
+ "sharpe": 0.1289,
+ "t_stat": 1.037,
+ "p_raw": 0.2997433938329612,
+ "p_bonferroni_528": 1.0,
+ "bootstrap_ci95_ann_excess_bp": [
+  -75.27,
+  243.08
+ ],
+ "k1_mean_le_zero": false,
+ "k2_sharpe_lt_030": true,
+ "k3_padj_gt_005": true,
+ "verdict": "KILL",
+ "known_bias": "linear duration approximation ignores convexity; convexity is positive, so a large move is understated in both directions - this does not tilt the mean, and it is recorded here rather than corrected after seeing the result.",
+ "cost_basis": "16bp/12 per month, i.e. one round trip per YEAR spread evenly. A true monthly rebalance to constant duration trades every month and would cost 16bp x 12; that harsher variant is reported in cost_sensitivity below.",
+ "generated_at": "2026-11-24T01:47:22+00:00",
+ "sample": [
+  {
+   "month": "1962-02",
+   "y_prev": 0.0399,
+   "y": 0.0377,
+   "carry": 0.003325,
+   "price": 0.011,
+   "cost": 0.000133,
+   "r": 0.014192,
+   "tbill": 0.002275,
+   "excess": 0.011917
+  },
+  {
+   "month": "1962-03",
+   "y_prev": 0.0377,
+   "y": 0.0361,
+   "carry": 0.003142,
+   "price": 0.008,
+   "cost": 0.000133,
+   "r": 0.011008,
+   "tbill": 0.002267,
+   "excess": 0.008742
+  },
+  {
+   "month": "1962-04",
+   "y_prev": 0.0361,
+   "y": 0.0364,
+   "carry": 0.003008,
+   "price": -0.0015,
+   "cost": 0.000133,
+   "r": 0.001375,
+   "tbill": 0.002275,
+   "excess": -0.0009
+  },
+  {
+   "month": "2026-08",
+   "y_prev": 0.0445,
+   "y": 0.0449,
+   "carry": 0.003708,
+   "price": -0.002,
+   "cost": 0.000133,
+   "r": 0.001575,
+   "tbill": 0.0031,
+   "excess": -0.001525
+  },
+  {
+   "month": "2026-09",
+   "y_prev": 0.0449,
+   "y": 0.0509,
+   "carry": 0.003742,
+   "price": -0.03,
+   "cost": 0.000133,
+   "r": -0.026392,
+   "tbill": 0.003283,
+   "excess": -0.029675
+  },
+  {
+   "month": "2026-10",
+   "y_prev": 0.0509,
+   "y": 0.0471,
+   "carry": 0.004242,
+   "price": 0.019,
+   "cost": 0.000133,
+   "r": 0.023108,
+   "tbill": 0.003375,
+   "excess": 0.019733
+  }
+ ],
+ "cost_sensitivity": {
+  "monthly_rebalance_16bp_each_month": {
+   "ann_excess_bp": -91.58,
+   "sharpe": -0.1398
+  },
+  "zero_cost": {
+   "ann_excess_bp": 100.42,
+   "sharpe": 0.1533
+  }
+ }
+}
