@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T09:16 | 46 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T09:16 | 46 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T09:16 | 46 | CRYPTO (spot and perp) | crosscheck | pollinations | 200 | 77 |  |
 | 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T10:17 | 47 | BONDS (govt and credit | crosscheck | pollinations | 200 | 51 |  |
@@ -32,24 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T16:23 | 53 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T16:23 | 53 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T16:23 | 53 | PREDICTION MARKETS (Po | crosscheck | pollinations | 200 | 90 |  |
+| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | pollinations | 200 | 134 |  |
 
 ## Latest answers
-
-### round 52 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 52 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 52 - OPTIONS (equity index) - crosscheck - pollinations
-
-**Claim likely wrong:**  
-(b) *Large‑cap post‑earnings drift has been dead since about 2006.*
-
-**Observation that would falsify it:**  
-On a 3‑yr rolling look‑back, a trend‑statistical test (e.g., a 95 % confidence level t‑test) finds that the drift of large‑cap equity‑index options (ATM vanillas) after earnings ex‑dividend dates is positive and statistically significant, yielding an excess implied expected return of at least 30 bps net of a 15 bps round‑trip cost. Such a result would prove that the drift has revived and is still harvestable.
 
 ### round 53 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -64,3 +48,21 @@ On a 3‑yr rolling look‑back, a trend‑statistical test (e.g., a 95 % conf
 **Claim most likely wrong:** (b) *“Large‑cap post‑earnings drift has been dead since about 2006.”*
 
 **Falsifying observation:** A statistically significant, risk‑adjusted excess return (at least +25 bps net of the 12‑20 bps round‑trip on Polymarket/Kalshi) from a systematic, high‑frequency post‑earnings trade on large‑cap stocks that persists for a full calendar year without obvious arbitrage exploitation or regime change. The strategy would need to survive detailed back‑testing, live paper‑trail execution, and stress testing against major earnings calendar shocks, thereby proving that the drift still exists and can be captured through prediction markets.
+
+### round 54 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 54 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 54 - STOCKS (single-name equity, long/short) - idea - pollinations
+
+**Test**: *London Stock Exchange vs. Nikkei 225 – “Momentum‑Book‑Spread”*:  
+- For each overnight session, compute the ratio of the daily closing price change to the overnight bid‑ask midpoint spread *on the LSE* and compare it with the same ratio on the Nikkei 225.  
+- The anomaly survives if the LSE ratio exceeds the Nikkei ratio by more than **+3%** on ≥60% of trading days over a 12‑month period after deducting a 15‑bps round‑trip cost.
+
+**Kill‑Measure**: The test is invalidated if the *mean* ratio on the LSE falls below the Nikkei ratio by ≥1% on >20% of days, indicating either wider spreads or weaker momentum.
+
+**Data**: Daily LSE closing prices, bid‑ask midpoints (free from Yahoo Finance “FinViz” API), daily Nikkei 225 closing prices (free via Yahoo Finance). All data are point‑in‑time, free, and publicly available.
