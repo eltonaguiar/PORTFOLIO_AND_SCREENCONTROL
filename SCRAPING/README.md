@@ -12,6 +12,7 @@ Akamai wall are recorded as failures, not quietly dropped — the failures are t
 |---|---|
 | `SOURCES.md` | **Every source probed**, with HTTP status, payload size, and verdict |
 | `LESSONS.md` | **Failure modes** — the bugs that produce confident wrong answers |
+| `EXTERNAL_ADVICE_AUDIT.md` | **Thirteen AI answers scored against live tests** — which advice survived contact |
 | `SEMIFINALS/` | Compiled shortlist: candidates that passed a first probe, with trade-offs |
 | `FINALS/` | **Endorsed solutions** — the ones that returned real data, plus runnable scripts |
 
