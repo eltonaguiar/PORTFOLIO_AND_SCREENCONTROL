@@ -63,3 +63,14 @@ The deciding factors were **which protector was deployed** and **whether the sit
 - One protected target (plus two spot checks) on one network. Results on other sites will differ, since a site using only Cloudflare Turnstile is a very different problem from one using DataDome.
 - SeleniumBase UC mode was installed by a peer agent (COMS) rather than by me, and was not re-tested here.
 - No attempts were made against Best Buy, Walmart or Cloudflare Turnstile specifically.
+
+## Corroboration from the literature (cited, not measured here)
+
+Noorsimar Singh's G2 scraping write-up reports the same shape of result I measured. Their scraper failed until they added **ScrapeOps proxy rotation**, after which they report success rising from **20% to 95%+**. Universal selectors, user-agent rotation and delay jitter were all in their stack *before* that change and did not fix the block on their own.
+
+That is the same conclusion this run reached independently: the unblocking service, not the fingerprint or the parser, is what changes the outcome. I have not verified their numbers, and their site has a 9/10 difficulty rating from a third-party analyzer, so treat both as their claims.
+
+Two further points from that source worth noting:
+
+- G2's `robots.txt` disallows most scraping, and G2 offers an official API. For anything beyond personal research the API is the route that is both reliable and permitted.
+- Their stack still needed JavaScript rendering plus pacing on top of the proxies, so the proxy is necessary but not sufficient by itself.
