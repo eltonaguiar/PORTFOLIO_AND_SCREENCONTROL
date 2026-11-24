@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 35 — 2026-11-23 (20:41 EST / cron run) — `hermes` (Session B, cron queue axis)
+Question: F2 — does the band-rebalancing logic implement the ±5% absolute rule (calendar/signal-agnostic), and what is the rebalance cost at 5 bp/side?
+
+|||
+||| time (UTC) | status | item | artifact ||
+|||---|---|---|---||
+|||| cron | DONE | F2 — `04-investment-strategy/rebalance.py`: band rebalancing on ±5pp absolute (calendar/signal-agnostic) with 5 bp/side cost. Worked example: Stable equity +6pp drift → BUY cash 6pp / SELL equity 6pp, cost 0.6 bp of portfolio per event, balanced. In-band control (+4pp) → no trade, 0 bp. Self-checks: all 3 portfolios sum to 100, trades net to zero, cost == 0.6 bp. | `04-investment-strategy/rebalance.py` · `04-investment-strategy/results/f2_rebalance_manifest.json` |
+
 ## Session 34 — 2026-11-23 (19:37 EST / cron run) — `hermes` (Session B, cron queue axis)
 Question: F1 — are the three framework portfolio templates faithfully rendered as a single runnable portfolios.json with weights and instruments, and do the weights sum to 100% per portfolio?
 ||

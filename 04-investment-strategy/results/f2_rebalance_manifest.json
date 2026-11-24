@@ -1,0 +1,91 @@
+{
+  "rule": "Rebalance on bands (+/-5% absolute), not on a calendar, and never on a signal from this programme until something passes G1-G5.",
+  "band_pp": 5.0,
+  "cost_bp_per_side": 5.0,
+  "examples": [
+    {
+      "portfolio": "Stable / low-risk",
+      "scenario": "equity +6 pp drift, cash -6 pp, bonds unchanged",
+      "currents_pct": {
+        "Cash & T-bills / HISA": 49.0,
+        "Short-duration govt bonds": 25.0,
+        "Broad equity": 26.0
+      },
+      "targets_pct": {
+        "Cash & T-bills / HISA": 55,
+        "Short-duration govt bonds": 25,
+        "Broad equity": 20
+      },
+      "trades": [
+        {
+          "sleeve": "Cash & T-bills / HISA",
+          "target_pct": 55,
+          "current_pct": 49.0,
+          "drift_pp": -6.0,
+          "side": "buy",
+          "trade_pp": 6.0
+        },
+        {
+          "sleeve": "Broad equity",
+          "target_pct": 20,
+          "current_pct": 26.0,
+          "drift_pp": 6.0,
+          "side": "sell",
+          "trade_pp": 6.0
+        }
+      ],
+      "cost": {
+        "buy_notional_pp": 6.0,
+        "sell_notional_pp": 6.0,
+        "balanced": true,
+        "cost_bp_per_side": 5.0,
+        "cost_bp_of_portfolio_per_event": 0.6
+      },
+      "weights_sum_100_before": true,
+      "weights_sum_100_after": true
+    },
+    {
+      "portfolio": "Stable / low-risk",
+      "scenario": "equity +4 pp drift (inside +/-5pp band) -> no rebalance",
+      "currents_pct": {
+        "Cash & T-bills / HISA": 51.0,
+        "Short-duration govt bonds": 25.0,
+        "Broad equity": 24.0
+      },
+      "targets_pct": {
+        "Cash & T-bills / HISA": 55,
+        "Short-duration govt bonds": 25,
+        "Broad equity": 20
+      },
+      "trades": [],
+      "cost": {
+        "buy_notional_pp": 0,
+        "sell_notional_pp": 0,
+        "balanced": true,
+        "cost_bp_per_side": 5.0,
+        "cost_bp_of_portfolio_per_event": 0.0
+      },
+      "no_trade_because_in_band": true
+    }
+  ],
+  "self_checks": {
+    "Stable / low-risk": {
+      "sleeves": 3,
+      "weights_sum_pct": 100,
+      "sums_to_100": true
+    },
+    "Moderate": {
+      "sleeves": 4,
+      "weights_sum_pct": 100,
+      "sums_to_100": true
+    },
+    "Aggressive": {
+      "sleeves": 4,
+      "weights_sum_pct": 100,
+      "sums_to_100": true
+    },
+    "all_portfolios_sum_to_100": true,
+    "worked_trades_net_to_zero": true,
+    "worked_cost_0_6_bp": true
+  }
+}
