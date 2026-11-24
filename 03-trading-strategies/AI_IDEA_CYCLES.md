@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 17 |  |
-| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
-| 2026-11-24T05:11 | 42 | COMMODITIES (energy, m | idea | pollinations | 200 | 104 |  |
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T06:12 | 43 | OPTIONS (equity index) | idea | pollinations | 200 | 113 |  |
@@ -32,22 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T12:19 | 49 | MUTUAL FUNDS (active a | crosscheck | pollinations | 200 | 57 |  |
+| 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-24T13:20 | 50 | FOREX (majors and cros | crosscheck | pollinations | 200 | 98 |  |
 
 ## Latest answers
-
-### round 48 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 48 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 48 - ETFS (sector, factor, cross-asset) - crosscheck - pollinations
-
-**Claim most likely wrong:** (c) *Value is the last untested family.*
-
-**Observation that would falsify it:** In a multi‑year back‑test of a liquid value‑ETF index (e.g., CRSP value factor), the net excess return after deducting a 15 bps round‑trip cost exceeds the 4.3 % T‑bill benchmark by at least 1 % per annum over five consecutive years. The cumulative excess would remain above the 4.3 % hurdle after adjusting for a 12–20 bps cost, proving that value can produce harvestable premia in a liquid ETF strategy.
 
 ### round 49 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -62,3 +48,17 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Claim most likely wrong:** (c) *“Value is the last untested family.”*  
 
 **Concrete falsifier:** a multi‑year, cost‑adjusted study of active and indexed value funds showing a mean annual excess return of ≥ 0.5 % over the 4.3 % T‑bill, after round‑trip costs of 12‑20 bps and gate‑based Sharpe deflation, would demonstrate that value has, in fact, been validated.
+
+### round 50 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 50 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 50 - FOREX (majors and crosses) - crosscheck - pollinations
+
+**Claim most likely wrong for majors/crosses: (a) “gross edge ≈ round‑trip; premia unharvestable at retail cost.”**
+
+**Observation that would falsify it:** In a 3‑year backtest on major USD‑pairs (EUR/USD, GBP/USD, USD/JPY) using a 50‑day moving‑average cross on a 5‑minute data set, the strategy returns a 7 % annual net of revenue‑service fees but only 4 % before transaction costs (12 bps round‑trip). The gross edge (≈ 3 %) far exceeds the purported “≈ round‑trip” claim, delivering a deflated Sharpe of 0.55 against a 4.3 % T‑bill. Such a persistent > 3 bps gross edge would falsify claim (a).
