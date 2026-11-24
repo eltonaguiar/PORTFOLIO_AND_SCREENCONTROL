@@ -3,6 +3,15 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 38 — 2026-11-24 (06:18 UTC / 01:18 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: E8 — can the first honest read be published at n>=30 per tier? F5 — what is the verified CAD/USD conversion cost for a Canadian account buying US names, versus CDR/hedged alternatives?
+
+||||||
+|||||| time (UTC) | status | item | artifact ||
+||||||---|---|---|---|---
+|||||| cron | BLOCKED | E8 — first honest read at n>=30 per tier: real tier books stable/moderate/aggressive all n=0 (e5 scorecard INSUFFICIENT_DATA at 2026-11-23T23:35 UTC); E4 agent picks (CP/ZOO/KILO/AG) not landed; nothing fabricated, item left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` ||
+|||||| cron | DONE | F5 — FX trap documented: Questrade CAD<->USD conversion verified at 1.5% per way (~3.0% round trip per US name; invest.questrade.com fee schedule, footnote updated 2023-11-18, fetched 2026-11-24); the TODO 1.75% figure was an unchecked ASSUMED figure, now corrected and tagged ASSUMED/stale. Alternatives: Norbert gambit DLR.TO/DLR.U.TO ~0.1-0.4% effective (third-party guides); CDRs in CAD with embedded notional FX hedge (cdr.cibc.com directory, Cboe brochure); dual-currency USD holding; hedged CAD ETFs (~0.1% MER class, ASSUMED). Trap real for short holding periods. | `04-investment-strategy/f5_fx_trap.md` · `03-trading-strategies/results/f5_fx_trap.json` ||
+
 ## Session 37 — 2026-11-24 (05:07 UTC / 00:07 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: F4 — what would each portfolio template have returned 2010-2026 net of MER and band rebalancing, using free data?
 

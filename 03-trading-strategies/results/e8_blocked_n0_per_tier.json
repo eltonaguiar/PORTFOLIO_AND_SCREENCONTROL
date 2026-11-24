@@ -1,0 +1,19 @@
+{
+  "item": "E8 — publish the first honest read at n>=30 per tier",
+  "owner": "H",
+  "gate": "G5 (provenance/tracking)",
+  "run_at": "2026-11-24T06:18:00-05:00",
+  "run_at_utc": "2026-11-24T11:18:00Z",
+  "git_hash": "3e986ac",
+  "status": "BLOCKED — not done; left unchecked in TODO",
+  "precondition": "E4 agent picks >= 5 per tier landed in the real per-tier books (results/paper_book_{stable,moderate,aggressive}.jsonl)",
+  "observed": {
+    "stable": 0,
+    "moderate": 0,
+    "aggressive": 0,
+    "total_resolved": 0
+  },
+  "source": "e5 scorecard results/e5_weekly_scorecard_latest.json (run 2026-11-23T23:35 UTC) and line counts of paper_book_*.jsonl — all three books empty",
+  "verdict": "Cannot publish an honest n>=30 read per tier; books are empty pending E4 agent picks (CP/ZOO/KILO/AG). Will not fabricate. Re-evaluate E8 once E4 lands; E5 score run then becomes the E8 read if n>=30 per tier.",
+  "artifact": "03-trading-strategies/results/e8_blocked_n0_per_tier.json"
+}
