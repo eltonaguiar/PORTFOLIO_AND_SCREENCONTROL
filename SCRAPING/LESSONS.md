@@ -198,3 +198,36 @@ Craigslist RSS, which is a hard 403.
 **Rule:** judge advice by whether its specific claims survive a probe, not by whether its tone matches your
 priors. Length and specificity are not quality signals on their own — but a named URL is falsifiable, and a
 principle is not.
+
+---
+
+## 15. Anti-bot technique is target-specific, and the cheapest method usually wins
+
+Measured across six retail targets with seven methods
+(`ANTIGRAVITY_KIT_2026-11-24/REVIEW_AND_VERIFICATION.md`). There is no "best scraper", only a best first
+attempt:
+
+| Target | plain curl | `curl_cffi` (TLS) | Playwright headful | apex winning method |
+|---|---|---|---|---|
+| Best Buy ecomm-api | **200** | 200 | — | plain HTTP is enough |
+| Amazon.ca search | **200, 1.98 MB** | 200 but 2.2 KB bot shell | — | plain curl |
+| Staples search | 403 | **200, full 396 KB page** | 200, shell only 9.2 KB | `curl_cffi` |
+| Walmart search | 403 | 200 but 7.5 KB challenge | **200, 50 products** | Playwright headful |
+| Memory Express | 403 | 403 challenge | 403 | **none — blocked** |
+| GameStop | 000 | DNSError | timeout | host unreachable |
+
+**Three rules, each from a row above.**
+
+1. **Probe with `curl_cffi` before launching a browser.** TLS/JA3 impersonation in a plain HTTP client took
+   Staples from `403` to a complete page; Playwright on the same target got a 9.2 KB shell. Two of the three
+   wins here needed no browser at all.
+2. **If a browser is genuinely needed, it must be the installed Chrome headful with a persistent profile —
+   never the Playwright headless shell.** The headless shell is fingerprinted; `channel="chrome"` headful
+   returned 50 real products from Walmart where the shell returned a challenge.
+3. **Know when the block is on the data endpoint rather than the document.** Memory Express served its page
+   to nodriver (real title, ~2.5 KB body) while its search-results API returned `403` to all five methods.
+   No amount of evasion fixes that. Record it blocked and spend the effort elsewhere.
+
+**Corollary:** `patchright` gave no measurable advantage over plain Playwright where both were tried, and
+"untested" is not "disproven" — Camoufox, CloakBrowser, Skyvern and browser-use remain untried.
+

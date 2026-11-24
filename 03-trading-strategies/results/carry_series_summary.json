@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T16:32:27.053662+00:00",
+  "generated_at": "2026-11-24T17:31:35.681133+00:00",
   "source": "results/carry_roundtrip.jsonl",
   "reference": {
     "note": "Mercury3 snapshot: 42.64 bp median round trip, n = 5, ~94% pure fees. This repo's series is a separate live measurement; not forced to match.",
@@ -31,7 +31,7 @@
   },
   "funding_bps": {
     "n": 371,
-    "median": 0.1335,
+    "median": 0.1348,
     "min": -1.9398,
     "max": 1.0
   },
@@ -66,13 +66,13 @@
       },
       "carry_net_bps": {
         "n": 53,
-        "median": -9.7342,
+        "median": -9.7202,
         "min": -11.8921,
         "max": -9.3649
       },
       "funding_bps": {
         "n": 53,
-        "median": 0.2825,
+        "median": 0.2963,
         "min": -0.1226,
         "max": 0.6514
       }
@@ -108,13 +108,13 @@
         "n": 53,
         "median": -10.3921,
         "min": -11.7658,
-        "max": -9.8327
+        "max": -9.6859
       },
       "funding_bps": {
         "n": 53,
         "median": -0.3262,
         "min": -0.7779,
-        "max": 0.2928
+        "max": 0.3735
       }
     },
     "LINK/USDT:USDT": {
@@ -133,7 +133,7 @@
       "funding_bps": {
         "n": 53,
         "median": 0.2544,
-        "min": -0.6788,
+        "min": -1.0587,
         "max": 1.0
       }
     },
@@ -179,5 +179,5 @@
     }
   },
   "first_ts": "2026-11-22T11:35:21.184373+00:00",
-  "last_ts": "2026-11-24T16:32:26.299919+00:00"
+  "last_ts": "2026-11-24T17:31:35.078382+00:00"
 }
