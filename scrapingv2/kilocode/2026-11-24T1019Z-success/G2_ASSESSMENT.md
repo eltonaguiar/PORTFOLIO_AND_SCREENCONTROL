@@ -33,3 +33,15 @@ challenge. Compliant paths: **G2's official API/partnership** or a **licensed da
 - **Walmart**: embedded `__NEXT_DATA__` → 48 items with name/price/url.
 - **Canada Computers**: ordinary 200 page.
 See `SUCCESS.md` in this folder for numbers and scripts.
+
+## Follow-up: "headful fixes it" — tested, and it does not (here)
+One request per mode, patchright 1.63.0, no cookies/profile, same IP, 12 s apart:
+
+| Mode | HTTP | UA | `navigator.webdriver` | bytes |
+|---|---|---|---|---|
+| headless | **403** | `HeadlessChrome/153.0.8010.12` | false | 2,769 |
+| headful (Xvfb) | **403** | `Chrome/153.0.0.0` | false | 2,769 |
+
+Headful removes the `Headless` token from the UA but the block is unchanged — it is
+IP/reputation/DataDome-side, not just the headless flag. So the advice "run headful
+and it works" is **not supported on this host/IP**. `t26_g2_mode.py` reproduces it.
