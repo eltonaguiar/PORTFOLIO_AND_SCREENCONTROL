@@ -8,8 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 84 |  |
-| 2026-11-23T12:38 | 25 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 200 | 88 |  |
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 100 |  |
 | 2026-11-23T13:39 | 26 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
 | 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 103 |  |
@@ -32,21 +30,10 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-23T22:55 | 35 | PREDICTION MARKETS (Po | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 110 |  |
 | 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 120 |  |
 | 2026-11-23T23:56 | 36 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 200 | 90 |  |
+| 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 91 |  |
+| 2026-11-24T00:57 | 37 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 200 | 75 |  |
 
 ## Latest answers
-
-### round 34 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-> WARNING: echo-suspect (mostly repeats the prompt). Do not use.
-
-Claim (a) is most likely wrong for equity index options. Its "gross edge ≈ round trip" arithmetic assumes the edge is a static, harvestable spread; for index options, the edge is in the variance risk premium, whose magnitude (typically 200–400 bps annualized) dwarfs 12–20 bps round-trip cost. The claim conflates the *level* of a premium with its *harvestability*. Falsifying observation: a deflated-Sharpe (with trial accounting) for a short-dated, delta-hedged straddle/short-vol program on SPX, net of 12–20 bps round trips, that clears the gate versus 4.3% T-bills. Every prior class failed; this is the one where gross edge plausibly exceeds cost by an order of magnitude, so (a) is the weakest link.
-
-### round 34 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
-
-## Claim most likely wrong: (a) — "gross edge ≈ round trip, so most premia are unharvestable"
-
-**Why it's the weakest for index options:** The 12–20 bps round-trip is a *spot/linear* cost. Index options embed a variance risk premium that is structurally large: realized-vs-implied vol gaps on SPX run 2–4 vol points annually, i.e. roughly 150–300 bps of gross carry in short-dated straddles or put-overwrites. That's an order of magnitude above the stated cost band — the premise "edge ≈ cost" doesn't hold for vol-selling, which is the dominant documented option premium.
-
-**Falsifying observation:** Net of 12–20 bps, a deflated Sharpe (trial-accounted) on a delta-hedged short-vol sleeve that fails to clear the 4.3% T-bill hurdle — i.e. the gross VR gap is fully consumed by hedging slippage, gap risk, and margin, not by the quoted round trip.
 
 ### round 35 - PREDICTION MARKETS (Polymarket / Kalshi) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -75,3 +62,19 @@ PEAD is a *price* anomaly requiring continuous re-pricing of a share. Polymarket
 **Data:** CRSP daily/monthly returns, delisting returns, share prices, shares outstanding. Free via WRDS (not point-in-time; survivorship bias inflates results). Point-in-time Compustat for market cap. CRSP delisting returns critical—ignoring them overstates short-leg returns.
 
 **Kill measurement:** Deflated Sharpe ratio (accounting for ~1 trial) falls below 0 after 12-20 bps round-trip cost applied per rebalance, and net CAGR underperforms 4.3% T-bill over the full period. If gross Sharpe < ~0.6, costs consume the edge entirely.
+
+### round 37 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
+
+**Test:** On Binance BTCUSDT perp, enter long when 1h return > +2σ (σ = rolling 20d 1h vol, updated once daily at 00:00 UTC from prior 480 hourly closes), exit on next hourly close. Short symmetric. 2019–2024.
+
+**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) with trial count = number of distinct parameter sets examined across all prior tests in this programme < 1.0, or net-of-15bps CAGR ≤ 4.3% T-bill.
+
+**Data:** Binance hourly klines + funding. Free via Binance public API. Point-in-time: yes, but funding history before 2020 is incomplete—exclude or flag.
+
+### round 37 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
+
+**Test:** On Binance BTCUSDT perp, enter long when 15m realized vol (Parkinson, 30-bar) crosses above its 200-bar median, exit on cross below. Daily rebalance, 2019-2024.
+
+**Kill measurement:** Deflated Sharpe (Bailey & López de Prado) with trial count = number of parameter combinations tested (lookback windows × thresholds). If DSR < 0.95 after 15bps round-trip cost deduction, the edge is indistinguishable from selection bias given the 4.3% hurdle.
+
+**Data:** Binance 1m klines via API—free, point-in-time reconstructible.
