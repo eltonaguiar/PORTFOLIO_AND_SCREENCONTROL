@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-23T14:40 | 27 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 99 |  |
-| 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 116 |  |
-| 2026-11-23T15:41 | 28 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 101 |  |
 | 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 131 |  |
 | 2026-11-23T16:42 | 29 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 200 | 105 |  |
 | 2026-11-23T17:43 | 30 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 200 | 111 |  |
@@ -32,32 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 200 | 97 |  |
 | 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 200 | 76 |  |
 | 2026-11-24T01:43 | 38 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
+| 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | ERR | 3 |  |
+| 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | ERR | 17 |  |
+| 2026-11-24T02:07 | 39 | ETFS (sector, factor,  | idea | pollinations | 200 | 124 |  |
 
 ## Latest answers
-
-### round 36 - STOCKS (single-name equity, long/short) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** Long S&P 500 constituents with 12-month momentum in top quintile, short bottom quintile, monthly rebalance, 25-year backtest.
-
-**Data:** CRSP daily/monthly returns, delisting returns, share prices, shares outstanding. Free via WRDS (not point-in-time; survivorship bias inflates results). Point-in-time Compustat for market cap. CRSP delisting returns critical—ignoring them overstates short-leg returns.
-
-**Kill measurement:** Deflated Sharpe ratio (accounting for ~1 trial) falls below 0 after 12-20 bps round-trip cost applied per rebalance, and net CAGR underperforms 4.3% T-bill over the full period. If gross Sharpe < ~0.6, costs consume the edge entirely.
-
-### round 37 - CRYPTO (spot and perp) - idea - ULTRA_FREE_CLOUD_LARGE
-
-**Test:** On Binance BTCUSDT perp, enter long when 1h return > +2σ (σ = rolling 20d 1h vol, updated once daily at 00:00 UTC from prior 480 hourly closes), exit on next hourly close. Short symmetric. 2019–2024.
-
-**Kill measurement:** Deflated Sharpe (Bailey–López de Prado) with trial count = number of distinct parameter sets examined across all prior tests in this programme < 1.0, or net-of-15bps CAGR ≤ 4.3% T-bill.
-
-**Data:** Binance hourly klines + funding. Free via Binance public API. Point-in-time: yes, but funding history before 2020 is incomplete—exclude or flag.
-
-### round 37 - CRYPTO (spot and perp) - idea - ULTRA_FREE_OPENROUTER
-
-**Test:** On Binance BTCUSDT perp, enter long when 15m realized vol (Parkinson, 30-bar) crosses above its 200-bar median, exit on cross below. Daily rebalance, 2019-2024.
-
-**Kill measurement:** Deflated Sharpe (Bailey & López de Prado) with trial count = number of parameter combinations tested (lookback windows × thresholds). If DSR < 0.95 after 15bps round-trip cost deduction, the edge is indistinguishable from selection bias given the 4.3% hurdle.
-
-**Data:** Binance 1m klines via API—free, point-in-time reconstructible.
 
 ### round 38 - BONDS (govt and credit) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -88,3 +64,23 @@ falls below 0.25 **exactly** on the day the portfolio’s deflated Sharpe turns 
 - **Cost Level**: 12–20 bps round‑trip on liquid 3‑ to 10‑yr Treasuries.  
 
 If the spread‑ratio ever dips below 0.25 on a Sharpe‑zero day, the bond gamble is statistically invalidated.
+
+### round 39 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_CLOUD_LARGE
+
+TimeoutError: timed out
+
+### round 39 - ETFS (sector, factor, cross-asset) - idea - ULTRA_FREE_OPENROUTER
+
+URLError: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+
+### round 39 - ETFS (sector, factor, cross-asset) - idea - pollinations
+
+**Concrete test**  
+“Across the 200 largest U.S. sector ETFs, the brief‑term (10‑day) rolling alpha relative to a benchmark of equal‑weighted S&P 500 sectors exceeds 0.20 % per month for at least 80 % of the daily windows in 2023.”
+
+*Kill‑measurement* – If the rolling alpha (after deducting a 15 bps round‑trip cost) falls below 0.10 % monthly in more than 20 % of the windows, the strategy is rejected.
+
+**Data needed**  
+Daily closing prices of the 200 sector ETFs, the same‑date sector index constituents, and U.S. Treasury 3‑month yields (for risk‑free reference). All are free and delivered at point‑in‑time (end‑of‑day).  
+
+This test satisfies the 12‑20 bps cost ceiling, uses a deflated‑Sharpe‑style gate (moving‑window alpha minus cost), and compares to the 4.3 % T‑bill benchmark.
