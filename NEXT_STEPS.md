@@ -70,7 +70,7 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 - [x] **B2 — forward-gate dashboard** · S · read the audit3 ledger JSON; print pods by status, rows per pod, and the
       binding gate clause per pod. **DoD:** runs against the live URL; output committed as
       `03-*/results/forward_gate_<UTC>.json`.
-- [ ] **B3 — cost-basis versioning** · S · capture `payload.slippage_validation` per class into a committed file with
+- [x] **B3 — cost-basis versioning** · S · capture `payload.slippage_validation` per class into a committed file with
       a hash, so any verdict can be recomputed against the costs it used. **DoD:** file committed;
       `CAPITAL_ALLOCATION.md` cites it instead of quoting numbers from memory.
 - [x] **B4 — re-run harness certification after any harness change** · S · `python -m

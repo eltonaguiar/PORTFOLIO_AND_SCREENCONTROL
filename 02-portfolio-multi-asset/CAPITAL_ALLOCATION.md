@@ -41,6 +41,7 @@ half of the message: short-horizon trading was a cost, not an income.
 
 Costs used (measured, per class, `payload.slippage_validation`): CRYPTO 0.0996%, EQUITY/ETF/BOND 0.05%,
 COMMODITY 0.15%, FOREX 0.02%, FUTURES 0.10%, MUTUAL_FUND 0.08%.
+Versioned: `02-portfolio-multi-asset/cost_basis_slippage_validation.json` (sha256 e8bcddf4203e84ca47ba45c43f63270ca09b1d33ed39cbb602d303e3a82fbad5), so any verdict can be recomputed against the costs it used.
 
 Forward gate: **9 pods, 1 pre-registered (POD-EQUITY-BREAKOUT), 8 observe, 0 with enough forward rows to
 promote.** So today the correct capital allocation to the strategy book is **zero**, not "small".
@@ -100,8 +101,8 @@ highest-return work right now is not a new strategy:
    more than any new cell.
 6. **Reproducibility**: the ledger's own provenance warns that its source is a `/tmp` build path, and audit2's
    population endpoint returns 404. Commit the build; fix the endpoint.
-7. **Commit the cost basis**: the measured per-class slippage table above is the most valuable number in the
-   repo — make sure it is versioned with the ledger, not regenerated silently.
+7. **Commit the cost basis**: done — the measured per-class slippage table is versioned in
+   `02-portfolio-multi-asset/cost_basis_slippage_validation.json` (sha256 e8bcddf4203e84ca47ba45c43f63270ca09b1d33ed39cbb602d303e3a82fbad5), committed alongside the allocation doc so verdicts recompute against the costs used.
 
 ## 6. Which of the four answers to trust
 

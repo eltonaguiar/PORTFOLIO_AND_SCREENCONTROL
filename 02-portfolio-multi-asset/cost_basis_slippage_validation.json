@@ -1,0 +1,17 @@
+{
+  "purpose": "Versioned cost basis: measured per-class payload.slippage_validation so any allocation verdict can be recomputed against the costs it used.",
+  "source": "CAPITAL_ALLOCATION.md \u00a71 costs table; values fetched live from audit3 ledger generated_at 2026-11-22T07:10:35Z (https://findtorontoevents.ca/audit3/audit3_ledger.json)",
+  "unit": "percent per side",
+  "slippage_validation_per_class": {
+    "CRYPTO": 0.0996,
+    "EQUITY": 0.05,
+    "ETF": 0.05,
+    "BOND": 0.05,
+    "COMMODITY": 0.15,
+    "FOREX": 0.02,
+    "FUTURES": 0.1,
+    "MUTUAL_FUND": 0.08
+  },
+  "hash_sha256": "e8bcddf4203e84ca47ba45c43f63270ca09b1d33ed39cbb602d303e3a82fbad5",
+  "committed_at": "2026-11-24T01:49Z"
+}
