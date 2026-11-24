@@ -3,6 +3,17 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 42 — 2026-11-24 (12:47 UTC / 07:47 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: E8 — can the first honest read be published at n>=30 per tier now?
+
+|||| time (UTC) | status | item | artifact ||
+|
+
+||||---|---|---|---|---
+|
+
+|||| cron | BLOCKED | E8 — first honest read at n>=30 per tier: paper_book.py score on real tier books ran at 12:47 UTC (exit 0 each); stable/moderate/aggressive all n=0, 0 resolved, INSUFFICIENT_DATA; tier books do not exist on disk; e5 scorecard refreshed (results/e5_weekly_scorecard_latest.json, git e0a5988); E4 agent picks (CP/ZOO/KILO/AG) still not landed per COMS 12:45Z; nothing fabricated, item left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` ||
+
 ## Session 41 — 2026-11-24 (10:39 UTC / 05:39 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: E8 — can the first honest read be published at n>=30 per tier now?
 
