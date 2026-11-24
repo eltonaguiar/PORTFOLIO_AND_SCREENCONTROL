@@ -1,0 +1,152 @@
+# LESSONS — the failure modes that produce confident wrong answers
+
+Each lesson is a bug this programme actually hit, with the evidence. These are more valuable than the source list:
+the source list tells you where to look, these tell you when the data is lying.
+
+---
+
+## 1. A 404 is a routing fact, not a verdict
+
+`greenhouse/salesforce` → 404, `greenhouse/servicenow` → 404. That does **not** mean Salesforce or ServiceNow
+don't hire, and it does not mean Greenhouse is broken. It means those companies use a different ATS —
+ServiceNow turned out to be on **SmartRecruiters** (997 postings).
+
+**Rule:** record which ATS a company uses, per company. Never generalise a 404 to a platform judgement.
+
+---
+
+## 2. Keyword search matches the description, not the title — so "25 jobs" is mostly noise
+
+Job Bank returned **25 listings** for `servicenow` in Toronto. Fetching the actual postings:
+
+| title | ServiceNow mentions | verdict |
+|---|---:|---|
+| `business consultant` (Blue Mantis) | 7 | ✅ *"experienced ServiceNow Business Process Consultant"* |
+| `programmer analyst` (BC Assessment) | 7 | ✅ *"take ownership of … ServiceNow platform"* |
+| `information technology (IT) analyst` (Aviso Wealth) | 1 | ✅ secondary — *"GRC tools (e.g., Archer, ServiceNow GRC, Resolver)"* |
+| `food delivery driver` (EDC, Montréal) | 1 | ❌ **false positive** |
+| `food delivery driver` (EDC, Ottawa) | 1 | ❌ **false positive** |
+
+**Precision: 3 of 5.** Both false positives are the same sentence:
+
+> *"Internal Employees, please consult the ServiceNow article entitled Internal movements"*
+
+That is an HR intranet reference, not a skill requirement.
+
+**Rules that work:**
+
+- Drop any hit within ~80 characters of `internal employees`, `consult the`, or `article entitled`.
+- Then require **≥2 surviving mentions**, *or* a single mention inside a requirements/skills section.
+- **Fetch the detail page.** The list page alone cannot distinguish a ServiceNow consultant from a food
+  delivery driver.
+- **Filter location after classification**, not before: `programmer analyst` was Victoria, BC — a "Toronto"
+  query returned it because Job Bank broadens nationally.
+
+Separate data-quality note: Export Development Canada, a federal export agency, listing *food delivery driver*
+twice is a Job Bank posting-quality problem, not a scraping problem.
+
+---
+
+## 3. Kijiji prices are in CENTS
+
+`StandardListing.price.amount` returned `60000` for a **$600** console. My first parse compared raw values and
+reported a **median price of $60,000**.
+
+**Rule:** divide by 100, and sanity-check the result against a known MSRP band before publishing anything.
+A 100× error is not subtle once you look — but it parses cleanly and reads as plausible if you don't.
+
+---
+
+## 4. Best Buy's availability API cannot answer "in stock near me"
+
+Nine GTA postal codes, byte-identical response: `InStock qty=105`, `pickup: NotAvailable`, `locations: 0`.
+
+**Rule:** for Best Buy, the availability API is a **national online-shipping** signal. It is a legitimate lead,
+but it is **not** evidence of Toronto stock, and `pickup` is never populated. Do not attach a city to it.
+
+The converse trap from earlier in this project: `pickup: NotAvailable / locations: []` also does **not** mean
+"sold out in store" — it means the field is not implemented. Unpopulated is not zero.
+
+---
+
+## 5. Stale ASINs become dead listings that still render a title and a price
+
+Three PS5 ASINs returned **$129.98** and **$229.99** with an empty availability block and no add-to-cart.
+Those are not bargains — they are retired listings.
+
+**Rules:**
+- Keep an **MSRP band per SKU** (roughly `0.6×` to `1.3×`) and drop anything outside it.
+- A price with **no availability block and no add-to-cart** is a dead page, not an opportunity.
+- Re-discover SKUs each run; never reuse a remembered one.
+
+---
+
+## 6. `soldBy` is the tie-breaker between a restock and a reseller
+
+Xbox Series X 1TB, Amazon.ca: **"Only 2 left in stock" at $1,299.50, sold by `CCJamesInc`.** MSRP is far below
+that, and there was no visible add-to-cart.
+
+**Rule:** read `#sellerProfileTriggerId`. A third-party seller at a premium is not a restock. Report first-party
+only as "verified retail".
+
+---
+
+## 7. A zero must never be reported the same way as a block
+
+"0 listings found" and "403 Forbidden" are different facts. Collapsing them into one number is how a dead
+source looks healthy for weeks.
+
+**Rule:** keep a `sources_status.json` with `last_success`, `http_status`, and `item_count` per source, and
+surface it. A source that has returned 0 for N runs is *stale*, not empty.
+
+---
+
+## 8. Verify the payload, not the parameter
+
+`?rss=1` on a Kijiji search returned **421 KB of HTML, not RSS**. Had I trusted the parameter name I would have
+been parsing XML tags that were never there.
+
+**Rule:** check the content — does it contain `<item>` / `"__NEXT_DATA__"` / valid JSON — before choosing a
+parser. `/rss-srp-...` returned a hard **403**; the plain search page returned 200.
+
+---
+
+## 9. The host can matter more than the User-Agent
+
+| request | result |
+|---|---|
+| `www.reddit.com/r/…/search.json` + descriptive UA | **403 Blocked** |
+| `old.reddit.com/r/…/search.json` + same UA | **200, 342 KB** |
+
+Same User-Agent, same query. Only the host changed.
+
+**Rule:** before concluding a site blocks automation, try its legacy/old/mobile host. And try a *descriptive*
+UA with contact info — some operators block generic UAs specifically.
+
+---
+
+## 10. Query strings with spaces break native URL fetchers
+
+Canada Computers search links come back as `/en/xbox/184244/slug.html?keyword=xbox series x`. Passing that
+straight to `urllib` raises **`URL can't contain control characters`**.
+
+**Rule:** strip the query string (`.split("?")[0]`) or percent-encode it. Free discovery, cheap fix.
+
+---
+
+## 11. Retry government endpoints; they reset connections
+
+`jobbank.gc.ca` returned `WinError 10054` ("connection forcibly closed") on one attempt and a clean 277 KB on
+the next. That is rate-limiting, not a block.
+
+**Rule:** retry with backoff (3–5 attempts, 3–15 s) and send `Connection: close`. Do not record a single reset
+as "source dead".
+
+---
+
+## 12. A public page can contain the word "captcha" without being challenged
+
+The Kijiji search page contains `captcha` in its source **and** returned 45 real listings. Grepping for the
+word and aborting would be a false negative.
+
+**Rule:** judge by whether the data is present in the payload, not by the presence of defensive keywords.
