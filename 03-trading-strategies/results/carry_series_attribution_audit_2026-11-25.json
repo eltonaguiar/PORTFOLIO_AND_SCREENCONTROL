@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-11-25T16:52:53.246222+00:00",
+  "audit": "P9 carry series (carry_roundtrip.jsonl / carry_series_summary.json / CARRY_SERIES.md) - venue-mixing + fee-vs-spread attribution + fee-vs-funding decomposition",
+  "source_file": "03-trading-strategies/results/carry_roundtrip.jsonl",
+  "summary_file": "03-trading-strategies/results/carry_series_summary.json",
+  "doc": "03-trading-strategies/CARRY_SERIES.md",
+  "rows_total": 532,
+  "rows_ok": 532,
+  "venue_counts": {
+    "binance": 7,
+    "bybit": 7,
+    "okx": 518
+  },
+  "venue_finding": "summary aggregates BY SYMBOL ONLY, pooling all venues. Current data is binance 7 / bybit 7 / okx 518. CARRY_SERIES.md line 'Instruments are not combined across venues - binance only' is FALSE on current data (97.4% okx); bybit (6bp taker) is blended into okx/binance (5bp) medians.",
+  "fee_attribution_finding": "roundtrip_cost_bps = 2 x taker_fee_bps + spread_bps. taker_fee_bps is a HARDCODED published-default-tier constant (binance/okx 5.0, bybit 6.0) in carry_roundtrip.py VENUES, never a measured fill. 89.83% of the 11.13 bp round-trip median is this ASSUMED fee; only 1.13 bp is measured top-of-book spread. The summary JSON and CARRY_SERIES.md headline present 11.13 as a cost without decomposition or an ASSUMED tag. (T4/CARRY_RTT_T4.md already separates these and states fees are 89-95% - P9 lags the repo standard.)",
+  "all": {
+    "n": 532,
+    "roundtrip_median_bps": 11.1321,
+    "assumed_fee_2x_median_bps": 10.0,
+    "spread_median_bps": 1.1281,
+    "fee_share_pct": 89.83,
+    "funding_median_bps": 0.2077,
+    "net_median_bps": -10.9487,
+    "net_frac_positive": 0.0,
+    "zero_fee_net_median_bps": -0.9271,
+    "zero_fee_net_frac_positive": 0.1842,
+    "zero_fee_net_max_bps": 0.9832
+  },
+  "per_venue": {
+    "binance": {
+      "n": 7,
+      "roundtrip_median_bps": 11.1346,
+      "assumed_fee_2x_median_bps": 10.0,
+      "spread_median_bps": 1.1346,
+      "fee_share_pct": 89.81,
+      "funding_median_bps": -0.0364,
+      "net_median_bps": -11.3709,
+      "net_frac_positive": 0.0,
+      "zero_fee_net_median_bps": -1.3709,
+      "zero_fee_net_frac_positive": 0.1429,
+      "zero_fee_net_max_bps": 0.4752
+    },
+    "bybit": {
+      "n": 7,
+      "roundtrip_median_bps": 13.1402,
+      "assumed_fee_2x_median_bps": 12.0,
+      "spread_median_bps": 1.1402,
+      "fee_share_pct": 91.32,
+      "funding_median_bps": 0.3455,
+      "net_median_bps": -12.525,
+      "net_frac_positive": 0.0,
+      "zero_fee_net_median_bps": -0.525,
+      "zero_fee_net_frac_positive": 0.2857,
+      "zero_fee_net_max_bps": 0.2342
+    },
+    "okx": {
+      "n": 518,
+      "roundtrip_median_bps": 11.127,
+      "assumed_fee_2x_median_bps": 10.0,
+      "spread_median_bps": 1.1269,
+      "fee_share_pct": 89.87,
+      "funding_median_bps": 0.2067,
+      "net_median_bps": -10.9271,
+      "net_frac_positive": 0.0,
+      "zero_fee_net_median_bps": -0.9271,
+      "zero_fee_net_frac_positive": 0.1834,
+      "zero_fee_net_max_bps": 0.9832
+    }
+  },
+  "fee_vs_funding_finding": "net carry is negative on 0-of-532. But under a ZERO-FEE counterfactual (funding_bps - spread_bps, taker fee set to 0) net is positive on 18.42% of ticks (max +0.98 bp); on BTC okx it is positive on 94.6% of ticks (median funding +0.365 bp vs spread ~0.017 bp). So the 0-of-532 null is FEE-DRIVEN, not 'funding is zero'. CARRY_SERIES.md reading 'funding ~ 0 across the majors ... so net carry is negative' mis-attributes it to funding.",
+  "btc_okx_zero_fee": {
+    "n": 74,
+    "frac_positive": 0.9459,
+    "median_bps": 0.3484,
+    "max_bps": 0.9832
+  },
+  "verdict": "KILL UNCHANGED: net carry is negative after any realistic taker fee (>=2bp round trip eats the <1bp funding) on all 532 ticks; even at the observed 5bp default tier it is negative everywhere. Only the ATTRIBUTION and INTERPRETATION are corrected. No gate lowered. Capturing the small positive BTC/ETH funding-spread needs maker fills, which A7 (KILO) records as UNMEASURED.",
+  "hermes_tags": [
+    "H3: assumed fee not tagged ASSUMED in summary/headline",
+    "A9/horizon: P9 net carry is per 8h interval (immediate round trip); T4 uses 90-day amortization - different horizons, not interchangeable",
+    "hard-rule: instruments pooled across venues while doc claims binance-only"
+  ]
+}

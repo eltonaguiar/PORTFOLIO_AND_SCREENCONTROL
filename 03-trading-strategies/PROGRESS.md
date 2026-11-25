@@ -663,3 +663,14 @@ Question: B7 — reconcile the 2x literature disagreement (25–42 vs 50–70 bp
 | 03:36 | PASS | B7 — literature 2x reconciled: verified JFQA primary source explains both bands — HML +5.20%/yr Jul 1926–Dec 2007 vs −0.86%/yr Jan 2008–Mar 2025 (≈ +43 vs −7 bp/month; value beat growth 55% → 43% of months), so 25–42 is the long-run gross average incl. post-2007 decay and 50–70 is a gross top-vs-bottom-quintile phrasing of the pre-2007 era that the router's own arithmetic takes to 30–40 bp/month after 15–20 bp/month turnover costs. Our VLUE measurement: net 25.23 bp/month (3.07%/yr), ≈25.6 bp/month gross after 0.4 bp/month cost drag (105 bp total over window), 262 rebalances / 5759 daily bars, 2004–2026, costs charged on position changes. It reproduces the low end of 25–42, not 50–70, and stays below the 36 bp/month cash hurdle either way. INVESTMENT_DECISION_FRAMEWORK.md §2a +0.11%/yr not used (flagged NOT evidence in B6 — no committed implementation). B6 kill verdict stands: established=false. | `03-trading-strategies/results/b7_literature_reconciliation.json` |
 
 Standing state: B7 closed. Value/HML research line stays dead (measured, reconciled to literature) — nothing to allocate. Next unchecked H items in order: C3, C4, H2, H3, D2/D3, E1/E2, F1–F5, H1.
+
+
+## Session 18 — 2026-11-25 (2026-11-25 16:53 UTC) — `hermes` (Session B, cron, empirical verification)
+
+E8 remains the only open H item and is blocked: `paper_book.py score` → all three tiers n=0 / 0 resolved / INSUFFICIENT_DATA; no `paper_book_*.jsonl` on disk; no E4/pick commits in the last 300. Queue otherwise clear, so audited the freshly-committed P9 carry series (carry_roundtrip.jsonl n=532).
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 16:53 | CORRECTION (KILL kept) | P9 carry series attribution: `roundtrip_cost_bps` median 11.13 bp = 10.0 bp ASSUMED default-tier taker fee (hardcoded 5/6 bp in carry_roundtrip.py) + 1.13 bp measured spread (fee 89.83%); the summary JSON and CARRY_SERIES.md headline presented it as a cost with no decomposition / ASSUMED tag. Series is 97.4% okx (binance 7 / bybit 7 / okx 518) yet the doc claimed "binance only" and the summary pools venues per symbol. Net carry negative on 0/532 ticks, but the zero-fee counterfactual (funding − spread) is positive on 18.4% of ticks (BTC/okx 94.6%, median +0.35 bp vs ~0.02 bp spread), so the null is FEE-driven, not "funding ~ 0". KILL unchanged: net negative at any realistic taker fee on all 532; no gate lowered. CARRY_SERIES.md corrected (fee/spread decomposition, venue mix, fee-vs-funding reading) to the standard CARRY_RTT_T4.md already set. | `03-trading-strategies/results/carry_series_attribution_audit_2026-11-25.json` |
+
+Standing state: E8 still blocked on E4 picks (CP/ZOO/KILO/AG). All four G-COST gates and the P9 carry series are now honestly attributed; no open H item is actionable without E4.
