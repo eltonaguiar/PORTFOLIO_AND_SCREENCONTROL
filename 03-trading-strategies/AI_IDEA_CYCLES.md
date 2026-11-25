@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | pollinations | 200 | 124 |  |
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | pollinations | 200 | 113 |  |
@@ -32,21 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | pollinations | 200 | 77 |  |
+| 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | pollinations | 200 | 51 |  |
 
 ## Latest answers
-
-### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 63 - STOCKS (single-name equity, long/short) - crosscheck - pollinations
-
-Pick (b).  
-A concrete falsifier: a 12‑month back‑test on large‑cap stocks beginning 2010, applying a classical post‑announcement drift strategy (buy over‑reactive earnings, sell under‑reactive, then liquidate after the expected reversal) that earns a gross excess of 0.25 % per annum after deducting the 18‑bp round‑trip cost. The strategy persists across sectors, capitalization deciles, and A‑to‑Z stocks, thus proving the drift is still harvestable.
 
 ### round 64 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -61,3 +48,16 @@ A concrete falsifier: a 12‑month back‑test on large‑cap stocks beginning 2
 **Claim most likely wrong:** (c) *Value is the last untested family.*
 
 **Falsifying observation:** Monthly evidence of a statistically significant, cost‑adjusted alpha from a replicated value beta on a liquid crypto‑spot or perpetual market. For instance, a 12‑month rolling regression on a 10‑asset value index yields an average excess return of 0.25 % per month, with a t‑stat of 2.7 after subtracting typical round‑trip costs (12–20 bps). This sustained, risk‑adjusted payoff contradicts the assertion that value remains untested.
+
+### round 65 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 65 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 65 - BONDS (govt and credit) - crosscheck - pollinations
+
+(b) Large‑cap post‑earnings drift is dead since about 2006.  
+**Falsifying observation:** Consistent, net‑after‑cost excess returns of large‑cap bond indices (e.g., 1‑2 basis‑points per quarter) immediately after earnings releases for several consecutive years, showing a statistically significant return that outpaces the 12‑20 bp round‑trip cost. This would prove the drift still exists.
