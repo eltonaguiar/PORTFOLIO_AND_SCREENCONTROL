@@ -3,6 +3,16 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 48 — 2026-11-25 (09:38 EST / 14:38 UTC cron run) — `hermes` (Session B, verification axis)
+Question: E8 is still the only unchecked H item and is blocked on E4 picks. Every other H item is closed — but the A10 CI gates had only ever had G-COST-3 audited; has G-COST-4 ever been checked for measuring what it claims? Its "KILL vol-target gap 240.9 bp/day" is carried in the TODO/PROGRESS as a cost finding.
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 14:37 | RECAST | A10 / G-COST-4 — the committed gate had three defects: (B1) it sampled 24 hourly-spaced OVERLAPPING 24h returns (~2 days, not 24 sessions); (B2) it annualised daily vol by 24*sqrt(365) instead of sqrt(365), oversizing rv 24x so scale averaged 0.058 (5.8% exposure) vs 0.822 correct; (B3) it KILLed on abs(vol_target − buy_and_hold) > 5 bp/day, direction-blind — a de-risked overlay always diverges when the asset trends. Proof of B3: the SAME committed gate reported buy-and-hold +246.3 bp/day (rally, PROGRESS 01:21Z) and −255.2 bp/day (crash, artifact 10:11Z), BOTH KILL. Independent re-fetch confirmed the arithmetic: same overlapping window, committed logic gap 243.4 bp/day vs 68.4 with only the annualisation fixed (3.6x inflation). Recast to 24 NON-overlapping daily sessions + sqrt(365) + signed effect as a report-only diagnostic; verdict ILL-POSED (no abs-gap KILL). Live run 14:37Z: bah −104.4 vs vt −29.8, signed +74.6 (overlay helped in a falling window), exposure 0.198. Overall still KILL on G-COST-1 (20.002 bp cost wall); CI still red on the real finding. No gate lowered, no candidate passed. | `03-trading-strategies/results/a10_g_cost4_recast_audit.json` |
+| 14:38 | BLOCKED | E8 — `paper_book.py score` re-ran: all three tiers n=0 / 0 resolved / INSUFFICIENT_DATA; no `paper_book_*.jsonl` on disk; no E4/pick commits in last 200 through 50f6d31 (only carry/rtc/ai-cycle ticks); COMS 14:31Z KILO 15-min status only. Nothing fabricated, left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
+No gate lowered, no measured value changed; a mislabelled KILL is retired the same way G-COST-3 was (a gate that cannot distinguish overlay quality from the asset's own move is ILL-POSED, not a pass). COMS post: correction of a measured number (G-COST-4 240.9 bp/day KILL → ILL-POSED) — rule 6 triggered.
+
 ## Session 47 — 2026-11-25 (08:26 EST / 13:26 UTC cron run) — `hermes` (Session B, verification axis)
 Question: E8 is the only unchecked H item and is still blocked on E4 picks (re-verified: all three tier books n=0). The prior H3 pass asserted the framework §2a B6 numbers "match the artifact" but only `py_compile`d `equity_factors.py` — it never re-ran it. Can the single load-bearing number in the framework (net 3.07%/yr = 25.2 bp/month, KILLED) actually be recomputed from committed code, or does the value KILL rest on an unverifiable phantom?
 

@@ -1,7 +1,7 @@
 {
   "item": "E5 weekly scorecard (owner H, gate G5)",
-  "run_at": "2026-11-25T13:29:28.150102+00:00",
-  "git_hash": "cd5865d3810c05b693d77c507ff119426880563d",
+  "run_at": "2026-11-25T14:38:26.503401+00:00",
+  "git_hash": "50f6d31ec998ca5adb77ebda651d063d3adf6e40",
   "books": {
     "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_aggressive.jsonl": {
       "book": "C:\\Users\\zerou\\pasc\\04-investment-strategy\\results\\paper_book_aggressive.jsonl",

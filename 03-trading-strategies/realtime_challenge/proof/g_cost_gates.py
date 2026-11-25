@@ -21,8 +21,11 @@ G-COST-3 | RECAST after A9: the "1D cost premium" is ILL-POSED, not merely noisy
          | one well-defined quantity (round-trip cost on a named instrument/venue)
          | and reports the frequency ladder + dead-figure provenance. Verdict is
          | ILL-POSED (no falsifiable content) or UNMEASURABLE (book unreadable).
-G-COST-4 | vol-target gap decomposition (2.3 vs 10.7 bp/day) on one instrument
-         | kill the vol-target overlay if the gap persists > 5 bp/day after 20 sessions
+G-COST-4 | RECAST after A10 (2026-11-25): the blind |gap| kill rule was ILL-POSED
+         | (a de-risked overlay always diverges from buy-and-hold when the asset
+         | trends, in either sign). Now reports a NON-overlapping 24-session signed
+         | decomposition with correct daily-vol annualisation (sqrt(365)); verdict
+         | ILL-POSED (measurable) / UNMEASURABLE (book unreadable), no |gap| KILL.
 """
 
 from __future__ import annotations
@@ -370,89 +373,116 @@ def gate_g_cost_3(exchange, taker_fee_bps: float) -> dict:
 
 
 def gate_g_cost_4(exchange) -> dict:
-    """G-COST-4: vol-target gap decomposition on one instrument.
-    Kill the vol-target overlay if the gap persists > 5 bp/day after 20 sessions.
+    """G-COST-4 (RECAST): the blind |gap| kill rule was ILL-POSED — retire it.
+
+    The committed predicate had three independent defects:
+      (B1) it built 24 hourly-SPACED samples of overlapping 24h returns — a ~2-day
+           snapshot, not 24 daily sessions;
+      (B2) it annualised a DAILY variance by 24*sqrt(365) instead of sqrt(365), a
+           24x oversizing that shrank the vol-target scale ~24x and inflated the gap;
+      (B3) it KILLed whenever |vol_target - buy_and_hold| > 5 bp/day regardless of
+           sign. This is fatal: a directionally de-risked overlay MUST diverge from
+           buy-and-hold whenever the asset trends (it gives up upside in rallies and
+           loses less in crashes), so |gap| measures the asset move, not overlay
+           quality. Proof: the same committed gate reported buy-and-hold +246.3 bp/day
+           at 01:21Z (rally) and -255.2 bp/day at 10:11Z (crash), BOTH KILL — the sign
+           of the underlying flipped while the verdict did not.
+
+    This recast uses NON-overlapping daily returns over a real 24-session window,
+    annualises daily vol by sqrt(365) (correct), reports the SIGNED overlay effect
+    (report-only diagnostic, framework 2c), and carries no PASS/KILL on the retired
+    |gap| band. Verdict: ILL-POSED (measurable) / UNMEASURABLE (book unreadable).
     """
     try:
-        ohlcv = exchange.fetch_ohlcv(INSTRUMENT, "1h", limit=480)
+        ohlcv = exchange.fetch_ohlcv(INSTRUMENT, "1h", limit=760)
     except Exception as exc:  # noqa: BLE001
         return {
             "gate": "G-COST-4",
             "instrument": INSTRUMENT,
             "venue": VENUE_NAME,
-            "horizon_basis": "1 day sessions, 1h bars, BTC/USDT",
+            "horizon_basis": "24 non-overlapping daily sessions, 1h bars resampled 24h, BTC/USDT",
             "n": 0,
-            "threshold": {"kill_if_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
-            "measured": {"gap_bps_per_day": None},
+            "threshold": {"retired_kill_if_abs_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
+            "measured": None,
             "verdict": "UNMEASURABLE",
-            "evidence": "OHLCV fetch failed",
+            "evidence": f"OHLCV fetch failed: {exc}",
         }
+
     closes = [float(row[4]) for row in ohlcv]
-    # session = 24h return; use the last SESSIONS sessions
-    rets = []
-    for i in range(24, len(closes)):
-        rets.append(closes[i] / closes[i - 24] - 1.0)
-    rets = rets[-SESSIONS:]
-    n = len(rets)
+    # NON-overlapping daily returns: advance one day (24 hourly bars) per step.
+    daily = [closes[i] / closes[i - 24] - 1.0 for i in range(24, len(closes), 24)]
+    daily = daily[-SESSIONS:]
+    n = len(daily)
     if n < 20:
         return {
             "gate": "G-COST-4",
             "instrument": INSTRUMENT,
             "venue": VENUE_NAME,
-            "horizon_basis": "1 day sessions, 1h bars, BTC/USDT",
+            "horizon_basis": "24 non-overlapping daily sessions, 1h bars resampled 24h, BTC/USDT",
             "n": n,
-            "threshold": {"kill_if_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
-            "measured": {"gap_bps_per_day": None},
+            "threshold": {"retired_kill_if_abs_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
+            "measured": None,
             "verdict": "UNMEASURABLE",
-            "evidence": f"only {n} sessions available; need >= 20",
+            "evidence": f"only {n} non-overlapping daily sessions available; need >= 20",
         }
 
     def mean_bp_day(series: list[float]) -> float:
         return statistics.mean(series) * 1e4
 
-    bah_bp_day = mean_bp_day(rets)
-
-    # Vol-targeted: scale exposure by target_vol / rolling realised vol, cap 1.0,
-    # charge round-turn cost on scale changes (Binance spot taker ~10 bp/side).
-    target_vol = 0.10
+    vol_target = 0.10
     window = 5
-    rv = []
-    for i in range(window - 1, len(rets)):
-        seg = rets[i - window + 1:i + 1]
-        mu = statistics.mean(seg)
-        var = statistics.pvariance(seg)
-        rv.append((var ** 0.5) * (24 * 365 ** 0.5))  # annualised approx
-    scales = []
-    for i in range(len(rv)):
-        scale = min(1.0, target_vol / rv[i]) if rv[i] > 0 else 0.0
-        scales.append(scale)
-    scales = [0.0] + scales  # align: scale decided on past vol
-    gross = [s * r for s, r in zip(scales, rets)]
     round_turn_cost = 0.0026  # project default model: 26 bp round turn
-    net = [
-        g - abs(scales[i] - scales[i - 1]) * round_turn_cost
-        for i, g in enumerate(gross)
-    ]
+
+    # Exposure for each day is decided from PAST realised vol only (no look-ahead):
+    # daily vol annualised by sqrt(365) (the committed version multiplied by an
+    # extra 24, shrinking scale ~24x — the B2 defect).
+    scales: list[float] = []
+    for i in range(len(daily)):
+        if i < window:
+            scales.append(0.0)
+        else:
+            seg = daily[i - window:i]
+            r = (statistics.pvariance(seg) ** 0.5) * (365 ** 0.5)  # daily -> annual
+            scales.append(min(1.0, vol_target / r) if r > 0 else 0.0)
+
+    net: list[float] = []
+    prev = 0.0
+    for s, r in zip(scales, daily):
+        net.append(s * r - abs(s - prev) * round_turn_cost)  # cost on scale change
+        prev = s
+
+    bah_bp_day = mean_bp_day(daily)
     vt_bp_day = mean_bp_day(net)
-    gap = abs(vt_bp_day - bah_bp_day)
-    verdict = "KILL" if gap > 5.0 else "PASS"
+    signed_effect = vt_bp_day - bah_bp_day  # + overlay helped, - overlay lagged
+
     return {
         "gate": "G-COST-4",
         "instrument": INSTRUMENT,
         "venue": VENUE_NAME,
-        "horizon_basis": "1 day sessions, 1h bars, BTC/USDT; vol target 10% annualised, cap 1.0",
+        "horizon_basis": "24 non-overlapping daily sessions, 1h bars resampled 24h, BTC/USDT; vol target 10% annualised (sqrt(365)), cap 1.0",
         "n": n,
-        "threshold": {"kill_if_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
+        "threshold": {"retired_kill_if_abs_gap_bps_per_day_gt": 5.0, "min_sessions": 20},
         "measured": {
             "buy_and_hold_bps_per_day": round(bah_bp_day, 3),
             "vol_target_bps_per_day": round(vt_bp_day, 3),
-            "gap_bps_per_day": round(gap, 3),
+            "signed_effect_bps_per_day": round(signed_effect, 3),
+            "mean_scale": round(statistics.mean(scales), 4),
         },
-        "verdict": verdict,
+        "verdict": "ILL-POSED",
+        "retired_predicate": "kill if |vol_target - buy_and_hold| > 5 bp/day",
+        "retirement_reason": (
+            "|gap| is direction-blind: a de-risked overlay always diverges from buy-and-hold "
+            "when the asset trends (gives up upside in rallies, loses less in crashes), so the "
+            "predicate measures the asset move, not overlay quality. The committed code also "
+            "used hourly-sampled overlapping returns (~2 days, not 24 sessions) and annualised "
+            "daily vol by 24*sqrt(365) instead of sqrt(365), shrinking scale ~24x and inflating the gap."
+        ),
+        "diagnostic_note": "signed_effect is report-only (framework 2c: report, do not wire). Positive = vol-target beat buy-and-hold net; negative = it lagged. Window-dependent by construction.",
         "evidence": (
-            f"over {n} sessions: buy-and-hold {bah_bp_day:.3f} bp/day vs vol-targeted "
-            f"{vt_bp_day:.3f} bp/day, gap {gap:.3f} bp/day; "
-            f"{'KILLS' if verdict == 'KILL' else 'within'} the 5 bp/day overlay limit"
+            f"over {n} non-overlapping daily sessions: buy-and-hold {bah_bp_day:.3f} bp/day vs "
+            f"vol-targeted {vt_bp_day:.3f} bp/day (mean exposure {statistics.mean(scales):.3f}); "
+            f"signed effect {signed_effect:+.3f} bp/day. The |gap| KILL rule is retired as ILL-POSED "
+            f"(it measures the asset move, not the overlay)."
         ),
     }
 

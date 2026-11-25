@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T10:11:19+00:00",
+ "generated_utc": "2026-11-25T14:37:51+00:00",
  "venue": "Binance spot",
  "venue_id": "binance",
  "fee_source": "published schedule assumed (https://www.binance.com/en/fee/schedule)",
@@ -39,11 +39,11 @@
     "kill_if_p90_bps_gt": 20.0
    },
    "measured": {
-    "p50_bps": 0.061,
-    "p90_bps": 0.644
+    "p50_bps": 0.062,
+    "p90_bps": 1.517
    },
    "verdict": "PASS",
-   "evidence": "round-trip slippage P50=0.061 bp P90=0.644 bp over 32 walks on ['BTC/USDT', 'ETH/USDT'] at Binance spot; within the 8 bp / 20 bp thresholds",
+   "evidence": "round-trip slippage P50=0.062 bp P90=1.517 bp over 32 walks on ['BTC/USDT', 'ETH/USDT'] at Binance spot; within the 8 bp / 20 bp thresholds",
    "pairs": [
     "BTC/USDT",
     "ETH/USDT"
@@ -56,8 +56,8 @@
    "horizon_basis": "1 day, one round trip (per-round-trip cost is horizon-independent)",
    "n": 1,
    "measured": {
-    "round_trip_cost_bps": 20.002,
-    "spread_bps": 0.0017,
+    "round_trip_cost_bps": 20.625,
+    "spread_bps": 0.6254,
     "round_turn_fee_bps": 20.0
    },
    "verdict": "ILL-POSED",
@@ -67,27 +67,27 @@
    "frequency_ladder": {
     "15m": {
      "round_trips_per_year": 35040,
-     "annual_drag_bps": 700859.418
+     "annual_drag_bps": 722712.39
     },
     "1h": {
      "round_trips_per_year": 8760,
-     "annual_drag_bps": 175214.855
+     "annual_drag_bps": 180678.098
     },
     "4h": {
      "round_trips_per_year": 2190,
-     "annual_drag_bps": 43803.714
+     "annual_drag_bps": 45169.524
     },
     "1D": {
      "round_trips_per_year": 365,
-     "annual_drag_bps": 7300.619
+     "annual_drag_bps": 7528.254
     },
     "1W": {
      "round_trips_per_year": 52,
-     "annual_drag_bps": 1040.088
+     "annual_drag_bps": 1072.518
     },
     "1M": {
      "round_trips_per_year": 12,
-     "annual_drag_bps": 240.02
+     "annual_drag_bps": 247.504
     }
    },
    "frequency_ratios": {
@@ -95,8 +95,8 @@
     "1D_over_1M": 30.4167
    },
    "old_predicate_accepts_fee_per_side_bps": [
-    9.499,
-    12.104
+    9.187,
+    11.792
    ],
    "kill_range_bps": [
     19.0,
@@ -108,16 +108,12 @@
     "sweep_root": "repo root",
     "docs_still_quoting": [
      "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md",
-     "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md",
      "03-trading-strategies/PROGRESS.md",
-     "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
-     "03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md",
-     "03-trading-strategies/validation/MODEL_PANEL_INDEX.md",
-     "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md"
+     "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md"
     ],
     "note": "coordinated multi-doc correction deferred per HORIZON_LADDER_A9.md; provenance is a documentation risk, not a cost signal"
    },
-   "evidence": "measured round-trip cost 20.002 bp at Binance spot BTC/USDT (spread 0.0017 + round-turn fee 20.000 bp). '1D cost premium is real' is ILL-POSED: cost per trade does not vary with horizon; the 15m->1D annual-cost ratio is the fixed frequency ratio 96.0x and 1D->1M 30.42x. The old [19,24.21] band accepts any fee/side in [9.50,12.10] bp \u2014 a fee-schedule artifact, not evidence. Dead figure still quoted in 7 tracked doc(s) outside its own definition.",
+   "evidence": "measured round-trip cost 20.625 bp at Binance spot BTC/USDT (spread 0.6254 + round-turn fee 20.000 bp). '1D cost premium is real' is ILL-POSED: cost per trade does not vary with horizon; the 15m->1D annual-cost ratio is the fixed frequency ratio 96.0x and 1D->1M 30.42x. The old [19,24.21] band accepts any fee/side in [9.19,11.79] bp \u2014 a fee-schedule artifact, not evidence. Dead figure still quoted in 3 tracked doc(s) outside its own definition.",
    "fee": {
     "per_side_bps": 10.0,
     "source": "https://www.binance.com/en/fee/schedule",
@@ -128,31 +124,35 @@
    "gate": "G-COST-4",
    "instrument": "BTC/USDT",
    "venue": "Binance spot",
-   "horizon_basis": "1 day sessions, 1h bars, BTC/USDT; vol target 10% annualised, cap 1.0",
+   "horizon_basis": "24 non-overlapping daily sessions, 1h bars resampled 24h, BTC/USDT; vol target 10% annualised (sqrt(365)), cap 1.0",
    "n": 24,
    "threshold": {
-    "kill_if_gap_bps_per_day_gt": 5.0,
+    "retired_kill_if_abs_gap_bps_per_day_gt": 5.0,
     "min_sessions": 20
    },
    "measured": {
-    "buy_and_hold_bps_per_day": -255.246,
-    "vol_target_bps_per_day": -14.5,
-    "gap_bps_per_day": 240.746
+    "buy_and_hold_bps_per_day": -104.432,
+    "vol_target_bps_per_day": -29.8,
+    "signed_effect_bps_per_day": 74.631,
+    "mean_scale": 0.198
    },
-   "verdict": "KILL",
-   "evidence": "over 24 sessions: buy-and-hold -255.246 bp/day vs vol-targeted -14.500 bp/day, gap 240.746 bp/day; KILLS the 5 bp/day overlay limit"
+   "verdict": "ILL-POSED",
+   "retired_predicate": "kill if |vol_target - buy_and_hold| > 5 bp/day",
+   "retirement_reason": "|gap| is direction-blind: a de-risked overlay always diverges from buy-and-hold when the asset trends (gives up upside in rallies, loses less in crashes), so the predicate measures the asset move, not overlay quality. The committed code also used hourly-sampled overlapping returns (~2 days, not 24 sessions) and annualised daily vol by 24*sqrt(365) instead of sqrt(365), shrinking scale ~24x and inflating the gap.",
+   "diagnostic_note": "signed_effect is report-only (framework 2c: report, do not wire). Positive = vol-target beat buy-and-hold net; negative = it lagged. Window-dependent by construction.",
+   "evidence": "over 24 non-overlapping daily sessions: buy-and-hold -104.432 bp/day vs vol-targeted -29.800 bp/day (mean exposure 0.198); signed effect +74.631 bp/day. The |gap| KILL rule is retired as ILL-POSED (it measures the asset move, not the overlay)."
   }
  ],
  "kills": [
-  "G-COST-1",
-  "G-COST-4"
+  "G-COST-1"
  ],
  "passes": [
   "G-COST-2"
  ],
  "unmeasurable": [],
  "retired": [
-  "G-COST-3"
+  "G-COST-3",
+  "G-COST-4"
  ],
  "overall": "KILL"
 }

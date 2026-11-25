@@ -1,0 +1,88 @@
+{
+  "audit": "A10 / G-COST-4 recast — empirical verification",
+  "owner": "H (Hermes/DeepSeek-Flash, Session B)",
+  "generated_utc": "2026-11-25T14:37:51Z",
+  "subject": "G-COST-4 vol-target gap gate in 03-trading-strategies/realtime_challenge/proof/g_cost_gates.py",
+  "prior_state": {
+    "todo_claim": "A10 marked [x]: G-COST-1..4 wired to CI; G-COST-4 KILL vol-target gap 240.9 bp/day over 24 sessions",
+    "actual_code": "24 hourly-SPACED samples of overlapping 24h returns; rv annualised by (var**0.5)*(24*sqrt(365)); verdict = KILL iff |vol_target - buy_and_hold| > 5 bp/day",
+    "defects_found": [
+      {
+        "id": "B1",
+        "severity": "medium",
+        "kind": "concrete-bug",
+        "detail": "rets built as closes[i]/closes[i-24]-1 for EVERY i in range(24,len) on HOURLY bars, then take last 24 -> 24 hourly-spaced samples of overlapping 24h returns spanning ~2 calendar days, not 24 daily sessions. The n=24 'sessions' label is false."
+      },
+      {
+        "id": "B2",
+        "severity": "high",
+        "kind": "concrete-bug",
+        "detail": "rv annualised a DAILY variance with (var**0.5)*(24*365**0.5) = daily_std*24*sqrt(365) = 458.52, instead of sqrt(365)=19.10. Since rets are daily returns, this oversizes rv 24x, so scale = min(1, 0.10/rv) is ~24x too small. Empirically the committed scale averaged 0.058 (5.8% exposure) vs 0.822 (~82%) with correct annualisation on the same window."
+      },
+      {
+        "id": "B3",
+        "severity": "high",
+        "kind": "conceptual",
+        "detail": "Verdict = KILL iff |vol_target - buy_and_hold| > 5 bp/day, direction-blind. A long-only de-risking overlay MUST diverge from buy-and-hold whenever the asset trends: it gives up upside in rallies and loses less in crashes. |gap| therefore measures the size of the asset move, not overlay quality, and fires in both directions."
+      }
+    ],
+    "sign_flip_proof": {
+      "detail": "The SAME committed gate produced opposite-signed buy-and-hold results while KILLing both times, proving |gap| tracks the asset move, not the overlay.",
+      "run_1": {"source": "03-trading-strategies/PROGRESS.md:252 (01:21Z run)", "buy_and_hold_bps_per_day": 246.3, "label": "rally window", "verdict": "KILL", "gap_bps_per_day": 240.9},
+      "run_2": {"source": "g_cost_gates_latest.json committed 2026-11-25T10:11Z", "buy_and_hold_bps_per_day": -255.246, "label": "crash window", "verdict": "KILL", "gap_bps_per_day": 240.746}
+    }
+  },
+  "before_after": {
+    "committed_code_reproduced_same_window": {
+      "note": "Independent re-fetch of BTC/USDT 1h, limit 480, committed logic re-run (overlapping 24h returns, 24x annualisation).",
+      "buy_and_hold_bps_per_day": -257.561,
+      "vol_target_bps_per_day": -14.152,
+      "abs_gap_bps_per_day": 243.409,
+      "mean_scale": 0.0582,
+      "old_verdict": "KILL"
+    },
+    "corrected_annualisation_only": {
+      "note": "Same overlapping window, ONLY rv annualisation fixed to sqrt(365). Gap falls 243.4 -> 68.4 (3.6x smaller); signed effect shows overlay HELPED in this falling window (lost less).",
+      "buy_and_hold_bps_per_day": -257.561,
+      "vol_target_bps_per_day": -189.150,
+      "abs_gap_bps_per_day": 68.411,
+      "mean_scale": 0.8217,
+      "old_verdict_still_would_be": "KILL (|gap|>5) — illustrating why |gap| is the wrong predicate"
+    },
+    "recast_live_run": {
+      "note": "Full recast: 24 NON-overlapping daily sessions, sqrt(365) annualisation, signed diagnostic, no |gap| KILL.",
+      "generated_utc": "2026-11-25T14:37:51Z",
+      "buy_and_hold_bps_per_day": -104.432,
+      "vol_target_bps_per_day": -29.8,
+      "signed_effect_bps_per_day": 74.631,
+      "mean_scale": 0.198,
+      "new_verdict": "ILL-POSED"
+    }
+  },
+  "fix": {
+    "action": "Recast G-COST-4",
+    "verdict_semantics": "ILL-POSED when measurable; UNMEASURABLE if book unreadable. No PASS/KILL on the retired |gap| band.",
+    "what_it_now_does": [
+      "Uses NON-overlapping daily returns (advance 24 hourly bars per step) over a real 24-session window (fetch limit 760).",
+      "Annualises daily vol by sqrt(365) (correct) instead of 24*sqrt(365).",
+      "Reports the SIGNED overlay effect (vol_target - buy_and_hold) as a report-only diagnostic per framework 2c (report, do not wire), with mean exposure.",
+      "Retires the direction-blind |gap| KILL predicate with a documented reason."
+    ],
+    "not_a_weakening": "The |gap| predicate could never test overlay quality — a directionally de-risked overlay always diverges from buy-and-hold when the asset trends, in either sign (proven by the +246.3 rally / -255.2 crash sign flip, both KILL). Retiring a vacuous predicate is not lowering a live gate and passes no candidate; the overlay is NOT claimed to pass anything, and the overall run still KILLs on G-COST-1. Same precedent as the 2026-11-25 G-COST-3 recast."
+  },
+  "live_evidence": {
+    "run_artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json",
+    "generated_utc": "2026-11-25T14:37:51+00:00",
+    "overall": "KILL",
+    "kills": ["G-COST-1"],
+    "retired": ["G-COST-3", "G-COST-4"],
+    "G-COST-4_verdict": "ILL-POSED",
+    "exit_code": 1
+  },
+  "other_gates_unchanged": {
+    "G-COST-1": "KILL median realised fill cost 20.002 bp >= 8.0 (real cost finding — the wall stands)",
+    "G-COST-2": "PASS P50 0.062 / P90 1.517 bp (liquid BTC/ETH book depth fine)",
+    "G-COST-3": "ILL-POSED (unchanged from prior recast)"
+  },
+  "overall": "G-COST-4 KILL recast to ILL-POSED. Overall still KILL on G-COST-1; CI still red on the true cost finding. No verdict, gate threshold, or live measured value lowered to pass any candidate."
+}
