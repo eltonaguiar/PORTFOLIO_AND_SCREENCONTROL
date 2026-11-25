@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | pollinations | 200 | 125 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
@@ -32,29 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | pollinations | 200 | 111 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | pollinations | 200 | 63 |  |
 
 ## Latest answers
-
-### round 61 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 61 - OPTIONS (equity index) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 61 - OPTIONS (equity index) - idea - pollinations
-
-**Test**: *Monthly “Moneyness‑Skew” exploit* – buy 30‑day at‑the‑money call options on the S&P 500, sell 30‑day out‑of‑the‑money puts, hold both positions overnight, and roll to the next month.  
-
-**Measurement that kills it**: Average annualised excess return on the strategy that exceeds 4.3 % after deducting round‑trip cost (12–20 bps) and applying a deflated Sharpe (≥ 1.0 under trial‑accounting).  
-
-**Data required**:  
-- Historical 1‑month implied vol‑surface for the S&P 500 (daily) – freely available from CBOE or Barchart.  
-- Daily closing prices of the S&P 500 index – free.  
-- Daily Treasury bill yield (4‑week T‑bill) – free.  
-
-All data are point‑in‑time and freely accessible; the test can be run with a back‑test platform.
 
 ### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
 
@@ -72,3 +51,16 @@ All data are point‑in‑time and freely accessible; the test can be run with a
 **Data**: Daily closing price of the “Israel’s win” contract (free API), daily 4.3 % T‑bill yield (FRED, free, point‑in‑time), transaction cost assumption 12‑20 bps per round‑trip (used wholesale).  
 
 **Why it survives cost**: Only a single, real‑time test, so no multiple testing penalty; 28‑day blocks yield enough data points (≈6) for a meaningful average while staying within the 110‑word limit.
+
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - pollinations
+
+Pick (b).  
+A concrete falsifier: a 12‑month back‑test on large‑cap stocks beginning 2010, applying a classical post‑announcement drift strategy (buy over‑reactive earnings, sell under‑reactive, then liquidate after the expected reversal) that earns a gross excess of 0.25 % per annum after deducting the 18‑bp round‑trip cost. The strategy persists across sectors, capitalization deciles, and A‑to‑Z stocks, thus proving the drift is still harvestable.
