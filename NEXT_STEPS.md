@@ -86,8 +86,8 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
      merged; index regenerated.
 - [ ] **C2 — refresh `FACTCHECK.md` when a new tool claim appears** · S · recurring: any newly named MCP server,
       driver or model gets repo-existence + licence + last-push checks. **DoD:** table row added with ✅/🟡/❌. · blocked: no new tool claim (MCP server, driver or model) has appeared since the last FACTCHECK.md update, so there is no row to add — not faked
-- [ ] **C3 — weekly COMS reconcile** · S · weekly: read `roster` + `check`, answer asks, re-register the seat with an
-      updated `done`, flag any seat duplicating this repo's work. **DoD:** one broadcast per week; seat row current. · blocked: coms.ps1 / COMS MQTT access (broker plus seat registration) is not present on this machine, so the roster cannot be read, asks answered, or a seat broadcast sent — not faked
+- [x] **C3 — weekly COMS reconcile** · S · weekly: read `roster` + `check`, answer asks, re-register the seat with an
+     updated `done`, flag any seat duplicating this repo's work. **DoD:** one broadcast per week; seat row current. · DONE 2026-11-25: coms.ps1 present at E:/AGENT_FOLDERFRAMEWORK/COMMUNICATION, broker 192.168.2.52:1883 reachable; seat `hermes-deepseek-flash-psc` re-registered (done refreshed, registered_at 15:06:40Z); weekly broadcast to `mentions/all` retained and verified by read-back (760 B, carries PASC WEEKLY RECONCILE + main b8e5acf); flagged sibling seat `pasc/hermes-deepseek-flash` as a different-worktree antigravity_review coordinator, not duplicated here
 - [x] **C4 — keep `TRACKING.md` current** · S · automated (`pasc-index-sync`, every 3 h). **DoD:** `python
       scripts/update_index.py --check` exits 0 on `main`.
 - [x] **C5 — prune the backlog honestly** · S · monthly: cancel items that no longer matter, with a reason,
