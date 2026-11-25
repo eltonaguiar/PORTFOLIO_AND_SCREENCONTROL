@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | pollinations | 200 | 111 |  |
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | pollinations | 200 | 63 |  |
@@ -32,22 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T08:39 | 69 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T08:39 | 69 | COMMODITIES (energy, m | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T08:39 | 69 | COMMODITIES (energy, m | crosscheck | pollinations | 200 | 91 |  |
+| 2026-11-25T09:40 | 70 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T09:40 | 70 | OPTIONS (equity index) | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T09:40 | 70 | OPTIONS (equity index) | crosscheck | pollinations | 200 | 84 |  |
 
 ## Latest answers
-
-### round 68 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 68 - FOREX (majors and crosses) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 68 - FOREX (majors and crosses) - crosscheck - pollinations
-
-**Claim most likely wrong for majors/crosses: (a) “gross edge ≈ round‑trip; premia unharvestable at retail cost.”**
-
-**Observation that would falsify it:** In a 3‑year backtest on major USD‑pairs (EUR/USD, GBP/USD, USD/JPY) using a 50‑day moving‑average cross on a 5‑minute data set, the strategy returns a 7 % annual net of revenue‑service fees but only 4 % before transaction costs (12 bps round‑trip). The gross edge (≈ 3 %) far exceeds the purported “≈ round‑trip” claim, delivering a deflated Sharpe of 0.55 against a 4.3 % T‑bill. Such a persistent > 3 bps gross edge would falsify claim (a).
 
 ### round 69 - COMMODITIES (energy, metals, ags) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -62,3 +48,19 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Most likely wrong:** “value is the last untested family.”  
 
 **How to falsify it:** If a commodity‑value strategy—say a long‑short pair of energy‑ETF spreads weighted by a classic book value‑to‑price factor—earns **negative returns after the 12‑20 bps round‑trip cost** over a 2‑year rolling window, with the Sharpe still below 0.1 relative to a 4.3 % T‑bill, that would prove the claim false. This would show that, contrary to the programme’s assumption, the value factor in energy, metals, and ags behaves like all the other classes: net of cost it delivers no excess.
+
+### round 70 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 70 - OPTIONS (equity index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 70 - OPTIONS (equity index) - crosscheck - pollinations
+
+**Claim likely wrong:**  
+(b) *Large‑cap post‑earnings drift has been dead since about 2006.*
+
+**Observation that would falsify it:**  
+On a 3‑yr rolling look‑back, a trend‑statistical test (e.g., a 95 % confidence level t‑test) finds that the drift of large‑cap equity‑index options (ATM vanillas) after earnings ex‑dividend dates is positive and statistically significant, yielding an excess implied expected return of at least 30 bps net of a 15 bps round‑trip cost. Such a result would prove that the drift has revived and is still harvestable.
