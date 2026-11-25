@@ -9,7 +9,7 @@ built and how the agents' pretend-money book should be run.
 | Gate | Question | Kills |
 |---|---|---|
 | **G1 Cost** | Does gross edge exceed **2× measured round-trip cost**, on our own fills? | ~everything intraday |
-| **G2 Horizon** | Does it survive at **≥1 day** holding (our ladder: +24.21 bp at 1D vs −0.57 bp at 15m)? | scalping, HFT, most intraday |
+| **G2 Horizon** | Does it survive at **≥1 day** holding (ladder: annual cost drag = 365 / holding_days × round_trip_bps, so the 15m→1D cost ratio is exactly 96×, venue-independent)? | scalping, HFT, most intraday |
 | **G3 Selection** | Is the trial count known, and does it pass **deflated Sharpe** at that N? | the 115-algorithm hub, every "best strategy" list |
 | **G4 Capital** | Is the return measured on **committed capital including cash collateral** vs a 4.3% T-bill? | most market-neutral long/short claims |
 | **G5 Provenance** | Can the result be reproduced from a **recorded pick**, written before the outcome? | H-119-style backfills |

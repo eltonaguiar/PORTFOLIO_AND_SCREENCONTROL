@@ -434,7 +434,7 @@ sweep.** Copilot's correction from 15 to 90 was honest but it assumed the six fa
 
 All three say the same thing our own measurement found independently: **only monthly/quarterly rebalancing survives
 retail costs.** GLM: *"for short-horizon mean reversion, essentially all of it [is consumed]"*; Qwen: *"short-horizon
-mean reversion is mostly bid-ask bounce"*; and our own ladder measured **+24.21 bp at 1D vs −0.57 bp at 15m**. Four
+mean reversion is mostly bid-ask bounce"*; and our own ladder gives annual cost drag = 365 / holding_days × round_trip_bps (the 15m→1D cost ratio is exactly 96×, venue-independent). Four
 independent sources, one conclusion.
 
 ### Ranking

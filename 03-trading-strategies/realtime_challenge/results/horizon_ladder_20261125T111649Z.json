@@ -1,0 +1,337 @@
+{
+ "generated_utc": "2026-11-25T11:16:49+00:00",
+ "published_figure": {
+  "one_day_bp": 24.21,
+  "fifteen_min_bp": -0.57,
+  "unit_stated": false,
+  "gross_or_net_stated": false
+ },
+ "kill_rule": {
+  "source": "NEXT_STEPS.md G-COST-3",
+  "range_bps": [
+   19.0,
+   24.21
+  ]
+ },
+ "reproducible": false,
+ "reproducibility_note": "no horizon_ladder/cost_horizon/horizon_sweep module in either repo; figure is cited in 4 documents with no artifact",
+ "cost_regimes": {
+  "equity ETF (measured, corrected)": 2.0,
+  "crypto perp, cheapest venue": 11.08,
+  "crypto spot, mid venue": 21.07,
+  "crypto spot, worst venue": 56.04,
+  "this project's default model": 26.0
+ },
+ "ladders": {
+  "equity ETF (measured, corrected)": {
+   "round_trip_bps": 2.0,
+   "rows": [
+    {
+     "horizon": "15m",
+     "holding_days": 0.01042,
+     "round_trips_per_year": 35040.0,
+     "annual_cost_drag_bps": 70080.0,
+     "annual_cost_pct": 700.8,
+     "breakeven_gross_bps_per_trade": 2.0
+    },
+    {
+     "horizon": "1h",
+     "holding_days": 0.04167,
+     "round_trips_per_year": 8760.0,
+     "annual_cost_drag_bps": 17520.0,
+     "annual_cost_pct": 175.2,
+     "breakeven_gross_bps_per_trade": 2.0
+    },
+    {
+     "horizon": "4h",
+     "holding_days": 0.16667,
+     "round_trips_per_year": 2190.0,
+     "annual_cost_drag_bps": 4380.0,
+     "annual_cost_pct": 43.8,
+     "breakeven_gross_bps_per_trade": 2.0
+    },
+    {
+     "horizon": "1D",
+     "holding_days": 1.0,
+     "round_trips_per_year": 365.0,
+     "annual_cost_drag_bps": 730.0,
+     "annual_cost_pct": 7.3,
+     "breakeven_gross_bps_per_trade": 2.0
+    },
+    {
+     "horizon": "1W",
+     "holding_days": 7.0,
+     "round_trips_per_year": 52.1,
+     "annual_cost_drag_bps": 104.3,
+     "annual_cost_pct": 1.04,
+     "breakeven_gross_bps_per_trade": 2.0
+    },
+    {
+     "horizon": "1M",
+     "holding_days": 30.0,
+     "round_trips_per_year": 12.2,
+     "annual_cost_drag_bps": 24.3,
+     "annual_cost_pct": 0.24,
+     "breakeven_gross_bps_per_trade": 2.0
+    }
+   ]
+  },
+  "crypto perp, cheapest venue": {
+   "round_trip_bps": 11.08,
+   "rows": [
+    {
+     "horizon": "15m",
+     "holding_days": 0.01042,
+     "round_trips_per_year": 35040.0,
+     "annual_cost_drag_bps": 388243.2,
+     "annual_cost_pct": 3882.43,
+     "breakeven_gross_bps_per_trade": 11.08
+    },
+    {
+     "horizon": "1h",
+     "holding_days": 0.04167,
+     "round_trips_per_year": 8760.0,
+     "annual_cost_drag_bps": 97060.8,
+     "annual_cost_pct": 970.61,
+     "breakeven_gross_bps_per_trade": 11.08
+    },
+    {
+     "horizon": "4h",
+     "holding_days": 0.16667,
+     "round_trips_per_year": 2190.0,
+     "annual_cost_drag_bps": 24265.2,
+     "annual_cost_pct": 242.65,
+     "breakeven_gross_bps_per_trade": 11.08
+    },
+    {
+     "horizon": "1D",
+     "holding_days": 1.0,
+     "round_trips_per_year": 365.0,
+     "annual_cost_drag_bps": 4044.2,
+     "annual_cost_pct": 40.44,
+     "breakeven_gross_bps_per_trade": 11.08
+    },
+    {
+     "horizon": "1W",
+     "holding_days": 7.0,
+     "round_trips_per_year": 52.1,
+     "annual_cost_drag_bps": 577.7,
+     "annual_cost_pct": 5.78,
+     "breakeven_gross_bps_per_trade": 11.08
+    },
+    {
+     "horizon": "1M",
+     "holding_days": 30.0,
+     "round_trips_per_year": 12.2,
+     "annual_cost_drag_bps": 134.8,
+     "annual_cost_pct": 1.35,
+     "breakeven_gross_bps_per_trade": 11.08
+    }
+   ]
+  },
+  "crypto spot, mid venue": {
+   "round_trip_bps": 21.07,
+   "rows": [
+    {
+     "horizon": "15m",
+     "holding_days": 0.01042,
+     "round_trips_per_year": 35040.0,
+     "annual_cost_drag_bps": 738292.8,
+     "annual_cost_pct": 7382.93,
+     "breakeven_gross_bps_per_trade": 21.07
+    },
+    {
+     "horizon": "1h",
+     "holding_days": 0.04167,
+     "round_trips_per_year": 8760.0,
+     "annual_cost_drag_bps": 184573.2,
+     "annual_cost_pct": 1845.73,
+     "breakeven_gross_bps_per_trade": 21.07
+    },
+    {
+     "horizon": "4h",
+     "holding_days": 0.16667,
+     "round_trips_per_year": 2190.0,
+     "annual_cost_drag_bps": 46143.3,
+     "annual_cost_pct": 461.43,
+     "breakeven_gross_bps_per_trade": 21.07
+    },
+    {
+     "horizon": "1D",
+     "holding_days": 1.0,
+     "round_trips_per_year": 365.0,
+     "annual_cost_drag_bps": 7690.6,
+     "annual_cost_pct": 76.91,
+     "breakeven_gross_bps_per_trade": 21.07
+    },
+    {
+     "horizon": "1W",
+     "holding_days": 7.0,
+     "round_trips_per_year": 52.1,
+     "annual_cost_drag_bps": 1098.7,
+     "annual_cost_pct": 10.99,
+     "breakeven_gross_bps_per_trade": 21.07
+    },
+    {
+     "horizon": "1M",
+     "holding_days": 30.0,
+     "round_trips_per_year": 12.2,
+     "annual_cost_drag_bps": 256.4,
+     "annual_cost_pct": 2.56,
+     "breakeven_gross_bps_per_trade": 21.07
+    }
+   ]
+  },
+  "crypto spot, worst venue": {
+   "round_trip_bps": 56.04,
+   "rows": [
+    {
+     "horizon": "15m",
+     "holding_days": 0.01042,
+     "round_trips_per_year": 35040.0,
+     "annual_cost_drag_bps": 1963641.6,
+     "annual_cost_pct": 19636.42,
+     "breakeven_gross_bps_per_trade": 56.04
+    },
+    {
+     "horizon": "1h",
+     "holding_days": 0.04167,
+     "round_trips_per_year": 8760.0,
+     "annual_cost_drag_bps": 490910.4,
+     "annual_cost_pct": 4909.1,
+     "breakeven_gross_bps_per_trade": 56.04
+    },
+    {
+     "horizon": "4h",
+     "holding_days": 0.16667,
+     "round_trips_per_year": 2190.0,
+     "annual_cost_drag_bps": 122727.6,
+     "annual_cost_pct": 1227.28,
+     "breakeven_gross_bps_per_trade": 56.04
+    },
+    {
+     "horizon": "1D",
+     "holding_days": 1.0,
+     "round_trips_per_year": 365.0,
+     "annual_cost_drag_bps": 20454.6,
+     "annual_cost_pct": 204.55,
+     "breakeven_gross_bps_per_trade": 56.04
+    },
+    {
+     "horizon": "1W",
+     "holding_days": 7.0,
+     "round_trips_per_year": 52.1,
+     "annual_cost_drag_bps": 2922.1,
+     "annual_cost_pct": 29.22,
+     "breakeven_gross_bps_per_trade": 56.04
+    },
+    {
+     "horizon": "1M",
+     "holding_days": 30.0,
+     "round_trips_per_year": 12.2,
+     "annual_cost_drag_bps": 681.8,
+     "annual_cost_pct": 6.82,
+     "breakeven_gross_bps_per_trade": 56.04
+    }
+   ]
+  },
+  "this project's default model": {
+   "round_trip_bps": 26.0,
+   "rows": [
+    {
+     "horizon": "15m",
+     "holding_days": 0.01042,
+     "round_trips_per_year": 35040.0,
+     "annual_cost_drag_bps": 911040.0,
+     "annual_cost_pct": 9110.4,
+     "breakeven_gross_bps_per_trade": 26.0
+    },
+    {
+     "horizon": "1h",
+     "holding_days": 0.04167,
+     "round_trips_per_year": 8760.0,
+     "annual_cost_drag_bps": 227760.0,
+     "annual_cost_pct": 2277.6,
+     "breakeven_gross_bps_per_trade": 26.0
+    },
+    {
+     "horizon": "4h",
+     "holding_days": 0.16667,
+     "round_trips_per_year": 2190.0,
+     "annual_cost_drag_bps": 56940.0,
+     "annual_cost_pct": 569.4,
+     "breakeven_gross_bps_per_trade": 26.0
+    },
+    {
+     "horizon": "1D",
+     "holding_days": 1.0,
+     "round_trips_per_year": 365.0,
+     "annual_cost_drag_bps": 9490.0,
+     "annual_cost_pct": 94.9,
+     "breakeven_gross_bps_per_trade": 26.0
+    },
+    {
+     "horizon": "1W",
+     "holding_days": 7.0,
+     "round_trips_per_year": 52.1,
+     "annual_cost_drag_bps": 1355.7,
+     "annual_cost_pct": 13.56,
+     "breakeven_gross_bps_per_trade": 26.0
+    },
+    {
+     "horizon": "1M",
+     "holding_days": 30.0,
+     "round_trips_per_year": 12.2,
+     "annual_cost_drag_bps": 316.3,
+     "annual_cost_pct": 3.16,
+     "breakeven_gross_bps_per_trade": 26.0
+    }
+   ]
+  }
+ },
+ "reading_analysis": [
+  {
+   "cost_regime": "equity ETF (measured, corrected)",
+   "cost_bps": 2.0,
+   "if_24.21_is_per_trade_net__gross_needed": 26.21,
+   "if_24.21_is_per_year_net__gross_needed": 2.07
+  },
+  {
+   "cost_regime": "crypto perp, cheapest venue",
+   "cost_bps": 11.08,
+   "if_24.21_is_per_trade_net__gross_needed": 35.29,
+   "if_24.21_is_per_year_net__gross_needed": 11.15
+  },
+  {
+   "cost_regime": "crypto spot, mid venue",
+   "cost_bps": 21.07,
+   "if_24.21_is_per_trade_net__gross_needed": 45.28,
+   "if_24.21_is_per_year_net__gross_needed": 21.14
+  },
+  {
+   "cost_regime": "crypto spot, worst venue",
+   "cost_bps": 56.04,
+   "if_24.21_is_per_trade_net__gross_needed": 80.25,
+   "if_24.21_is_per_year_net__gross_needed": 56.11
+  },
+  {
+   "cost_regime": "this project's default model",
+   "cost_bps": 26.0,
+   "if_24.21_is_per_trade_net__gross_needed": 50.21,
+   "if_24.21_is_per_year_net__gross_needed": 26.07
+  }
+ ],
+ "g_cost_3": {
+  "regimes_inside_kill_range": [
+   "crypto spot, mid venue"
+  ],
+  "regimes_outside_kill_range": [
+   "equity ETF (measured, corrected)",
+   "crypto perp, cheapest venue",
+   "crypto spot, worst venue",
+   "this project's default model"
+  ],
+  "verdict": "the rule fires for 4 of 5 regimes but does NOT fire for ['crypto spot, mid venue'] at 21.07bp \u2014 so G-COST-3 alone cannot kill the figure"
+ },
+ "verdict": "KILL the +24.21 bp at 1D as a quoted claim, on REPRODUCIBILITY and UNIT grounds, not on the cost test. It is (a) unit-ambiguous between per-trade and per-year - a factor of 365 - and gross/net ambiguous, and (b) unreproducible: no horizon-ladder implementation exists in either repo, so four documents cite a number nobody can recompute. G-COST-3 cannot settle it because a 21.07bp mid-venue round trip lands INSIDE the kill range while 2.00, 11.08, 26.00 and 56.04bp land outside - the rule is firing on cost regime, not on the claim. What survives is the ladder arithmetic: annual cost drag = 365/holding_days x round_trip_bps, so a 15m hold at a 21bp round turn pays ~2,450pct of notional a year in friction against ~17pct for a 1D hold. THAT is the defensible horizon claim, and it needs no unstated figure to make it."
+}

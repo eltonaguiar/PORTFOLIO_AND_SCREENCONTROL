@@ -29,7 +29,7 @@ One table for the whole exercise. Each row points at the section of `validation/
 
 1. **DSR ≥ 0.95** with an honest trial count — the only gate every credible answer shares.
 2. **Pre-registration + a trial ledger**, with N_eff from the correlation structure, not the config count.
-3. **Only monthly/quarterly rebalancing survives retail cost** — matched independently by our own ladder (+24.21 bp at 1D vs −0.57 bp at 15m).
+3. **Only monthly/quarterly rebalancing survives retail cost** — matched independently by our own cost ladder (annual drag = 365 / holding_days × round_trip_bps; the 15m→1D ratio is exactly 96×, venue-independent).
 4. **A short paper test cannot confirm a modest Sharpe.** Four different phrasings, same arithmetic.
 5. **"Proven" means auditable and falsifiable, never guaranteed.**
 

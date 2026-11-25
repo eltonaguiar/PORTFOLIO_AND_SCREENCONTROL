@@ -1,0 +1,85 @@
+{
+  "item": "A9 follow-up (deferred) - coordinated one-line correction of the dead +24.21 bp figure across the docs that still presented it as live evidence",
+  "session": "Session B / Session 45 (cron queue axis)",
+  "axis": "empirical verification",
+  "run_time_utc": "2026-11-25T11:14Z",
+  "run_time_est": "2026-11-25T06:14-05:00",
+  "head_at_start": "b217c72",
+  "why_this_run": "E8 is the only unchecked H item and remains BLOCKED on E4 picks (n=0). The genuinely outstanding, repeatedly-deferred defect was A9's four one-line corrections: four docs still quoted the dead +24.21 bp at 1D figure as live evidence with no DEAD annotation. This run lands them.",
+
+  "control": {
+    "reproducer": "python -m realtime_challenge.proof.horizon_ladder (run from 03-trading-strategies/)",
+    "output_file": "03-trading-strategies/results/horizon_ladder_latest.json",
+    "formulation": "annual cost drag = 365 / holding_days * round_trip_bps",
+    "trips_per_year": { "15m": 35040, "1h": 8760, "4h": 2190, "1D": 365, "1W": 52, "1M": 12 },
+    "ratio_15m_to_1D": 96.0,
+    "ratio_1D_to_1M": 30.4167,
+    "venue_dependence": "the RATIO is venue-independent (35040/365 = 96.0x, 365/12 = 30.4167x); the ABSOLUTE drag scales linearly with round_trip_bps",
+    "why_it_survives": "the old figure had no unit (per-trade vs per-year differ 365x), no gross/net statement, and no implementation in either repo; the ladder formulation is exact and recomputable and needs no unstated figure"
+  },
+
+  "corrections": [
+    {
+      "file": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "line": 12,
+      "context": "G2 Horizon gate definition (most-cited surface)",
+      "old": "our ladder: +24.21 bp at 1D vs -0.57 bp at 15m",
+      "new": "ladder: annual cost drag = 365 / holding_days x round_trip_bps, so the 15m->1D cost ratio is exactly 96x, venue-independent"
+    },
+    {
+      "file": "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md",
+      "line": 8,
+      "context": "injected state summary",
+      "old": "horizon +24.21 bp at 1D vs -0.57 bp at 15m",
+      "new": "horizon: annual cost drag = 365 / holding_days x round_trip_bps (15m->1D ratio 96x, venue-independent)"
+    },
+    {
+      "file": "03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md",
+      "line": 437,
+      "context": "'convergent operational finding' - our own ladder agreeing with the panel",
+      "old": "our own ladder measured **+24.21 bp at 1D vs -0.57 bp at 15m**",
+      "new": "our own ladder gives annual cost drag = 365 / holding_days x round_trip_bps (the 15m->1D cost ratio is exactly 96x, venue-independent)"
+    },
+    {
+      "file": "03-trading-strategies/validation/MODEL_PANEL_INDEX.md",
+      "line": 32,
+      "context": "point 3 of the thirteen-answer consensus",
+      "old": "matched independently by our own ladder (+24.21 bp at 1D vs -0.57 bp at 15m)",
+      "new": "matched independently by our own cost ladder (annual drag = 365 / holding_days x round_trip_bps; the 15m->1D ratio is exactly 96x, venue-independent)"
+    }
+  ],
+
+  "conclusion_survival": {
+    "claim_tested": "does each doc's argument still hold after substituting the recomputable formulation for the dead bare figure?",
+    "verdict": "YES - unchanged",
+    "reason": "each doc used the old figure to argue that sub-1D horizons are destroyed by friction and only daily-or-longer holds survive. The 96x (15m->1D) and 30.42x (1D->1M) ratios establish exactly that, and they are constant across venues, so the argument is if anything stronger (no venue assumption). At a 21.07 bp crypto-spot round trip the ladder gives a 7,382.9%/yr drag on a 15m hold vs 76.9%/yr on a 1D hold vs 2.6%/yr on a 1M hold - the qualitative ranking every doc relied on.",
+    "per_doc": {
+      "INVESTMENT_DECISION_FRAMEWORK.md G2": "still kills scalping/HFT/most intraday: 15m drag is 96x the 1D drag",
+      "ASSET_CLASS_IDEA_HARVEST.md": "horizon stat no longer needs a dead number; the harvest conclusions (0 proven; two small falsifiable ideas) never depended on the bp value",
+      "MODEL_ANSWER_DELTAS.md": "'only monthly/quarterly rebalancing survives retail costs' - directly the ladder's result",
+      "MODEL_PANEL_INDEX.md": "same consensus point 3, same support"
+    }
+  },
+
+  "verification": {
+    "grep_24_21_in_corrected_files": 0,
+    "corrected_files": [
+      "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+      "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md",
+      "03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md",
+      "03-trading-strategies/validation/MODEL_PANEL_INDEX.md"
+    ],
+    "remaining_24_21_md_mentions_classified": {
+      "03-trading-strategies/HORIZON_LADDER_A9.md": "the kill record itself - retained by design",
+      "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md": "already carries the 'DEAD as a quoted claim - killed by A9' annotation - retained record",
+      "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md": "already carries 'DEAD per A9' annotations - retained record",
+      "03-trading-strategies/PROGRESS.md": "history log",
+      "04-investment-strategy/TODO_2026-11-23.md": "the A9 item text",
+      "NEXT_STEPS.md": "Session A build/tracking file - NOT edited (forbidden), contains only the retired G-COST-3 rule text"
+    },
+    "no_gate_lowered": true,
+    "no_number_changed": "no measured value was altered; only a dead, unrecomputable quoted figure was removed from live citations and replaced by its recomputable equivalent"
+  },
+
+  "verdict": "The +24.21 bp figure was already KILLED in HORIZON_LADDER_A9.md (reproducibility + unit grounds). This run lands the four deferred one-line corrections so no doc presents it as live evidence. Every conclusion in all four docs survives the substitution unchanged. E8 remains the sole unchecked H item and remains BLOCKED on E4 picks (n=0)."
+}

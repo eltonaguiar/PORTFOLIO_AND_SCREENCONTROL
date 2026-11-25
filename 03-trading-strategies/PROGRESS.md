@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 45 — 2026-11-25 (11:14 UTC / 06:14 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: E8 is the only unchecked H item and it is blocked on E4 picks; the one genuinely outstanding defect is A9's deferred 4-doc correction of the dead +24.21 bp figure — can it be landed without weakening any gate, and does each doc's conclusion survive the substitution?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 11:14 | CORRECTION | A9 follow-up — landed the deferred 4-doc one-line correction. Removed the dead bare "+24.21 bp at 1D vs -0.57 bp at 15m" from the 3 docs that still presented it as live evidence (ASSET_CLASS_IDEA_HARVEST.md:8, MODEL_ANSWER_DELTAS.md:437, MODEL_PANEL_INDEX.md:32) and from the G2 Horizon gate definition (INVESTMENT_DECISION_FRAMEWORK.md:12); each now cites the recomputable `annual cost drag = 365 / holding_days x round_trip_bps`. Control: re-ran horizon_ladder.py — 15m/1D = 35040/365 = 96.0x, 1D/1M = 365/12 = 30.42x, venue-independent. Every doc's conclusion (sub-1D horizons destroyed; only monthly/quarterly survives) is unchanged by the substitution. grep 24.21 in the 4 files = 0; remaining mentions are the kill record (HORIZON_LADDER_A9.md), the two DEAD-annotated docs, the TODO and NEXT_STEPS (Session A). No gate lowered, no measured value changed. | `03-trading-strategies/results/a9_doc_correction_2026-11-25.json` |
+| 11:14 | BLOCKED | E8 — re-verified: no paper_book_*.jsonl on disk, `paper_book.py score` = n=0 / 0 resolved / INSUFFICIENT_DATA across all three tiers; E4 picks (CP/ZOO/KILO/AG) still not landed, COMS 11:25Z carried COPILOT artifacts + a wallet-persistence null, no picks. Nothing fabricated, left unchecked. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
 ## Session 44 — 2026-11-25 (10:11 UTC / 05:11 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: A10 is marked DONE but its G-COST-3 "fix" only renamed the subject — does the rule actually test the horizon claim, and does the provenance sweep see every doc?
 

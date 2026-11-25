@@ -5,7 +5,7 @@ slice of the estate so no single model's blind spot chose the class. Every answe
 **table of test + kill rule** per risk-appetite tier (capital-preservation / balanced / aggressive).
 State injected: 10 classes under one proof contract, 67/374 cells tested, 0 proven, 10 killed, lag-0 fill
 worth +2.54 bp and not executable, honest next-open +12.43 bp gross / +8.79 bp with 5 bp adverse, cost
-horizon +24.21 bp at 1D vs −0.57 bp at 15m, FX live spread 8.0 bp, vol-target gap 2.3 vs 10.7 bp/day,
+horizon: annual cost drag = 365 / holding_days × round_trip_bps (15m→1D ratio 96×, venue-independent), FX live spread 8.0 bp, vol-target gap 2.3 vs 10.7 bp/day,
 zero forward observations.
 
 Run 2026-11-22, all three returned HTTP 200 in ~9–10 s. Raw: `asset_class_harvest_20261122.json`.
