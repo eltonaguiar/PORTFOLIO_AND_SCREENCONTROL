@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 43 — 2026-11-25 (02:37 UTC / 21:37 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: is any H item actionable, and is the A10 cost-gate CI actually committing its evidence?
+
+|| time (UTC) | status | item | artifact ||
+| 02:37 | BLOCKED | E8 — paper_book.py score on the real tier books: stable/moderate/aggressive all n=0, 0 resolved, INSUFFICIENT_DATA; no paper_book_*.jsonl on disk; no E4 pick commits in history; COMS KILO 02:31Z reports no new market data / no verdict upgrade. Nothing fabricated, item left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+| 02:37 | FIXED | A10 CI-wiring audit — the g-cost-gates job (a) never fired on schedule: on.schedule had no '15 5 * * *' cron, which the job if: requires, so it was dispatch-only; (b) 'always commits evidence' git-add pointed at 03-trading-strategies/results/ (nonexistent) instead of realtime_challenge/results/, silently no-oping under 2>/dev/null. Both corrected in .github/workflows/realtime-challenge.yml. Measurement itself verified sound/committed: G-COST-1 KILL 20.002bp, G-COST-2 PASS 0.03/0.564bp, G-COST-3 PASS 20.002bp in [19,24.21], G-COST-4 KILL gap 240.886bp/day, overall KILL. | `03-trading-strategies/results/a10_ci_wiring_audit.json` |
+| 02:45 | FIXED | E5 artifact writer — `paper_book.py score` appended a literal backslash-n (source `"\\n"` = 2 chars) instead of a real newline, so `e5_weekly_scorecard_latest.json` failed `json.load` with "Extra data". One-char fix (write a real newline); regenerated; now `json.load` green, total_resolved=0, all tiers n=0. | `03-trading-strategies/results/e5_weekly_scorecard_latest.json` |
+
 ## Session 42 — 2026-11-24 (12:47 UTC / 07:47 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: E8 — can the first honest read be published at n>=30 per tier now?
 

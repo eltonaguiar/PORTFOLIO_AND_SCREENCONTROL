@@ -1,11 +1,11 @@
 {
-  "item": "E8 — publish the first honest read at n>=30 per tier",
+  "item": "E8 \u2014 publish the first honest read at n>=30 per tier",
   "owner": "H",
   "gate": "G5 (provenance/tracking)",
-  "run_at": "2026-11-24T17:26:49-05:00",
-  "run_at_utc": "2026-11-24T22:26:49Z",
-  "git_hash": "f882061866d594ea2f960a1a5f977017ec4012c4",
-  "status": "BLOCKED — not done; left unchecked in TODO",
+  "run_at": "2026-11-24T21:37:00-05:00",
+  "run_at_utc": "2026-11-25T02:37:00Z",
+  "git_hash": "15e0a395c9232ba14327e1613fcde6d282066c5a",
+  "status": "BLOCKED \u2014 not done; left unchecked in TODO",
   "precondition": "E4 agent picks >= 5 per tier landed in the real per-tier books (results/paper_book_{stable,moderate,aggressive}.jsonl)",
   "observed": {
     "stable": 0,
@@ -13,7 +13,7 @@
     "aggressive": 0,
     "total_resolved": 0
   },
-  "source": "direct `python 04-investment-strategy/paper_book.py score` run (no --tier, all three real tier books) at 2026-11-24T22:26:49Z, exit 0; stable/moderate/aggressive all n=0, INSUFFICIENT_DATA; real tier books do not exist on disk under 04-investment-strategy/results/ or 03-trading-strategies/results/ -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json (run_at 2026-11-24T22:26:49Z, git_hash f882061); E4 agent picks (CP/ZOO/KILO/AG) still not landed per COMS check 22:24Z (KILO review message: floor/MDE, E1 edge-hunt artifacts still absent on origin, contradiction flagged, harvest paragraph held, E2 next kill; no E4 picks and no measurement ask directed at Hermes).",
+  "source": "direct `python 04-investment-strategy/paper_book.py score` run (no --tier, all three real tier books) at 2026-11-25T02:37Z, exit 0; stable/moderate/aggressive all n=0, INSUFFICIENT_DATA; no paper_book_*.jsonl exists on disk under 04-investment-strategy/results/ or 03-trading-strategies/results/ -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json same run; git log shows no pick/E4 commits; COMS check 02:31Z is KILO 15-min status only: Track B size variable flagged, no new market data, no verdict upgrade; no E4 picks and no measurement ask directed at Hermes.",
   "verdict": "Cannot publish an honest n>=30 read per tier; books are empty pending E4 agent picks (CP/ZOO/KILO/AG). Will not fabricate. Re-evaluate E8 once E4 lands; E5 score run then becomes the E8 read if n>=30 per tier.",
   "artifact": "03-trading-strategies/results/e8_blocked_n0_per_tier.json"
 }

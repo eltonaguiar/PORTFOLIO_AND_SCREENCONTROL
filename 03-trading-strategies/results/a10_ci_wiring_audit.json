@@ -1,0 +1,57 @@
+{
+ "audited_utc": "2026-11-25T02:37:00Z",
+ "audited_local_est": "2026-11-24 21:37 EST",
+ "owner": "H",
+ "item": "A10",
+ "repo": "eltonaguiar/PORTFOLIO_AND_SCREENCONTROL",
+ "claim_checked": "A10 says the g-cost-gates job runs on a schedule AND always commits its measured verdict so a red run leaves evidence on main.",
+ "verification_method": "Static audit: read .github/workflows/realtime-challenge.yml g-cost-gates job; resolved the evidence path the proof script actually writes; compared to the path the commit step staged; checked on.schedule vs the job if: condition.",
+ "defects_found": [
+  {
+   "id": "A10-D1",
+   "severity": "medium",
+   "title": "Job never fires on schedule (dispatch-only)",
+   "detail": "on.schedule listed only ['7 * * * *','30 * * * *','20 6 * * *']; the g-cost-gates job gate was `if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 5 * * *'`. Since '15 5 * * *' was absent from on.schedule, the job could only run on manual workflow_dispatch, despite the 'Runs on a schedule and on dispatch' comment.",
+   "fix": "Added `- cron: \"15 5 * * *\"` to on.schedule so the job's gate cron exists and it runs daily."
+  },
+  {
+   "id": "A10-D2",
+   "severity": "high",
+   "title": "'Always commits evidence' silently no-oped on a wrong path",
+   "detail": "Commit step ran `git add 03-trading-strategies/results/g_cost_gates_latest.json 2>/dev/null || true`. That file does not exist. The proof script resolves its output dir as RESULTS = Path(__file__).resolve().parent.parent / 'results' = 03-trading-strategies/realtime_challenge/results, so the real artifact is 03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json. The wrong path made git add fail, the failure was swallowed by 2>/dev/null || true, `git diff --cached --quiet` saw nothing, the step printed 'no gate change this pass' and exited 0 — so no evidence was ever committed by CI on a KILL.",
+   "fix": "Corrected the git add path to 03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json; corrected the operator-facing KILL message path to the same location."
+  }
+ ],
+ "measurement_integrity": {
+  "verdict": "SOUND AND COMMITTED",
+  "detail": "The A10 measured numbers are real and present in the committed artifact; only the CI plumbing was defective.",
+  "artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json",
+  "generated_utc": "2026-11-23T01:25:55+00:00",
+  "venue": "Binance spot",
+  "gates": {
+   "G-COST-1": {"verdict": "KILL", "median_bps": 20.002, "threshold_kill_if_median_bps_ge": 8.0},
+   "G-COST-2": {"verdict": "PASS", "p50_bps": 0.03, "p90_bps": 0.564, "threshold_p50_gt": 8.0, "threshold_p90_gt": 20.0},
+   "G-COST-3": {"verdict": "PASS", "one_day_cost_bps": 20.002, "band": [19.0, 24.21]},
+   "G-COST-4": {"verdict": "KILL", "buy_and_hold_bps_per_day": 246.253, "vol_target_bps_per_day": 5.367, "gap_bps_per_day": 240.886, "threshold_gap_gt": 5.0}
+  },
+  "kills": ["G-COST-1", "G-COST-4"],
+  "passes": ["G-COST-2", "G-COST-3"],
+  "overall": "KILL"
+ },
+ "path_resolution_proof": {
+  "old_path": "03-trading-strategies/results/g_cost_gates_latest.json -> MISSING",
+  "new_path": "03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json -> EXISTS"
+ },
+ "validation": {
+  "yaml_parse": "ok (yaml.safe_load)",
+  "schedule_after_fix": ["7 * * * *", "30 * * * *", "20 6 * * *", "15 5 * * *"],
+  "cron_15_5_present": true,
+  "job_if": "github.event_name == 'workflow_dispatch' || github.event.schedule == '15 5 * * *'",
+  "job_if_matches_schedule": true,
+  "evidence_git_add_path_exists": true
+ },
+ "files_changed": [
+  ".github/workflows/realtime-challenge.yml"
+ ],
+ "conclusion": "A10 measurement stands (unchanged). Its CI wiring was broken in two ways (no schedule, wrong evidence path). Both corrected; the job will now run daily at 05:15 UTC and actually commit the measured gate verdict on every pass, red or green."
+}

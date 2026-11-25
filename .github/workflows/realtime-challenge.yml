@@ -27,6 +27,7 @@ on:
     - cron: "7 * * * *"      # forward pod, hourly
     - cron: "30 * * * *"     # carry series, hourly (offset from forward-pod :07)
     - cron: "20 6 * * *"     # daily backtest refresh
+    - cron: "15 5 * * *"     # G-COST cost gates, daily (this exact cron gates the g-cost-gates job)
 
 permissions:
   contents: write
@@ -273,7 +274,7 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           git config user.name  "realtime-challenge-bot"
           git config user.email "realtime-challenge@users.noreply.github.com"
-          git add 03-trading-strategies/results/g_cost_gates_latest.json 2>/dev/null || true
+          git add 03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no gate change this pass"
             exit 0
@@ -291,5 +292,5 @@ jobs:
       - name: Fail the job if any gate KILLs
         if: env.GATES_EXIT != '0'
         run: |
-          echo "A G-COST gate KILLED a cost assumption — see results/g_cost_gates_latest.json" >&2
+          echo "A G-COST gate KILLED a cost assumption — see 03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json" >&2
           exit 1

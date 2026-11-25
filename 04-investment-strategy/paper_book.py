@@ -624,7 +624,7 @@ def cmd_score(args: argparse.Namespace) -> int:
     tmp = artifact.with_suffix(artifact.suffix + ".tmp")
     with tmp.open("w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=2)
-        fh.write("\\n")
+        fh.write("\n")
         fh.flush()
         os.fsync(fh.fileno())
     tmp.replace(artifact)
