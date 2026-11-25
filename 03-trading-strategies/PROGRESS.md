@@ -3,6 +3,13 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 44 — 2026-11-25 (10:11 UTC / 05:11 EST cron run) — `hermes` (Session B, cron queue axis)
+Question: A10 is marked DONE but its G-COST-3 "fix" only renamed the subject — does the rule actually test the horizon claim, and does the provenance sweep see every doc?
+
+| time (UTC) | status | item | artifact |
+| 10:11 | RECAST | A10 / G-COST-3 — the gate was still `KILL iff measured_1D_cost ∉ [19,24.21]`, and with a 10bp/side taker fee the round-turn fee alone is 20bp (inside the band), so PASS was a fee-schedule artifact: the old predicate accepts any 9.5–12.1bp/side venue. Per-round-trip cost is horizon-independent, so "1D cost premium" is a category error; retired the absolute-band predicate. Gate is now ILL-POSED and reports the A9 frequency ladder (15m/1D=96.0x, 1D/1M=30.42x) plus a repo-root provenance sweep. Fixed D2 (cwd-relative `-- *.md` missed 2 of the 4 A9 docs: INVESTMENT_HUB_REVIEW.md, INVESTMENT_DECISION_FRAMEWORK.md) and D3 (exclusion path-prefix mismatch leaked the excluded A9 artifact). Live round-trip cost 20.002bp; 7 docs still quote 24.21 (coordinated edit deferred). G-COST-1/4 still KILL; overall KILL unchanged. | `03-trading-strategies/results/a10_g_cost3_recast_audit.json` |
+| 10:11 | BLOCKED | E8 — no paper_book_*.jsonl on disk, so score stays n=0 / 0 resolved / INSUFFICIENT_DATA across all three tiers; E4 picks (CP/ZOO/KILO/AG) still not landed (COMS 10:06Z only KILO self-correction; last 8h of commits are automated ticks). Nothing fabricated, left unchecked. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
 ## Session 43 — 2026-11-25 (02:37 UTC / 21:37 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: is any H item actionable, and is the A10 cost-gate CI actually committing its evidence?
 

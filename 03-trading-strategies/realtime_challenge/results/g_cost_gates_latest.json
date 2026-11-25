@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-11-23T01:25:55+00:00",
+ "generated_utc": "2026-11-25T10:11:19+00:00",
  "venue": "Binance spot",
  "venue_id": "binance",
  "fee_source": "published schedule assumed (https://www.binance.com/en/fee/schedule)",
- "fee_fetch_date": "2026-11-23",
+ "fee_fetch_date": "2026-11-25",
  "gates": [
   {
    "gate": "G-COST-1",
@@ -25,7 +25,7 @@
    "fee": {
     "per_side_bps": 10.0,
     "source": "https://www.binance.com/en/fee/schedule",
-    "fetch_date": "2026-11-23"
+    "fetch_date": "2026-11-25"
    }
   },
   {
@@ -39,11 +39,11 @@
     "kill_if_p90_bps_gt": 20.0
    },
    "measured": {
-    "p50_bps": 0.03,
-    "p90_bps": 0.564
+    "p50_bps": 0.061,
+    "p90_bps": 0.644
    },
    "verdict": "PASS",
-   "evidence": "round-trip slippage P50=0.030 bp P90=0.564 bp over 32 walks on ['BTC/USDT', 'ETH/USDT'] at Binance spot; within the 8 bp / 20 bp thresholds",
+   "evidence": "round-trip slippage P50=0.061 bp P90=0.644 bp over 32 walks on ['BTC/USDT', 'ETH/USDT'] at Binance spot; within the 8 bp / 20 bp thresholds",
    "pairs": [
     "BTC/USDT",
     "ETH/USDT"
@@ -53,26 +53,75 @@
    "gate": "G-COST-3",
    "instrument": "BTC/USDT",
    "venue": "Binance spot",
-   "horizon_basis": "1 day, one round trip (named instrument, venue, basis)",
+   "horizon_basis": "1 day, one round trip (per-round-trip cost is horizon-independent)",
    "n": 1,
-   "threshold": {
-    "kill_if_cost_bps_gt": 24.21,
-    "kill_if_cost_bps_lt": 19.0
-   },
    "measured": {
-    "one_day_cost_bps": 20.002
+    "round_trip_cost_bps": 20.002,
+    "spread_bps": 0.0017,
+    "round_turn_fee_bps": 20.0
    },
-   "verdict": "PASS",
-   "evidence": "measured 1D round-trip cost 20.002 bp at Binance spot BTC/USDT (1 day basis); kill range [19.0, 24.21] bp \u2014 cost test does not fire. The +24.21 bp figure is independently dead on A9 grounds (unit unstated, gross/net unstated, no implementation); this gate now guards its resurrection at the named venue/basis. Figure still quoted in tracked files: ASSET_CLASS_IDEA_HARVEST.md, HORIZON_LADDER_A9.md, PROGRESS.md, VALUE_VS_PEAD_EVIDENCE.md (coordinated edit pending, not made here).",
+   "verdict": "ILL-POSED",
+   "claim_tested": "1D cost premium is real and equals the +24.21 bp figure",
+   "retired_predicate": "absolute band [19, 24.21] bp on the measured 1D cost",
+   "retirement_reason": "per-round-trip cost is horizon-independent; annual drag = (365/holding_days)*c_rt. A threshold on c_rt tests the venue fee schedule, not the claim: a ~10bp/side venue forces the old [19,24.21] PASS by construction.",
+   "frequency_ladder": {
+    "15m": {
+     "round_trips_per_year": 35040,
+     "annual_drag_bps": 700859.418
+    },
+    "1h": {
+     "round_trips_per_year": 8760,
+     "annual_drag_bps": 175214.855
+    },
+    "4h": {
+     "round_trips_per_year": 2190,
+     "annual_drag_bps": 43803.714
+    },
+    "1D": {
+     "round_trips_per_year": 365,
+     "annual_drag_bps": 7300.619
+    },
+    "1W": {
+     "round_trips_per_year": 52,
+     "annual_drag_bps": 1040.088
+    },
+    "1M": {
+     "round_trips_per_year": 12,
+     "annual_drag_bps": 240.02
+    }
+   },
+   "frequency_ratios": {
+    "15m_over_1D": 96.0,
+    "1D_over_1M": 30.4167
+   },
+   "old_predicate_accepts_fee_per_side_bps": [
+    9.499,
+    12.104
+   ],
    "kill_range_bps": [
     19.0,
     24.21
    ],
    "a9_kill_grounds": "unit unstated (per trade vs per day, 365x), gross/net unstated, no implementation in either repo",
+   "provenance": {
+    "sweep_ok": true,
+    "sweep_root": "repo root",
+    "docs_still_quoting": [
+     "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md",
+     "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md",
+     "03-trading-strategies/PROGRESS.md",
+     "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+     "03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md",
+     "03-trading-strategies/validation/MODEL_PANEL_INDEX.md",
+     "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md"
+    ],
+    "note": "coordinated multi-doc correction deferred per HORIZON_LADDER_A9.md; provenance is a documentation risk, not a cost signal"
+   },
+   "evidence": "measured round-trip cost 20.002 bp at Binance spot BTC/USDT (spread 0.0017 + round-turn fee 20.000 bp). '1D cost premium is real' is ILL-POSED: cost per trade does not vary with horizon; the 15m->1D annual-cost ratio is the fixed frequency ratio 96.0x and 1D->1M 30.42x. The old [19,24.21] band accepts any fee/side in [9.50,12.10] bp \u2014 a fee-schedule artifact, not evidence. Dead figure still quoted in 7 tracked doc(s) outside its own definition.",
    "fee": {
     "per_side_bps": 10.0,
     "source": "https://www.binance.com/en/fee/schedule",
-    "fetch_date": "2026-11-23"
+    "fetch_date": "2026-11-25"
    }
   },
   {
@@ -86,12 +135,12 @@
     "min_sessions": 20
    },
    "measured": {
-    "buy_and_hold_bps_per_day": 246.253,
-    "vol_target_bps_per_day": 5.367,
-    "gap_bps_per_day": 240.886
+    "buy_and_hold_bps_per_day": -255.246,
+    "vol_target_bps_per_day": -14.5,
+    "gap_bps_per_day": 240.746
    },
    "verdict": "KILL",
-   "evidence": "over 24 sessions: buy-and-hold 246.253 bp/day vs vol-targeted 5.367 bp/day, gap 240.886 bp/day; KILLS the 5 bp/day overlay limit"
+   "evidence": "over 24 sessions: buy-and-hold -255.246 bp/day vs vol-targeted -14.500 bp/day, gap 240.746 bp/day; KILLS the 5 bp/day overlay limit"
   }
  ],
  "kills": [
@@ -99,9 +148,11 @@
   "G-COST-4"
  ],
  "passes": [
-  "G-COST-2",
-  "G-COST-3"
+  "G-COST-2"
  ],
  "unmeasurable": [],
+ "retired": [
+  "G-COST-3"
+ ],
  "overall": "KILL"
 }

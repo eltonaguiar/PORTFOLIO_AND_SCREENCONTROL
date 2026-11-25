@@ -1,0 +1,65 @@
+{
+  "audit": "A10 / G-COST-3 recast — empirical verification",
+  "owner": "H (Hermes/DeepSeek-Flash, Session B)",
+  "generated_utc": "2026-11-25T10:11:19Z",
+  "subject": "G-COST-3 kill rule in 03-trading-strategies/realtime_challenge/proof/g_cost_gates.py",
+  "prior_state": {
+    "todo_claim": "A10 marked [x]: G-COST-3 fixed to name instrument/venue/horizon basis per A9 defect",
+    "actual_code": "verdict = KILL iff measured_1D_cost outside [19, 24.21] bp, where measured_1D_cost = spread + 2*taker_fee",
+    "defects_found": [
+      {
+        "id": "D1",
+        "severity": "high",
+        "kind": "conceptual",
+        "detail": "Predicate is still an absolute cost-regime threshold, not a test of the horizon claim. Per-round-trip cost is horizon-independent; a ~10bp/side venue forces the round-turn fee alone to 20 bp, which sits inside [19,24.21], so PASS is a function of the fee schedule. Demonstrated: the acceptance window in fee-per-side terms is [9.499, 12.104] bp."
+      },
+      {
+        "id": "D2",
+        "severity": "medium",
+        "kind": "concrete-bug",
+        "detail": "Provenance sweep ran 'git grep -l 24\\.21 -- *.md' from cwd 03-trading-strategies, so it missed 02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md and 04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md (2 of the 4 A9-named docs). Reproduced from both cwds."
+      },
+      {
+        "id": "D3",
+        "severity": "low",
+        "kind": "concrete-bug",
+        "detail": "Exclusion set used repo-root-relative paths but git grep returned cwd-relative paths, so the excluded HORIZON_LADDER_A9.md still appeared in the 'still quoted' list. Reproduced from the committed 2026-11-23 artifact."
+      }
+    ]
+  },
+  "fix": {
+    "action": "Recast G-COST-3",
+    "verdict_semantics": "ILL-POSED when measurable; UNMEASURABLE if book unreadable. No PASS/KILL on the absolute band.",
+    "what_it_now_does": [
+      "Measures the one well-defined quantity: round-trip cost on the named instrument/venue (BTC/USDT, Binance spot).",
+      "Reports the A9 replacement frequency ladder and its structural ratios (15m/1D=96.0, 1D/1M=30.4167).",
+      "Runs a repo-root provenance sweep for the dead 24.21 figure with correct exclusions; lists residual docs as a documentation risk but does not flip the verdict (4-doc correction deferred per HORIZON_LADDER_A9.md)."
+    ],
+    "not_a_weakening": "The retired predicate could never pass or fail on the claim — it was satisfied by any ~9.5-12.1 bp/side venue. Retiring a vacuous predicate that gates a dead figure is not lowering a live gate; there is no candidate to pass."
+  },
+  "live_evidence": {
+    "run_artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json",
+    "generated_utc": "2026-11-25T10:11:19+00:00",
+    "G-COST-3_verdict": "ILL-POSED",
+    "measured_round_trip_cost_bps": 20.002,
+    "spread_bps": 0.0017,
+    "round_turn_fee_bps": 20.0,
+    "old_predicate_accepts_fee_per_side_bps": [9.499, 12.104],
+    "frequency_ratios": {"15m_over_1D": 96.0, "1D_over_1M": 30.4167},
+    "docs_still_quoting_24_21": [
+      "02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md",
+      "03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md",
+      "03-trading-strategies/PROGRESS.md",
+      "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+      "03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md",
+      "03-trading-strategies/validation/MODEL_PANEL_INDEX.md",
+      "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md"
+    ]
+  },
+  "other_gates_unchanged": {
+    "G-COST-1": "KILL 20.002 bp (>= 8.0)",
+    "G-COST-2": "PASS P50 0.061 / P90 0.644 bp",
+    "G-COST-4": "KILL gap 240.746 bp/day"
+  },
+  "overall": "KILL (G-COST-1, G-COST-4) — unchanged; CI still red on real cost findings. G-COST-3 retired to ILL-POSED."
+}

@@ -13,10 +13,14 @@ G-COST-1 | median realised fill cost over >= 30 live fills, 15m horizon
          | kill the cost assumption if median >= 8.0 bp
 G-COST-2 | slippage distribution on liquid pairs at 15m
          | kill if P50 > 8 bp or P90 > 20 bp
-G-COST-3 | is the 1D cost premium real? recompute on one instrument (fixed:
-         | names instrument, venue and horizon basis; was firing on regime,
-         | not on the claim — see A9 / HORIZON_LADDER_A9.md)
-         | kill the +24.21 bp figure if 1D cost > 24.21 bp or < 19 bp
+G-COST-3 | RECAST after A9: the "1D cost premium" is ILL-POSED, not merely noisy.
+         | Per-round-trip cost is horizon-independent; only frequency multiplies
+         | it. The old [19,24.21] bp band on the measured 1D cost is retired: a
+         | ~10bp/side venue forces a PASS by construction (20 bp round-turn fee),
+         | so it tested the fee schedule, not the claim. The gate now measures the
+         | one well-defined quantity (round-trip cost on a named instrument/venue)
+         | and reports the frequency ladder + dead-figure provenance. Verdict is
+         | ILL-POSED (no falsifiable content) or UNMEASURABLE (book unreadable).
 G-COST-4 | vol-target gap decomposition (2.3 vs 10.7 bp/day) on one instrument
          | kill the vol-target overlay if the gap persists > 5 bp/day after 20 sessions
 """
@@ -43,6 +47,17 @@ NOTIONAL_USD = 5000.0                # book-walk notional per side (G-COST-2)
 FILL_SNAPSHOTS = 36                  # >= 30 live fills (G-COST-1)
 SESSIONS = 24                        # >= 20 sessions (G-COST-4)
 FEE_URL = "https://www.binance.com/en/fee/schedule"
+
+# --- Frequency ladder (A9 replacement claim: annual drag = freq x round_trip) ---
+PERIODS_PER_YEAR = {"15m": 35040, "1h": 8760, "4h": 2190, "1D": 365, "1W": 52, "1M": 12}
+
+# Files where the dead 24.21 figure may legitimately appear as a rule/definition
+# rather than a live empirical claim (excluded from the provenance-risk list).
+DEFINITIONAL_DOCS = {
+    "NEXT_STEPS.md",                               # defines the kill rule itself
+    "04-investment-strategy/TODO_2026-11-23.md",   # task list
+    "03-trading-strategies/HORIZON_LADDER_A9.md",  # the retraction artifact
+}
 
 
 def now_utc() -> str:
@@ -208,73 +223,148 @@ def gate_g_cost_2(exchange, taker_fee_bps: float) -> dict:
     }
 
 
-def gate_g_cost_3(exchange, taker_fee_bps: float) -> dict:
-    """G-COST-3 (fixed): is the 1D cost premium real? recompute on one instrument.
+def _frequency_ladder(round_trip_bps: float) -> tuple[dict, float, float]:
+    """Annual cost drag at each horizon = periods_per_year * round_trip_bps.
 
-    FIX vs A9 finding: the instrument (BTC/USDT spot), venue (Binance) and horizon
-    basis (1 day, one round trip) are named, so the rule tests the claim at one
-    defined regime instead of flipping with whichever venue is measured.
-    Kill the +24.21 bp figure if 1D cost > 24.21 bp or < 19 bp.
-    Independently (A9): the figure is already killed on unit/reproducibility
-    grounds (no unit, no implementation, four documents quote it) — see
-    HORIZON_LADDER_A9.md and realtime_challenge/proof/horizon_ladder.py.
+    This is the A9 replacement claim. The *ratios* are structural (number of round
+    trips per year), not market predictions: 15m/1D = 96.0, 1D/1M = ~30.4.
     """
-    kill_lo, kill_hi = 19.0, 24.21
+    rows = {
+        name: {
+            "round_trips_per_year": per_year,
+            "annual_drag_bps": round(per_year * round_trip_bps, 3),
+        }
+        for name, per_year in PERIODS_PER_YEAR.items()
+    }
+    ratio_15m_1d = PERIODS_PER_YEAR["15m"] / PERIODS_PER_YEAR["1D"]
+    ratio_1d_1m = PERIODS_PER_YEAR["1D"] / PERIODS_PER_YEAR["1M"]
+    return rows, ratio_15m_1d, ratio_1d_1m
+
+
+def _provenance_sweep(repo_root: Path) -> tuple[list[str], bool]:
+    """Tracked *.md files still quoting the dead 24.21 figure.
+
+    Run from the REPO ROOT with repo-relative pathspecs so subdirectory docs
+    (02-portfolio-multi-asset/, 04-investment-strategy/) are not silently missed —
+    the previous cwd-relative '-- *.md' sweep found only 03-trading-strategies/*.md
+    and even leaked the excluded A9 artifact because exclusion matched the wrong
+    path prefix.
+    """
+    import subprocess
+
+    try:
+        output = subprocess.run(
+            ["git", "grep", "-l", "24\\.21", "--", "*.md"],
+            cwd=str(repo_root), capture_output=True, text=True, check=False,
+        ).stdout
+    except Exception:  # noqa: BLE001
+        return ["grep unavailable"], False
+    found = [f.strip() for f in output.splitlines() if f.strip()]
+    return [f for f in found if f not in DEFINITIONAL_DOCS], True
+
+
+def gate_g_cost_3(exchange, taker_fee_bps: float) -> dict:
+    """G-COST-3 (RECAST): the "1D cost premium" is ILL-POSED, not merely noisy.
+
+    A9 showed the old kill rule tested the cost REGIME, not the claim: it PASSed
+    iff the measured round trip landed in [19, 24.21] bp, which is satisfied by any
+    venue charging ~9.5-12.1 bp/side (round-turn fee alone is ~20 bp). The verdict
+    was therefore a function of the published fee schedule, not of any property of
+    a 1D horizon.
+
+    The deeper defect: per-round-trip cost is horizon-INDEPENDENT. There is no
+    "cost per trade" that differs between a 15m and a 1D hold; what differs is how
+    often the same round trip is paid. annual_drag = (365/holding_days)*c_rt. So
+    "the 1D cost premium" does not name a measurable quantity and cannot be tested
+    by a threshold on c_rt. A9's replacement (96x 15m->1D, ~30x 1D->1M) is the
+    frequency ratio, i.e. arithmetic, not a market prediction.
+
+    This gate RETIRES the absolute-band kill predicate (it could never fail or pass
+    on the claim) and instead measures the one well-defined quantity on the named
+    instrument/venue, reports the frequency ladder, and records which tracked docs
+    still quote the dead figure. Verdict: ILL-POSED when measurable (no
+    falsifiable content remains), UNMEASURABLE if the book cannot be read. It does
+    NOT emit PASS/KILL on the absolute band — doing so was the original defect.
+    """
+    kill_lo, kill_hi = 19.0, 24.21  # retained only as the historical band, for the record
     try:
         book = exchange.fetch_order_book(INSTRUMENT)
         mid = mid_price(book)
         spread_bps = (float(book["asks"][0][0]) - float(book["bids"][0][0])) / mid * 1e4
-        one_day_cost_bps = spread_bps + 2.0 * taker_fee_bps
+        round_trip_cost_bps = spread_bps + 2.0 * taker_fee_bps
         measurable = True
-    except Exception as exc:  # noqa: BLE001
-        one_day_cost_bps = None
+    except Exception:  # noqa: BLE001
+        round_trip_cost_bps = None
         measurable = False
 
-    # Doc sweep: does any tracked file still assert the figure as a live claim?
-    import subprocess
+    repo_root = Path(__file__).resolve().parents[3]
+    risk_docs, sweep_ok = _provenance_sweep(repo_root)
 
-    quoted_files: list[str] = []
-    try:
-        output = subprocess.run(
-            ["git", "grep", "-l", "24\\.21", "--", "*.md"],
-            capture_output=True, text=True, check=False,
-        ).stdout
-        excluded = {
-            "04-investment-strategy/TODO_2026-11-23.md",
-            "03-trading-strategies/HORIZON_LADDER_A9.md",
-            "03-trading-strategies/realtime_challenge/proof/horizon_ladder.py",
+    if not measurable:
+        return {
+            "gate": "G-COST-3",
+            "instrument": INSTRUMENT,
+            "venue": VENUE_NAME,
+            "horizon_basis": "1 day, one round trip (per-round-trip cost is horizon-independent)",
+            "n": 0,
+            "verdict": "UNMEASURABLE",
+            "claim_tested": "1D cost premium is real and equals the +24.21 bp figure",
+            "retired_predicate": "absolute band [19, 24.21] bp on the measured 1D cost",
+            "evidence": "order book unreadable; no round-trip cost measured",
+            "kill_range_bps": [kill_lo, kill_hi],
+            "provenance": {"sweep_ok": sweep_ok, "docs_still_quoting": risk_docs},
         }
-        quoted_files = [
-            f for f in output.splitlines()
-            if f and not any(f.endswith(ex) or ex in f for ex in excluded)
-        ]
-    except Exception:  # noqa: BLE001
-        quoted_files = ["grep unavailable"]
 
-    cost_test_fires = measurable and (one_day_cost_bps > kill_hi or one_day_cost_bps < kill_lo)
-    verdict = "KILL" if cost_test_fires else "PASS"
-    note = (
-        f"measured 1D round-trip cost {one_day_cost_bps:.3f} bp at {VENUE_NAME} {INSTRUMENT} "
-        f"(1 day basis); kill range [{kill_lo}, {kill_hi}] bp — "
-        f"{'cost test fires' if cost_test_fires else 'cost test does not fire'}. "
-        "The +24.21 bp figure is independently dead on A9 grounds "
-        "(unit unstated, gross/net unstated, no implementation); this gate now guards "
-        "its resurrection at the named venue/basis."
-    )
-    if quoted_files:
-        note += f" Figure still quoted in tracked files: {', '.join(quoted_files)} (coordinated edit pending, not made here)."
+    ladder, ratio_15m_1d, ratio_1d_1m = _frequency_ladder(round_trip_cost_bps)
+
+    # Why the old predicate was vacuous: with a 10bp/side fee the round-turn fee
+    # alone (20 bp) sits inside [19, 24.21]; the acceptance window is really a
+    # window on FEE PER SIDE, i.e. on the venue's published schedule.
+    fee_lo = (kill_lo - spread_bps) / 2.0
+    fee_hi = (kill_hi - spread_bps) / 2.0
+
     return {
         "gate": "G-COST-3",
         "instrument": INSTRUMENT,
         "venue": VENUE_NAME,
-        "horizon_basis": "1 day, one round trip (named instrument, venue, basis)",
-        "n": 1 if measurable else 0,
-        "threshold": {"kill_if_cost_bps_gt": kill_hi, "kill_if_cost_bps_lt": kill_lo},
-        "measured": {"one_day_cost_bps": round(one_day_cost_bps, 3) if measurable else None},
-        "verdict": verdict,
-        "evidence": note,
+        "horizon_basis": "1 day, one round trip (per-round-trip cost is horizon-independent)",
+        "n": 1,
+        "measured": {
+            "round_trip_cost_bps": round(round_trip_cost_bps, 3),
+            "spread_bps": round(spread_bps, 4),
+            "round_turn_fee_bps": round(2.0 * taker_fee_bps, 3),
+        },
+        "verdict": "ILL-POSED",
+        "claim_tested": "1D cost premium is real and equals the +24.21 bp figure",
+        "retired_predicate": "absolute band [19, 24.21] bp on the measured 1D cost",
+        "retirement_reason": (
+            "per-round-trip cost is horizon-independent; annual drag = (365/holding_days)*c_rt. "
+            "A threshold on c_rt tests the venue fee schedule, not the claim: a ~10bp/side venue "
+            "forces the old [19,24.21] PASS by construction."
+        ),
+        "frequency_ladder": ladder,
+        "frequency_ratios": {
+            "15m_over_1D": round(ratio_15m_1d, 4),
+            "1D_over_1M": round(ratio_1d_1m, 4),
+        },
+        "old_predicate_accepts_fee_per_side_bps": [round(fee_lo, 3), round(fee_hi, 3)],
         "kill_range_bps": [kill_lo, kill_hi],
         "a9_kill_grounds": "unit unstated (per trade vs per day, 365x), gross/net unstated, no implementation in either repo",
+        "provenance": {
+            "sweep_ok": sweep_ok,
+            "sweep_root": "repo root",
+            "docs_still_quoting": risk_docs,
+            "note": "coordinated multi-doc correction deferred per HORIZON_LADDER_A9.md; provenance is a documentation risk, not a cost signal",
+        },
+        "evidence": (
+            f"measured round-trip cost {round_trip_cost_bps:.3f} bp at {VENUE_NAME} {INSTRUMENT} "
+            f"(spread {spread_bps:.4f} + round-turn fee {2.0 * taker_fee_bps:.3f} bp). "
+            f"'1D cost premium is real' is ILL-POSED: cost per trade does not vary with horizon; "
+            f"the 15m->1D annual-cost ratio is the fixed frequency ratio {ratio_15m_1d:.1f}x and "
+            f"1D->1M {ratio_1d_1m:.2f}x. The old [19,24.21] band accepts any fee/side in "
+            f"[{fee_lo:.2f},{fee_hi:.2f}] bp — a fee-schedule artifact, not evidence. "
+            f"Dead figure still quoted in {len(risk_docs)} tracked doc(s) outside its own definition."
+        ),
         "fee": {"per_side_bps": taker_fee_bps, "source": FEE_URL, "fetch_date": now_utc()[:10]},
     }
 
@@ -389,8 +479,12 @@ def main() -> int:
         "kills": [g["gate"] for g in gates if g["verdict"] == "KILL"],
         "passes": [g["gate"] for g in gates if g["verdict"] == "PASS"],
         "unmeasurable": [g["gate"] for g in gates if g["verdict"] == "UNMEASURABLE"],
+        "retired": [g["gate"] for g in gates if g["verdict"] == "ILL-POSED"],
     }
-    report["overall"] = "KILL" if report["kills"] else ("UNMEASURABLE" if report["unmeasurable"] else "PASS")
+    report["overall"] = (
+        "KILL" if report["kills"]
+        else ("UNMEASURABLE" if report["unmeasurable"] else ("RETIRED" if report["retired"] else "PASS"))
+    )
 
     body = json.dumps(report, indent=1) + "\n"
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
