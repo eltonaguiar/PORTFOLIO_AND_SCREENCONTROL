@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
 | 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T20:27 | 57 | ETFS (sector, factor,  | idea | pollinations | 200 | 124 |  |
@@ -32,25 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | pollinations | 200 | 63 |  |
+| 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T03:34 | 64 | CRYPTO (spot and perp) | crosscheck | pollinations | 200 | 77 |  |
 
 ## Latest answers
-
-### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - pollinations
-
-**Test**: In the 10‑yr period from 2022‑01‑01 to 2023‑07‑01, compute the net excess return of Polymarket’s “Israel’s win” market versus 4.3 % T‑bill, after deducting 80 bps round‑trip cost.  
-**Kill‑switch**: If the adjusted excess return is **≤ 0 %** on any one 28‑day block (i.e., a month of trading), the hypothesis collapses.  
-
-**Data**: Daily closing price of the “Israel’s win” contract (free API), daily 4.3 % T‑bill yield (FRED, free, point‑in‑time), transaction cost assumption 12‑20 bps per round‑trip (used wholesale).  
-
-**Why it survives cost**: Only a single, real‑time test, so no multiple testing penalty; 28‑day blocks yield enough data points (≈6) for a meaningful average while staying within the 110‑word limit.
 
 ### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -64,3 +47,17 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 Pick (b).  
 A concrete falsifier: a 12‑month back‑test on large‑cap stocks beginning 2010, applying a classical post‑announcement drift strategy (buy over‑reactive earnings, sell under‑reactive, then liquidate after the expected reversal) that earns a gross excess of 0.25 % per annum after deducting the 18‑bp round‑trip cost. The strategy persists across sectors, capitalization deciles, and A‑to‑Z stocks, thus proving the drift is still harvestable.
+
+### round 64 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 64 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 64 - CRYPTO (spot and perp) - crosscheck - pollinations
+
+**Claim most likely wrong:** (c) *Value is the last untested family.*
+
+**Falsifying observation:** Monthly evidence of a statistically significant, cost‑adjusted alpha from a replicated value beta on a liquid crypto‑spot or perpetual market. For instance, a 12‑month rolling regression on a 10‑asset value index yields an average excess return of 0.25 % per month, with a t‑stat of 2.7 after subtracting typical round‑trip costs (12–20 bps). This sustained, risk‑adjusted payoff contradicts the assertion that value remains untested.
