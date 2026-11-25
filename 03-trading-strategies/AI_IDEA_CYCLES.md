@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T21:28 | 58 | MUTUAL FUNDS (active a | idea | pollinations | 200 | 113 |  |
 | 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | pollinations | 200 | 67 |  |
@@ -32,22 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T04:35 | 65 | BONDS (govt and credit | crosscheck | pollinations | 200 | 51 |  |
+| 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | pollinations | 200 | 86 |  |
 
 ## Latest answers
-
-### round 64 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 64 - CRYPTO (spot and perp) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 64 - CRYPTO (spot and perp) - crosscheck - pollinations
-
-**Claim most likely wrong:** (c) *Value is the last untested family.*
-
-**Falsifying observation:** Monthly evidence of a statistically significant, cost‑adjusted alpha from a replicated value beta on a liquid crypto‑spot or perpetual market. For instance, a 12‑month rolling regression on a 10‑asset value index yields an average excess return of 0.25 % per month, with a t‑stat of 2.7 after subtracting typical round‑trip costs (12–20 bps). This sustained, risk‑adjusted payoff contradicts the assertion that value remains untested.
 
 ### round 65 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -61,3 +47,17 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 (b) Large‑cap post‑earnings drift is dead since about 2006.  
 **Falsifying observation:** Consistent, net‑after‑cost excess returns of large‑cap bond indices (e.g., 1‑2 basis‑points per quarter) immediately after earnings releases for several consecutive years, showing a statistically significant return that outpaces the 12‑20 bp round‑trip cost. This would prove the drift still exists.
+
+### round 66 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 66 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 66 - ETFS (sector, factor, cross-asset) - crosscheck - pollinations
+
+**Claim most likely wrong:** (c) *Value is the last untested family.*
+
+**Observation that would falsify it:** In a multi‑year back‑test of a liquid value‑ETF index (e.g., CRSP value factor), the net excess return after deducting a 15 bps round‑trip cost exceeds the 4.3 % T‑bill benchmark by at least 1 % per annum over five consecutive years. The cumulative excess would remain above the 4.3 % hurdle after adjusting for a 12–20 bps cost, proving that value can produce harvestable premia in a liquid ETF strategy.
