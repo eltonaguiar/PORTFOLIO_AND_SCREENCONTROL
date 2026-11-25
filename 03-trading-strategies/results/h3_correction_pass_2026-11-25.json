@@ -1,0 +1,147 @@
+{
+  "item": "H3 correction pass - resolve the 15 violations the H3 audit left deferred",
+  "owner": "H (Hermes, Session B cron)",
+  "audit_source": "04-investment-strategy/results/h3_number_audit.json",
+  "run_utc": "2026-11-25T12:24Z",
+  "base_commit": "c1fbf44",
+  "rule_applied": "no number in a doc without (source, date) or an explicit ASSUMED tag; dead figures marked DEAD; a number with no committed implementation is NOT EVIDENCE",
+  "critical_violations": [
+    {
+      "id": "C1",
+      "location": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md G2 gate",
+      "number": "+24.21 bp at 1D vs -0.57 bp at 15m",
+      "status": "FIXED_PREVIOUSLY",
+      "fixed_by": "A9 doc correction, commit e197aba (merged 70c5bea, 2026-11-25 11:14Z)",
+      "note": "G2 now cites annual cost drag = 365 / holding_days x round_trip_bps (15m/1D = 96.0x)."
+    },
+    {
+      "id": "C2",
+      "location": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md section 2a result table",
+      "number": "+0.11%/yr gross, +0.02%/yr net (186 names, 44 rebalances)",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Replaced with the committed B6 measurement: net 3.07%/yr = 25.2 bp/month, n=262 rebalances / 5,759 daily bars, 2004-01-02 to 2026-11-20, 5 bp/side on position changes; vs SPY 10.28%/yr and the 4.32%/yr (36 bp/month) cash hurdle -> -10.4 bp/month vs cash; KILLED (permutation p=0.61, n=100; Sharpe 0.372 vs SPY 0.619). The old figure is marked DEAD as evidence (price-only/raw-close artifact, no committed implementation; B6/H2, COMS e8dc5ca)."
+    },
+    {
+      "id": "C3",
+      "location": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md cost-sensitivity row",
+      "number": "11.92% -> 3.36%; 6.59% revenue-surprise drift",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line KILLED tag added in the body row (model-fabricated, no primary source; H2 audit #5). H2 had killed the figure in the audit table; the body occurrence carried no status."
+    },
+    {
+      "id": "C4",
+      "location": "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md router SUE1 row",
+      "number": "2.0-3.5%/yr ~ 20-30 bp/month (ULTRA_FREE_CLOUD_LARGE)",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line KILLED tag added (no matching paper; Latane & Jones 1977 differs in magnitude; H2 audit #7)."
+    },
+    {
+      "id": "C5",
+      "location": "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md closing line",
+      "number": "doc-wide claim 'every number came from a measurement or is labelled as an assumption'",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Closing line corrected to: measured (committed implementation/artifact cited), explicitly labelled ASSUMED, or explicitly marked UNVERIFIED/DEAD."
+    }
+  ],
+  "moderate_violations": [
+    {
+      "id": "M1",
+      "location": "INVESTMENT_DECISION_FRAMEWORK.md frozen kill rule (+ G4 gate row)",
+      "number": "4.32% T-bill hurdle",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Tagged ASSUMED (policy choice frozen before the test, not today's live rate); live 3-month T-bill 4.13% US / 2.62% Canada per F3, fetched 2026-11-23/24. Value unchanged - no gate lowered."
+    },
+    {
+      "id": "M2",
+      "location": "INVESTMENT_DECISION_FRAMEWORK.md prediction-market verdict",
+      "number": "1-2% of the aggressive sleeve",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Tagged ASSUMED policy cap, not a measured size."
+    },
+    {
+      "id": "M3",
+      "location": "INVESTMENT_DECISION_FRAMEWORK.md equity cost paragraph",
+      "number": "1-5 bp over 191 names, 238,810 daily + 356,271 minute bars",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Marked NOT EVIDENCE: no committed implementation anywhere in the repo (no Corwin-Schultz/Roll or equivalent script; grep found none), cannot be recomputed. Verdict costs redirected to the versioned basis 02-portfolio-multi-asset/cost_basis_slippage_validation.json (sha256 e8bc...fbad5, EQUITY 0.05%/side = 10 bp round turn). The section 2b ETF-trend cost bullet 'measured 1-2 bp, not assumed' likewise retagged ASSUMED with the higher versioned basis preferred."
+    },
+    {
+      "id": "M4",
+      "location": "VALUE_VS_PEAD_EVIDENCE.md value effect-size row",
+      "number": "3-5%/yr ~ 25-42 bp/month",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line PARTIAL tag (band reconciled by B7 vs JFQA; base claim not primary-verified; H2 audit #1)."
+    },
+    {
+      "id": "M5",
+      "location": "VALUE_VS_PEAD_EVIDENCE.md sample row",
+      "number": "1927-2024; 1977-2023",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line UNVERIFIED tag (1977-2023 study not identified; H2 audit #2)."
+    },
+    {
+      "id": "M6",
+      "location": "VALUE_VS_PEAD_EVIDENCE.md decay row",
+      "number": "~half cumulative value after 2007",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line PARTIAL tag (direction matches JFQA; 'half' not traced to primary; H2 audit #3)."
+    },
+    {
+      "id": "M7",
+      "location": "VALUE_VS_PEAD_EVIDENCE.md PEAD effect-size row",
+      "number": "~6% abnormal over 60 days",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line UNVERIFIED tag (later summary not identified; H2 audit #4)."
+    },
+    {
+      "id": "M8",
+      "location": "VALUE_VS_PEAD_EVIDENCE.md router value row",
+      "number": "50-70 bp/month",
+      "status": "FIXED_THIS_RUN",
+      "fix": "In-line PARTIAL tag (reconciled band; router specifics not primary-verified; H2 audit #6)."
+    },
+    {
+      "id": "M9",
+      "location": "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md costs-used line",
+      "number": "per-class measured costs",
+      "status": "FIXED_THIS_RUN",
+      "fix": "Artifact + sha256 were already present; added the fetch provenance (audit3 ledger generated 2026-11-22T07:10Z, fetched the same day). Cost values unchanged."
+    },
+    {
+      "id": "M10",
+      "location": "CAPITAL_ALLOCATION.md section 6 'Where it errs' table",
+      "number": "'5% or less' and '90%+ indexing'",
+      "status": "ALREADY_COMPLIANT",
+      "note": "Both are already presented as model errors with the defect stated in-line ('is a number without a derivation', 'asserts ... without a citation'); no silent presentation."
+    }
+  ],
+  "extra_purge_dead_figure": {
+    "reason": "The dead +0.11%/yr figure was still presented as our measurement in 3 docs outside the H3 audit's 6-doc scope. H3's rule applies to every doc, so the figure was replaced with the committed B6 numbers there too.",
+    "files": [
+      "03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md (section 2 table row + section 3 closing sentence)",
+      "03-trading-strategies/READING_LIST_VERIFIED.md (section table row)",
+      "03-trading-strategies/validation/REVIEW_AND_ADOPTION.md (haircut comparison row)"
+    ],
+    "conclusion_effect": "PROVEN_STRATEGIES_TABLE_AUDIT's 'premium is absent' becomes 'premium is present but insufficient' (25 bp/month net vs 36 bp/month hurdle). Family verdict unchanged: not investable. No other conclusion changed."
+  },
+  "control": {
+    "b6_artifact_read": "03-trading-strategies/results/b6_value_test_latest.json - net_cagr_pct_yr 3.07, net_bp_per_month 25.23, cash_hurdle_pct_yr 4.32, cash_hurdle_bp_per_month 36.0, buy_and_hold_cagr_pct_yr 7.06, spy_buy_and_hold_cagr_pct_yr 10.28, sharpe 0.372, spy_sharpe 0.619, permutation_p_value 0.61, n_rebalances 262, n_daily_bars 5759, window 2004-01-02 -> 2026-11-20",
+    "implementation_compiles": "python -m py_compile 03-trading-strategies/realtime_challenge/proof/equity_factors.py -> OK",
+    "cost_artifact_read": "02-portfolio-multi-asset/cost_basis_slippage_validation.json - EQUITY/ETF/BOND 0.05%/side, sha256 e8bcddf4..., committed_at 2026-11-24T01:49Z",
+    "grep_dead_figure": "grep 0.11%/yr over all .md: remaining occurrences are only DEAD-marked texts, audit/history records (PROGRESS.md, TODO history, H2 audit notes, VALUE correction note) and the REVIEWS/inputs archive - 0 live presentations",
+    "grep_no_impl_cost": "grep corwin|roll_spread over *.py -> no committed implementation of the 1-5 bp equity round-trip claim; therefore NOT EVIDENCE per the hard rule"
+  },
+  "gates_unchanged": {
+    "kill_hurdle": "4.32%/yr (now tagged ASSUMED, value unchanged)",
+    "value_verdict": "KILLED - unchanged",
+    "ground_truth": "No measured value altered except replacing one dead figure with its committed replacement; no gate lowered, no threshold moved."
+  },
+  "files_changed": [
+    "04-investment-strategy/INVESTMENT_DECISION_FRAMEWORK.md",
+    "03-trading-strategies/VALUE_VS_PEAD_EVIDENCE.md",
+    "02-portfolio-multi-asset/CAPITAL_ALLOCATION.md",
+    "03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md",
+    "03-trading-strategies/READING_LIST_VERIFIED.md",
+    "03-trading-strategies/validation/REVIEW_AND_ADOPTION.md"
+  ]
+}

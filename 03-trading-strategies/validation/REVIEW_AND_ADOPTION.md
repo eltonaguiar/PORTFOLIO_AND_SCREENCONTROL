@@ -56,7 +56,7 @@ later readers can detect a change in behaviour:
 | SR 1.0 needs 6.2 y (t=3 → 9.0 y) | Copilot independently derived 4+ years from 10%/yr vol; 3-model panel got 6.2 y | yes — three sources |
 | Commission $0.0035/sh at $30 = **11.7 bp/side** | Copilot measured IBKR **11 bp/side at a $1k ticket, 0.4 bp at $25k** | yes, exactly — this is our binding constraint |
 | Mega-cap round trip **8 bp** | our measured ETF **6.7122 bp**, direct equity **12.0749 bp** | plausible; ours is measured on our own bars, theirs is a 2025–26 assumption table |
-| 30–60% haircut to published premia | our HML: **+0.11%/yr gross** — i.e. ~100% decay | ours is worse than their prior |
+| 30–60% haircut to published premia | our HML: **+3.07%/yr net ≈ 25 bp/month** (committed B6) — at the low end of the 25–42 band, below the 4.32% hurdle; the earlier +0.11%/yr figure is DEAD (price-only artifact) | yes — 25 bp/month sits inside a 30–60% haircut of 50–70 |
 
 ## 4. Where it does not bind for us (and what to use instead)
 

@@ -12,18 +12,18 @@ with an explicit kill rule.
 
 | Item | Reported |
 |---|---|
-| Effect size | **3–5%/yr ≈ 25–42 bp/month gross**, described as "highly sample-dependent, not a stable monthly payoff" |
-| Sample | Standard HML series **1927–2024**; a recent study builds size-adjusted book-to-market portfolios **1977–2023** |
-| Decay | HML "lost about half its cumulative value after 2007"; book-to-market **misclassifies firms with substantial intangible assets**, with composite value and operating-cash-flow-to-market offered as alternatives |
+| Effect size | **3–5%/yr ≈ 25–42 bp/month gross**, described as "highly sample-dependent, not a stable monthly payoff" — PARTIAL: band reconciled by B7 vs JFQA, base claim not primary-verified (H2 audit #1) |
+| Sample | Standard HML series **1927–2024**; a recent study builds size-adjusted book-to-market portfolios **1977–2023** — UNVERIFIED at primary level, 1977–2023 study not identified (H2 audit #2) |
+| Decay | HML "lost about half its cumulative value after 2007"; book-to-market **misclassifies firms with substantial intangible assets**, with composite value and operating-cash-flow-to-market offered as alternatives — PARTIAL: direction matches JFQA, "half" not traced to primary (H2 audit #3) |
 | Net of our costs | At 12–20 bp round trip, 25–42 bp/month gross leaves **roughly 5–30 bp/month** before other implementation effects — and that is an arithmetic remainder, not a forecast |
 
 ## Post-earnings-announcement drift (PEAD)
 
 | Item | Reported |
 |---|---|
-| Effect size | Bernard & Thomas: top-minus-bottom standardized-surprise spread positive in **41 of 48 quarters, 1974–1985**; later summary cites **~6% abnormal over 60 days**, with estimates varying widely by sample |
+| Effect size | Bernard & Thomas: top-minus-bottom standardized-surprise spread positive in **41 of 48 quarters, 1974–1985**; later summary cites **~6% abnormal over 60 days**, with estimates varying widely by sample — the ~6% is UNVERIFIED, later summary not identified (H2 audit #4) |
 | **Decay — the important one** | **Martineau: PEAD was non-existent for LARGE stocks since 2006**, disappearing only more recently for microcaps |
-| Cost sensitivity | One 12-month extreme-portfolio result falls **11.92% → 3.36%** at the highest transaction-cost estimate; a revenue-surprise drift of **6.59% becomes unprofitable after costs** |
+| Cost sensitivity | One 12-month extreme-portfolio result falls **11.92% → 3.36%** at the highest transaction-cost estimate; a revenue-surprise drift of **6.59% becomes unprofitable after costs** — KILLED: model-fabricated, no primary source (H2 audit #5) |
 
 ## The verdict it gave
 
@@ -51,8 +51,8 @@ Same prompt, no shared numbers, three independent surfaces:
 | Source | Value premium | PEAD | Decay claim |
 |---|---|---|---|
 | **duck.ai / GPT-6 Luna** | 3–5%/yr = **25–42 bp/month** gross; series 1927–2024 | positive in 41/48 quarters 1974–85; ~6% over 60 days | HML lost ~half cumulative value **after 2007**; **Martineau: large-cap PEAD non-existent since 2006** |
-| **Router / `ULTRA_FREE_OPENROUTER`** | **0.5–0.7%/month = 50–70 bp/month** gross (top vs bottom quintile); FF 1963–2019+, Asness 1975–2011 international | Ball & Brown 1968; Bernard & Thomas | HML **≈ −0.3%/month 2007–2020**; decay after publication; "net of 15–20 bp/month turnover costs the alpha shrinks to **30–40 bp/month**" |
-| **Router / `ULTRA_FREE_CLOUD_LARGE`** | (answer truncated before the value section) | **2.0–3.5%/yr ≈ 20–30 bp/month** SUE1 decile spread; 4–6% over 60 days for extreme SUE; sample **1971–2005 US** | "post-2005 SUE spread compressed" |
+| **Router / `ULTRA_FREE_OPENROUTER`** | **0.5–0.7%/month = 50–70 bp/month** gross (top vs bottom quintile); FF 1963–2019+, Asness 1975–2011 international | Ball & Brown 1968; Bernard & Thomas | HML **≈ −0.3%/month 2007–2020**; decay after publication; "net of 15–20 bp/month turnover costs the alpha shrinks to **30–40 bp/month**" — PARTIAL: reconciled band, router specifics not primary-verified (H2 audit #6) |
+| **Router / `ULTRA_FREE_CLOUD_LARGE`** | (answer truncated before the value section) | **2.0–3.5%/yr ≈ 20–30 bp/month** SUE1 decile spread; 4–6% over 60 days for extreme SUE; sample **1971–2005 US** | "post-2005 SUE spread compressed" — KILLED: no matching paper, Latane & Jones 1977 differs in magnitude (H2 audit #7) |
 
 **The disagreement is roughly 2×** — 25–42 vs 50–70 bp/month gross for the same factor. Both cannot be right about the same portfolio, and the difference is plausibly the construction: annualised HML return across a very long sample (duck.ai) versus a quintile-spread average per month on a shorter sample (router). That distinction decides whether value clears our 12–20 bp round trip with room to spare or barely at all.
 

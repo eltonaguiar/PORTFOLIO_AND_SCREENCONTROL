@@ -3,6 +3,14 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 46 — 2026-11-25 (12:24 UTC / 07:24 EST cron run) — `hermes` (Session B, verification axis)
+Question: E8 is still blocked on E4 picks and every other H item is closed — but H3's own done-condition said its 15 violations were "audit only; corrections require coordinated cross-session edits", and A9/H2/B6 fixed only some. Are the rest still live, and can each be closed without weakening a gate?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 12:24 | CORRECTION | H3 correction pass — verified all 5 critical + 10 moderate violations against the current tree. Still live: framework §2a presented the killed +0.11%/yr 186-name figure as a Result; closing line claimed every number measured/ASSUMED; 4.32% hurdle and 1–2% allocation untagged; the 1–5 bp equity cost claim has NO committed implementation (no Corwin-Schultz/Roll script in the repo) so it is NOT EVIDENCE, replaced by the versioned cost basis (sha256 e8bc…, EQUITY 0.05%/side); VALUE body rows lacked the H2 status tags their audit table recorded. Fixed all: §2a now runs the committed B6 numbers (net 3.07%/yr = 25.2 bp/month, n=262 rebalances, 2004–2026, KILLED vs 4.32% hurdle, p=0.61) with the old figure marked DEAD. Dead +0.11%/yr also purged from 3 out-of-scope docs still citing it as live (PROVEN_STRATEGIES_TABLE_AUDIT, READING_LIST_VERIFIED, REVIEW_AND_ADOPTION). Control: B6 artifact values re-read and matched, equity_factors.py py_compiles, grep 0.11%/yr shows 0 live presentations. No gate lowered; value verdict KILLED unchanged; one doc conclusion upgraded honestly (table audit: premium "absent" → "present but insufficient"). | `03-trading-strategies/results/h3_correction_pass_2026-11-25.json` |
+| 12:24 | BLOCKED | E8 — re-verified: no paper_book_*.jsonl on disk, `paper_book.py score` n=0 / 0 resolved / INSUFFICIENT_DATA across all three tiers; E4 picks (CP/ZOO/KILO/AG) still not landed (COMS 12:16Z KILO status only, no picks; recent commits are ai-cycle/carry ticks and B1). Nothing fabricated, left unchecked. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
 ## Session 45 — 2026-11-25 (11:14 UTC / 06:14 EST cron run) — `hermes` (Session B, cron queue axis)
 Question: E8 is the only unchecked H item and it is blocked on E4 picks; the one genuinely outstanding defect is A9's deferred 4-doc correction of the dead +24.21 bp figure — can it be landed without weakening any gate, and does each doc's conclusion survive the substitution?
 

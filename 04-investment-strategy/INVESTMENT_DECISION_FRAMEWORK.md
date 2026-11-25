@@ -11,7 +11,7 @@ built and how the agents' pretend-money book should be run.
 | **G1 Cost** | Does gross edge exceed **2× measured round-trip cost**, on our own fills? | ~everything intraday |
 | **G2 Horizon** | Does it survive at **≥1 day** holding (ladder: annual cost drag = 365 / holding_days × round_trip_bps, so the 15m→1D cost ratio is exactly 96×, venue-independent)? | scalping, HFT, most intraday |
 | **G3 Selection** | Is the trial count known, and does it pass **deflated Sharpe** at that N? | the 115-algorithm hub, every "best strategy" list |
-| **G4 Capital** | Is the return measured on **committed capital including cash collateral** vs a 4.3% T-bill? | most market-neutral long/short claims |
+| **G4 Capital** | Is the return measured on **committed capital including cash collateral** vs a 4.3% T-bill (ASSUMED policy hurdle, see §2b)? | most market-neutral long/short claims |
 | **G5 Provenance** | Can the result be reproduced from a **recorded pick**, written before the outcome? | H-119-style backfills |
 
 Nothing in this estate currently passes G1 on a liquid market at retail cost. That is the finding, and
@@ -38,23 +38,30 @@ programme has measured has failed net of costs.
 
 ## 2a. UPDATE 2026-11-23 — value (HML) is now DEAD too, measured
 
-The one family that was "untested and plausibly alive" has since been measured and refuted:
+The one family that was "untested and plausibly alive" has since been measured and refuted. The figures
+below are the committed B6 test (`realtime_challenge/proof/equity_factors.py`, control ran 2026-11-22,
+results `realtime_challenge/results/equity_factors_latest.json`):
 
 | | Result |
 |---|---|
-| Universe | 186 names, **44 monthly rebalances** |
-| Gross | **+0.11%/yr** |
-| Net of measured cost | **+0.02%/yr** |
-| Hurdle | 4.32% T-bill |
+| Universe / window | VLUE value factor, 12-1m momentum filter, monthly rebalance; n=262 rebalances / 5,759 daily bars, 2004-01-02 → 2026-11-20 |
+| Net return | **3.07%/yr ≈ 25.2 bp/month** (5 bp/side charged on position changes; gross ≈ 25.6 bp/month) |
+| Vs market / cash | SPY buy-and-hold 10.28%/yr; cash hurdle 4.32%/yr = 36 bp/month → **−10.4 bp/month vs cash** |
+| Kill verdict | **KILLED** — below the frozen 4.32% hurdle (permutation p=0.61, n=100; Sharpe 0.372 vs SPY 0.619) |
 
-It did not die of cost — it died because **the gross premium is absent**. That closes the last open
-research line, and it means the framework's earlier "run the value test as the single research bet" is
-superseded by the entry below.
+The earlier **+0.11%/yr gross / +0.02%/yr net** 186-name, 44-rebalance figure is **DEAD as evidence**:
+it is a price-only/raw-close artifact with no committed implementation (B6/H2, COMS e8dc5ca). The
+committed test shows a real but insufficient premium — below the cash hurdle and far below SPY — so it
+closes the last open research line, and the framework's earlier "run the value test as the single
+research bet" is superseded by the entry below.
 
-Also measured the same day: **EQUITY round-trip cost is 1–5 bp** (191 names, 238,810 daily + 356,271
-minute bars, participation 0.008% of ADV). The repo had been carrying two constants 5× apart (5.0 vs
-25.0 bp) and the 25 bp one overstated cost by ~5×; the old Questrade model's 175 bp per trade is simply
-wrong (buy/sell $0 commission, ECN $0 on smart-routed orders, FX 1.5% and only on conversion).
+The repo had been carrying two equity cost constants 5× apart (5.0 vs 25.0 bp) with no committed
+reconciliation; the old Questrade model's 175 bp per trade is wrong for this account (buy/sell $0
+commission, ECN $0 on smart-routed orders, FX 1.5% and only on conversion — see `f5_fx_trap.md`). An
+earlier "1–5 bp over 191 names" estimate has **no committed implementation in this repo** and cannot be
+recomputed here, so it is **NOT EVIDENCE**; verdict costs come from the versioned basis
+`02-portfolio-multi-asset/cost_basis_slippage_validation.json` (sha256 e8bc…fbad5, audit3 ledger
+generated 2026-11-22T07:10Z; EQUITY 0.05% per side, i.e. a 10 bp round turn).
 
 ## 2b. THE ONE BET LEFT, AND HOW TO PROVE IT
 
@@ -66,9 +73,13 @@ backtest raises the bar for the next one. So the only rational move is to stop m
 **ETF trend / tactical allocation**
 - Universe: the 24 liquid ETFs already held (SPY QQQ IWM EFA EEM TLT IEF LQD HYG GLD XLE XLF XLK XLV …)
 - Signal: 12-month absolute momentum per ETF, monthly rebalance, hold top-k else cash
-- Costs: **measured 1–2 bp + $0 commission**, not assumed
+- Costs: **ASSUMED 1–2 bp + $0 commission** — the bp figure has no committed implementation here; the
+  versioned basis (`cost_basis_slippage_validation.json`) carries EQUITY/ETF 0.05% per side, so charge the
+  higher figure until a measurement lands
 - No short leg → zero borrow (the blocker that killed HML); no FX if CAD-listed equivalents are used
-- **Frozen kill rule**: annualised net ≤ 4.32% **or** the one-sided 95% upper bound ≤ 4.32%
+- **Frozen kill rule**: annualised net ≤ 4.32% **or** the one-sided 95% upper bound ≤ 4.32% — ASSUMED (policy
+  choice frozen before the test, not today's live rate; live 3-month T-bill 4.13% US / 2.62% Canada per F3,
+  fetched 2026-11-23/24)
 - **Proof = forward clock only.** Start it, publish monthly, do not backtest it again
 
 If trend on a diversified ETF basket cannot beat 4.32% net of 1–2 bp, then nothing runnable at this size
@@ -163,7 +174,8 @@ calendar, and never on a signal from this programme until something passes G1–
   "rate cut" contracts as a cheap tail hedge), and as a **cheap forward test** for hypotheses that would
   need years of equity data to validate.
 
-**Verdict:** open a small, capped experimental allocation (say 1–2% of the aggressive sleeve) *only* after
+**Verdict:** open a small, capped experimental allocation (say 1–2% of the aggressive sleeve — ASSUMED
+policy cap, not a measured size) *only* after
 the calibration test above shows `ΔBrier > 0`. Do not trade them for excitement; they are a measuring
 instrument that happens to pay.
 
@@ -200,5 +212,6 @@ report it as a candidate, not a result.
 5. **Run the prediction-market calibration test** because it is the cheapest possible forward test of
    whether any model here has genuine foresight.
 
-Nothing in this document is investment advice, and every number in it came from a measurement or is
-labelled as an assumption.
+Nothing in this document is investment advice, and every number in it is either measured (with a
+committed implementation/artifact cited), explicitly labelled ASSUMED, or explicitly marked
+UNVERIFIED/DEAD.

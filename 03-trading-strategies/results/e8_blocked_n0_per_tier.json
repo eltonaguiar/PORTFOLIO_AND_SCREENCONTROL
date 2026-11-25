@@ -2,9 +2,9 @@
   "item": "E8 — publish the first honest read at n>=30 per tier",
   "owner": "H",
   "gate": "G5 (provenance/tracking)",
-  "run_at": "2026-11-25T06:14:00-05:00",
-  "run_at_utc": "2026-11-25T11:14:00Z",
-  "git_hash": "b217c72ff6b55bc9282184e55f78ca8a05399c0e",
+  "run_at": "2026-11-25T07:26:00-05:00",
+  "run_at_utc": "2026-11-25T12:26:00Z",
+  "git_hash": "c1fbf44",
   "status": "BLOCKED — not done; left unchecked in TODO",
   "precondition": "E4 agent picks >= 5 per tier landed in the real per-tier books (results/paper_book_{stable,moderate,aggressive}.jsonl)",
   "observed": {
@@ -13,7 +13,7 @@
     "aggressive": 0,
     "total_resolved": 0
   },
-  "source": "direct `python 04-investment-strategy/paper_book.py score` run (all three real tier books) at 2026-11-25T11:14Z, exit 0; stable/moderate/aggressive all n=0, INSUFFICIENT_DATA; no paper_book_*.jsonl exists on disk under 04-investment-strategy/results/ or 03-trading-strategies/results/ -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json same run; find -newer b217c72 shows no pick files; git log HEAD b217c72 is automated carry/rtc ticks only; COMS check 11:25Z (COPILOT tick) reports harvest artifacts and a wallet-persistence null, no E4 picks and no measurement ask directed at Hermes.",
+  "source": "direct `python 04-investment-strategy/paper_book.py score` run (all three real tier books) at 2026-11-25T12:26Z, exit 0; stable/moderate/aggressive all n=0, INSUFFICIENT_DATA; no paper_book_*.jsonl exists on disk -> all three books empty; e5 scorecard refreshed results/e5_weekly_scorecard_latest.json same run; git log HEAD c1fbf44 shows only ai-cycle/carry/B1 commits since the last E8 check; COMS check 12:16Z is KILO 15-min status (score inversion pairwise p values, UP_ONLY_MDE) with no E4 picks and no measurement ask directed at Hermes.",
   "verdict": "Cannot publish an honest n>=30 read per tier; books are empty pending E4 agent picks (CP/ZOO/KILO/AG). Will not fabricate. Re-evaluate E8 once E4 lands; E5 score run then becomes the E8 read if n>=30 per tier.",
   "artifact": "03-trading-strategies/results/e8_blocked_n0_per_tier.json"
 }

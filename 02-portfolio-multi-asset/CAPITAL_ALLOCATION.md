@@ -39,7 +39,8 @@ That is not "the strategies need tuning" — it is the allocation instruction. M
 reporting *holding* returns that are close to zero or slightly negative over these windows, which is the other
 half of the message: short-horizon trading was a cost, not an income.
 
-Costs used (measured, per class, `payload.slippage_validation`): CRYPTO 0.0996%, EQUITY/ETF/BOND 0.05%,
+Costs used (measured, per class, `payload.slippage_validation`; audit3 ledger generated 2026-11-22T07:10Z,
+fetched the same day): CRYPTO 0.0996%, EQUITY/ETF/BOND 0.05%,
 COMMODITY 0.15%, FOREX 0.02%, FUTURES 0.10%, MUTUAL_FUND 0.08%.
 Versioned: `02-portfolio-multi-asset/cost_basis_slippage_validation.json` (sha256 e8bcddf4203e84ca47ba45c43f63270ca09b1d33ed39cbb602d303e3a82fbad5), so any verdict can be recomputed against the costs it used.
 

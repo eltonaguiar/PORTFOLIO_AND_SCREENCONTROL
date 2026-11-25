@@ -32,7 +32,7 @@ This is the part the table cannot supply, and it reverses most of its retail gui
 
 | Family | 1min.ai framing | Our measured result |
 |---|---|---|
-| Risk premia (value) | "proven… stable average returns" | **HML +0.11%/yr gross, +0.02% net** on 186 names, 44 monthly rebalances — the premium is *absent* in our sample, not merely cost-eaten |
+| Risk premia (value) | "proven… stable average returns" | **HML +3.07%/yr net ≈ 25 bp/month** (committed B6, n=262 rebalances, 2004–2026) vs the 36 bp/month cash hurdle — the premium is *present but insufficient* in our sample, not merely cost-eaten. The earlier +0.11%/yr gross / +0.02% net 186-name figure is **DEAD** (price-only artifact, no committed implementation; B6/H2). |
 | Time-series momentum | "proven out-of-sample on many asset classes" | Only live line we have; the ETF 12-month absolute momentum test is **forward-only and years from a verdict**. SPY-200d specifically: null 53.4, excess **−6.8 pp** → NOT_INVESTABLE |
 | Cross-sectional momentum | "works well over long periods; high trading costs" | 6 classes × 15 configs = **N=90**; DSR collapses **0.9543 → 0.3191**; **0 of 6 classes survive** |
 | Trend following | "strong long-term edge" | ETF wrapper cost 6.7122 bp RT is the one thing that passes — a **cost** fact, not an alpha fact |
@@ -54,7 +54,8 @@ risk". Risk-adjusted is not cost-adjusted.
 What the table never supplies, and what our gates require: **n**, trial count, deflated Sharpe, PBO, walk-forward
 efficiency, information ratio against a matched benchmark, break-even cost multiple, capacity, tail ratio, and the
 date each sample ends. Post-publication decay is mentioned once in a caveat ("Decay in some premia post-publication")
-with no magnitude — and our HML measurement (+0.11%/yr gross) suggests the decay is total, not partial.
+with no magnitude — and our committed HML measurement (+3.07%/yr net ≈ 25 bp/month) suggests the decay is
+large: it lands at the low end of the 25–42 bp/month literature band and below the 36 bp/month cash hurdle.
 
 ## 4. What is worth keeping
 

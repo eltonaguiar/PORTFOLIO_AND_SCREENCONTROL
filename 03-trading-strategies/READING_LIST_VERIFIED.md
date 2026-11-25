@@ -63,7 +63,7 @@ already measured on our own bars and failed:
 | Carry | FX Sharpe **−0.126**, break-even 468 bp ≈ 62× cost; crypto funding **−11 bp/tick** |
 | TSMOM / trend | only live line; SPY-200d null 53.4 vs excess **−6.8 pp**; ETF version 9.3 years from a verdict |
 | Cross-sectional momentum | N=90 → **DSR 0.9543 → 0.3191**, 0 of 6 classes survive |
-| Risk premia (value) | **+0.11%/yr gross, +0.02% net** vs 4.32% hurdle |
+| Risk premia (value) | **+3.07%/yr net ≈ 25 bp/month** vs 4.32% hurdle (committed B6; the earlier +0.11%/yr figure is DEAD — price-only artifact) |
 | VRP | **unmeasured** — no options history in the estate |
 | Mean reversion | FX break-even 4.30 bp **< 7.53 bp measured**; crypto PF 0.815 after costs |
 
