@@ -8,12 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T17:24 | 54 | STOCKS (single-name eq | idea | pollinations | 200 | 134 |  |
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T18:25 | 55 | CRYPTO (spot and perp) | idea | pollinations | 200 | 125 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T19:26 | 56 | BONDS (govt and credit | idea | pollinations | 200 | 109 |  |
@@ -32,48 +26,41 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T00:31 | 61 | OPTIONS (equity index) | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T00:31 | 61 | OPTIONS (equity index) | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T00:31 | 61 | OPTIONS (equity index) | idea | pollinations | 200 | 113 |  |
+| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T01:32 | 62 | PREDICTION MARKETS (Po | idea | pollinations | 200 | 111 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T02:33 | 63 | STOCKS (single-name eq | crosscheck | pollinations | 200 | 63 |  |
 
 ## Latest answers
 
-### round 60 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_CLOUD_LARGE
+### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_CLOUD_LARGE
 
 {"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
 
-### round 60 - COMMODITIES (energy, metals, ags) - idea - ULTRA_FREE_OPENROUTER
+### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - ULTRA_FREE_OPENROUTER
 
 {"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
 
-### round 60 - COMMODITIES (energy, metals, ags) - idea - pollinations
+### round 62 - PREDICTION MARKETS (Polymarket / Kalshi) - idea - pollinations
 
-**Test:**  
-On any liquid commodity futures contract (e.g., Crude WTI August 24), calculate the overnight risk‑free‑rate‑adjusted return as  
+**Test**: In the 10‑yr period from 2022‑01‑01 to 2023‑07‑01, compute the net excess return of Polymarket’s “Israel’s win” market versus 4.3 % T‑bill, after deducting 80 bps round‑trip cost.  
+**Kill‑switch**: If the adjusted excess return is **≤ 0 %** on any one 28‑day block (i.e., a month of trading), the hypothesis collapses.  
 
-\[
-R = \frac{P_{\text{1‑day avg. close}}-P_{\text{open}}}{P_{\text{open}}}-0.043\text{\%}
-\]
+**Data**: Daily closing price of the “Israel’s win” contract (free API), daily 4.3 % T‑bill yield (FRED, free, point‑in‑time), transaction cost assumption 12‑20 bps per round‑trip (used wholesale).  
 
-*Measure:* the average daily return must stay **above 0.03 bps** after subtracting the 4.3 % T‑bill annualized rate divided by 360 days (~0.0119 bps). If the average return ever falls **≤ 0.03 bps** (even once in the back‑test period), the commodity strategy is killed.
+**Why it survives cost**: Only a single, real‑time test, so no multiple testing penalty; 28‑day blocks yield enough data points (≈6) for a meaningful average while staying within the 110‑word limit.
 
-**Data required:** daily open and close prices of the futures contract.  
-**Source:** Yahoo! Finance or Quandl (free, point‑in‑time). If the dataset contains a single day where the condition fails, the test rejects the commodity class.
-
-### round 61 - OPTIONS (equity index) - idea - ULTRA_FREE_CLOUD_LARGE
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
 {"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
 
-### round 61 - OPTIONS (equity index) - idea - ULTRA_FREE_OPENROUTER
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - ULTRA_FREE_OPENROUTER
 
 {"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
 
-### round 61 - OPTIONS (equity index) - idea - pollinations
+### round 63 - STOCKS (single-name equity, long/short) - crosscheck - pollinations
 
-**Test**: *Monthly “Moneyness‑Skew” exploit* – buy 30‑day at‑the‑money call options on the S&P 500, sell 30‑day out‑of‑the‑money puts, hold both positions overnight, and roll to the next month.  
-
-**Measurement that kills it**: Average annualised excess return on the strategy that exceeds 4.3 % after deducting round‑trip cost (12–20 bps) and applying a deflated Sharpe (≥ 1.0 under trial‑accounting).  
-
-**Data required**:  
-- Historical 1‑month implied vol‑surface for the S&P 500 (daily) – freely available from CBOE or Barchart.  
-- Daily closing prices of the S&P 500 index – free.  
-- Daily Treasury bill yield (4‑week T‑bill) – free.  
-
-All data are point‑in‑time and freely accessible; the test can be run with a back‑test platform.
+Pick (b).  
+A concrete falsifier: a 12‑month back‑test on large‑cap stocks beginning 2010, applying a classical post‑announcement drift strategy (buy over‑reactive earnings, sell under‑reactive, then liquidate after the expected reversal) that earns a gross excess of 0.25 % per annum after deducting the 18‑bp round‑trip cost. The strategy persists across sectors, capitalization deciles, and A‑to‑Z stocks, thus proving the drift is still harvestable.
