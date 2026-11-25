@@ -1,0 +1,105 @@
+{
+  "audit": "A10 / G-COST-1 attribution — empirical verification",
+  "owner": "H (Hermes/DeepSeek-Flash, Session B)",
+  "generated_utc": "2026-11-25T15:46:46Z",
+  "base_git_hash": "875c578",
+  "subject": "G-COST-1 cost-wall gate in 03-trading-strategies/realtime_challenge/proof/g_cost_gates.py",
+  "prior_state": {
+    "todo_progress_claim": "A10 marked [x]: G-COST-1 KILL median realised fill cost 20.002 bp >= 8.0 bp, carried as 'the wall stands' / 'the 8 bp cost assumption is dead' / 'real cost finding'.",
+    "what_prior_runs_audited": "G-COST-3 (2026-11-25 10:11Z) and G-COST-4 (14:37Z) were both recast to ILL-POSED. Neither touched G-COST-1. Its 20.002 bp figure was repeatedly cited as the real, measured cost wall that the whole-programme KILL rests on.",
+    "committed_artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_20261125T143751Z.json",
+    "committed_g_cost_1": {
+      "n": 36,
+      "median_bps": 20.002,
+      "p90_bps": 20.002,
+      "min_bps": 20.002,
+      "max_bps": 20.002,
+      "verdict": "KILL",
+      "evidence_string": "median realised fill cost 20.002 bp over 36 live snapshots at Binance spot BTC/USDT; KILLS the 8.0 bp cost assumption",
+      "fee_per_side_bps": 10.0,
+      "fee_source_string": "published schedule assumed (https://www.binance.com/en/fee/schedule)"
+    }
+  },
+  "finding": {
+    "headline": "G-COST-1's '20.002 bp measured cost wall' is 99.99 percent a hardcoded ASSUMED 10 bp/side taker fee; only 0.002 bp is measured top-of-book spread. The gate is a fee-schedule test, not a measured market fill, and its 8 bp kill wall sits below the 20 bp mandatory round-turn fee so PASS is impossible on this venue by construction.",
+    "defects": [
+      {
+        "id": "C1",
+        "severity": "high",
+        "kind": "attribution / provenance",
+        "detail": "The fee was NOT fetched. fetch_taker_fee_bps calls the public fee endpoint, which returns nothing without auth, and falls back to a hardcoded 10.0 bp/side (code line ~82). The committed artifact records fee_source = 'published schedule assumed'. So of the 20.002 bp, 20.0 bp is the ASSUMED round-turn fee (2 x 10.0) and only 0.002 bp is measured spread. The number is presented and carried as a measured 'realised fill cost'; it is almost entirely an assumption."
+      },
+      {
+        "id": "C2",
+        "severity": "high",
+        "kind": "conceptual (fee-schedule vacuity)",
+        "detail": "The kill wall is 8.0 bp; the mandatory round-turn fee alone is 20.0 bp on any venue charging >= 4 bp/side. PASS is therefore impossible by construction on this venue: the gate tests the published fee schedule, not any market property. This is the exact vacuity already retired for G-COST-3 (whose [19,24.21] band forced PASS by construction) - here it forces a KILL. The programme retired the PASS-forcing gate but left the KILL-forcing twin standing and labelled it a measurement."
+      },
+      {
+        "id": "C3",
+        "severity": "medium",
+        "kind": "false labels",
+        "detail": "Output said '36 live fills' and '15m horizon'. No orders are sent: it reads the top-of-book 36 times ~0.6s apart (~22s total), so these are 36 quotes in one ~22-second snapshot, not fills, and no 15m holding period is ever measured. At the 14:37Z run min=max=median=20.002 -> the 36 samples carried no measurable variance at all (the entire cost was the flat assumed fee + a 1-cent spread)."
+      }
+    ],
+    "spread_immateriality_proof": {
+      "14:37Z_committed_run": {"min_bps": 20.002, "max_bps": 20.002, "median_bps": 20.002, "implied_measured_spread_bps": 0.002},
+      "15:46Z_live_recast_run": {"min_bps": 20.002, "max_bps": 20.04, "median_bps": 20.002, "implied_measured_spread_bps": 0.002},
+      "single_snapshot_spread_variance_note": "G-COST-3's single-snapshot spread read was 0.6254 bp at 14:37Z but 0.0017 bp at 15:46Z on the same instrument/venue, a transient wide-book moment. Spread reads vary by up to ~0.6 bp between snapshots; either way the spread is <1 bp and immaterial next to the 20 bp fee."
+    }
+  },
+  "before_after": {
+    "before_14:37Z": {
+      "horizon_basis": "15m assumed fill cadence; cost per round trip",
+      "measured": {"median_bps": 20.002, "p90_bps": 20.002, "min_bps": 20.002, "max_bps": 20.002},
+      "evidence": "median realised fill cost 20.002 bp over 36 live snapshots at Binance spot BTC/USDT; KILLS the 8.0 bp cost assumption"
+    },
+    "after_15:46Z": {
+      "horizon_basis": "36 top-of-book quote snapshots ~0.6s apart (~22s total); NOT a 15m horizon - no holding period is measured",
+      "measured": {
+        "round_trip_cost_bps": 20.002,
+        "measured_spread_component_bps": 0.002,
+        "assumed_round_turn_fee_bps": 20.0,
+        "min_bps": 20.002,
+        "max_bps": 20.04
+      },
+      "verdict": "KILL",
+      "verdict_basis": "fee-schedule KILL: the ASSUMED round-turn fee alone (20.0 bp) exceeds the 8.0 bp wall; the measured spread component does not drive the verdict",
+      "attribution": {"fee_is_assumed": true, "measured_spread_fraction_bps": 0.0017, "fee_fraction_bps": 20.0},
+      "fee_budget_analysis": {"kill_wall_bps": 8.0, "max_pass_feasible_fee_per_side_bps": 3.9991},
+      "evidence": "round-trip cost 20.002 bp = measured spread 0.002 bp + ASSUMED round-turn fee 20.000 bp over 36 top-of-book quote snapshots (~22s, not a 15m horizon); KILLS the 8.0 bp cost assumption. The fee, not the measured market, drives this number."
+    }
+  },
+  "fix": {
+    "action": "Honest re-attribution of G-COST-1 in g_cost_gates.py; NO verdict change.",
+    "what_changed": [
+      "Split the output into measured_spread_component_bps (0.002) and assumed_round_turn_fee_bps (20.0) instead of a single 'median realised fill cost'.",
+      "Label the fee ASSUMED (fee.assumed=true, fee.source='published schedule assumed') when fetch_trading_fees yields nothing, instead of silently presenting it as measured.",
+      "Replace the false 'live fills / 15m horizon' labels with '36 top-of-book quote snapshots ~0.6s apart (~22s); no holding period measured'.",
+      "Add fee_budget_analysis: PASS feasible only if fee/side + spread/2 < 4 bp; at the real 10 bp/side the wall is exceeded by construction.",
+      "Add verdict_basis naming the KILL as a fee-schedule KILL, not a measured-fill KILL."
+    ],
+    "verdict_and_gate_unchanged": "verdict stays KILL; threshold stays 8.0 bp; the fee fallback stays 10.0 bp/side; overall stays KILL; CI still exits 1. Nothing was lowered.",
+    "not_a_weakening": "This is the OPPOSITE of lowering a gate. G-COST-3 was retired to ILL-POSED because retiring it lost nothing (the '1D cost premium' quantity does not exist). G-COST-1 encodes a REAL economic fact - a retail taker pays 2 x taker fee per round turn (~20 bp on Binance VIP0 spot), which exceeds the 8 bp edge budget - so the KILL is KEPT. Only the misrepresentation (an assumed fee dressed as a measured fill cost) is corrected. Retiring G-COST-1 to ILL-POSED would have removed the only live KILL and passed candidates; that was deliberately NOT done."
+    },
+  "residual_assumption": {
+    "taker_fee_per_side_bps": 10.0,
+    "basis": "Binance spot VIP0 published taker fee 0.1% = 10 bp/side (maker = taker at VIP0). The assumption is correct for a retail taker but is NOT measured here and could differ for maker orders, BNB-fee discounts, higher VIP tiers, or another venue. Unmeasured beyond the published Schedule.",
+    "what_would_measure_it": "send a live order and read the actual fill vs mid (requires an API key and an account; out of scope for this keyless proof harness)."
+  },
+  "live_evidence": {
+    "run_artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_latest.json",
+    "timestamped_artifact": "03-trading-strategies/realtime_challenge/results/g_cost_gates_20261125T154646Z.json",
+    "generated_utc": "2026-11-25T15:46:46+00:00",
+    "overall": "KILL",
+    "kills": ["G-COST-1"],
+    "retired": ["G-COST-3", "G-COST-4"],
+    "exit_code": 1
+  },
+  "other_gates_unchanged": {
+    "G-COST-2": "PASS P50 0.061 / P90 0.364 bp over 32 walks (liquid BTC/ETH book fine)",
+    "G-COST-3": "ILL-POSED (unchanged from prior recast)",
+    "G-COST-4": "ILL-POSED (unchanged from prior recast; 15:46Z bah -105.9 vs vt -31.3, signed +74.6, exposure 0.205)"
+  },
+  "overall": "G-COST-1 re-attributed, NOT recast: the 20.002 bp 'measured cost wall' is 99.99 percent an ASSUMED 10 bp/side fee and 0.002 bp measured spread; the 8 bp wall is below the 20 bp mandatory fee so the gate is a fee-schedule test. KILL KEPT on the real economic fact; nothing lowered; overall still KILL, CI still red."
+}

@@ -9,8 +9,17 @@ Run:  cd 03-trading-strategies && python -m realtime_challenge.proof.g_cost_gate
 Writes: results/g_cost_gates_latest.json
 Exit code: 0 if no gate KILLs, 1 if any gate KILLs (CI job fails fast).
 
-G-COST-1 | median realised fill cost over >= 30 live fills, 15m horizon
-         | kill the cost assumption if median >= 8.0 bp
+G-COST-1 | round-trip cost = top-of-book spread (MEASURED) + taker fee (fetched,
+         | or ASSUMED from the published schedule when the public fee endpoint
+         | returns nothing); kill the cost assumption if median >= 8.0 bp.
+         | ATTRIBUTION (2026-11-25): the number is dominated by the taker FEE, and
+         | on a 10bp/side venue the round-turn fee alone (20 bp) exceeds the 8 bp
+         | wall, so PASS is impossible here by construction - the same fee-schedule
+         | vacuity already retired for G-COST-3. Unlike G-COST-3 this KILL is KEPT:
+         | the economic fact (a retail taker pays 2 x taker fee per round turn,
+         | > 8 bp edge budget) is real; only the measured-vs-assumed attribution is
+         | corrected, so "20.002 bp realised fill cost" no longer overstates a
+         | 99.99%-assumed fee as a market measurement.
 G-COST-2 | slippage distribution on liquid pairs at 15m
          | kill if P50 > 8 bp or P90 > 20 bp
 G-COST-3 | RECAST after A9: the "1D cost premium" is ILL-POSED, not merely noisy.
@@ -111,13 +120,17 @@ def book_walk_slippage_bps(book: dict, side: str, notional_usd: float, mid: floa
     return (mid - avg_price) / mid * 1e4
 
 
-def gate_g_cost_1(exchange, taker_fee_bps: float) -> dict:
-    """G-COST-1: median realised fill cost over >= 30 live fills, 15m horizon.
+def gate_g_cost_1(exchange, taker_fee_bps: float, fee_source: str) -> dict:
+    """G-COST-1: round-trip cost = measured top-of-book spread + taker fee.
     Kill the cost assumption if median >= 8.0 bp.
 
-    Proxy for a realised fill: live top-of-book spread (full round-turn spread)
-    plus round-turn taker fee, sampled across live snapshots. No live account and
-    no orders are sent, so this is a live-book measurement, not executed fills.
+    ATTRIBUTION (2026-11-25): this is NOT a realised fill and NOT a 15m horizon.
+    No orders are sent; it reads the top-of-book N times ~0.6s apart (~20s total).
+    The cost is the QUOTED round-trip cost: the full quoted spread (measured) plus
+    2 x taker fee. On a 10bp/side venue the fee alone is 20 bp, so the 8 bp wall
+    cannot be passed here by construction (fee-schedule vacuity, as in G-COST-3).
+    The KILL is KEPT (a retail taker really does pay ~2 x taker fee per round
+    turn, > the 8 bp edge budget); only the measured-vs-assumed split is exposed.
     """
     round_turn_fee_bps = 2.0 * taker_fee_bps
     samples: list[float] = []
@@ -146,30 +159,80 @@ def gate_g_cost_1(exchange, taker_fee_bps: float) -> dict:
             "measured": {"median_bps": None, "samples": samples},
             "verdict": "UNMEASURABLE",
             "evidence": f"only {n} of {FILL_SNAPSHOTS} live snapshots obtained ({errors} failures); need >= 30",
-            "fee": {"per_side_bps": taker_fee_bps, "source": FEE_URL, "fetch_date": now_utc()[:10]},
+            "fee": {"per_side_bps": taker_fee_bps, "source": fee_source,
+                    "assumed": ("assumed" in str(fee_source).lower()),
+                    "fetch_date": now_utc()[:10]},
         }
     median_bps = statistics.median(samples)
     verdict = "KILL" if median_bps >= 8.0 else "PASS"
+    fee_assumed = "assumed" in str(fee_source).lower()
+    fee_label = "ASSUMED" if fee_assumed else "fetched"
+    spread_component_bps = median_bps - round_turn_fee_bps  # the measured market part
+    if verdict == "KILL":
+        verdict_basis = (
+            f"fee-schedule KILL: the {fee_label} round-turn fee alone "
+            f"({round_turn_fee_bps:.1f} bp) exceeds the 8.0 bp wall; the measured "
+            "spread component does not drive the verdict"
+        )
+    else:
+        verdict_basis = "measured round-trip cost below the 8.0 bp wall"
+    span_s = n * 0.6
     return {
         "gate": "G-COST-1",
         "instrument": INSTRUMENT,
         "venue": VENUE_NAME,
-        "horizon_basis": "15m assumed fill cadence; cost per round trip",
+        "horizon_basis": (
+            f"{n} top-of-book quote snapshots ~0.6s apart (~{span_s:.0f}s total); "
+            "NOT a 15m horizon - no holding period is measured"
+        ),
         "n": n,
         "threshold": {"kill_if_median_bps_ge": 8.0},
         "measured": {
-            "median_bps": round(median_bps, 3),
+            "round_trip_cost_bps": round(median_bps, 3),
+            "measured_spread_component_bps": round(spread_component_bps, 3),
+            "assumed_round_turn_fee_bps": round(round_turn_fee_bps, 3),
             "p90_bps": round(statistics.quantiles(samples, n=10)[8], 3),
             "min_bps": round(min(samples), 3),
             "max_bps": round(max(samples), 3),
         },
         "verdict": verdict,
+        "verdict_basis": verdict_basis,
+        "attribution": {
+            "measured_spread_fraction_bps": round(spread_component_bps, 4),
+            "fee_fraction_bps": round(round_turn_fee_bps, 4),
+            "fee_is_assumed": fee_assumed,
+            "note": (
+                "the round-trip cost is dominated by the taker fee"
+                + (" (ASSUMED from the published schedule; the public fee endpoint "
+                   "returned no usable value)" if fee_assumed else " (fetched from the venue)")
+                + "; the measured top-of-book spread is immaterial"
+            ),
+        },
+        "fee_budget_analysis": {
+            "kill_wall_bps": 8.0,
+            "max_pass_feasible_fee_per_side_bps": round((8.0 - spread_component_bps) / 2.0, 4),
+            "note": (
+                f"PASS is impossible on this venue by construction: the round-turn fee "
+                f"({round_turn_fee_bps:.1f} bp) alone exceeds the 8.0 bp wall. Same "
+                "fee-schedule vacuity already retired for G-COST-3, but here it forces a "
+                "KILL. The KILL is KEPT because the economic fact (a retail taker pays "
+                "2 x taker fee per round turn) is real; only the measured-vs-assumed "
+                "attribution is corrected."
+            ),
+        },
         "evidence": (
-            f"median realised fill cost {median_bps:.3f} bp over {n} live snapshots "
-            f"at {VENUE_NAME} {INSTRUMENT}; "
-            f"{'KILLS' if verdict == 'KILL' else 'holds against'} the 8.0 bp cost assumption"
+            f"round-trip cost {median_bps:.3f} bp = measured spread {spread_component_bps:.3f} bp + "
+            f"{fee_label} round-turn fee {round_turn_fee_bps:.3f} bp over {n} top-of-book quote "
+            f"snapshots (~{span_s:.0f}s, not a 15m horizon); "
+            f"{'KILLS' if verdict == 'KILL' else 'holds against'} the 8.0 bp cost assumption. "
+            "The fee, not the measured market, drives this number."
         ),
-        "fee": {"per_side_bps": taker_fee_bps, "source": FEE_URL, "fetch_date": now_utc()[:10]},
+        "fee": {
+            "per_side_bps": taker_fee_bps,
+            "source": fee_source,
+            "assumed": fee_assumed,
+            "fetch_date": now_utc()[:10],
+        },
     }
 
 
@@ -493,7 +556,7 @@ def main() -> int:
     taker_fee_bps, fee_source, fee_date = fetch_taker_fee_bps(exchange)
 
     gates = [
-        gate_g_cost_1(exchange, taker_fee_bps),
+        gate_g_cost_1(exchange, taker_fee_bps, fee_source),
         gate_g_cost_2(exchange, taker_fee_bps),
         gate_g_cost_3(exchange, taker_fee_bps),
         gate_g_cost_4(exchange),

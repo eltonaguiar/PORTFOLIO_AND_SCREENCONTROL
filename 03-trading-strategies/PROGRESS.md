@@ -3,6 +3,16 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 49 — 2026-11-25 (10:46 EST / 15:46 UTC cron run) — `hermes` (Session B, verification axis)
+Question: E8 is still the only unchecked H item (blocked on E4 picks). A10's G-COST-3 and G-COST-4 were both audited/recast — but G-COST-1, the 20.002 bp "cost wall" the entire programme KILL rests on, had never been audited. Does it measure what it claims?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 15:46 | AUDIT | A10 / G-COST-1 — the committed gate reports "median realised fill cost 20.002 bp over 36 live fills at a 15m horizon" and KILLs the 8 bp wall. Verified against the committed artifact (14:37Z): the taker fee was NOT fetched — fee_source = "published schedule assumed", per-side 10.0 bp — so 20.0 of the 20.002 bp is a hardcoded ASSUMED fee and only 0.002 bp is measured top-of-book spread. The 8 bp wall sits below the 20 bp mandatory round-turn fee, so PASS is impossible here by construction: the same fee-schedule vacuity already retired for G-COST-3, but here it forces a KILL. Also: "36 live fills / 15m" is false — no orders sent, 36 top-of-book quotes ~0.6s apart (~22s; at 14:37Z min=max=median=20.002, zero measured variance). FIX = honest re-attribution, NOT a recast: output now separates measured_spread_component_bps (0.002) + assumed_round_turn_fee_bps (20.0), labels fee.assumed=true, adds fee_budget_analysis (PASS feasible only at fee/side < 4 bp; actual 10 bp), relabels horizon_basis. KILL KEPT — a retail taker really pays ~2× taker fee per round turn (20 bp) > the 8 bp edge budget; retiring it to ILL-POSED would drop the only live KILL and pass candidates, so it was NOT done. Live re-run 15:46Z reproduces 20.002 = 0.002 spread + 20.0 assumed fee; verdict KILL; overall KILL; exit 1. | `03-trading-strategies/results/a10_g_cost1_attribution_audit.json` |
+| 15:44 | BLOCKED | E8 — `paper_book.py score` re-ran: all three tiers n=0 / 0 resolved / INSUFFICIENT_DATA; no `paper_book_*.jsonl` on disk; no E4/pick commits in last 200 through 875c578 (only carry/rtc/ai-cycle ticks); COMS 15:44Z = antigravity_review CDP tick, no ask to this seat. Nothing fabricated, left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
+No verdict lowered, no threshold changed, no candidate passed. G-COST-1's KILL stands on the real economic fact; what changed is that the report no longer sells a 99.99%-assumed fee as a measured fill cost. COMS post: correction of an existing measured number's provenance (20.002 bp "realised fill cost" → 20.0 assumed fee + 0.002 measured spread) — rule 6 triggered.
+
 ## Session 48 — 2026-11-25 (09:38 EST / 14:38 UTC cron run) — `hermes` (Session B, verification axis)
 Question: E8 is still the only unchecked H item and is blocked on E4 picks. Every other H item is closed — but the A10 CI gates had only ever had G-COST-3 audited; has G-COST-4 ever been checked for measuring what it claims? Its "KILL vol-target gap 240.9 bp/day" is carried in the TODO/PROGRESS as a cost finding.
 
