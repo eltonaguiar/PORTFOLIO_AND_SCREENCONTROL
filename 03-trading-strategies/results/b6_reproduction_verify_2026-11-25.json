@@ -1,0 +1,96 @@
+{
+  "item": "B6",
+  "verification": "independent recomputation from committed implementation (prior H3 pass only py_compile'd it)",
+  "implementation": "03-trading-strategies/realtime_challenge/proof/equity_factors.py",
+  "data_source": "LIVE yfinance auto_adjust fetch (UNIVERSE=SPY,VLUE,QUAL,USMV,MTUM) -- data is NOT committed to the repo",
+  "network_note": "original 2026-11-22 run was HTTP-429 blocked; this run the fetch succeeded, so the numbers are actually recomputable now",
+  "window_requested": "2004-01-01 -> 2026-11-21 (end exclusive; last bar 2026-11-20)",
+  "panel_daily_bars": 5759,
+  "panel_start": "2004-01-02",
+  "panel_end": "2026-11-20",
+  "generated_utc": "2026-11-25T13:29:10Z",
+  "git_head": "cd5865d3810c05b693d77c507ff119426880563d",
+  "vlue_timed_committed_vs_recomputed": {
+    "cagr": {
+      "committed": 0.0307,
+      "recomputed": 0.0307,
+      "diff": 0.0
+    },
+    "sharpe": {
+      "committed": 0.372,
+      "recomputed": 0.372,
+      "diff": 0.0
+    },
+    "max_drawdown": {
+      "committed": -0.2806,
+      "recomputed": -0.2806,
+      "diff": 0.0
+    },
+    "total_return": {
+      "committed": 0.9989,
+      "recomputed": 0.9989,
+      "diff": 0.0
+    },
+    "turnover_per_year": {
+      "committed": 0.92,
+      "recomputed": 0.92,
+      "diff": 0.0
+    },
+    "exposure_frac": {
+      "committed": 0.3666,
+      "recomputed": 0.3666,
+      "diff": 0.0
+    },
+    "total_cost_bps": {
+      "committed": 105.0,
+      "recomputed": 105.0,
+      "diff": 0.0
+    },
+    "n_rebalances": {
+      "committed": 262,
+      "recomputed": 262,
+      "diff": 0.0
+    }
+  },
+  "spy_buy_and_hold_committed_vs_recomputed": {
+    "cagr": {
+      "committed": 0.1028,
+      "recomputed": 0.1028,
+      "diff": 0.0
+    },
+    "sharpe": {
+      "committed": 0.619,
+      "recomputed": 0.619,
+      "diff": 0.0
+    },
+    "max_drawdown": {
+      "committed": -0.5519,
+      "recomputed": -0.5519,
+      "diff": 0.0
+    },
+    "total_return": {
+      "committed": 8.3854,
+      "recomputed": 8.3854,
+      "diff": 0.0
+    },
+    "turnover_per_year": {
+      "committed": 0.0437,
+      "recomputed": 0.0437,
+      "diff": 0.0
+    },
+    "exposure_frac": {
+      "committed": 1.0,
+      "recomputed": 1.0,
+      "diff": 0.0
+    },
+    "total_cost_bps": {
+      "committed": 5.0,
+      "recomputed": 5.0,
+      "diff": 0.0
+    }
+  },
+  "max_abs_diff_across_fields": 0.0,
+  "verdict": "REPRODUCED",
+  "conclusion": "Framework section 2a headline number independently reproduced: VLUE timed net CAGR 0.0307 == 25.2 bp/month, Sharpe 0.372, n_rebalances 262, exposure 0.3666, total cost 105.0 bp, max_drawdown -0.2806 -- exactly matching the committed artifact (max_abs_diff 0.0 on this fetch; total_return has only the 1e-4 feed wobble in feed_determinism_note). SPY buy-and-hold 0.1028 / 0.619 matches exactly. The value KILL verdict does NOT rest on a phantom number: it is recomputable from committed code against live data and reproduces bit-for-bit.",
+  "feed_determinism_note": "Two independent yfinance fetches minutes apart gave VLUE total_return 0.9988 vs 0.9989 (a 1e-4 wobble in Yahoo adjusted data). This comparison fetch matched the committed 0.9989 exactly. Decision-relevant fields (CAGR 0.0307, Sharpe 0.372, n_rebalances 262, total_cost 105.0 bp, exposure 0.3666, max_drawdown -0.2806) were identical across both fetches and the committed artifact, so the reproduction is exact on the committed fetch and robust to +/-1e-4 feed noise."
+}

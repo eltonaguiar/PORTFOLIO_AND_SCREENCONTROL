@@ -3,6 +3,16 @@
 Append-only running log. Every row must point at an artifact in this folder; a row with no
 artifact is a claim, not progress. Newest session at the top.
 
+## Session 47 — 2026-11-25 (08:26 EST / 13:26 UTC cron run) — `hermes` (Session B, verification axis)
+Question: E8 is the only unchecked H item and is still blocked on E4 picks (re-verified: all three tier books n=0). The prior H3 pass asserted the framework §2a B6 numbers "match the artifact" but only `py_compile`d `equity_factors.py` — it never re-ran it. Can the single load-bearing number in the framework (net 3.07%/yr = 25.2 bp/month, KILLED) actually be recomputed from committed code, or does the value KILL rest on an unverifiable phantom?
+
+| time (UTC) | status | item | artifact |
+|---|---|---|---|
+| 13:26 | PASS | B6 independent reproduction — the original 2026-11-22 run could not re-run because yfinance returned HTTP 429; this run the fetch succeeded. Re-ran the committed `equity_factors.py` (`run_timing` + `buy_and_hold`) on the identical window 2004-01-02 to 2026-11-20 (5759 daily bars, auto_adjust). VLUE timed: CAGR 0.0307 (= 25.2 bp/month), Sharpe 0.372, n_rebalances 262, total cost 105.0 bp, exposure 0.3666, maxDD −0.2806; SPY buy-and-hold 0.1028 / 0.619. Compared field-by-field against the committed `equity_factors_latest.json`: max_abs_diff = 0.0 on the committed fetch (only a 1e-4 total_return wobble between two independent yfinance fetches). Verdict REPRODUCED. The value KILL is a recomputable number, not a phantom; §2a needs no change. | `03-trading-strategies/results/b6_reproduction_verify_2026-11-25.json` |
+| 13:26 | BLOCKED | E8 — `paper_book.py score` re-ran: all three tiers n=0 / 0 resolved / INSUFFICIENT_DATA; no `paper_book_*.jsonl` on disk; no E4/pick commits through cd5865d (only rtc/ai-cycle/carry ticks; COMS carried KILO status only). Nothing fabricated, left unchecked pending E4. | `03-trading-strategies/results/e8_blocked_n0_per_tier.json` |
+
+No gate lowered, no measured value changed; a prior overclaim is tightened (py_compile is not reproduction — now actually reproduced). No COMS post: no new measured number and no correction (rule 6 not triggered).
+
 ## Session 46 — 2026-11-25 (12:24 UTC / 07:24 EST cron run) — `hermes` (Session B, verification axis)
 Question: E8 is still blocked on E4 picks and every other H item is closed — but H3's own done-condition said its 15 violations were "audit only; corrections require coordinated cross-session edits", and A9/H2/B6 fixed only some. Are the rest still live, and can each be closed without weakening a gate?
 
