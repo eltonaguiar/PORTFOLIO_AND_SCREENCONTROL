@@ -36,9 +36,9 @@ reflects new peer artifacts without a human in the loop.
 <!-- INDEX:START -->
 | Folder | Files | Artifacts (results/ledger/state) | Last commit |
 |---|---:|---:|---|
-| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 155 (26 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
+| `01-screen-control-llm/` — Screen control via LLM/AI — how an agent sees and drives a machine | 198 (26 md) | 0 | see `git log -1 -- 01-screen-control-llm` |
 | `02-portfolio-multi-asset/` — Reference: tracking, engine choice, evidence rules | 9 (8 md) | 0 | see `git log -1 -- 02-portfolio-multi-asset` |
-| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 194 (34 md) | 140 | see `git log -1 -- 03-trading-strategies` |
+| `03-trading-strategies/` — The challenge: specs, rounds, results, ledgers | 199 (35 md) | 144 | see `git log -1 -- 03-trading-strategies` |
 | `REVIEWS/` — Audits of model answers and challenge documents | 26 (25 md) | 0 | see `git log -1 -- REVIEWS` |
 
 ### Documents
@@ -71,7 +71,7 @@ reflects new peer artifacts without a human in the loop.
 | [`01-screen-control-llm/SAFETY.md`](01-screen-control-llm/SAFETY.md) | 43 | 3029 |
 | [`01-screen-control-llm/TOOL_INTERFACE.md`](01-screen-control-llm/TOOL_INTERFACE.md) | 140 | 7296 |
 | [`01-screen-control-llm/VSCODE_PANEL_CDP_CONTROL.md`](01-screen-control-llm/VSCODE_PANEL_CDP_CONTROL.md) | 281 | 12825 |
-| [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 123 | 8695 |
+| [`02-portfolio-multi-asset/CAPITAL_ALLOCATION.md`](02-portfolio-multi-asset/CAPITAL_ALLOCATION.md) | 123 | 8813 |
 | [`02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md`](02-portfolio-multi-asset/DATA_EVIDENCE_RULES.md) | 134 | 7082 |
 | [`02-portfolio-multi-asset/FRAMEWORK_MATRIX.md`](02-portfolio-multi-asset/FRAMEWORK_MATRIX.md) | 80 | 6855 |
 | [`02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md`](02-portfolio-multi-asset/INVESTMENT_HUB_REVIEW.md) | 101 | 7465 |
@@ -79,12 +79,13 @@ reflects new peer artifacts without a human in the loop.
 | [`02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md`](02-portfolio-multi-asset/PAPER_TRADING_AND_MONITORING.md) | 100 | 6132 |
 | [`02-portfolio-multi-asset/PORTFOLIO_TRACKING.md`](02-portfolio-multi-asset/PORTFOLIO_TRACKING.md) | 115 | 6910 |
 | [`02-portfolio-multi-asset/README.md`](02-portfolio-multi-asset/README.md) | 67 | 5671 |
-| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 66 | 5832 |
-| [`03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`](03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md) | 59 | 4359 |
+| [`03-trading-strategies/AI_IDEA_CYCLES.md`](03-trading-strategies/AI_IDEA_CYCLES.md) | 68 | 6183 |
+| [`03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md`](03-trading-strategies/ASSET_CLASS_IDEA_HARVEST.md) | 59 | 4420 |
 | [`03-trading-strategies/BRACKET_P7.md`](03-trading-strategies/BRACKET_P7.md) | 180 | 9527 |
 | [`03-trading-strategies/CARRY_RTT_T4.md`](03-trading-strategies/CARRY_RTT_T4.md) | 125 | 6582 |
 | [`03-trading-strategies/CARRY_SERIES.md`](03-trading-strategies/CARRY_SERIES.md) | 68 | 3752 |
 | [`03-trading-strategies/ETF_ROTATION_H-E1.md`](03-trading-strategies/ETF_ROTATION_H-E1.md) | 144 | 7413 |
+| [`03-trading-strategies/EXPIRY_SCORING_SPEC.md`](03-trading-strategies/EXPIRY_SCORING_SPEC.md) | 139 | 8731 |
 | [`03-trading-strategies/FABRICATION_CHECKLIST.md`](03-trading-strategies/FABRICATION_CHECKLIST.md) | 106 | 5862 |
 | [`03-trading-strategies/FOLD_SENSITIVITY_T3.md`](03-trading-strategies/FOLD_SENSITIVITY_T3.md) | 92 | 4206 |
 | [`03-trading-strategies/FX_CENSUS_P8.md`](03-trading-strategies/FX_CENSUS_P8.md) | 98 | 5130 |
@@ -95,7 +96,7 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/LIBRARY_SURVEY.md`](03-trading-strategies/LIBRARY_SURVEY.md) | 70 | 5884 |
 | [`03-trading-strategies/PEER_REVIEW_T2.md`](03-trading-strategies/PEER_REVIEW_T2.md) | 119 | 7568 |
 | [`03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md`](03-trading-strategies/PEERCROSSCHECK_deepseek-flash.md) | 282 | 17431 |
-| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 612 | 91360 |
+| [`03-trading-strategies/PROGRESS.md`](03-trading-strategies/PROGRESS.md) | 627 | 94120 |
 | [`03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md`](03-trading-strategies/PROVEN_EDGE_METHODOLOGY.md) | 124 | 9362 |
 | [`03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md`](03-trading-strategies/PROVEN_STRATEGIES_TABLE_AUDIT.md) | 135 | 11438 |
 | [`03-trading-strategies/READING_LIST_VERIFIED.md`](03-trading-strategies/READING_LIST_VERIFIED.md) | 72 | 5978 |
@@ -104,8 +105,8 @@ reflects new peer artifacts without a human in the loop.
 | [`03-trading-strategies/STATIC_GATE_AUDIT.md`](03-trading-strategies/STATIC_GATE_AUDIT.md) | 37 | 3470 |
 | [`03-trading-strategies/STRATEGY_SPEC.md`](03-trading-strategies/STRATEGY_SPEC.md) | 133 | 6196 |
 | [`03-trading-strategies/TIMEFRAME_MATRIX.md`](03-trading-strategies/TIMEFRAME_MATRIX.md) | 202 | 10945 |
-| [`03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md`](03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md) | 559 | 39541 |
-| [`03-trading-strategies/validation/MODEL_PANEL_INDEX.md`](03-trading-strategies/validation/MODEL_PANEL_INDEX.md) | 80 | 6440 |
+| [`03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md`](03-trading-strategies/validation/MODEL_ANSWER_DELTAS.md) | 559 | 39614 |
+| [`03-trading-strategies/validation/MODEL_PANEL_INDEX.md`](03-trading-strategies/validation/MODEL_PANEL_INDEX.md) | 80 | 6514 |
 | [`03-trading-strategies/validation/REVIEW_AND_ADOPTION.md`](03-trading-strategies/validation/REVIEW_AND_ADOPTION.md) | 98 | 7168 |
 | [`03-trading-strategies/validation/strategy_validation_protocol.md`](03-trading-strategies/validation/strategy_validation_protocol.md) | 662 | 49890 |
 | [`03-trading-strategies/VALIDATION_METHODOLOGY_PANEL.md`](03-trading-strategies/VALIDATION_METHODOLOGY_PANEL.md) | 152 | 10964 |
@@ -143,8 +144,8 @@ reflects new peer artifacts without a human in the loop.
 
 | Path | Lines | Bytes |
 |---|---:|---:|
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 157 | 13285 |
-| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 48 | 10678 |
+| [`NEXT_STEPS.md`](NEXT_STEPS.md) | 159 | 13520 |
+| [`PROGRESS_LOG.md`](PROGRESS_LOG.md) | 49 | 11487 |
 | [`README.md`](README.md) | 197 | 16993 |
 | [`WORKSTREAMS.md`](WORKSTREAMS.md) | 97 | 6492 |
 

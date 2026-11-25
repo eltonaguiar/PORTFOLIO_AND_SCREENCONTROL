@@ -96,7 +96,7 @@ highest-return work right now is not a new strategy:
 2. **The winner-stays bug** gave POD-ETF-DUAL-MOMENTUM zero closes.
 3. **Dormant emitters** — `commodity_basis_carry` emits zero rows; `contango_roll_yield` is misclassified.
 4. **9,277 auto-expired rows score as neither win nor loss**, so a wide-TP strategy escapes judgement forever.
-   Score timeouts as their own class.
+   Score timeouts as their own class — schema spec: [`../03-trading-strategies/EXPIRY_SCORING_SPEC.md`](../03-trading-strategies/EXPIRY_SCORING_SPEC.md).
 5. **5,994 integrity-excluded rows** (ghost rows, WON-vs-PnL contradictions) is a data-quality problem worth
    more than any new cell.
 6. **Reproducibility**: the ledger's own provenance warns that its source is a `/tmp` build path, and audit2's

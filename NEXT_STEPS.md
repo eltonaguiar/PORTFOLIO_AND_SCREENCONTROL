@@ -64,9 +64,11 @@ Item format: `- [ ] **A1 — title** · size · definition of done`. Sizes: S < 
 
 ## Track B — trading (`03-trading-strategies/`)
 
-- [ ] **B1 — score auto-expired rows as their own class** · M · **blocked upstream** — lives in
-      `findtorontoevents.ca`, fleet-owned (asked on COMS). Locally: spec the schema change and the failure mode it
-      fixes. **DoD:** written spec in `03-*/` even if the upstream fix lands elsewhere.
+- [x] **B1 — score auto-expired rows as their own class** · M · local spec delivered in
+      [`03-trading-strategies/EXPIRY_SCORING_SPEC.md`](03-trading-strategies/EXPIRY_SCORING_SPEC.md) — `resolution_class`
+      enum `{OPEN,TP_HIT,SL_HIT,TIME_EXPIRED,VOID}`, expiry mark in `realized_bp` (no default `0`), class-average
+      semantics, local mapping + verification gates. **Upstream code fix remains blocked** — lives in
+      `findtorontoevents.ca`, fleet-owned (asked on COMS); B1's DoD was the local spec, which now exists.
 - [x] **B2 — forward-gate dashboard** · S · read the audit3 ledger JSON; print pods by status, rows per pod, and the
       binding gate clause per pod. **DoD:** runs against the live URL; output committed as
       `03-*/results/forward_gate_<UTC>.json`.
