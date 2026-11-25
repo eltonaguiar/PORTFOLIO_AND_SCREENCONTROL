@@ -8,9 +8,6 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 
 | ts | round | asset | mode | model | status | words | echo |
 |---|---|---|---|---|---|---|---|
-| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
-| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
-| 2026-11-24T22:29 | 59 | FOREX (majors and cros | idea | pollinations | 200 | 67 |  |
 | 2026-11-24T23:30 | 60 | COMMODITIES (energy, m | idea | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-24T23:30 | 60 | COMMODITIES (energy, m | idea | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-24T23:30 | 60 | COMMODITIES (energy, m | idea | pollinations | 200 | 104 |  |
@@ -32,21 +29,11 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 | 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
 | 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
 | 2026-11-25T05:36 | 66 | ETFS (sector, factor,  | crosscheck | pollinations | 200 | 86 |  |
+| 2026-11-25T06:37 | 67 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_CLOUD_LARGE | 400 | 22 |  |
+| 2026-11-25T06:37 | 67 | MUTUAL FUNDS (active a | crosscheck | ULTRA_FREE_OPENROUTER | 400 | 22 |  |
+| 2026-11-25T06:37 | 67 | MUTUAL FUNDS (active a | crosscheck | pollinations | 200 | 57 |  |
 
 ## Latest answers
-
-### round 65 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_CLOUD_LARGE
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
-
-### round 65 - BONDS (govt and credit) - crosscheck - ULTRA_FREE_OPENROUTER
-
-{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
-
-### round 65 - BONDS (govt and credit) - crosscheck - pollinations
-
-(b) Large‑cap post‑earnings drift is dead since about 2006.  
-**Falsifying observation:** Consistent, net‑after‑cost excess returns of large‑cap bond indices (e.g., 1‑2 basis‑points per quarter) immediately after earnings releases for several consecutive years, showing a statistically significant return that outpaces the 12‑20 bp round‑trip cost. This would prove the drift still exists.
 
 ### round 66 - ETFS (sector, factor, cross-asset) - crosscheck - ULTRA_FREE_CLOUD_LARGE
 
@@ -61,3 +48,17 @@ Rounds recorded: **24** rows (last 24 kept here). Ledger: `ledger/ai_idea_cycles
 **Claim most likely wrong:** (c) *Value is the last untested family.*
 
 **Observation that would falsify it:** In a multi‑year back‑test of a liquid value‑ETF index (e.g., CRSP value factor), the net excess return after deducting a 15 bps round‑trip cost exceeds the 4.3 % T‑bill benchmark by at least 1 % per annum over five consecutive years. The cumulative excess would remain above the 4.3 % hurdle after adjusting for a 12–20 bps cost, proving that value can produce harvestable premia in a liquid ETF strategy.
+
+### round 67 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_CLOUD_LARGE
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_CLOUD_LARGE. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE
+
+### round 67 - MUTUAL FUNDS (active and index) - crosscheck - ULTRA_FREE_OPENROUTER
+
+{"error":{"message":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_OPENROUTER. Call `/v1/models` to view available models for your key.","type":"None","param":"None","code":"400","provider_specific_fields":{"error":"/chat/completions: Invalid model name passed in model=ULTRA_FREE_
+
+### round 67 - MUTUAL FUNDS (active and index) - crosscheck - pollinations
+
+**Claim most likely wrong:** (c) *“Value is the last untested family.”*  
+
+**Concrete falsifier:** a multi‑year, cost‑adjusted study of active and indexed value funds showing a mean annual excess return of ≥ 0.5 % over the 4.3 % T‑bill, after round‑trip costs of 12‑20 bps and gate‑based Sharpe deflation, would demonstrate that value has, in fact, been validated.
