@@ -4,7 +4,7 @@
  "equity": 10000.0,
  "n_closed": 0,
  "n_open": 0,
- "n_skips": 4,
+ "n_skips": 5,
  "win_rate": null,
  "profit_factor": null,
  "total_pnl": 0,
@@ -13,24 +13,24 @@
  "fees_paid": 0,
  "exit_mix": {},
  "skip_reasons": {
-  "BRACKET_REFUSED": 4
+  "BRACKET_REFUSED": 5
  },
  "outcome": "NO_SIGNAL",
  "rolling_sharpe_20": null,
  "decay_alarm": null,
  "pass": {
-  "ts_utc": "2026-11-27T05:16:27+00:00",
+  "ts_utc": "2026-11-27T06:25:36+00:00",
   "venue": "kraken",
   "closed_this_pass": [],
   "opened_this_pass": [],
   "marks": {
-   "BTC": 61589.0,
-   "ETH": 1740.17,
-   "SOL": 73.01,
-   "XRP": 0.96228,
-   "DOGE": 0.0577887,
-   "ADA": 0.151878,
-   "LINK": 9.63145
+   "BTC": 61633.3,
+   "ETH": 1735.27,
+   "SOL": 72.96,
+   "XRP": 0.96965,
+   "DOGE": 0.0579972,
+   "ADA": 0.153025,
+   "LINK": 9.63284
   },
   "equity": 10000.0
  }
